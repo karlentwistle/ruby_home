@@ -1,5 +1,6 @@
-require "rubyhome/version"
+require_relative "rubyhome/version"
+require_relative "rubyhome/broadcast"
 
 module Rubyhome
-  # Your code goes here...
+  Broadcast.run
 end
