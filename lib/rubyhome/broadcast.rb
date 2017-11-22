@@ -1,21 +1,30 @@
 require 'dnssd'
 require_relative 'dns/text_record'
+require_relative 'http/server'
+
+Thread.abort_on_exception = true
 
 module Rubyhome
   class Broadcast
+
     def self.run
-      http = TCPServer.new nil, 8080
       name = "RubyHome"
-      service = "hap"
+      type = "_hap._tcp"
       text_record = TextRecord.new
 
-      DNSSD.announce http, name, service, text_record
+      server = Rubyhome::Server
+      port = server.port
+      server.set :bind, '0.0.0.0'
+      server.set :quiet, true
 
-      loop do
-        socket = http.accept
-        peeraddr = socket.peeraddr
-        puts "Connection from %s:%d" % socket.peeraddr.values_at(2, 1)
+      threads = []
+      threads << Thread.new do
+        DNSSD::Service.register name, type, nil, port, nil, text_record
       end
+      threads.each(&:join)
+
+      server.run!
     end
+
   end
 end
