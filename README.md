@@ -1,8 +1,6 @@
-# Rubyhome
+# RubyHome
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rubyhome`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+RubyHome is a lightweight service you can run on your home network that emulates the iOS HomeKit API. It supports community contributed plugins, which are modules that provide a bridge from HomeKit to various 3rd-party APIs provided by manufacturers of smart home devices.
 
 ## Installation
 
