@@ -1,6 +1,6 @@
 require 'dnssd'
 require_relative 'dns/text_record'
-require_relative 'http/server'
+require_relative 'http/application'
 
 Thread.abort_on_exception = true
 
@@ -12,7 +12,7 @@ module Rubyhome
       type = "_hap._tcp"
       text_record = TextRecord.new
 
-      server = Rubyhome::Server
+      server = Rubyhome::HTTP::Application
       port = server.port
       server.set :bind, '0.0.0.0'
       server.set :quiet, true

@@ -1,7 +1,19 @@
 require "bundler/setup"
-require "rubyhome"
+require "rack/test"
+require "rspec"
+
+ENV['RACK_ENV'] = 'test'
+
+require_relative '../lib/rubyhome/http/application'
+
+module RSpecMixin
+  include Rack::Test::Methods
+  def app() Rubyhome::HTTP::Application end
+end
 
 RSpec.configure do |config|
+  config.include RSpecMixin
+
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
 
