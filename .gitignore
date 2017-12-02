@@ -1,3 +1,5 @@
+.byebug_history
+.rspec_status
 /.bundle/
 /.yardoc
 /_yardoc/
@@ -6,6 +8,3 @@
 /pkg/
 /spec/reports/
 /tmp/
-
-# rspec failure tracking
-.rspec_status
