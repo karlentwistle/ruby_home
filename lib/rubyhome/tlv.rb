@@ -3,11 +3,14 @@ module Rubyhome
     INTEGER_UNPACKER = ->(value) { [value].pack('H*').unpack('C*').first }
     INTEGER_PACKER = ->(value) { [value].pack('C*').unpack('H*').first }
 
-    UTF8_UNPACKER = ->(value) { [value.force_encoding("UTF-8")].pack('H*') }
-    UTF8_PACKER = ->(value) { value.force_encoding("UTF-8").bytes.map { |b| b.to_s(16) }.join }
+    UTF8_UNPACKER = ->(value) { [value].pack('H*').force_encoding("UTF-8").encode('utf-8') }
+    UTF8_PACKER = ->(value) { value.bytes.map { |b| b.to_s(16) }.join }
 
     BYTES_UNPACKER = ->(value) { value }
-    BYTES_PACKER = ->(value) { value }
+    BYTES_PACKER = ->(value) do
+      value.insert(0, '0') if value.length.odd?
+      value
+    end
 
     TLV = Struct.new(:type, :name, :unpack, :pack)
     TLVs = [

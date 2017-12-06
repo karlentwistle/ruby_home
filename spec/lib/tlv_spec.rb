@@ -17,6 +17,11 @@ RSpec.describe Rubyhome::TLV do
       it { is_expected.to eql({'kTLVType_Identifier' => 'hello'}) }
     end
 
+    context 'kTLVType_Identifier unicode character' do
+      let(:input) { "0105e29087" }
+      it { is_expected.to eql({'kTLVType_Identifier' => '␇'}) }
+    end
+
     context 'kTLVType_Salt' do
       let(:input) { "0210c8eb453673a905cc5ca6b64ce85e22e9" }
       it { is_expected.to eql({'kTLVType_Salt' => 'c8eb453673a905cc5ca6b64ce85e22e9'}) }
@@ -162,6 +167,11 @@ RSpec.describe Rubyhome::TLV do
       it { is_expected.to eql(["010568656c6c6f"].pack('H*')) }
     end
 
+    context 'kTLVType_Identifier unicode character' do
+      let(:input) { {'kTLVType_Identifier' => '␇'} }
+      it { is_expected.to eql(["0103e29087"].pack('H*')) }
+    end
+
     context 'kTLVType_Salt' do
       let(:input) { {'kTLVType_Salt' => 'c8eb453673a905cc5ca6b64ce85e22e9'} }
       it { is_expected.to eql(["0210c8eb453673a905cc5ca6b64ce85e22e9"].pack('H*')) }
@@ -298,6 +308,13 @@ RSpec.describe Rubyhome::TLV do
           'c18bbd4f8f14825b45aac1ec31a507d77f077cbc02ebb90d7d8e752dfb2493ced237bb',
           '13992fee996b4e04a81d68d2e9282bba497f7dcba1bab4f3f2a6'
         ].pack('H*'))
+      end
+    end
+
+    context 'Value byte length is a odd (as opposed to even) number' do
+      let(:input) { { 'kTLVType_Salt' => '3259528331e701a72df8c77815c8a63' } }
+      it 'pads the hexadecimal by prefixing with a 0' do
+        is_expected.to eql(["021003259528331e701a72df8c77815c8a63"].pack('H*'))
       end
     end
   end
