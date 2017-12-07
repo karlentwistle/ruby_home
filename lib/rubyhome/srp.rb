@@ -1,4 +1,5 @@
 require "openssl"
+require "securerandom"
 
 module Rubyhome
   module SRP
@@ -130,7 +131,6 @@ module Rubyhome
       end
     end
 
-
     class Verifier
       attr_reader :N, :g, :k, :A, :B, :b, :S, :K, :M, :H_AMK
 
@@ -195,11 +195,11 @@ module Rubyhome
       end
 
       def random_salt
-        "%x" % SRP.bigrand(16).hex
+        SecureRandom.hex(16)
       end
 
       def random_bignum
-        SRP.bigrand(32).hex
+        SecureRandom.hex(32).hex
       end
 
       # generates challenge

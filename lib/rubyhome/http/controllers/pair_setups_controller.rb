@@ -27,8 +27,6 @@ module Rubyhome
 
         b = srp.generate_B(verifier)
 
-
-
         TLV.pack({
           'kTLVType_Salt' => salt,
           'kTLVType_PublicKey' => b,
