@@ -52,8 +52,7 @@ module Rubyhome
       # Private key (derived from username, raw password and salt)
       # x = H(salt || H(username || ':' || password))
       def calc_x(username, password, salt)
-        spad = if salt.length.odd? then '0' else '' end
-        sha1_hex(spad + salt + sha1_str([username, password].join(':'))).hex
+        sha1_hex(salt + sha1_str([username, password].join(':'))).hex
       end
 
       # Random scrambling parameter
@@ -93,15 +92,18 @@ module Rubyhome
       # M = H(H(N) xor H(g), H(I), s, A, B, K)
       def calc_M(username, xsalt, xaa, xbb, xkk, n, g)
         hn = sha1_hex("%x" % n).hex
-        hg = sha1_hex("%x" % g).hex
+        hg = sha1_hex(g).hex
         hxor = "%x" % (hn ^ hg)
         hi = sha1_str(username)
-        return H(n, hxor, hi, xsalt, xaa, xbb, xkk)
+
+        hashin = [hxor, hi, xsalt, xaa, xbb, xkk].join
+        sha1_hex(hashin).hex % n
       end
 
       # H(A, M, K)
       def calc_H_AMK(xaa, xmm, xkk, n, g)
-        H(n, xaa, xmm, xkk)
+        hashin = [xaa, xmm, xkk].join()
+        sha1_hex(hashin).hex % n
       end
 
       def Ng(group)
@@ -123,7 +125,7 @@ module Rubyhome
             BBE11757 7A615D6C 770988C0 BAD946E2 08E24FA0 74E5AB31 43DB5BFC
             E0FD108E 4B82D120 A93AD2CA FFFFFFFF FFFFFFFF
           }.join.hex
-          @g = 5
+          @g = '05'
         else
           raise NotImplementedError
         end
@@ -132,7 +134,8 @@ module Rubyhome
     end
 
     class Verifier
-      attr_reader :N, :g, :k, :A, :B, :b, :S, :K, :M, :H_AMK
+      attr_reader :N, :g, :k, :A, :B, :b, :S, :K, :M, :H_AMK, :u
+      attr_writer :salt
 
       def initialize group=3072
         # select modulus (N) and generator (g)
@@ -146,21 +149,18 @@ module Rubyhome
       def generate_userauth username, password
         @salt ||= random_salt
         x = SRP.calc_x(username, password, @salt)
-        v = SRP.calc_v(x, @N, @g)
+        v = SRP.calc_v(x, @N, @g.hex)
         return {:username => username, :verifier => "%x" % v, :salt => @salt}
       end
 
       # Authentication phase 1 - create challenge.
       # Returns Hash with challenge for client and proof to be stored on server.
       # Parameters should be given in hex.
-      def get_challenge_and_proof username, xverifier, xsalt, xaa
-        # SRP-6a safety check
-        return false if (xaa.to_i(16) % @N) == 0
+      def get_challenge_and_proof username, xverifier, xsalt
         generate_B(xverifier)
         return {
-          :challenge    => {:B => @B, :salt => xsalt},
-          :proof        => {:A => xaa, :B => @B, :b => "%x" % @b,
-                            :I => username, :s => xsalt, :v => xverifier}
+          :challenge => {:B => @B, :salt => xsalt},
+          :proof     => {:B => @B, :b => "%x" % @b, :I => username, :s => xsalt, :v => xverifier}
         }
       end
 
@@ -175,12 +175,12 @@ module Rubyhome
         xsalt = proof[:s]
         v = proof[:v].to_i(16)
 
-        u = SRP.calc_u(@A, @B, @N)
+        @u = SRP.calc_u(@A, @B, @N)
         # SRP-6a safety check
-        return false if u == 0
+        return false if @u == 0
 
         # calculate session key
-        @S = "%x" % SRP.calc_server_S(@A.to_i(16), @b, v, u, @N)
+        @S = "%x" % SRP.calc_server_S(@A.to_i(16), @b, v, @u, @N)
         @K = SRP.sha1_hex(@S)
 
         # calculate match
@@ -202,12 +202,16 @@ module Rubyhome
         SecureRandom.hex(32).hex
       end
 
+      def u
+        "%x" % @u
+      end
+
       # generates challenge
       # input verifier in hex
       def generate_B xverifier
         v = xverifier.to_i(16)
         @b ||= random_bignum
-        @B = "%x" % SRP.calc_B(@b, k, v, @N, @g)
+        @B = "%x" % SRP.calc_B(@b, k, v, @N, @g.hex)
       end
     end
   end
