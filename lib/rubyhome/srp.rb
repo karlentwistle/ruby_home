@@ -13,10 +13,6 @@ module Rubyhome
         OpenSSL::Digest::SHA512.hexdigest(s)
       end
 
-      def bigrand(bytes)
-        OpenSSL::Random.random_bytes(bytes).unpack("H*")[0]
-      end
-
       # a^n (mod m)
       def modpow(a, n, m)
         r = 1
@@ -28,7 +24,7 @@ module Rubyhome
         end
       end
 
-      # SHA1 hashing function with padding.
+      # hashing function with padding.
       # Input is prefixed with 0 to meet N hex width.
       def H(n, *a)
         nlen = 2 * ((('%x' % [n]).length * 4 + 7) >> 3)
@@ -67,20 +63,9 @@ module Rubyhome
         modpow(g, x, n)
       end
 
-      # A = g^a (mod N)
-      def calc_A(a, n, g)
-        modpow(g, a, n)
-      end
-
       # B = g^b + k v (mod N)
       def calc_B(b, k, v, n, g)
         (modpow(g, b, n) + k * v) % n
-      end
-
-      # Client secret
-      # S = (B - (k * g^x)) ^ (a + (u * x)) % N
-      def calc_client_S(bb, a, k, x, u, n, g)
-        modpow((bb - k * modpow(g, x, n)) % n, (a+ x * u), n)
       end
 
       # Server secret
