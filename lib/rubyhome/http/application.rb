@@ -4,6 +4,7 @@ require_relative 'controllers/pair_setups_controller'
 module Rubyhome
   module HTTP
     class Application < Sinatra::Base
+      enable :logging
 
       get '/accessories' do
         puts request.inspect
