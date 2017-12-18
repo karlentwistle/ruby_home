@@ -1,6 +1,5 @@
 require_relative '../../srp'
 require_relative '../../tlv'
-require 'byebug'
 
 module Rubyhome
   module HTTP
@@ -26,16 +25,13 @@ module Rubyhome
         username = 'Pair-Setup'
         password = '031-45-154'
 
-        srp = Rubyhome::SRP::Verifier.new
-        auth = srp.generate_userauth(username, password)
+        auth = srp_verifier.generate_userauth(username, password)
 
         verifier = auth[:verifier]
         salt = auth[:salt]
 
-        challenge_and_proof = srp.get_challenge_and_proof(username, verifier, salt)
-
-        data = Marshal.dump(challenge_and_proof[:proof])
-        File.open('/Users/karl/gems/rubyhome/bla', 'w') { |file| file.write(data) }
+        challenge_and_proof = srp_verifier.get_challenge_and_proof(username, verifier, salt)
+        store_proof(challenge_and_proof[:proof])
 
         TLV.pack({
           'kTLVType_Salt' => challenge_and_proof[:challenge][:salt],
@@ -45,18 +41,15 @@ module Rubyhome
       end
 
       def srp_verify_response
-        file = File.read('/Users/karl/gems/rubyhome/bla')
-        data = Marshal.load(file)
-
-        srp = Rubyhome::SRP::Verifier.new
-
-        proof = data
+        proof = retrieve_proof.dup
         proof[:A] = unpack_request['kTLVType_PublicKey']
 
-        srp.verify_session(proof, unpack_request['kTLVType_Proof'])
+        client_m1_proof = unpack_request['kTLVType_Proof']
+        server_m2_proof = srp_verifier.verify_session(proof, unpack_request['kTLVType_Proof'])
 
         TLV.pack({
-          'kTLVType_State' => 4
+          'kTLVType_State' => 4,
+          'kTLVType_Proof' => server_m2_proof
         })
       end
 
@@ -65,6 +58,18 @@ module Rubyhome
           request.body.rewind
           TLV.unpack(request.body.read)
         end
+      end
+
+      def srp_verifier
+        @_verifier ||= Rubyhome::SRP::Verifier.new
+      end
+
+      def store_proof(proof)
+        Cache.instance[:proof] = proof
+      end
+
+      def retrieve_proof
+        Cache.instance[:proof]
       end
     end
   end

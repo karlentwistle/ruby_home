@@ -1,10 +1,15 @@
 require 'sinatra/base'
 require_relative 'controllers/pair_setups_controller'
+require_relative '../cache'
 
 module Rubyhome
   module HTTP
     class Application < Sinatra::Base
       enable :logging
+
+      configure do
+        ::Rubyhome::Cache.instance
+      end
 
       get '/accessories' do
         puts request.inspect
