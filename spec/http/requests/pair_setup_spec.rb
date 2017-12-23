@@ -7,7 +7,7 @@ RSpec.describe "POST /pair-setup" do
     before do
       path = File.expand_path("../../../fixtures/srp_start_request", __FILE__)
       data = File.read(path)
-      post '/pair-setup', data
+      post '/pair-setup', data, {'CONTENT_TYPE' => 'application/pairing+tlv8'}
     end
 
     it "headers contains application/pairing+tlv8 header" do
@@ -114,13 +114,49 @@ RSpec.describe "POST /pair-setup" do
       expect(unpacked_body).to include('kTLVType_State' => 4)
     end
 
-    it "body contains kTLVType_Proof" do
-      expect(unpacked_body).to include('kTLVType_Proof' => a_kind_of(String))
-    end
-
     it "body contains kTLVType_Proof at least 128 in length" do
       public_key = unpacked_body['kTLVType_Proof']
-      expect(public_key.length).to be >= 128
+      expected_proof = %w{
+        986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
+        033B4B94 0583C317 0CD4C326 4BB093C0 B518F8C9 710B6F68 A56E5B03 D0686EDA
+      }.join.downcase
+      expect(public_key).to eql(expected_proof)
+    end
+
+    it "stores session_key" do
+      expected_session_key = %w{
+        2B5F1FA4 046B2E63 2A06F1D9 612B031F 6D0B9676 B602DD36 BFCFEA0F 85D8567E
+        DDEBF2EF B5C24227 DF05D9F8 BECC3F32 518CEAAD BA5F689F 50252F6B E5D77EA6
+      }.join.downcase
+      expect(Rubyhome::Cache.instance[:session_key]).to eql(expected_session_key)
+    end
+
+    it "destroy proof" do
+      expect(Rubyhome::Cache.instance[:proof]).to be_nil
+    end
+  end
+
+  context 'Exchange Response' do
+    let(:session_key) do
+      %w{
+        7D9E8A37 2C395CC5 F4CF2AB4 D960E6D1 76FBCFC9 587DE6B6 9E3114B6 D39C6D83
+        7CA464CE F3A1D51E CC1674E2 6D57783D D72B5438 882B93F6 EDCADF65 FC15288F
+      }.join.downcase
+    end
+
+    before do
+      Rubyhome::Cache.instance[:session_key] = session_key
+      path = File.expand_path("../../../fixtures/exchange_request", __FILE__)
+      data = File.read(path)
+      post '/pair-setup', data, { "CONTENT_TYPE" => "application/pairing+tlv8" }
+    end
+
+    it "headers contains application/pairing+tlv8 header" do
+      expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+    end
+
+    it "body contains kTLVType_State" do
+      expect(unpacked_body).to include('kTLVType_State' => 6)
     end
   end
 

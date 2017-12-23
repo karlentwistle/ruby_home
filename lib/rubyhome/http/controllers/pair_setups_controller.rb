@@ -1,5 +1,9 @@
 require_relative '../../srp'
 require_relative '../../tlv'
+require 'hkdf'
+require 'openssl'
+require 'rbnacl/libsodium'
+
 
 module Rubyhome
   module HTTP
@@ -14,6 +18,8 @@ module Rubyhome
           srp_start_response
         when 3
           srp_verify_response
+        when 5
+          exchange_response
         end
       end
 
@@ -47,10 +53,57 @@ module Rubyhome
         client_m1_proof = unpack_request['kTLVType_Proof']
         server_m2_proof = srp_verifier.verify_session(proof, unpack_request['kTLVType_Proof'])
 
+        store_session_key(srp_verifier.K)
+        forget_proof!
+
         TLV.pack({
           'kTLVType_State' => 4,
           'kTLVType_Proof' => server_m2_proof
         })
+      end
+
+      def exchange_response
+        encrypted_data = unpack_request['kTLVType_EncryptedData']
+
+        auth_tag = [encrypted_data[0...32]].pack('H*')
+        message_data = [encrypted_data[32..-1]].pack('H*')
+
+        salt = "Pair-Setup-Encrypt-Salt"
+        sinfo = "Pair-Setup-Encrypt-Info"
+        hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
+        hkdf = HKDF.new([session_key].pack('H*'), hkdf_opts)
+        hkdf.rewind
+        key = hkdf.next_bytes(32)
+
+        chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
+        nonce = ["0000000050532d4d73673035"].pack('H*')
+        decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
+        unpacked_decrypted_data = TLV.unpack(decrypted_data)
+
+        iosdevicepairingid = unpacked_decrypted_data['kTLVType_Identifier']
+        iosdevicesignature = unpacked_decrypted_data['kTLVType_Signature']
+        iosdeviceltpk = unpacked_decrypted_data['kTLVType_PublicKey']
+
+        salt = "Pair-Setup-Controller-Sign-Salt"
+        sinfo = "Pair-Setup-Controller-Sign-Info"
+        hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
+        hkdf = HKDF.new([session_key].pack('H*'), hkdf_opts)
+        hkdf.rewind
+        iosdevicex = hkdf.next_hex_bytes(32)
+
+        iosdeviceinfo = [
+          iosdevicex,
+          TLV::UTF8_PACKER.call(iosdevicepairingid),
+          iosdeviceltpk
+        ].join
+        verify_key = RbNaCl::Signatures::Ed25519::VerifyKey.new([iosdeviceltpk].pack('H*'))
+
+        if verify_key.verify([iosdevicesignature].pack('H*'), [iosdeviceinfo].pack('H*'))
+          TLV.pack({
+            'kTLVType_State' => 6,
+          })
+        end
+
       end
 
       def unpack_request
@@ -70,6 +123,18 @@ module Rubyhome
 
       def retrieve_proof
         Cache.instance[:proof]
+      end
+
+      def forget_proof!
+        Cache.instance[:proof] = nil
+      end
+
+      def store_session_key(key)
+        Cache.instance[:session_key] = key
+      end
+
+      def session_key
+        Cache.instance[:session_key]
       end
     end
   end
