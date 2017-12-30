@@ -114,7 +114,7 @@ RSpec.describe "POST /pair-setup" do
       expect(unpacked_body).to include('kTLVType_State' => 4)
     end
 
-    it "body contains kTLVType_Proof at least 128 in length" do
+    it "body contains kTLVType_Proof" do
       public_key = unpacked_body['kTLVType_Proof']
       expected_proof = %w{
         986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
@@ -157,6 +157,18 @@ RSpec.describe "POST /pair-setup" do
 
     it "body contains kTLVType_State" do
       expect(unpacked_body).to include('kTLVType_State' => 6)
+    end
+
+    it "body contains kTLVType_EncryptedData" do
+      encrypted_data = unpacked_body['kTLVType_EncryptedData']
+      expected_encrypted_data = %w{
+        51445260 6E942707 25D0A470 8708B97B C9A495FB A0900796 A2BCF06F 8388829B
+        6F6B7C09 BEE33B8F DEAD373D 83EBB92F 395B0C9B C16A8AA1 8F13EA58 F89ADF8A
+        87BB4F07 8E960854 09D0BD50 02947917 FE9A0486 88E42885 1AAB213E 52B69A97
+        5C3EC2CD 46E43A7A 94BCDFC3 7A4BEEF1 60612F16 C0E82753 C0D0099A 93D2F4B0
+        1CF924B0 97F08C
+      }.join.downcase
+      expect(encrypted_data).to eql(expected_encrypted_data)
     end
   end
 

@@ -8,8 +8,9 @@ require 'rbnacl/libsodium'
 module Rubyhome
   module HTTP
     class PairSetupsController
-      def initialize(request)
+      def initialize(request, settings)
         @request = request
+        @settings = settings
       end
 
       def create
@@ -25,7 +26,7 @@ module Rubyhome
 
       private
 
-      attr_reader :request
+      attr_reader :request, :settings
 
       def srp_start_response
         username = 'Pair-Setup'
@@ -99,11 +100,37 @@ module Rubyhome
         verify_key = RbNaCl::Signatures::Ed25519::VerifyKey.new([iosdeviceltpk].pack('H*'))
 
         if verify_key.verify([iosdevicesignature].pack('H*'), [iosdeviceinfo].pack('H*'))
+          salt = "Pair-Setup-Accessory-Sign-Salt"
+          sinfo = "Pair-Setup-Accessory-Sign-Info"
+          hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
+          hkdf = HKDF.new([session_key].pack('H*'), hkdf_opts)
+          hkdf.rewind
+          accessory_x = hkdf.next_hex_bytes(32)
+
+          signing_key = accessory_info.signing_key
+          accessoryltpk = signing_key.verify_key.to_bytes.unpack('H*')[0]
+          accessoryinfo = [
+            accessory_x,
+            TLV::UTF8_PACKER.call(accessory_info.device_id),
+            accessoryltpk
+          ].join
+
+          accessorysignature = signing_key.sign([accessoryinfo].pack('H*')).unpack('H*')[0]
+
+          subtlv = TLV.pack({
+            'kTLVType_Identifier' => accessory_info.device_id,
+            'kTLVType_PublicKey' => accessoryltpk,
+            'kTLVType_Signature' => accessorysignature
+          })
+
+          nonce = ["0000000050532d4d73673036"].pack('H*')
+          encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil).unpack('H*')[0]
+
           TLV.pack({
             'kTLVType_State' => 6,
+            'kTLVType_EncryptedData' => encrypted_data
           })
         end
-
       end
 
       def unpack_request
@@ -135,6 +162,10 @@ module Rubyhome
 
       def session_key
         Cache.instance[:session_key]
+      end
+
+      def accessory_info
+        settings.accessory_info
       end
     end
   end

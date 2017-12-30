@@ -1,14 +1,17 @@
 require 'dnssd/text_record'
-require_relative 'device_id'
+
 
 module Rubyhome
   class TextRecord < DNSSD::TextRecord
 
-    def initialize
+    def initialize(accessory_info:)
+      @accessory_info = accessory_info
       super(to_hash)
     end
 
     private
+
+    attr_reader :accessory_info
 
     def to_hash
       {
@@ -65,7 +68,7 @@ module Rubyhome
     # Pairing Identifier.
 
     def device_id
-      DeviceID.generate
+      accessory_info.device_id
     end
 
     # Model name of the accessory (e.g. "Device1,1"). Required.

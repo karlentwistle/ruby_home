@@ -1,12 +1,10 @@
 require 'sinatra/base'
 require_relative 'controllers/pair_setups_controller'
-require_relative '../cache'
+require_relative 'cache'
 
 module Rubyhome
   module HTTP
     class Application < Sinatra::Base
-      enable :logging
-
       configure do
         ::Rubyhome::Cache.instance
       end
@@ -33,7 +31,7 @@ module Rubyhome
 
       post '/pair-setup' do
         content_type 'application/pairing+tlv8'
-        PairSetupsController.new(request).create
+        PairSetupsController.new(request, settings).create
       end
 
       post '/pair-verify' do
