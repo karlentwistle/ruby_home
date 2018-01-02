@@ -1,3 +1,5 @@
+require 'ed25519'
+
 class FakeAccessoryInfo
   include Singleton
 
@@ -14,7 +16,7 @@ class FakeAccessoryInfo
   end
 
   def signing_key
-    RbNaCl::Signatures::Ed25519::SigningKey.new(signing_key_hex)
+    Ed25519::SigningKey.new(signing_key_hex)
   end
 
   private

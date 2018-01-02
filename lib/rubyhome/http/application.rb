@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require_relative 'controllers/pair_setups_controller'
+require_relative 'controllers/pair_verifies_controller'
 require_relative 'cache'
 
 module Rubyhome
@@ -35,8 +36,8 @@ module Rubyhome
       end
 
       post '/pair-verify' do
-        puts request.inspect
-        'verify'
+        content_type 'application/pairing+tlv8'
+        PairVerifiesController.new(request, settings).create
       end
 
       post '/pairings' do

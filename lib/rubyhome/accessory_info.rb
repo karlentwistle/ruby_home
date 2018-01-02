@@ -1,5 +1,5 @@
 require "singleton"
-require "rbnacl/libsodium"
+require "ed25519"
 require_relative "device_id"
 
 module Rubyhome
@@ -19,7 +19,7 @@ module Rubyhome
     end
 
     def signing_key
-      @_signing_key ||= RbNaCl::Signatures::Ed25519::SigningKey.generate
+      @_signing_key ||= Ed25519::SigningKey.generate
     end
   end
 end

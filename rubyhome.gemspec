@@ -34,11 +34,13 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "dnssd", "~> 3.0"
+  spec.add_dependency "ed25519", "~> 1.2", ">= 1.2.3"
   spec.add_dependency "hkdf", "~> 0.3.0"
   spec.add_dependency "rbnacl", "~> 5.0"
   spec.add_dependency "rbnacl-libsodium", "~> 1.0", ">= 1.0.16"
   spec.add_dependency "sinatra", "~> 2.0"
   spec.add_dependency "thin", "~> 1.7", ">= 1.7.2"
+  spec.add_dependency "x25519", "~> 1.0", ">= 1.0.5"
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "byebug", "~> 9.1"
   spec.add_development_dependency "rack-test", "~> 0.8.2"

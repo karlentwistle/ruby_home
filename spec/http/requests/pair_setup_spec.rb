@@ -1,6 +1,5 @@
-require_relative '../../../lib/rubyhome/tlv'
-
 require 'spec_helper'
+require_relative '../../../lib/rubyhome/tlv'
 
 RSpec.describe "POST /pair-setup" do
   context "SRP Start Response" do
