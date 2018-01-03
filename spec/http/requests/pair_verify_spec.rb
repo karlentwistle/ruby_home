@@ -4,18 +4,10 @@ require_relative '../../../lib/rubyhome/tlv'
 
 RSpec.describe "POST /pair-verify" do
   context 'Verify Start Response' do
-    let(:session_key) do
-      %w{
-        BB295B9E B95A5917 2B66C0DB D5A66012 43A1A9C2 17F5BAB4 3F2947F4 0EF59521
-        17931222 21BBA110 32002273 1B4F9162 701B73E3 B1C74C04 A758A5F6 B4541D71
-      }.join.downcase
-    end
-
     before do
       stub_secret_key = X25519::Scalar.new(['0000000000000000000000000000000000000000000000000000000000000040'].pack('H*'))
       allow(X25519::Scalar).to receive(:generate).and_return(stub_secret_key)
 
-      Rubyhome::Cache.instance[:session_key] = session_key
       path = File.expand_path("../../../fixtures/verify_start_response", __FILE__)
       data = File.read(path)
       post '/pair-verify', data, { "CONTENT_TYPE" => "application/pairing+tlv8" }
@@ -47,6 +39,24 @@ RSpec.describe "POST /pair-verify" do
       }.join.downcase
 
       expect(encrypted_data).to eql(expected_encrypted_data)
+    end
+  end
+
+  context 'Verify Finish Response' do
+    before do
+      Rubyhome::Cache.instance[:session_key] = ['d741e4ecbf9868e86aab782ddc03ed75767bfc30634a15dabcc895bace33e57e'].pack('H*')
+
+      path = File.expand_path("../../../fixtures/verify_finish_response", __FILE__)
+      data = File.read(path)
+      post '/pair-verify', data, { "CONTENT_TYPE" => "application/pairing+tlv8" }
+    end
+
+    it "headers contains application/pairing+tlv8 header" do
+      expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+    end
+
+    it "body contains kTLVType_State" do
+      expect(unpacked_body).to include('kTLVType_State' => 4)
     end
   end
 

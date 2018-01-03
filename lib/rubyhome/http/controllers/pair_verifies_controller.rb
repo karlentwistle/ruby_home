@@ -10,10 +10,11 @@ module Rubyhome
       end
 
       def create
-        puts unpack_request
         case unpack_request['kTLVType_State']
         when 1
           verify_start_response
+        when 3
+          verify_finish_response
         end
       end
 
@@ -48,6 +49,7 @@ module Rubyhome
         hkdf = HKDF.new(shared_secret, hkdf_opts)
         hkdf.rewind
         session_key = hkdf.next_bytes(32)
+        store_session_key(session_key)
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(session_key)
         nonce = ["0000000050562D4D73673032"].pack('H*')
@@ -60,6 +62,19 @@ module Rubyhome
         })
       end
 
+      def verify_finish_response
+        encrypted_data = unpack_request["kTLVType_EncryptedData"]
+
+        chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(session_key)
+        nonce = ["0000000050562D4D73673033"].pack('H*')
+        decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
+        unpacked_decrypted_data = TLV.unpack(decrypted_data)
+
+        TLV.pack({
+          'kTLVType_State' => 4,
+        })
+      end
+
       def unpack_request
         @_unpack_request ||= begin
           request.body.rewind
@@ -69,6 +84,14 @@ module Rubyhome
 
       def accessory_info
         settings.accessory_info
+      end
+
+      def store_session_key(session_key)
+        Cache.instance[:session_key] = session_key
+      end
+
+      def session_key
+        Cache.instance[:session_key]
       end
     end
   end
