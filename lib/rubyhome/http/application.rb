@@ -1,7 +1,9 @@
 require 'sinatra/base'
+require_relative '../rack/handler/hap_server'
+require_relative 'cache'
+require_relative 'controllers/accessories_controller'
 require_relative 'controllers/pair_setups_controller'
 require_relative 'controllers/pair_verifies_controller'
-require_relative 'cache'
 
 module Rubyhome
   module HTTP
@@ -10,9 +12,12 @@ module Rubyhome
         ::Rubyhome::Cache.instance
       end
 
+      ::Rack::Handler.register 'hap_server', Rubyhome::Rack::Handler::HAPServer
+      set :server, :hap_server
+
       get '/accessories' do
-        puts request.inspect
-        'accessories'
+        content_type 'application/hap+json'
+        AccessoriesController.new(request, settings).index
       end
 
       get '/characteristics' do
@@ -44,9 +49,6 @@ module Rubyhome
         puts request.inspect
         'pairings'
       end
-
     end
   end
 end
-
-

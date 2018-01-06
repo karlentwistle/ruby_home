@@ -27,6 +27,7 @@ module Rubyhome
         public_key = secret_key.public_key.to_bytes.unpack('H*')[0]
         client_public_key = X25519::MontgomeryU.new([unpack_request['kTLVType_PublicKey']].pack('H*'))
         shared_secret = secret_key.multiply(client_public_key).to_bytes
+        cache[:shared_secret] = shared_secret
 
         accessoryinfo = [
           public_key,
@@ -49,7 +50,7 @@ module Rubyhome
         hkdf = HKDF.new(shared_secret, hkdf_opts)
         hkdf.rewind
         session_key = hkdf.next_bytes(32)
-        store_session_key(session_key)
+        cache[:session_key] = session_key
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(session_key)
         nonce = ["0000000050562D4D73673032"].pack('H*')
@@ -65,10 +66,26 @@ module Rubyhome
       def verify_finish_response
         encrypted_data = unpack_request["kTLVType_EncryptedData"]
 
-        chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(session_key)
+        chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(cache[:session_key])
         nonce = ["0000000050562D4D73673033"].pack('H*')
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
         unpacked_decrypted_data = TLV.unpack(decrypted_data)
+
+        salt = "Control-Salt"
+        sinfo = "Control-Write-Encryption-Key"
+        hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
+
+        hkdf = HKDF.new(cache[:shared_secret], hkdf_opts)
+        hkdf.rewind
+        cache[:controller_to_accessory_key] = hkdf.next_bytes(32)
+
+        salt = "Control-Salt"
+        sinfo = "Control-Read-Encryption-Key"
+        hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
+
+        hkdf = HKDF.new(cache[:shared_secret], hkdf_opts)
+        hkdf.rewind
+        cache[:accessory_to_controller_key] = hkdf.next_bytes(32)
 
         TLV.pack({
           'kTLVType_State' => 4,
@@ -86,14 +103,9 @@ module Rubyhome
         settings.accessory_info
       end
 
-      def store_session_key(session_key)
-        Cache.instance[:session_key] = session_key
-      end
-
-      def session_key
-        Cache.instance[:session_key]
+      def cache
+        Cache.instance
       end
     end
   end
 end
-
