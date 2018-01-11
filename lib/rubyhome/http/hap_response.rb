@@ -1,4 +1,5 @@
 require 'webrick/httpresponse'
+require_relative '../hap/http_encryption'
 
 module Rubyhome
   module HTTP
@@ -8,11 +9,9 @@ module Rubyhome
           response = String.new
           super(response)
 
-          chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(cache[:accessory_to_controller_key])
-          nonce = ["000000000000000000000000"].pack('H*')
-          additional_data = [response.length].pack('v')
+          key = cache[:accessory_to_controller_key]
 
-          encrypted_response = chacha20poly1305ietf.encrypt(nonce, response, additional_data)
+          encrypted_response = [Rubyhome::HAP::HTTPEncryption.new(key).pack(response).join].pack('H*')
 
           _write_data(socket, encrypted_response)
         else
