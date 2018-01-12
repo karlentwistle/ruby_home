@@ -30,7 +30,6 @@ module Rubyhome
     def self.http_server
       @_http_server ||= begin
         server = Rubyhome::HTTP::Application
-        server.enable :logging
 
         server.set :bind, '0.0.0.0'
         server.set :quiet, true
