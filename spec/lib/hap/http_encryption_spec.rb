@@ -2,12 +2,12 @@ require 'spec_helper'
 require_relative '../../../lib/rubyhome/hap/http_encryption'
 
 RSpec.describe Rubyhome::HAP::HTTPEncryption do
-  describe '.pack' do
+  describe '#encrypt' do
     let(:key) { ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*') }
     let(:encryption_count) { 0 }
 
     subject do
-      described_class.new(key, encryption_count: encryption_count).pack(data)
+      described_class.new(key, encryption_count: encryption_count).encrypt(data)
     end
 
     context 'short data' do

@@ -8,7 +8,7 @@ module Rubyhome
         @encryption_count = encryption_count
       end
 
-      def pack(data)
+      def encrypt(data)
         data.chars.each_slice(1024).map(&:join).map do |message|
           additional_data = [message.length].pack('v')
 

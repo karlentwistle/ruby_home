@@ -11,7 +11,7 @@ module Rubyhome
 
           key = cache[:accessory_to_controller_key]
 
-          encrypted_response = [Rubyhome::HAP::HTTPEncryption.new(key).pack(response).join].pack('H*')
+          encrypted_response = Rubyhome::HAP::HTTPEncryption.new(key).encrypt(response).join
 
           _write_data(socket, encrypted_response)
         else
