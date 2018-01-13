@@ -4,10 +4,10 @@ require_relative '../../../lib/rubyhome/hap/http_encryption'
 RSpec.describe Rubyhome::HAP::HTTPEncryption do
   describe '#encrypt' do
     let(:key) { ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*') }
-    let(:encryption_count) { 0 }
+    let(:count) { 0 }
 
     subject do
-      described_class.new(key, encryption_count: encryption_count).encrypt(data)
+      described_class.new(key, count: count).encrypt(data)
     end
 
     context 'short data' do
@@ -22,9 +22,9 @@ RSpec.describe Rubyhome::HAP::HTTPEncryption do
       end
     end
 
-    context 'custom encryption_count' do
+    context 'custom count' do
       let(:data) { 'hello world' }
-      let(:encryption_count) { 2 }
+      let(:count) { 2 }
 
       it 'encrypts using correct nonce' do
         expected_encrypted_data = %w{

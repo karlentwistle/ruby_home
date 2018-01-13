@@ -3,9 +3,9 @@ require 'rbnacl/libsodium'
 module Rubyhome
   module HAP
     class HTTPEncryption
-      def initialize(key, encryption_count: 0)
+      def initialize(key, count: 0)
         @key = key
-        @encryption_count = encryption_count
+        @count = count
       end
 
       def encrypt(data)
@@ -13,7 +13,7 @@ module Rubyhome
           additional_data = [message.length].pack('v')
 
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, message, additional_data)
-          encryption_count_increment!
+          increment_count!
 
           [additional_data, encrypted_data].join
         end
@@ -21,13 +21,15 @@ module Rubyhome
 
       private
 
-      def encryption_count_increment!
-        @encryption_count += 1
+      attr_reader :count, :key
+
+      def increment_count!
+        @count += 1
       end
 
       def nonce
         prefix = '00000000'
-        num = [@encryption_count].pack('V').unpack('H*').first
+        num = [@count].pack('V').unpack('H*').first
         append = '00000000'
 
         [prefix + num + append].pack('H*')
@@ -36,8 +38,6 @@ module Rubyhome
       def chacha20poly1305ietf
         RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
       end
-
-      attr_reader :key
     end
   end
 end
