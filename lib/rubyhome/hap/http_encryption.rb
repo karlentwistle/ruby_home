@@ -19,9 +19,11 @@ module Rubyhome
         end
       end
 
+      attr_reader :count
+
       private
 
-      attr_reader :count, :key
+      attr_reader :key
 
       def increment_count!
         @count += 1
