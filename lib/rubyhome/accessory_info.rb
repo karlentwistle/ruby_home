@@ -21,5 +21,9 @@ module Rubyhome
     def signing_key
       @_signing_key ||= Ed25519::SigningKey.generate
     end
+
+    def paired?
+      Pairing.any?
+    end
   end
 end

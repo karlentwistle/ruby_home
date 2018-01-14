@@ -59,7 +59,11 @@ module Rubyhome
     }.freeze
 
     def status_flags
-      STATUS_FLAGS[:NOT_PAIRED]
+      if accessory_info.paired?
+        STATUS_FLAGS[:PAIRED]
+      else
+        STATUS_FLAGS[:NOT_PAIRED]
+      end
     end
 
     # Device ID (Device ID (page 36)) of the accessory. The Device ID must be

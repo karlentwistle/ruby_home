@@ -1,3 +1,4 @@
+require 'active_record'
 require 'sinatra/base'
 require_relative '../rack/handler/hap_server'
 require_relative 'cache'
@@ -5,6 +6,12 @@ require_relative 'controllers/accessories_controller'
 require_relative 'controllers/pair_setups_controller'
 require_relative 'controllers/pair_verifies_controller'
 require_relative 'controllers/pairings_controller'
+require_relative 'models/pairing'
+
+ActiveRecord::Base.establish_connection(
+  adapter: "sqlite3",
+  database: "rubyhome.sqlite3.db"
+)
 
 module Rubyhome
   module HTTP

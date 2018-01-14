@@ -126,6 +126,14 @@ module Rubyhome
           nonce = ["0000000050532d4d73673036"].pack('H*')
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil).unpack('H*')[0]
 
+          pairing_params = {
+            admin: true,
+            identifier: iosdevicepairingid,
+            public_key: iosdeviceltpk
+          }
+          Pairing.create!(pairing_params)
+          Rubyhome::Broadcast.dns_service.update
+
           TLV.pack({
             'kTLVType_State' => 6,
             'kTLVType_EncryptedData' => encrypted_data

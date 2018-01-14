@@ -1,5 +1,4 @@
-require 'dnssd'
-require_relative 'dns/text_record'
+require_relative 'dns/service'
 require_relative 'http/application'
 require_relative 'accessory_info'
 
@@ -19,11 +18,10 @@ module Rubyhome
 
     def self.dns_service
       @_dns_service ||= begin
-        name = "RubyHome"
-        type = "_hap._tcp"
-        port = http_server.port
-        text_record = TextRecord.new(accessory_info: AccessoryInfo.instance)
-        DNSSD::Service.register name, type, nil, port, nil, text_record
+        service = Rubyhome::DNS::Service.new(http_server.port)
+
+        service.register
+        service
       end
     end
 
