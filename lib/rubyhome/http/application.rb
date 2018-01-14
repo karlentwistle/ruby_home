@@ -4,6 +4,7 @@ require_relative 'cache'
 require_relative 'controllers/accessories_controller'
 require_relative 'controllers/pair_setups_controller'
 require_relative 'controllers/pair_verifies_controller'
+require_relative 'controllers/pairings_controller'
 
 module Rubyhome
   module HTTP
@@ -46,8 +47,8 @@ module Rubyhome
       end
 
       post '/pairings' do
-        puts request.inspect
-        'pairings'
+        content_type 'application/pairing+tlv8'
+        PairingsController.new(request, settings).create
       end
     end
   end
