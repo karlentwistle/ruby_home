@@ -66,14 +66,8 @@ module Rubyhome
       def exchange_response
         encrypted_data = unpack_request['kTLVType_EncryptedData']
 
-        auth_tag = [encrypted_data[0...32]].pack('H*')
-        message_data = [encrypted_data[32..-1]].pack('H*')
-
-        salt = "Pair-Setup-Encrypt-Salt"
-        sinfo = "Pair-Setup-Encrypt-Info"
-        hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
-        hkdf = HKDF.new([session_key].pack('H*'), hkdf_opts)
-        key = hkdf.next_bytes(32)
+        hkdf = HAP::HKDFEncryption.new(info: "Pair-Setup-Encrypt-Info", salt: "Pair-Setup-Encrypt-Salt")
+        key = hkdf.encrypt([session_key].pack('H*'))
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
         nonce = ["0000000050532d4d73673035"].pack('H*')
@@ -84,30 +78,24 @@ module Rubyhome
         iosdevicesignature = unpacked_decrypted_data['kTLVType_Signature']
         iosdeviceltpk = unpacked_decrypted_data['kTLVType_PublicKey']
 
-        salt = "Pair-Setup-Controller-Sign-Salt"
-        sinfo = "Pair-Setup-Controller-Sign-Info"
-        hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
-        hkdf = HKDF.new([session_key].pack('H*'), hkdf_opts)
-        iosdevicex = hkdf.next_hex_bytes(32)
+        hkdf = HAP::HKDFEncryption.new(info: "Pair-Setup-Controller-Sign-Info", salt: "Pair-Setup-Controller-Sign-Salt")
+        iosdevicex = hkdf.encrypt([session_key].pack('H*'))
 
         iosdeviceinfo = [
-          iosdevicex,
+          iosdevicex.unpack('H*'),
           TLV::UTF8_PACKER.call(iosdevicepairingid),
           iosdeviceltpk
         ].join
         verify_key = RbNaCl::Signatures::Ed25519::VerifyKey.new([iosdeviceltpk].pack('H*'))
 
         if verify_key.verify([iosdevicesignature].pack('H*'), [iosdeviceinfo].pack('H*'))
-          salt = "Pair-Setup-Accessory-Sign-Salt"
-          sinfo = "Pair-Setup-Accessory-Sign-Info"
-          hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
-          hkdf = HKDF.new([session_key].pack('H*'), hkdf_opts)
-          accessory_x = hkdf.next_hex_bytes(32)
+          hkdf = HAP::HKDFEncryption.new(info: "Pair-Setup-Accessory-Sign-Info", salt: "Pair-Setup-Accessory-Sign-Salt")
+          accessory_x = hkdf.encrypt([session_key].pack('H*'))
 
           signing_key = accessory_info.signing_key
           accessoryltpk = signing_key.verify_key.to_bytes.unpack('H*')[0]
           accessoryinfo = [
-            accessory_x,
+            accessory_x.unpack('H*'),
             TLV::UTF8_PACKER.call(accessory_info.device_id),
             accessoryltpk
           ].join
@@ -129,7 +117,6 @@ module Rubyhome
             public_key: iosdeviceltpk
           }
           Pairing.create!(pairing_params)
-          Rubyhome::Broadcast.dns_service.update
 
           TLV.pack({
             'kTLVType_State' => 6,

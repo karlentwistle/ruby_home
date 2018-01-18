@@ -1,4 +1,5 @@
-require_relative '../../tlv'
+require_relative "../../tlv"
+require_relative "../../hap/hkdf_encryption"
 require "x25519"
 
 module Rubyhome
@@ -43,12 +44,8 @@ module Rubyhome
           'kTLVType_Signature' => accessorysignature
         })
 
-        salt = "Pair-Verify-Encrypt-Salt"
-        sinfo = "Pair-Verify-Encrypt-Info"
-        hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
-
-        hkdf = HKDF.new(shared_secret, hkdf_opts)
-        session_key = hkdf.next_bytes(32)
+        hkdf = HAP::HKDFEncryption.new(info: "Pair-Verify-Encrypt-Info", salt: "Pair-Verify-Encrypt-Salt")
+        session_key = hkdf.encrypt(shared_secret)
         cache[:session_key] = session_key
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(session_key)
@@ -70,19 +67,11 @@ module Rubyhome
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
         unpacked_decrypted_data = TLV.unpack(decrypted_data)
 
-        salt = "Control-Salt"
-        sinfo = "Control-Write-Encryption-Key"
-        hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
+        hkdf = HAP::HKDFEncryption.new(info: "Control-Write-Encryption-Key", salt: "Control-Salt")
+        cache[:controller_to_accessory_key] = hkdf.encrypt(cache[:shared_secret])
 
-        hkdf = HKDF.new(cache[:shared_secret], hkdf_opts)
-        cache[:controller_to_accessory_key] = hkdf.next_bytes(32)
-
-        salt = "Control-Salt"
-        sinfo = "Control-Read-Encryption-Key"
-        hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
-
-        hkdf = HKDF.new(cache[:shared_secret], hkdf_opts)
-        cache[:accessory_to_controller_key] = hkdf.next_bytes(32)
+        hkdf = HAP::HKDFEncryption.new(info: "Control-Read-Encryption-Key", salt: "Control-Salt")
+        cache[:accessory_to_controller_key] = hkdf.encrypt(cache[:shared_secret])
 
         TLV.pack({
           'kTLVType_State' => 4,
