@@ -73,7 +73,6 @@ module Rubyhome
         sinfo = "Pair-Setup-Encrypt-Info"
         hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
         hkdf = HKDF.new([session_key].pack('H*'), hkdf_opts)
-        hkdf.rewind
         key = hkdf.next_bytes(32)
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
@@ -89,7 +88,6 @@ module Rubyhome
         sinfo = "Pair-Setup-Controller-Sign-Info"
         hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
         hkdf = HKDF.new([session_key].pack('H*'), hkdf_opts)
-        hkdf.rewind
         iosdevicex = hkdf.next_hex_bytes(32)
 
         iosdeviceinfo = [
@@ -104,7 +102,6 @@ module Rubyhome
           sinfo = "Pair-Setup-Accessory-Sign-Info"
           hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
           hkdf = HKDF.new([session_key].pack('H*'), hkdf_opts)
-          hkdf.rewind
           accessory_x = hkdf.next_hex_bytes(32)
 
           signing_key = accessory_info.signing_key

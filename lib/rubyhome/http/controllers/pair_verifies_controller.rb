@@ -48,7 +48,6 @@ module Rubyhome
         hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
 
         hkdf = HKDF.new(shared_secret, hkdf_opts)
-        hkdf.rewind
         session_key = hkdf.next_bytes(32)
         cache[:session_key] = session_key
 
@@ -76,7 +75,6 @@ module Rubyhome
         hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
 
         hkdf = HKDF.new(cache[:shared_secret], hkdf_opts)
-        hkdf.rewind
         cache[:controller_to_accessory_key] = hkdf.next_bytes(32)
 
         salt = "Control-Salt"
@@ -84,7 +82,6 @@ module Rubyhome
         hkdf_opts = { salt: salt, algorithm: 'SHA512', info: sinfo }
 
         hkdf = HKDF.new(cache[:shared_secret], hkdf_opts)
-        hkdf.rewind
         cache[:accessory_to_controller_key] = hkdf.next_bytes(32)
 
         TLV.pack({
