@@ -4,8 +4,7 @@ module Rubyhome
       def self.pad(input, pad_length: 12)
         [
           input
-            .unpack('H*')
-            .first
+            .unpack1('H*')
             .rjust(24, '0')
         ].pack('H*')
       end
