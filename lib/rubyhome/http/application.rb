@@ -20,6 +20,8 @@ module Rubyhome
         ::Rubyhome::Cache.instance
       end
 
+      use Rubyhome::HTTP::PairingsController
+
       ::Rack::Handler.register 'hap_server', Rubyhome::Rack::Handler::HAPServer
       set :server, :hap_server
 
@@ -53,10 +55,6 @@ module Rubyhome
         PairVerifiesController.new(request, settings).create
       end
 
-      post '/pairings' do
-        content_type 'application/pairing+tlv8'
-        PairingsController.new(request, settings).create
-      end
     end
   end
 end

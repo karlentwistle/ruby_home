@@ -2,13 +2,10 @@ require_relative '../../tlv'
 
 module Rubyhome
   module HTTP
-    class PairingsController
-      def initialize(request, settings)
-        @request = request
-        @settings = settings
-      end
+    class PairingsController < Sinatra::Base
+      post '/pairings' do
+        content_type 'application/pairing+tlv8'
 
-      def create
         case unpack_request['kTLVType_Method']
         when 4
           remove_pairing
@@ -17,9 +14,8 @@ module Rubyhome
 
       private
 
-      attr_reader :request, :settings
-
       def remove_pairing
+        response["connection"] = "close"
         TLV.pack({'kTLVType_State' => 2})
       end
 
@@ -33,12 +29,6 @@ module Rubyhome
       def accessory_info
         settings.accessory_info
       end
-
-      def cache
-        Cache.instance
-      end
     end
   end
 end
-
-
