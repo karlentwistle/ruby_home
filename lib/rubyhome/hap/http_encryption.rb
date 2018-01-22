@@ -30,11 +30,7 @@ module Rubyhome
       end
 
       def nonce
-        prefix = '00000000'
-        num = [@count].pack('V').unpack('H*').first
-        append = '00000000'
-
-        [prefix + num + append].pack('H*')
+        HexPad.pad([count].pack("Q<"))
       end
 
       def chacha20poly1305ietf
