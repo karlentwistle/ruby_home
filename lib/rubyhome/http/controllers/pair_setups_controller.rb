@@ -1,9 +1,9 @@
 require_relative '../../srp'
 require_relative '../../tlv'
+require_relative '../../hap/hex_pad'
 require 'hkdf'
 require 'openssl'
 require 'rbnacl/libsodium'
-
 
 module Rubyhome
   module HTTP
@@ -70,7 +70,8 @@ module Rubyhome
         key = hkdf.encrypt([session_key].pack('H*'))
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
-        nonce = ["0000000050532d4d73673035"].pack('H*')
+
+        nonce = HAP::HexPad.pad("PS-Msg05")
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
         unpacked_decrypted_data = TLV.unpack(decrypted_data)
 
@@ -108,7 +109,7 @@ module Rubyhome
             'kTLVType_Signature' => accessorysignature
           })
 
-          nonce = ["0000000050532d4d73673036"].pack('H*')
+          nonce = HAP::HexPad.pad("PS-Msg06")
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil).unpack('H*')[0]
 
           pairing_params = {

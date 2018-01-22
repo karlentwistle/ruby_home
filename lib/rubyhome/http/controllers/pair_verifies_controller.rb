@@ -1,5 +1,6 @@
 require_relative "../../tlv"
 require_relative "../../hap/hkdf_encryption"
+require_relative "../../hap/hex_pad"
 require "x25519"
 
 module Rubyhome
@@ -49,7 +50,7 @@ module Rubyhome
         cache[:session_key] = session_key
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(session_key)
-        nonce = ["0000000050562D4D73673032"].pack('H*')
+        nonce = HAP::HexPad.pad("PV-Msg02")
         encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil).unpack('H*')[0]
 
         TLV.pack({
@@ -63,7 +64,7 @@ module Rubyhome
         encrypted_data = unpack_request["kTLVType_EncryptedData"]
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(cache[:session_key])
-        nonce = ["0000000050562D4D73673033"].pack('H*')
+        nonce = HAP::HexPad.pad("PV-Msg03")
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
         unpacked_decrypted_data = TLV.unpack(decrypted_data)
 
