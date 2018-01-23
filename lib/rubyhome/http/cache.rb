@@ -4,16 +4,18 @@ module Rubyhome
   class Cache
     include Singleton
 
-    def store
-      @@store ||= {}
+    attr_reader :store
+    
+    def initialize
+      @store = {}
     end
 
     def [](key)
-      store[key]
+      instance.store[key]
     end
 
     def []=(key, value)
-      store[key] = value
+      instance.store[key] = value
     end
   end
 end
