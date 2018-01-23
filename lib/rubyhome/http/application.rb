@@ -21,14 +21,10 @@ module Rubyhome
       end
 
       use Rubyhome::HTTP::PairingsController
+      use Rubyhome::HTTP::AccessoriesController
 
       ::Rack::Handler.register 'hap_server', Rubyhome::Rack::Handler::HAPServer
       set :server, :hap_server
-
-      get '/accessories' do
-        content_type 'application/hap+json'
-        AccessoriesController.new(request, settings).index
-      end
 
       get '/characteristics' do
         puts request.inspect

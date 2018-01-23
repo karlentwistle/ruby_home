@@ -1,16 +1,12 @@
 require_relative '../../tlv'
-require "x25519"
 
 module Rubyhome
   module HTTP
-    class AccessoriesController
-      def initialize(request, settings)
-        @request = request
-        @settings = settings
-      end
-
-      def index
-        { "accessories" => [] }.to_json
+    class AccessoriesController < Sinatra::Base
+      get '/accessories' do
+        content_type 'application/hap+json'
+        status 401
+        JSON.generate({"status" => -70401})
       end
     end
   end
