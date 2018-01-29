@@ -21,6 +21,7 @@ module Rubyhome
             raise WEBrick::HTTPStatus::EOFError if timeout <= 0 || @status != :Running
             raise WEBrick::HTTPStatus::EOFError if sock.eof?
             req.parse(sock)
+            res.received_encrypted_request = req.received_encrypted_request?
             res.request_method = req.request_method
             res.request_uri = req.request_uri
             res.request_http_version = req.http_version
@@ -54,13 +55,8 @@ module Rubyhome
             end
           end
 
-          puts "@http_version < \"1.1\" #{@http_version < "1.1"}"
           break if @http_version < "1.1"
-
-          puts "req.keep_alive? #{req.keep_alive?}"
           break unless req.keep_alive?
-
-          puts "res.keep_alive? #{res.keep_alive?}"
           break unless res.keep_alive?
         end
       end

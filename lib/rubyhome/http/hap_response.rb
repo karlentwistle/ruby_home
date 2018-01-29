@@ -1,23 +1,30 @@
-require 'webrick/httpresponse'
-require_relative '../counter'
-require_relative '../hap/http_encryption'
+require "webrick/httpresponse"
+require_relative "../hap/http_encryption"
 
 module Rubyhome
   module HTTP
     class HAPResponse < WEBrick::HTTPResponse
+      def initialize(*args)
+        @_accessory_to_controller_count = 0
+
+        super
+      end
+
       def send_response(socket)
         if encryption_time?
           response = String.new
           super(response)
 
           encrypted_response = encrypter.encrypt(response).join
-          accessory_to_controller_count_increment(encrypter.count)
+          @_accessory_to_controller_count += encrypter.count
 
           _write_data(socket, encrypted_response)
         else
           super(socket)
         end
       end
+
+      attr_writer :received_encrypted_request
 
       private
 
@@ -27,32 +34,16 @@ module Rubyhome
 
       def encrypter_params
         {
-          count: accessory_to_controller_count
+          count: @_accessory_to_controller_count
         }
       end
 
       def encryption_time?
-        encryption_key && received_encrypted_request?
-      end
-
-      def received_encrypted_request?
-        !!cache[:controller_to_accessory_count]
+        encryption_key && !!@received_encrypted_request
       end
 
       def encryption_key
         cache[:accessory_to_controller_key]
-      end
-
-      def accessory_to_controller_count
-        accessory_to_controller_counter.count
-      end
-
-      def accessory_to_controller_counter
-        cache[:accessory_to_controller_count] ||= Rubyhome::Counter.new
-      end
-
-      def accessory_to_controller_count_increment(value)
-        accessory_to_controller_counter.increment(value)
       end
 
       def cache
