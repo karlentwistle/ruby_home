@@ -1,56 +1,35 @@
 require 'active_record'
 require 'sinatra/base'
-require_relative '../rack/handler/hap_server'
 require_relative 'cache'
-require_relative 'controllers/accessories_controller'
-require_relative 'controllers/pair_setups_controller'
-require_relative 'controllers/pair_verifies_controller'
-require_relative 'controllers/pairings_controller'
 require_relative 'models/pairing'
+require_relative '../rack/handler/hap_server'
+require_relative '../accessory_info'
 
 ActiveRecord::Base.establish_connection(
   adapter: "sqlite3",
   database: "rubyhome.sqlite3.db"
 )
 
+Rack::Handler.register 'hap_server', Rubyhome::Rack::Handler::HAPServer
+
 module Rubyhome
   module HTTP
+    class ApplicationController < Sinatra::Base
+      set :accessory_info, -> { Application.accessory_info }
+    end
+
     class Application < Sinatra::Base
-      configure do
-        ::Rubyhome::Cache.instance
-      end
+      Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
 
-      use Rubyhome::HTTP::PairingsController
-      use Rubyhome::HTTP::AccessoriesController
-
-      ::Rack::Handler.register 'hap_server', Rubyhome::Rack::Handler::HAPServer
       set :server, :hap_server
+      set :bind, '0.0.0.0'
+      set :quiet, true
+      set :accessory_info, AccessoryInfo.instance
 
-      get '/characteristics' do
-        puts request.inspect
-        'characteristics'
-      end
-
-      put '/characteristics' do
-        puts request.inspect
-        'characteristics'
-      end
-
-      post '/identify' do
-        puts request.inspect
-        'identify'
-      end
-
-      post '/pair-setup' do
-        content_type 'application/pairing+tlv8'
-        PairSetupsController.new(request, settings).create
-      end
-
-      post '/pair-verify' do
-        content_type 'application/pairing+tlv8'
-        PairVerifiesController.new(request, settings).create
-      end
-
+      use AccessoriesController
+      use PairSetupsController
+      use PairVerifiesController
+      use PairingsController
     end
   end
 end

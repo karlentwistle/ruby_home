@@ -2,7 +2,7 @@ require_relative '../../tlv'
 
 module Rubyhome
   module HTTP
-    class AccessoriesController < Sinatra::Base
+    class AccessoriesController < ApplicationController
       get '/accessories' do
         content_type 'application/hap+json'
         status 401

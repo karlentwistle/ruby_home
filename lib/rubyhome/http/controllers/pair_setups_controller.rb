@@ -7,13 +7,10 @@ require 'rbnacl/libsodium'
 
 module Rubyhome
   module HTTP
-    class PairSetupsController
-      def initialize(request, settings)
-        @request = request
-        @settings = settings
-      end
+    class PairSetupsController < ApplicationController
+      post '/pair-setup' do
+        content_type 'application/pairing+tlv8'
 
-      def create
         case unpack_request['kTLVType_State']
         when 1
           srp_start_response
@@ -25,8 +22,6 @@ module Rubyhome
       end
 
       private
-
-      attr_reader :request, :settings
 
       def srp_start_response
         username = 'Pair-Setup'

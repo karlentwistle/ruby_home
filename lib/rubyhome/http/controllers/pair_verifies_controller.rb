@@ -5,13 +5,10 @@ require "x25519"
 
 module Rubyhome
   module HTTP
-    class PairVerifiesController
-      def initialize(request, settings)
-        @request = request
-        @settings = settings
-      end
+    class PairVerifiesController < ApplicationController
+      post '/pair-verify' do
+        content_type 'application/pairing+tlv8'
 
-      def create
         case unpack_request['kTLVType_State']
         when 1
           verify_start_response
@@ -21,8 +18,6 @@ module Rubyhome
       end
 
       private
-
-      attr_reader :request, :settings
 
       def verify_start_response
         secret_key = X25519::Scalar.generate
