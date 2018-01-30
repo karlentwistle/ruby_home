@@ -25,10 +25,6 @@ module Rubyhome
           TLV.unpack(request.body.read)
         end
       end
-
-      def accessory_info
-        settings.accessory_info
-      end
     end
   end
 end
