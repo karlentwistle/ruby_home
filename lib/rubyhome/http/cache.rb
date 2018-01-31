@@ -1,4 +1,4 @@
-require "singleton"
+require 'singleton'
 
 module Rubyhome
   class Cache

@@ -27,7 +27,7 @@ module Rubyhome
       end
 
       def algorithm
-        "SHA512"
+        'SHA512'
       end
     end
   end

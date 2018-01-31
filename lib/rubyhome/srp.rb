@@ -1,5 +1,5 @@
-require "openssl"
-require "securerandom"
+require 'openssl'
+require 'securerandom'
 
 module Rubyhome
   module SRP
@@ -30,11 +30,11 @@ module Rubyhome
         nlen = 2 * ((('%x' % [n]).length * 4 + 7) >> 3)
         hashin = a.map {|s|
           next unless s
-          shex = s.class == String ? s : "%x" % s
+          shex = s.class == String ? s : '%x' % s
           if shex.length > nlen
-              raise "Bit width does not match - client uses different prime"
+              raise 'Bit width does not match - client uses different prime'
           end
-          "0" * (nlen - shex.length) + shex
+          '0' * (nlen - shex.length) + shex
         }.join('')
         sha1_hex(hashin).hex % n
       end
@@ -76,9 +76,9 @@ module Rubyhome
 
       # M = H(H(N) xor H(g), H(I), s, A, B, K)
       def calc_M(username, xsalt, xaa, xbb, xkk, n, g)
-        hn = sha1_hex("%x" % n).hex
+        hn = sha1_hex('%x' % n).hex
         hg = sha1_hex(g).hex
-        hxor = "%x" % (hn ^ hg)
+        hxor = '%x' % (hn ^ hg)
         hi = sha1_str(username)
 
         hashin = [hxor, hi, xsalt, xaa, xbb, xkk].join
@@ -135,7 +135,7 @@ module Rubyhome
         @salt ||= random_salt
         x = SRP.calc_x(username, password, @salt)
         v = SRP.calc_v(x, @N, @g.hex)
-        return {:username => username, :verifier => "%x" % v, :salt => @salt}
+        return {:username => username, :verifier => '%x' % v, :salt => @salt}
       end
 
       # Authentication phase 1 - create challenge.
@@ -145,7 +145,7 @@ module Rubyhome
         generate_B(xverifier)
         return {
           :challenge => {:B => @B, :salt => xsalt},
-          :proof     => {:B => @B, :b => "%x" % @b, :I => username, :s => xsalt, :v => xverifier}
+          :proof     => {:B => @B, :b => '%x' % @b, :I => username, :s => xsalt, :v => xverifier}
         }
       end
 
@@ -165,15 +165,15 @@ module Rubyhome
         return false if @u == 0
 
         # calculate session key
-        @S = "%x" % SRP.calc_server_S(@A.to_i(16), @b, v, @u, @N)
+        @S = '%x' % SRP.calc_server_S(@A.to_i(16), @b, v, @u, @N)
         @K = SRP.sha1_hex(@S)
 
         # calculate match
-        @M = "%x" % SRP.calc_M(username, xsalt, @A, @B, @K, @N, @g)
+        @M = '%x' % SRP.calc_M(username, xsalt, @A, @B, @K, @N, @g)
 
         if @M == client_M
           # authentication succeeded
-          @H_AMK = "%x" % SRP.calc_H_AMK(@A, @M, @K, @N, @g)
+          @H_AMK = '%x' % SRP.calc_H_AMK(@A, @M, @K, @N, @g)
           return @H_AMK
         end
         return false
@@ -188,7 +188,7 @@ module Rubyhome
       end
 
       def u
-        "%x" % @u
+        '%x' % @u
       end
 
       # generates challenge
@@ -196,7 +196,7 @@ module Rubyhome
       def generate_B xverifier
         v = xverifier.to_i(16)
         @b ||= random_bignum
-        @B = "%x" % SRP.calc_B(@b, k, v, @N, @g.hex)
+        @B = '%x' % SRP.calc_B(@b, k, v, @N, @g.hex)
       end
     end
   end

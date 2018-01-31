@@ -1,46 +1,46 @@
 require 'spec_helper'
 require_relative '../../../lib/rubyhome/tlv'
 
-RSpec.describe "POST /pair-setup" do
-  context "SRP Start Response" do
+RSpec.describe 'POST /pair-setup' do
+  context 'SRP Start Response' do
     before do
-      path = File.expand_path("../../../fixtures/srp_start_request", __FILE__)
+      path = File.expand_path('../../../fixtures/srp_start_request', __FILE__)
       data = File.read(path)
       post '/pair-setup', data, {'CONTENT_TYPE' => 'application/pairing+tlv8'}
     end
 
-    it "headers contains application/pairing+tlv8 header" do
+    it 'headers contains application/pairing+tlv8 header' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it "body contains kTLVType_State" do
+    it 'body contains kTLVType_State' do
       expect(unpacked_body).to include('kTLVType_State' => 2)
     end
 
-    it "body contains kTLVType_Salt" do
+    it 'body contains kTLVType_Salt' do
       expect(unpacked_body).to include('kTLVType_Salt' => a_kind_of(String))
     end
 
-    it "body contains kTLVType_Salt at least 31 in length" do
+    it 'body contains kTLVType_Salt at least 31 in length' do
       salt = unpacked_body['kTLVType_Salt']
       expect(salt.length).to be >= 31
     end
 
-    it "body contains kTLVType_PublicKey" do
+    it 'body contains kTLVType_PublicKey' do
       expect(unpacked_body).to include('kTLVType_PublicKey' => a_kind_of(String))
     end
 
-    it "body contains kTLVType_PublicKey at least 766 in length" do
+    it 'body contains kTLVType_PublicKey at least 766 in length' do
       public_key = unpacked_body['kTLVType_PublicKey']
       expect(public_key.length).to be >= 766
     end
 
-    it "stores proof in cache" do
+    it 'stores proof in cache' do
       salt = unpacked_body['kTLVType_Salt']
       public_key = unpacked_body['kTLVType_PublicKey']
       expect(Rubyhome::Cache.instance[:proof]).to include(
         B: public_key,
-        I: "Pair-Setup",
+        I: 'Pair-Setup',
         b: a_kind_of(String),
         s: salt,
         v: a_kind_of(String)
@@ -48,7 +48,7 @@ RSpec.describe "POST /pair-setup" do
     end
   end
 
-  context "SRP Verify Response" do
+  context 'SRP Verify Response' do
     let(:b_pub) do
       %w{
         3818FEE2 97FB0201 729E04C3 644A6C5D 5099F556 7F1791F7 92666C3C 70A3C1B3
@@ -96,24 +96,24 @@ RSpec.describe "POST /pair-setup" do
       Rubyhome::Cache.instance[:proof] = {
         B: b_pub,
         b: b,
-        I: "Pair-Setup",
+        I: 'Pair-Setup',
         s: salt,
         v: verifier
       }
-      path = File.expand_path("../../../fixtures/srp_verify_request", __FILE__)
+      path = File.expand_path('../../../fixtures/srp_verify_request', __FILE__)
       data = File.read(path)
-      post '/pair-setup', data, { "CONTENT_TYPE" => "application/pairing+tlv8" }
+      post '/pair-setup', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
     end
 
-    it "headers contains application/pairing+tlv8 header" do
+    it 'headers contains application/pairing+tlv8 header' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it "body contains kTLVType_State" do
+    it 'body contains kTLVType_State' do
       expect(unpacked_body).to include('kTLVType_State' => 4)
     end
 
-    it "body contains kTLVType_Proof" do
+    it 'body contains kTLVType_Proof' do
       public_key = unpacked_body['kTLVType_Proof']
       expected_proof = %w{
         986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
@@ -122,7 +122,7 @@ RSpec.describe "POST /pair-setup" do
       expect(public_key).to eql(expected_proof)
     end
 
-    it "stores session_key" do
+    it 'stores session_key' do
       expected_session_key = %w{
         2B5F1FA4 046B2E63 2A06F1D9 612B031F 6D0B9676 B602DD36 BFCFEA0F 85D8567E
         DDEBF2EF B5C24227 DF05D9F8 BECC3F32 518CEAAD BA5F689F 50252F6B E5D77EA6
@@ -130,7 +130,7 @@ RSpec.describe "POST /pair-setup" do
       expect(Rubyhome::Cache.instance[:session_key]).to eql(expected_session_key)
     end
 
-    it "destroy proof" do
+    it 'destroy proof' do
       expect(Rubyhome::Cache.instance[:proof]).to be_nil
     end
   end
@@ -145,20 +145,20 @@ RSpec.describe "POST /pair-setup" do
 
     before do
       Rubyhome::Cache.instance[:session_key] = session_key
-      path = File.expand_path("../../../fixtures/exchange_request", __FILE__)
+      path = File.expand_path('../../../fixtures/exchange_request', __FILE__)
       data = File.read(path)
-      post '/pair-setup', data, { "CONTENT_TYPE" => "application/pairing+tlv8" }
+      post '/pair-setup', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
     end
 
-    it "headers contains application/pairing+tlv8 header" do
+    it 'headers contains application/pairing+tlv8 header' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it "body contains kTLVType_State" do
+    it 'body contains kTLVType_State' do
       expect(unpacked_body).to include('kTLVType_State' => 6)
     end
 
-    it "body contains kTLVType_EncryptedData" do
+    it 'body contains kTLVType_EncryptedData' do
       encrypted_data = unpacked_body['kTLVType_EncryptedData']
       expected_encrypted_data = %w{
         51445260 6E942707 25D0A470 8708B97B C9A495FB A0900796 A2BCF06F 8388829B
@@ -170,9 +170,9 @@ RSpec.describe "POST /pair-setup" do
       expect(encrypted_data).to eql(expected_encrypted_data)
     end
 
-    it "creates pairing record" do
-      expected_identifier = "349CBC7D-01B9-4DC4-AD98-FB9029BB77F2"
-      expected_public_key = "62398c58854a0718b19a64445f5f63761472802dd15ddf19cc74bee253dde525"
+    it 'creates pairing record' do
+      expected_identifier = '349CBC7D-01B9-4DC4-AD98-FB9029BB77F2'
+      expected_public_key = '62398c58854a0718b19a64445f5f63761472802dd15ddf19cc74bee253dde525'
 
       query_params = {
         admin: true,

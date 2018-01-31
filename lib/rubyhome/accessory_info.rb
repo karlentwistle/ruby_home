@@ -1,6 +1,6 @@
-require "singleton"
-require "ed25519"
-require_relative "device_id"
+require 'singleton'
+require 'ed25519'
+require_relative 'device_id'
 
 module Rubyhome
   class AccessoryInfo

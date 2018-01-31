@@ -1,5 +1,5 @@
-require "webrick/httpresponse"
-require_relative "../hap/http_encryption"
+require 'webrick/httpresponse'
+require_relative '../hap/http_encryption'
 
 module Rubyhome
   module HTTP

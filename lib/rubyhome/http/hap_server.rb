@@ -1,7 +1,7 @@
-require "webrick/httpserver"
-require "webrick/httpstatus"
-require_relative "hap_request"
-require_relative "hap_response"
+require 'webrick/httpserver'
+require 'webrick/httpstatus'
+require_relative 'hap_request'
+require_relative 'hap_response'
 
 module Rubyhome
   module HTTP
@@ -30,7 +30,7 @@ module Rubyhome
             if callback = server[:RequestCallback]
               callback.call(req, res)
             elsif callback = server[:RequestHandler]
-              msg = ":RequestHandler is deprecated, please use :RequestCallback"
+              msg = ':RequestHandler is deprecated, please use :RequestCallback'
               @logger.warn(msg)
               callback.call(req, res)
             end
@@ -55,7 +55,7 @@ module Rubyhome
             end
           end
 
-          break if @http_version < "1.1"
+          break if @http_version < '1.1'
           break unless req.keep_alive?
           break unless res.keep_alive?
         end

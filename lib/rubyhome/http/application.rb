@@ -6,8 +6,8 @@ require_relative '../rack/handler/hap_server'
 require_relative '../accessory_info'
 
 ActiveRecord::Base.establish_connection(
-  adapter: "sqlite3",
-  database: "rubyhome.sqlite3.db"
+  adapter: 'sqlite3',
+  database: 'rubyhome.sqlite3.db'
 )
 
 Rack::Handler.register 'hap_server', Rubyhome::Rack::Handler::HAPServer

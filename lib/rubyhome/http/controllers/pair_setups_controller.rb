@@ -61,12 +61,12 @@ module Rubyhome
       def exchange_response
         encrypted_data = unpack_request['kTLVType_EncryptedData']
 
-        hkdf = HAP::HKDFEncryption.new(info: "Pair-Setup-Encrypt-Info", salt: "Pair-Setup-Encrypt-Salt")
+        hkdf = HAP::HKDFEncryption.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
         key = hkdf.encrypt([session_key].pack('H*'))
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
 
-        nonce = HAP::HexPad.pad("PS-Msg05")
+        nonce = HAP::HexPad.pad('PS-Msg05')
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
         unpacked_decrypted_data = TLV.unpack(decrypted_data)
 
@@ -74,7 +74,7 @@ module Rubyhome
         iosdevicesignature = unpacked_decrypted_data['kTLVType_Signature']
         iosdeviceltpk = unpacked_decrypted_data['kTLVType_PublicKey']
 
-        hkdf = HAP::HKDFEncryption.new(info: "Pair-Setup-Controller-Sign-Info", salt: "Pair-Setup-Controller-Sign-Salt")
+        hkdf = HAP::HKDFEncryption.new(info: 'Pair-Setup-Controller-Sign-Info', salt: 'Pair-Setup-Controller-Sign-Salt')
         iosdevicex = hkdf.encrypt([session_key].pack('H*'))
 
         iosdeviceinfo = [
@@ -85,7 +85,7 @@ module Rubyhome
         verify_key = RbNaCl::Signatures::Ed25519::VerifyKey.new([iosdeviceltpk].pack('H*'))
 
         if verify_key.verify([iosdevicesignature].pack('H*'), [iosdeviceinfo].pack('H*'))
-          hkdf = HAP::HKDFEncryption.new(info: "Pair-Setup-Accessory-Sign-Info", salt: "Pair-Setup-Accessory-Sign-Salt")
+          hkdf = HAP::HKDFEncryption.new(info: 'Pair-Setup-Accessory-Sign-Info', salt: 'Pair-Setup-Accessory-Sign-Salt')
           accessory_x = hkdf.encrypt([session_key].pack('H*'))
 
           signing_key = accessory_info.signing_key
@@ -104,7 +104,7 @@ module Rubyhome
             'kTLVType_Signature' => accessorysignature
           })
 
-          nonce = HAP::HexPad.pad("PS-Msg06")
+          nonce = HAP::HexPad.pad('PS-Msg06')
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil).unpack('H*')[0]
 
           pairing_params = {

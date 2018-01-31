@@ -1,6 +1,6 @@
-require "dnssd"
-require_relative "../accessory_info"
-require_relative "text_record"
+require 'dnssd'
+require_relative '../accessory_info'
+require_relative 'text_record'
 
 module Rubyhome
   module DNS
@@ -26,11 +26,11 @@ module Rubyhome
       end
 
       def name
-        "RubyHome"
+        'RubyHome'
       end
 
       def type
-        "_hap._tcp"
+        '_hap._tcp'
       end
 
       attr_reader :port

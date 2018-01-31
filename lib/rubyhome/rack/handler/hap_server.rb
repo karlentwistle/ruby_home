@@ -12,7 +12,7 @@ module Rubyhome
           options[:BindAddress] = options.delete(:Host) || default_host
           options[:Port] ||= 8080
           @server = HTTP::HAPServer.new(options)
-          @server.mount "/", Handler::HAPServer, app
+          @server.mount '/', Handler::HAPServer, app
           yield @server  if block_given?
           @server.start
         end

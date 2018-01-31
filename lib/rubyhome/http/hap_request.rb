@@ -1,5 +1,5 @@
-require "webrick/httprequest"
-require_relative "../hap/http_decryption"
+require 'webrick/httprequest'
+require_relative '../hap/http_decryption'
 
 module Rubyhome
   module HTTP

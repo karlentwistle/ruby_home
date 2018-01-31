@@ -2,7 +2,7 @@ module Rubyhome
   class DeviceID
     class << self
 
-      DELIMITER = ":"
+      DELIMITER = ':'
 
       # Device ID of the accessory must be a unique random number generated at every
       # factory reset and must persist across reboots

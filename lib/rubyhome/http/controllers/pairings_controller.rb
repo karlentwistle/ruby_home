@@ -18,16 +18,16 @@ module Rubyhome
 
       def add_pairing
         pairing_params = {
-          admin: !!unpack_request["kTLVType_Permissions"],
-          identifier: unpack_request["kTLVType_Identifier"],
-          public_key: unpack_request["kTLVType_PublicKey"]
+          admin: !!unpack_request['kTLVType_Permissions'],
+          identifier: unpack_request['kTLVType_Identifier'],
+          public_key: unpack_request['kTLVType_PublicKey']
         }
         Pairing.create!(pairing_params)
         TLV.pack({'kTLVType_State' => 2})
       end
 
       def remove_pairing
-        response["connection"] = "close"
+        response['connection'] = 'close'
         TLV.pack({'kTLVType_State' => 2})
       end
     end

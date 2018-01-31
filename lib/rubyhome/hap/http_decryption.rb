@@ -47,7 +47,7 @@ module Rubyhome
       end
 
       def nonce
-        HexPad.pad([count].pack("Q<"))
+        HexPad.pad([count].pack('Q<'))
       end
 
       def chacha20poly1305ietf
