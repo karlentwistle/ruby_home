@@ -14,25 +14,6 @@ Rack::Handler.register 'hap_server', Rubyhome::Rack::Handler::HAPServer
 
 module Rubyhome
   module HTTP
-    class ApplicationController < Sinatra::Base
-      set :accessory_info, -> { Application.accessory_info }
-
-      def unpack_request
-        @_unpack_request ||= begin
-          request.body.rewind
-          TLV.unpack(request.body.read)
-        end
-      end
-
-      def accessory_info
-        settings.accessory_info
-      end
-
-      def cache
-        Cache.instance
-      end
-    end
-
     class Application < Sinatra::Base
       Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
 
