@@ -121,13 +121,6 @@ module Rubyhome
         end
       end
 
-      def unpack_request
-        @_unpack_request ||= begin
-          request.body.rewind
-          TLV.unpack(request.body.read)
-        end
-      end
-
       def srp_verifier
         @_verifier ||= Rubyhome::SRP::Verifier.new
       end
@@ -150,10 +143,6 @@ module Rubyhome
 
       def session_key
         Cache.instance[:session_key]
-      end
-
-      def accessory_info
-        settings.accessory_info
       end
     end
   end
