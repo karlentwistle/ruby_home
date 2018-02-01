@@ -13,6 +13,7 @@ module RSpecMixin
   def app
     app = Rubyhome::HTTP::Application
     app.set :accessory_info, FakeAccessoryInfo.instance
+    app.set :request_id, 1
     app
   end
 end

@@ -4,10 +4,11 @@ require_relative '../hap/http_decryption'
 module Rubyhome
   module HTTP
     class HAPRequest < WEBrick::HTTPRequest
-      def initialize(*args)
+      def initialize(*args, request_id: nil)
         @_controller_to_accessory_count = 0
+        @_request_id = request_id
 
-        super
+        super(*args)
       end
 
       def parse(socket=nil)
@@ -48,7 +49,7 @@ module Rubyhome
       end
 
       def cache
-        Cache.instance
+        GlobalCache.instance[@_request_id] ||= Cache.new
       end
     end
   end

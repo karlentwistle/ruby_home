@@ -21,6 +21,9 @@ module Rubyhome
       set :bind, '0.0.0.0'
       set :quiet, true
       set :accessory_info, AccessoryInfo.instance
+      set :server_settings, AcceptCallback: -> (sock) do
+        self.set :request_id, sock.object_id
+      end
 
       use AccessoriesController
       use PairSetupsController

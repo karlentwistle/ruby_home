@@ -38,7 +38,7 @@ RSpec.describe 'POST /pair-setup' do
     it 'stores proof in cache' do
       salt = unpacked_body['kTLVType_Salt']
       public_key = unpacked_body['kTLVType_PublicKey']
-      expect(Rubyhome::Cache.instance[:proof]).to include(
+      expect(Rubyhome::GlobalCache.instance[1][:proof]).to include(
         B: public_key,
         I: 'Pair-Setup',
         b: a_kind_of(String),
@@ -93,7 +93,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     before do
-      Rubyhome::Cache.instance[:proof] = {
+      Rubyhome::GlobalCache.instance[1][:proof] = {
         B: b_pub,
         b: b,
         I: 'Pair-Setup',
@@ -127,11 +127,11 @@ RSpec.describe 'POST /pair-setup' do
         2B5F1FA4 046B2E63 2A06F1D9 612B031F 6D0B9676 B602DD36 BFCFEA0F 85D8567E
         DDEBF2EF B5C24227 DF05D9F8 BECC3F32 518CEAAD BA5F689F 50252F6B E5D77EA6
       }.join.downcase
-      expect(Rubyhome::Cache.instance[:session_key]).to eql(expected_session_key)
+      expect(Rubyhome::GlobalCache.instance[1][:session_key]).to eql(expected_session_key)
     end
 
     it 'destroy proof' do
-      expect(Rubyhome::Cache.instance[:proof]).to be_nil
+      expect(Rubyhome::GlobalCache.instance[1][:proof]).to be_nil
     end
   end
 
@@ -144,7 +144,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     before do
-      Rubyhome::Cache.instance[:session_key] = session_key
+      Rubyhome::GlobalCache.instance[1][:session_key] = session_key
       path = File.expand_path('../../../fixtures/exchange_request', __FILE__)
       data = File.read(path)
       post '/pair-setup', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }

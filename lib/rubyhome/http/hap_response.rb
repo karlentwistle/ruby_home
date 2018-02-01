@@ -4,10 +4,11 @@ require_relative '../hap/http_encryption'
 module Rubyhome
   module HTTP
     class HAPResponse < WEBrick::HTTPResponse
-      def initialize(*args)
+      def initialize(*args, request_id: nil)
         @_accessory_to_controller_count = 0
+        @_request_id = request_id
 
-        super
+        super(*args)
       end
 
       def send_response(socket)
@@ -47,7 +48,7 @@ module Rubyhome
       end
 
       def cache
-        Cache.instance
+        GlobalCache.instance[@_request_id] ||= Cache.new
       end
     end
   end

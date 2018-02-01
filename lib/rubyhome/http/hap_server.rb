@@ -8,8 +8,8 @@ module Rubyhome
     class HAPServer < WEBrick::HTTPServer
       def run(sock)
         while true
-          res = Rubyhome::HTTP::HAPResponse.new(@config)
-          req = Rubyhome::HTTP::HAPRequest.new(@config)
+          res = Rubyhome::HTTP::HAPResponse.new(@config, request_id: sock.object_id)
+          req = Rubyhome::HTTP::HAPRequest.new(@config, request_id: sock.object_id)
           server = self
           begin
             timeout = @config[:RequestTimeout]

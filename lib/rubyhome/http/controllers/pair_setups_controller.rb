@@ -126,23 +126,23 @@ module Rubyhome
       end
 
       def store_proof(proof)
-        Cache.instance[:proof] = proof
+        cache[:proof] = proof
       end
 
       def retrieve_proof
-        Cache.instance[:proof]
+        cache[:proof]
       end
 
       def forget_proof!
-        Cache.instance[:proof] = nil
+        cache[:proof] = nil
       end
 
       def store_session_key(key)
-        Cache.instance[:session_key] = key
+        cache[:session_key] = key
       end
 
       def session_key
-        Cache.instance[:session_key]
+        cache[:session_key]
       end
     end
   end

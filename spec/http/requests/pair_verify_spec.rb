@@ -44,7 +44,7 @@ RSpec.describe 'POST /pair-verify' do
 
   context 'Verify Finish Response' do
     before do
-      Rubyhome::Cache.instance[:session_key] = ['d741e4ecbf9868e86aab782ddc03ed75767bfc30634a15dabcc895bace33e57e'].pack('H*')
+      Rubyhome::GlobalCache.instance[1][:session_key] = ['d741e4ecbf9868e86aab782ddc03ed75767bfc30634a15dabcc895bace33e57e'].pack('H*')
 
       path = File.expand_path('../../../fixtures/verify_finish_response', __FILE__)
       data = File.read(path)

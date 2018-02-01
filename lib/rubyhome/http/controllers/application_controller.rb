@@ -3,8 +3,6 @@ require_relative '../../tlv'
 module Rubyhome
   module HTTP
     class ApplicationController < Sinatra::Base
-      set :accessory_info, -> { Application.accessory_info }
-
       def unpack_request
         @_unpack_request ||= begin
           request.body.rewind
@@ -13,11 +11,15 @@ module Rubyhome
       end
 
       def accessory_info
-        settings.accessory_info
+        Application.accessory_info
+      end
+
+      def request_id
+        Application.request_id
       end
 
       def cache
-        Cache.instance
+        GlobalCache.instance[request_id] ||= Cache.new
       end
     end
   end
