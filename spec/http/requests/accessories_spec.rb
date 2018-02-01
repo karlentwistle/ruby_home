@@ -15,7 +15,7 @@ RSpec.describe 'POST /pair-verify' do
     end
 
     it 'response body includes status' do
-      expect(last_response.body).to eql('{\'status\':-70401}')
+      expect(last_response.body).to eql('{"status":-70401}')
     end
   end
 end
