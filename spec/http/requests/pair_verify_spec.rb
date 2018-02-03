@@ -44,7 +44,7 @@ RSpec.describe 'POST /pair-verify' do
 
   context 'Verify Finish Response' do
     before do
-      Rubyhome::GlobalCache.instance[1][:session_key] = ['d741e4ecbf9868e86aab782ddc03ed75767bfc30634a15dabcc895bace33e57e'].pack('H*')
+      set_cache(:session_key, ['d741e4ecbf9868e86aab782ddc03ed75767bfc30634a15dabcc895bace33e57e'].pack('H*'))
 
       path = File.expand_path('../../../fixtures/verify_finish_response', __FILE__)
       data = File.read(path)
@@ -58,9 +58,5 @@ RSpec.describe 'POST /pair-verify' do
     it 'body contains kTLVType_State' do
       expect(unpacked_body).to include('kTLVType_State' => 4)
     end
-  end
-
-  def unpacked_body
-    @_unpacked_body ||= Rubyhome::TLV.unpack(last_response.body)
   end
 end

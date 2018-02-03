@@ -33,8 +33,4 @@ RSpec.describe 'POST /pairings' do
       expect(unpacked_body['kTLVType_State']).to eql(2)
     end
   end
-
-  def unpacked_body
-    @_unpacked_body ||= Rubyhome::TLV.unpack(last_response.body)
-  end
 end
