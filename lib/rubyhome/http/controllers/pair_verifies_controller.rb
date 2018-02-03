@@ -63,15 +63,17 @@ module Rubyhome
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
         unpacked_decrypted_data = TLV.unpack(decrypted_data)
 
-        hkdf = HAP::HKDFEncryption.new(info: 'Control-Write-Encryption-Key', salt: 'Control-Salt')
-        cache[:controller_to_accessory_key] = hkdf.encrypt(cache[:shared_secret])
+        if Pairing.exists?(identifier: unpacked_decrypted_data['kTLVType_Identifier'])
+          hkdf = HAP::HKDFEncryption.new(info: 'Control-Write-Encryption-Key', salt: 'Control-Salt')
+          cache[:controller_to_accessory_key] = hkdf.encrypt(cache[:shared_secret])
 
-        hkdf = HAP::HKDFEncryption.new(info: 'Control-Read-Encryption-Key', salt: 'Control-Salt')
-        cache[:accessory_to_controller_key] = hkdf.encrypt(cache[:shared_secret])
+          hkdf = HAP::HKDFEncryption.new(info: 'Control-Read-Encryption-Key', salt: 'Control-Salt')
+          cache[:accessory_to_controller_key] = hkdf.encrypt(cache[:shared_secret])
 
-        TLV.pack({
-          'kTLVType_State' => 4,
-        })
+          TLV.pack({'kTLVType_State' => 4})
+        else
+          TLV.pack({'kTLVType_State' => 4, 'kTLVType_Error' => 2})
+        end
       end
     end
   end

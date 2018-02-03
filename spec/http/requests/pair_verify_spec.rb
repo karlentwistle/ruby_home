@@ -43,20 +43,44 @@ RSpec.describe 'POST /pair-verify' do
   end
 
   context 'Verify Finish Response' do
+    let(:path) { File.expand_path('../../../fixtures/verify_finish_response', __FILE__) }
+    let(:data) { File.read(path) }
+
     before do
       set_cache(:session_key, ['d741e4ecbf9868e86aab782ddc03ed75767bfc30634a15dabcc895bace33e57e'].pack('H*'))
-
-      path = File.expand_path('../../../fixtures/verify_finish_response', __FILE__)
-      data = File.read(path)
-      post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+      set_cache(:shared_secret, ['4bdd6daf9eb979012962fd0ab33a58c528784cf15ac724d213e494b1ca744e02'].pack('H*'))
     end
 
-    it 'headers contains application/pairing+tlv8 header' do
-      expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+    context 'iOSDevicePairingID exists in list of paired controllers.' do
+      before do
+        Pairing.create!(
+          admin: true,
+          identifier: '349CBC7D-01B9-4DC4-AD98-FB9029BB77F2',
+          public_key: '62398c58854a0718b19a64445f5f63761472802dd15ddf19cc74bee253dde525'
+        )
+      end
+
+      it 'headers contains application/pairing+tlv8 header' do
+        post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+        expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+      end
+
+      it 'body contains only kTLVType_State: 4' do
+        post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+        expect(unpacked_body).to eql('kTLVType_State' => 4)
+      end
     end
 
-    it 'body contains kTLVType_State' do
-      expect(unpacked_body).to include('kTLVType_State' => 4)
+    context 'iOSDevicePairingID does not exists in list of paired controllers.' do
+      it 'headers contains application/pairing+tlv8 header' do
+        post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+        expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+      end
+
+      it 'body contains only kTLVType_State: 4 and kTLVType_Error: 2' do
+        post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+        expect(unpacked_body).to eql('kTLVType_State' => 4, 'kTLVType_Error' => 2)
+      end
     end
   end
 end
