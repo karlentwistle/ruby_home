@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'POST /pair-verify' do
+RSpec.describe 'GET /accessories' do
   context 'Request denied due to insufficient privileges' do
     before do
       get '/accessories', nil, {'CONTENT_TYPE' => 'application/hap+json'}
