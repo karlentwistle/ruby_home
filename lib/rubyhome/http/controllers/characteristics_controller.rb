@@ -6,7 +6,8 @@ module Rubyhome
       get '/characteristics' do
         content_type 'application/hap+json'
 
-        unless cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
+        if cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
+        else
           status 401
           JSON.generate({"status" => -70401})
         end
@@ -15,7 +16,9 @@ module Rubyhome
       put '/characteristics' do
         content_type 'application/hap+json'
 
-        unless cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
+        if cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
+          status 204
+        else
           status 401
           JSON.generate({"status" => -70401})
         end
