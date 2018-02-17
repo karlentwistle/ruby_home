@@ -4,9 +4,9 @@ require_relative '../hap/http_decryption'
 module Rubyhome
   module HTTP
     class HAPRequest < WEBrick::HTTPRequest
-      def initialize(*args, request_id: nil)
-        @_controller_to_accessory_count = 0
+      def initialize(*args, request_id: )
         @_request_id = request_id
+        cache[:controller_to_accessory_count] ||= 0
 
         super(*args)
       end
@@ -16,7 +16,7 @@ module Rubyhome
           request_line = socket.read_nonblock(@buffer_size)
 
           decrypted_request = decrypter.decrypt(request_line).join
-          @_controller_to_accessory_count += decrypter.count
+          cache[:controller_to_accessory_count] += decrypter.count
 
           super(StringIO.new(decrypted_request))
         else
@@ -25,7 +25,7 @@ module Rubyhome
       end
 
       def received_encrypted_request?
-        @_controller_to_accessory_count >= 1
+        cache[:controller_to_accessory_count] >= 1
       end
 
       private
@@ -36,7 +36,7 @@ module Rubyhome
 
       def decrypter_params
         {
-          count: @_controller_to_accessory_count
+          count: cache[:controller_to_accessory_count]
         }
       end
 

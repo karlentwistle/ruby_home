@@ -4,9 +4,9 @@ require_relative '../hap/http_encryption'
 module Rubyhome
   module HTTP
     class HAPResponse < WEBrick::HTTPResponse
-      def initialize(*args, request_id: nil)
-        @_accessory_to_controller_count = 0
+      def initialize(*args, request_id: )
         @_request_id = request_id
+        cache[:accessory_to_controller_count] ||= 0
 
         super(*args)
       end
@@ -17,7 +17,7 @@ module Rubyhome
           super(response)
 
           encrypted_response = encrypter.encrypt(response).join
-          @_accessory_to_controller_count += encrypter.count
+          cache[:accessory_to_controller_count] += encrypter.count
 
           _write_data(socket, encrypted_response)
         else
@@ -35,7 +35,7 @@ module Rubyhome
 
       def encrypter_params
         {
-          count: @_accessory_to_controller_count
+          count: cache[:accessory_to_controller_count]
         }
       end
 
