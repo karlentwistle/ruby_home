@@ -26,6 +26,7 @@ module Rubyhome
       end
 
       use AccessoriesController
+      use CharacteristicsController
       use PairSetupsController
       use PairVerifiesController
       use PairingsController
