@@ -17,10 +17,11 @@ module Rubyhome
     class Application < Sinatra::Base
       Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
 
-      set :server, :hap_server
-      set :bind, '0.0.0.0'
-      set :quiet, true
       set :accessory_info, AccessoryInfo.instance
+      set :bind, '0.0.0.0'
+      set :protection, true
+      set :quiet, true
+      set :server, :hap_server
       set :server_settings, AcceptCallback: -> (sock) do
         self.set :request_id, sock.object_id
       end
