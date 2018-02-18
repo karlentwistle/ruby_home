@@ -16,7 +16,7 @@ module Rubyhome
           request_line = socket.read_nonblock(@buffer_size)
 
           decrypted_request = decrypter.decrypt(request_line).join
-          cache[:controller_to_accessory_count] += decrypter.count
+          cache[:controller_to_accessory_count] = decrypter.count
 
           super(StringIO.new(decrypted_request))
         else

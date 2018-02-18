@@ -17,7 +17,7 @@ module Rubyhome
           super(response)
 
           encrypted_response = encrypter.encrypt(response).join
-          cache[:accessory_to_controller_count] += encrypter.count
+          cache[:accessory_to_controller_count] = encrypter.count
 
           _write_data(socket, encrypted_response)
         else
