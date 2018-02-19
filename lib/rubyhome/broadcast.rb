@@ -25,10 +25,7 @@ module Rubyhome
     end
 
     def self.http_server
-      @_http_server ||= begin
-        server = Rubyhome::HTTP::Application
-        server
-      end
+      @_http_server ||= Rubyhome::HTTP::Application
     end
   end
 end
