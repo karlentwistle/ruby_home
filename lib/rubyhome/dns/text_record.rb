@@ -1,9 +1,7 @@
 require 'dnssd/text_record'
 
-
 module Rubyhome
   class TextRecord < DNSSD::TextRecord
-
     def initialize(accessory_info:)
       @accessory_info = accessory_info
       super(to_hash)
@@ -98,6 +96,5 @@ module Rubyhome
     def current_state_number
       1
     end
-
   end
 end
