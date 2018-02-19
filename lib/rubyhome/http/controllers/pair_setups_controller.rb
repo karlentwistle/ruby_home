@@ -79,7 +79,7 @@ module Rubyhome
 
         iosdeviceinfo = [
           iosdevicex.unpack('H*'),
-          TLV::UTF8_PACKER.call(iosdevicepairingid),
+          TLV::Utf8.pack(iosdevicepairingid),
           iosdeviceltpk
         ].join
         verify_key = RbNaCl::Signatures::Ed25519::VerifyKey.new([iosdeviceltpk].pack('H*'))
@@ -92,7 +92,7 @@ module Rubyhome
           accessoryltpk = signing_key.verify_key.to_bytes.unpack('H*')[0]
           accessoryinfo = [
             accessory_x.unpack('H*'),
-            TLV::UTF8_PACKER.call(accessory_info.device_id),
+            TLV::Utf8.pack(accessory_info.device_id),
             accessoryltpk
           ].join
 

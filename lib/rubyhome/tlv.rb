@@ -1,92 +1,82 @@
+Dir[File.dirname(__FILE__) + '/tlv/*.rb'].each {|file| require file }
+
 module Rubyhome
   module TLV
-    INTEGER_UNPACKER = ->(value) { [value].pack('H*').unpack('C*').first }
-    INTEGER_PACKER = ->(value) { [value].pack('C*').unpack('H*').first }
+    extend self
 
-    UTF8_UNPACKER = ->(value) { [value].pack('H*').force_encoding('UTF-8').encode('utf-8') }
-    UTF8_PACKER = ->(value) { value.bytes.map { |b| b.to_s(16) }.join }
-
-    BYTES_UNPACKER = ->(value) { value }
-    BYTES_PACKER = ->(value) do
-      value.insert(0, '0') if value.length.odd?
-      value
-    end
-
-    TLV = Struct.new(:type, :name, :unpack, :pack)
+    TLV = Struct.new(:type, :name, :handler)
     TLVs = [
-      TLV.new('00', 'kTLVType_Method', INTEGER_UNPACKER, INTEGER_PACKER),
-      TLV.new('01', 'kTLVType_Identifier', UTF8_UNPACKER, UTF8_PACKER),
-      TLV.new('02', 'kTLVType_Salt', BYTES_UNPACKER, BYTES_PACKER),
-      TLV.new('03', 'kTLVType_PublicKey', BYTES_UNPACKER, BYTES_PACKER),
-      TLV.new('04', 'kTLVType_Proof', BYTES_UNPACKER, BYTES_PACKER),
-      TLV.new('05', 'kTLVType_EncryptedData', BYTES_UNPACKER, BYTES_PACKER),
-      TLV.new('06', 'kTLVType_State', INTEGER_UNPACKER, INTEGER_PACKER),
-      TLV.new('07', 'kTLVType_Error', INTEGER_UNPACKER, INTEGER_PACKER),
-      TLV.new('08', 'kTLVType_RetryDelay', INTEGER_UNPACKER, INTEGER_PACKER),
-      TLV.new('09', 'kTLVType_Certificate', BYTES_UNPACKER, BYTES_PACKER),
-      TLV.new('0a', 'kTLVType_Signature', BYTES_UNPACKER, BYTES_PACKER),
-      TLV.new('0b', 'kTLVType_Permissions', INTEGER_UNPACKER, INTEGER_PACKER),
-      TLV.new('0c', 'kTLVType_FragmentData', BYTES_UNPACKER, BYTES_PACKER),
-      TLV.new('0d', 'kTLVType_FragmentLast', BYTES_UNPACKER, BYTES_PACKER),
+      TLV.new('00', 'kTLVType_Method', Int),
+      TLV.new('01', 'kTLVType_Identifier', Utf8),
+      TLV.new('02', 'kTLVType_Salt', Bytes),
+      TLV.new('03', 'kTLVType_PublicKey', Bytes),
+      TLV.new('04', 'kTLVType_Proof', Bytes),
+      TLV.new('05', 'kTLVType_EncryptedData', Bytes),
+      TLV.new('06', 'kTLVType_State', Int),
+      TLV.new('07', 'kTLVType_Error', Int),
+      TLV.new('08', 'kTLVType_RetryDelay', Int),
+      TLV.new('09', 'kTLVType_Certificate', Bytes),
+      TLV.new('0a', 'kTLVType_Signature', Bytes),
+      TLV.new('0b', 'kTLVType_Permissions', Int),
+      TLV.new('0c', 'kTLVType_FragmentData', Bytes),
+      TLV.new('0d', 'kTLVType_FragmentLast', Bytes),
     ].freeze
 
-    class << self
-      def pack(hash)
-        data = ''
+    def pack(hash)
+      data = ''
 
-        pack_objects(hash).each do |type, value|
-          value.chars.each_slice(510).map(&:join).each do |value_slice|
-            length = INTEGER_PACKER.call([value_slice].pack('H*').length)
+      pack_objects(hash).each do |type, value|
+        value.chars.each_slice(510).map(&:join).each do |value_slice|
+          length = Int.pack([value_slice].pack('H*').length)
 
-            data << type
-            data << length
-            data << value_slice
-          end
-        end
-
-        [data].pack('H*')
-      end
-
-      def pack_objects(objects)
-        objects.each_with_object({}) do |(unpacked_key, unpacked_value), memo|
-          tlv_value = TLVs.find { |tlv| tlv.name == unpacked_key }
-          packed_key = tlv_value.type
-          packed_value = tlv_value.pack.call(unpacked_value)
-          memo[packed_key] = packed_value
+          data << type
+          data << length
+          data << value_slice
         end
       end
 
-      def unpack(input)
-        data = input.unpack('H*')[0]
-        objects = {}
-        scanner_index = 0
+      [data].pack('H*')
+    end
 
-        while scanner_index < data.length do
-          type = data[scanner_index, 2]
-          scanner_index += 2
+    def pack_objects(objects)
+      objects.each_with_object({}) do |(unpacked_key, unpacked_value), memo|
+        tlv_value = TLVs.find { |tlv| tlv.name == unpacked_key }
+        packed_key = tlv_value.type
+        packed_value = tlv_value.handler.pack(unpacked_value)
+        memo[packed_key] = packed_value
+      end
+    end
 
-          byte_length = INTEGER_UNPACKER.call(data[scanner_index, 2]) * 2
-          scanner_index += 2
+    def unpack(input)
+      data = input.unpack('H*')[0]
+      objects = {}
+      scanner_index = 0
 
-          newData = data[scanner_index, byte_length]
-          if objects[type]
-            objects[type] << newData
-          else
-            objects[type] = newData
-          end
-          scanner_index += byte_length
+      while scanner_index < data.length do
+        type = data[scanner_index, 2]
+        scanner_index += 2
+
+        byte_length = Int.unpack(data[scanner_index, 2]) * 2
+        scanner_index += 2
+
+        newData = data[scanner_index, byte_length]
+        if objects[type]
+          objects[type] << newData
+        else
+          objects[type] = newData
         end
-
-        unpack_objects(objects)
+        scanner_index += byte_length
       end
 
-      def unpack_objects(objects)
-        objects.each_with_object({}) do |(packed_key, packed_value), memo|
-          tlv_value = TLVs.find { |tlv| tlv.type == packed_key }
-          unpacked_key = tlv_value.name
-          unpacked_value = tlv_value.unpack.call(packed_value)
-          memo[unpacked_key] = unpacked_value
-        end
+      unpack_objects(objects)
+    end
+
+    def unpack_objects(objects)
+      objects.each_with_object({}) do |(packed_key, packed_value), memo|
+        tlv_value = TLVs.find { |tlv| tlv.type == packed_key }
+        unpacked_key = tlv_value.name
+        unpacked_value = tlv_value.handler.unpack(packed_value)
+        memo[unpacked_key] = unpacked_value
       end
     end
   end

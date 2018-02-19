@@ -28,7 +28,7 @@ module Rubyhome
 
         accessoryinfo = [
           public_key,
-          TLV::UTF8_PACKER.call(accessory_info.device_id),
+          TLV::Utf8.pack(accessory_info.device_id),
           client_public_key.to_bytes.unpack('H*')[0]
         ].join
 
