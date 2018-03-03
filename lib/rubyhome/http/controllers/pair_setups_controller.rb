@@ -1,8 +1,8 @@
 require 'hkdf'
 require 'openssl'
 require 'rbnacl/libsodium'
+require 'rubyhome-srp'
 require_relative '../../hap/hex_pad'
-require_relative '../../srp'
 require_relative '../../tlv'
 require_relative 'application_controller'
 

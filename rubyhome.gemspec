@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'hkdf', '~> 0.3.0'
   spec.add_dependency 'rbnacl', '~> 5.0'
   spec.add_dependency 'rbnacl-libsodium', '~> 1.0', '>= 1.0.16'
+  spec.add_dependency 'rubyhome-srp', '~> 1.0'
   spec.add_dependency 'sinatra', '~> 2.0'
   spec.add_dependency 'sqlite3', '~> 1.3', '>= 1.3.13'
   spec.add_dependency 'x25519', '~> 1.0', '>= 1.0.5'
