@@ -1,9 +1,10 @@
-require_relative '../../srp'
-require_relative '../../tlv'
-require_relative '../../hap/hex_pad'
 require 'hkdf'
 require 'openssl'
 require 'rbnacl/libsodium'
+require_relative '../../hap/hex_pad'
+require_relative '../../srp'
+require_relative '../../tlv'
+require_relative 'application_controller'
 
 module Rubyhome
   module HTTP

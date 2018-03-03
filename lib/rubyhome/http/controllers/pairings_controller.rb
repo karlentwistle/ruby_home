@@ -1,4 +1,4 @@
-require_relative '../../tlv'
+require_relative 'application_controller'
 
 module Rubyhome
   module HTTP

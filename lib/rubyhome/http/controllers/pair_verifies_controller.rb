@@ -1,7 +1,8 @@
-require_relative '../../tlv'
-require_relative '../../hap/hkdf_encryption'
-require_relative '../../hap/hex_pad'
 require 'x25519'
+require_relative '../../hap/hex_pad'
+require_relative '../../hap/hkdf_encryption'
+require_relative '../../tlv'
+require_relative 'application_controller'
 
 module Rubyhome
   module HTTP
