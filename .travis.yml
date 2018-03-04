@@ -10,10 +10,9 @@ before_install:
   - sudo apt-get install -y libavahi-compat-libdnssd-dev
 
 rvm:
-  - 2.2
-  - 2.3
   - 2.4.3
   - 2.5.0
+  - ruby-head
 
 matrix:
   fast_finish: true
