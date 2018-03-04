@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180304115508) do
+ActiveRecord::Schema.define(version: 20180304165428) do
+
+  create_table "characteristics", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "value"
+  end
 
   create_table "pairings", force: :cascade do |t|
     t.string "identifier", null: false
