@@ -1,15 +1,22 @@
 language: ruby
+cache: bundler
+
+before_install:
+  - gem update --system
+  - gem --version
+  - gem install bundler -v 1.16.1
+  - bundle --version
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libavahi-compat-libdnssd-dev
+
+rvm:
+  - 2.2
+  - 2.3
+  - 2.4.3
+  - 2.5.0
+
+matrix:
+  fast_finish: true
+
 notifications:
   email: false
-rvm:
-  - 2.5.0
-matrix:
-  include:
-    - os: linux
-      dist: trusty
-      sudo: false
-      before_install:
-        - sudo apt-get -qq update
-        - sudo apt-get install -y libavahi-compat-libdnssd-dev
-    - os: osx
-      osx_image: xcode9.1
