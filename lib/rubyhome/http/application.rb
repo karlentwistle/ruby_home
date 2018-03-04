@@ -1,14 +1,9 @@
-require 'active_record'
+require 'sinatra/activerecord'
 require 'sinatra/base'
+require_relative '../accessory_info'
+require_relative '../rack/handler/hap_server'
 require_relative 'cache'
 require_relative 'models/pairing'
-require_relative '../rack/handler/hap_server'
-require_relative '../accessory_info'
-
-ActiveRecord::Base.establish_connection(
-  adapter: 'sqlite3',
-  database: 'rubyhome.sqlite3.db'
-)
 
 Rack::Handler.register 'hap_server', Rubyhome::Rack::Handler::HAPServer
 
