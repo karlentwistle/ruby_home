@@ -15,6 +15,8 @@ ActiveRecord::Schema.define(version: 20180304181545) do
   create_table "characteristics", force: :cascade do |t|
     t.string "type", null: false
     t.string "value"
+    t.integer "service_id", null: false
+    t.index ["service_id"], name: "index_characteristics_on_service_id"
   end
 
   create_table "pairings", force: :cascade do |t|

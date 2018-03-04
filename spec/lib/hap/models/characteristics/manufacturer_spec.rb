@@ -2,7 +2,8 @@ require 'spec_helper'
 require_relative '../../../../../lib/rubyhome/hap/models/characteristics/manufacturer'
 
 RSpec.describe Rubyhome::Characteristic::Manufacturer, type: :model do
-  subject { described_class.new(value: 'Acme') }
+  let(:service) { Rubyhome::Service::AccessoryInformation.create }
+  subject { described_class.new(value: 'Acme', service: service) }
 
   describe 'Validations' do
     it 'is valid with valid attributes' do

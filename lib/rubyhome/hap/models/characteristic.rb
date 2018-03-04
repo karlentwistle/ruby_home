@@ -4,6 +4,8 @@ module Rubyhome
   class Characteristic < ApplicationRecord
     validates :type, presence: true
     validates :uuid, presence: true
+
+    belongs_to :service, required: true
   end
 end
 

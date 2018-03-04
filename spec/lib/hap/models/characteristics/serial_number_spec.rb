@@ -2,7 +2,8 @@ require 'spec_helper'
 require_relative '../../../../../lib/rubyhome/hap/models/characteristics/serial_number'
 
 RSpec.describe Rubyhome::Characteristic::SerialNumber, type: :model do
-  subject { described_class.new(value: '1A2B3C4D5E6F') }
+  let(:service) { Rubyhome::Service::AccessoryInformation.create }
+  subject { described_class.new(value: '1A2B3C4D5E6F', service: service) }
 
   describe 'Validations' do
     it 'is valid with valid attributes' do
