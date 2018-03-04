@@ -1,3 +1,5 @@
+require_relative '../characteristic'
+
 module Rubyhome
   class Characteristic
     class Model < Characteristic
