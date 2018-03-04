@@ -24,7 +24,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activerecord', '~> 5.1', '>= 5.1.4'
   spec.add_dependency 'dnssd', '~> 3.0'
   spec.add_dependency 'ed25519', '~> 1.2', '>= 1.2.3'
   spec.add_dependency 'hkdf', '~> 0.3.0'
@@ -32,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rbnacl-libsodium', '~> 1.0', '>= 1.0.16'
   spec.add_dependency 'rubyhome-srp', '~> 1.0'
   spec.add_dependency 'sinatra', '~> 2.0'
+  spec.add_dependency 'sinatra-activerecord', '~> 2.0', '>= 2.0.13'
   spec.add_dependency 'sqlite3', '~> 1.3', '>= 1.3.13'
   spec.add_dependency 'x25519', '~> 1.0', '>= 1.0.5'
   spec.add_development_dependency 'bundler', '~> 1.16'

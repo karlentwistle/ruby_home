@@ -8,6 +8,8 @@ before_install:
   - bundle --version
   - sudo apt-get -qq update
   - sudo apt-get install -y libavahi-compat-libdnssd-dev
+  - bundle exec rake db:migrate
+  - bundle exec rake db:test:prepare
 
 rvm:
   - 2.4.3
