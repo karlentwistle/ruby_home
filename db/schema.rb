@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180304165428) do
+ActiveRecord::Schema.define(version: 20180304181545) do
 
   create_table "characteristics", force: :cascade do |t|
     t.string "type", null: false
@@ -24,6 +24,12 @@ ActiveRecord::Schema.define(version: 20180304165428) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["identifier"], name: "index_pairings_on_identifier"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "type", null: false
+    t.boolean "hidden", default: false, null: false
+    t.boolean "primary", default: false, null: false
   end
 
 end
