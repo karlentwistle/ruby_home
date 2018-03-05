@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../../../lib/rubyhome/hap/models/characteristics/firmware_revision'
+require_relative '../../../../../lib/rubyhome/hap/models/services/accessory_information'
 
 RSpec.describe Rubyhome::Service::AccessoryInformation, type: :model do
   subject { described_class.new }

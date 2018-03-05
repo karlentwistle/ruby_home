@@ -7,17 +7,15 @@ module Rubyhome
         content_type 'application/hap+json'
 
         if cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
+          aid, iid = params[:id].split('.')
+
+          characteristic = Instance.find(iid).attributable
           JSON.generate({
             'characteristics' => [
               {
-                'aid' => 2,
-                'iid' => 11,
-                'value' => false
-              },
-              {
-                'aid' => 2,
-                'iid' => 10,
-                'value' => 0
+                'aid' => aid.to_i,
+                'iid' => iid.to_i,
+                'value' => characteristic.value
               }
             ]
           })

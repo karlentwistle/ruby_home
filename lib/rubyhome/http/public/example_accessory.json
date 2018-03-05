@@ -76,11 +76,11 @@
       "aid": 2,
       "services": [
         {
-          "iid": 1,
+          "iid": 8,
           "type": "0000003E-0000-1000-8000-0026BB765291",
           "characteristics": [
             {
-              "iid": 2,
+              "iid": 9,
               "type": "00000014-0000-1000-8000-0026BB765291",
               "perms": [
                 "pw"
@@ -89,17 +89,17 @@
               "description": "Identify"
             },
             {
-              "iid": 3,
+              "iid": 10,
               "type": "00000020-0000-1000-8000-0026BB765291",
               "perms": [
                 "pr"
               ],
               "format": "string",
-              "value": "Sample Company",
+              "value": "Default-Manufacturer",
               "description": "Manufacturer"
             },
             {
-              "iid": 4,
+              "iid": 11,
               "type": "00000021-0000-1000-8000-0026BB765291",
               "perms": [
                 "pr"
@@ -109,17 +109,17 @@
               "description": "Model"
             },
             {
-              "iid": 5,
+              "iid": 12,
               "type": "00000023-0000-1000-8000-0026BB765291",
               "perms": [
                 "pr"
               ],
               "format": "string",
-              "value": "Fan",
+              "value": "Node Bridge",
               "description": "Name"
             },
             {
-              "iid": 6,
+              "iid": 13,
               "type": "00000030-0000-1000-8000-0026BB765291",
               "perms": [
                 "pr"
@@ -129,7 +129,7 @@
               "description": "Serial Number"
             },
             {
-              "iid": 7,
+              "iid": 14,
               "type": "00000052-0000-1000-8000-0026BB765291",
               "perms": [
                 "pr"
@@ -143,11 +143,11 @@
           "hidden": false
         },
         {
-          "iid": 8,
+          "iid": 15,
           "type": "00000040-0000-1000-8000-0026BB765291",
           "characteristics": [
             {
-              "iid": 9,
+              "iid": 16,
               "type": "00000023-0000-1000-8000-0026BB765291",
               "perms": [
                 "pr"
@@ -157,7 +157,7 @@
               "description": "Name"
             },
             {
-              "iid": 10,
+              "iid": 17,
               "type": "00000025-0000-1000-8000-0026BB765291",
               "perms": [
                 "pr",
@@ -167,22 +167,6 @@
               "format": "bool",
               "value": false,
               "description": "On"
-            },
-            {
-              "iid": 11,
-              "type": "00000029-0000-1000-8000-0026BB765291",
-              "perms": [
-                "pr",
-                "pw",
-                "ev"
-              ],
-              "format": "float",
-              "value": 0,
-              "description": "Rotation Speed",
-              "unit": "percentage",
-              "maxValue": 100,
-              "minValue": 0,
-              "minStep": 1
             }
           ],
           "primary": false,

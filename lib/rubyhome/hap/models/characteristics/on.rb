@@ -2,23 +2,25 @@ require_relative '../characteristic'
 
 module Rubyhome
   class Characteristic
-    class FirmwareRevision < Characteristic
-      validates :value, presence: true
-
+    class On < Characteristic
       def description
-        'Firmware Revision'
+        'On'
       end
 
       def format
-        'string'
+        'bool'
       end
 
       def permissions
-        ['pr']
+        ['pr', 'pw', 'ev']
+      end
+
+      def value
+        false
       end
 
       def uuid
-        '00000052-0000-1000-8000-0026BB765291'
+        '00000025-0000-1000-8000-0026BB765291'
       end
     end
   end
