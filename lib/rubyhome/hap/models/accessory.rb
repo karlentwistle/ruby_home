@@ -7,7 +7,7 @@ module Rubyhome
       end
     end
 
-    def initialize(id: , services: [])
+    def initialize(id:, services: [])
       @id = id
       @services = services
     end
@@ -15,4 +15,3 @@ module Rubyhome
     attr_reader :id, :services
   end
 end
-
