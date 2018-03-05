@@ -2,4 +2,7 @@
 
 require_relative '../lib/rubyhome'
 
+Rubyhome::AccessoryInformationBuilder.new.save
+Rubyhome::FanBuilder.new.save
+
 Rubyhome::Broadcast.run

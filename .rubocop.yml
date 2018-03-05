@@ -200,6 +200,8 @@ Style/SpecialGlobalVars:
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes
+  Exclude:
+    - 'db/schema.rb'
 
 Style/TrailingCommaInLiteral:
   Enabled: true

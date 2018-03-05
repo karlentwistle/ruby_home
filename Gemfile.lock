@@ -5,6 +5,7 @@ PATH
       dnssd (~> 3.0)
       ed25519 (~> 1.2, >= 1.2.3)
       hkdf (~> 0.3.0)
+      oj (~> 3.4)
       rbnacl (~> 5.0)
       rbnacl-libsodium (~> 1.0, >= 1.0.16)
       rubyhome-srp (~> 1.0)
@@ -40,6 +41,7 @@ GEM
       concurrent-ruby (~> 1.0)
     minitest (5.11.3)
     mustermann (1.0.2)
+    oj (3.5.0)
     rack (2.0.4)
     rack-protection (2.0.1)
       rack

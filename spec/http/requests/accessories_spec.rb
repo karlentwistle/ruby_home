@@ -1,5 +1,8 @@
 require 'spec_helper'
 
+require_relative '../../../lib/rubyhome/hap/builders/accessory_information_builder'
+require_relative '../../../lib/rubyhome/hap/builders/fan_builder'
+
 RSpec.describe 'GET /accessories' do
   context 'Request denied due to insufficient privileges' do
     before do
@@ -21,6 +24,8 @@ RSpec.describe 'GET /accessories' do
 
   context 'Sufficient privileges and no error occurs' do
     before do
+      create_accessory
+
       set_cache(:controller_to_accessory_key, ['a' * 64].pack('H*'))
       set_cache(:accessory_to_controller_key, ['b' * 64].pack('H*'))
       get '/accessories', nil, {'CONTENT_TYPE' => 'application/hap+json'}
@@ -37,7 +42,15 @@ RSpec.describe 'GET /accessories' do
     it 'responds with accessories' do
       path = File.expand_path('../../../../lib/rubyhome/http/public/example_accessory.json', __FILE__)
       data = File.read(path)
-      expect(last_response.body).to eql(data)
+      expect(JSON.parse(last_response.body)).to eql(JSON.parse(data))
     end
+  end
+
+  def create_accessory
+    information = Rubyhome::AccessoryInformationBuilder.new
+    fan = Rubyhome::FanBuilder.new
+
+    information.save
+    fan.save
   end
 end
