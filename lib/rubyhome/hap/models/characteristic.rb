@@ -16,6 +16,10 @@ module Rubyhome
       instance.id
     end
 
+    def aid
+      service.accessory_id
+    end
+
     before_create :build_associations
 
     private
