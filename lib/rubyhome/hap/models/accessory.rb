@@ -2,7 +2,6 @@ require_relative 'application_record'
 
 module Rubyhome
   class Accessory < ApplicationRecord
-
     has_many :services
     has_many :characteristics, through: :services
 
