@@ -1,8 +1,8 @@
 require 'spec_helper'
-require_relative '../../../../../lib/rubyhome/hap/models/characteristics/firmware_revision'
 
 RSpec.describe Rubyhome::Characteristic::FirmwareRevision, type: :model do
-  let(:service) { Rubyhome::Service::AccessoryInformation.create }
+  let(:accessory) { Rubyhome::Accessory.create }
+  let(:service) { Rubyhome::Service::AccessoryInformation.create!(accessory: accessory) }
   subject { described_class.new(value: '100.1.1', service: service) }
 
   describe 'Validations' do

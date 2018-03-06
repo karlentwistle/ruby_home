@@ -1,31 +1,23 @@
 require_relative 'application_record'
-require_relative 'instance'
 
 module Rubyhome
   class Characteristic < ApplicationRecord
     validates :type, presence: true
 
+    belongs_to :accessory, required: true
     belongs_to :service, required: true
-    has_one :instance, as: :attributable, required: true
 
-    def instance
-      super || build_instance
-    end
-
-    def iid
-      instance.id
-    end
-
-    def aid
-      service.accessory_id
-    end
-
-    before_create :build_associations
+    before_save :set_instance_id
+    before_validation :inherit_accessory
 
     private
 
-      def build_associations
-        instance
+      def set_instance_id
+        self.instance_id ||= accessory.next_available_instance_id
+      end
+
+      def inherit_accessory
+        self.accessory ||= service.accessory
       end
   end
 end

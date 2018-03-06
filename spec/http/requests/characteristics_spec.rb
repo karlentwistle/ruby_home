@@ -30,8 +30,8 @@ RSpec.describe '/characteristics' do
         Rubyhome::FanBuilder.new.save
         characteristic = Rubyhome::Characteristic::On.first
 
-        iid = characteristic.iid
-        aid = characteristic.aid
+        iid = characteristic.instance_id
+        aid = characteristic.accessory_id
 
         get "/characteristics?id=#{aid}.#{iid}", {'CONTENT_TYPE' => 'application/hap+json'}
 
@@ -42,8 +42,8 @@ RSpec.describe '/characteristics' do
         Rubyhome::FanBuilder.new.save
         characteristic = Rubyhome::Characteristic::On.first
 
-        iid = characteristic.iid
-        aid = characteristic.aid
+        iid = characteristic.instance_id
+        aid = characteristic.accessory_id
 
         get "/characteristics?id=#{aid}.#{iid}", {'CONTENT_TYPE' => 'application/hap+json'}
 

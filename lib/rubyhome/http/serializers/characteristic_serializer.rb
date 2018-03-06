@@ -8,7 +8,7 @@ module Rubyhome
       def record_hash(characteristic)
         record_hash = {}
 
-        record_hash['iid'] = characteristic.iid
+        record_hash['iid'] = characteristic.instance_id
         record_hash['type'] = characteristic.uuid
         record_hash['perms'] = characteristic.permissions
         record_hash['format'] = characteristic.format

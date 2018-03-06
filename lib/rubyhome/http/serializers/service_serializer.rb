@@ -7,8 +7,8 @@ module Rubyhome
       include ObjectSerializer
 
       def record_hash(service)
-        base_hash = {
-          'iid' => service.iid,
+        {
+          'iid' => service.instance_id,
           'type' => service.uuid,
           'characteristics' => CharacteristicSerializer.new(service.characteristics).serializable_hash,
           'primary' => service.primary,
