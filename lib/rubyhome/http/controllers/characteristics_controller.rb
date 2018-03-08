@@ -1,4 +1,5 @@
 require_relative 'application_controller'
+require_relative '../serializers/characteristic_value_serializer'
 
 module Rubyhome
   module HTTP
@@ -9,16 +10,8 @@ module Rubyhome
         if cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
           accessory_id, instance_id = params[:id].split('.')
 
-          characteristic = Characteristic.find_by(accessory_id: accessory_id, instance_id: instance_id)
-          JSON.generate({
-            'characteristics' => [
-              {
-                'aid' => accessory_id.to_i,
-                'iid' => instance_id.to_i,
-                'value' => characteristic.value
-              }
-            ]
-          })
+          characteristics = Characteristic.where(accessory_id: accessory_id, instance_id: instance_id)
+          CharacteristicValueSerializer.new(characteristics).serialized_json
         else
           status 401
           JSON.generate({"status" => -70401})

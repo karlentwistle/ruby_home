@@ -17,7 +17,6 @@ module Rubyhome
         end
         record_hash['description'] = characteristic.description
 
-
         record_hash
       end
     end

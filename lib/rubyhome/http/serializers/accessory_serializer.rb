@@ -1,4 +1,4 @@
-require 'oj'
+require_relative 'object_serializer'
 require_relative 'service_serializer'
 
 module Rubyhome
@@ -7,7 +7,7 @@ module Rubyhome
       include ObjectSerializer
 
       def root
-        "accessories"
+        'accessories'
       end
 
       def record_hash(accessory)
