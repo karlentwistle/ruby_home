@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'ed25519'
-require_relative '../../../lib/rubyhome/tlv'
 
 RSpec.describe 'POST /pair-verify' do
   context 'Verify Start Response' do

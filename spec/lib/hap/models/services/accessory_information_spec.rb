@@ -1,5 +1,4 @@
 require 'spec_helper'
-require_relative '../../../../../lib/rubyhome/hap/models/services/accessory_information'
 
 RSpec.describe Rubyhome::Service::AccessoryInformation, type: :model do
   let(:accessory) { Rubyhome::Accessory.create }

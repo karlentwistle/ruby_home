@@ -1,5 +1,4 @@
 require 'spec_helper'
-require_relative '../../../lib/rubyhome/hap/http_encryption'
 
 RSpec.describe Rubyhome::HAP::HTTPEncryption do
   describe '#encrypt' do

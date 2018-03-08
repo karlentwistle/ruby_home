@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-require_relative '../../../lib/rubyhome/hap/builders/accessory_information_builder'
-require_relative '../../../lib/rubyhome/hap/builders/fan_builder'
-
 RSpec.describe 'GET /accessories' do
   context 'Request denied due to insufficient privileges' do
     before do

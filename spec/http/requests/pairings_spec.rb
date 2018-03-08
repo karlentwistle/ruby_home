@@ -1,5 +1,4 @@
 require 'spec_helper'
-require_relative '../../../lib/rubyhome/tlv'
 
 RSpec.describe 'POST /pairings' do
   context 'Add Pairing' do
