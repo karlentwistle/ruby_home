@@ -33,7 +33,7 @@ RSpec.describe '/characteristics' do
         iid = characteristic.instance_id
         aid = characteristic.accessory_id
 
-        get "/characteristics?id=#{aid}.#{iid}", {'CONTENT_TYPE' => 'application/hap+json'}
+        get '/characteristics', { id: [aid, iid].join('.') }, headers: { 'CONTENT_TYPE' => 'application/hap+json' }
 
         expect(last_response.status).to eql(200)
       end
@@ -45,9 +45,9 @@ RSpec.describe '/characteristics' do
         iid = characteristic.instance_id
         aid = characteristic.accessory_id
 
-        get "/characteristics?id=#{aid}.#{iid}", {'CONTENT_TYPE' => 'application/hap+json'}
+        get '/characteristics', { id: [aid, iid].join('.') }, headers: { 'CONTENT_TYPE' => 'application/hap+json' }
 
-        expected_data = {"characteristics" => [{"aid" => aid,"iid" => iid,"value" => false}]}
+        expected_data = { 'characteristics' => [{ 'aid' => aid, 'iid' => iid, 'value' => false }] }
         expect(last_response.body).to eql(JSON.generate(expected_data))
       end
     end
@@ -74,7 +74,7 @@ RSpec.describe '/characteristics' do
 
     context 'sufficient privileges and no error occurs' do
       let(:valid_parameters) do
-        JSON.generate({"characteristics" => [{"aid" => 2, "iid" => 10, "ev" => true}]})
+        JSON.generate({ 'characteristics' => [{ 'aid' => 2, 'iid' => 10, 'ev' => true }] })
       end
 
       before do
