@@ -19,6 +19,38 @@ RSpec.describe '/characteristics' do
         expect(last_response.body).to eql('{"status":-70401}')
       end
     end
+
+    context 'sufficient privileges and no error occurs' do
+      before do
+        set_cache(:controller_to_accessory_key, ['a' * 64].pack('H*'))
+        set_cache(:accessory_to_controller_key, ['b' * 64].pack('H*'))
+      end
+
+      it 'responds with a 204 No Content HTTP Status Code' do
+        Rubyhome::FanBuilder.new.save
+        characteristic = Rubyhome::Characteristic::On.first
+
+        iid = characteristic.instance_id
+        aid = characteristic.accessory_id
+
+        get '/characteristics', { id: [aid, iid].join('.') }, headers: { 'CONTENT_TYPE' => 'application/hap+json' }
+
+        expect(last_response.status).to eql(200)
+      end
+
+      it 'responds with characteristics' do
+        Rubyhome::FanBuilder.new.save
+        characteristic = Rubyhome::Characteristic::On.first
+
+        iid = characteristic.instance_id
+        aid = characteristic.accessory_id
+
+        get '/characteristics', { id: [aid, iid].join('.') }, headers: { 'CONTENT_TYPE' => 'application/hap+json' }
+
+        expected_data = { 'characteristics' => [{ 'aid' => aid, 'iid' => iid, 'value' => false }] }
+        expect(last_response.body).to eql(JSON.generate(expected_data))
+      end
+    end
   end
 
   context 'PUT' do
@@ -42,7 +74,7 @@ RSpec.describe '/characteristics' do
 
     context 'sufficient privileges and no error occurs' do
       let(:valid_parameters) do
-        JSON.generate({"characteristics" => [{"aid" => 2, "iid" => 10, "ev" => true}]})
+        JSON.generate({ 'characteristics' => [{ 'aid' => 2, 'iid' => 10, 'ev' => true }] })
       end
 
       before do

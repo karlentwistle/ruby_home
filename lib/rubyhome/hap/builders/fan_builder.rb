@@ -5,7 +5,8 @@ require_relative 'accessory_information_builder'
 module Rubyhome
   class FanBuilder
     def initialize
-      @service = Rubyhome::Service::Fan.new(accessory_id: 2)
+      @accessory = Accessory.create!
+      @service = Rubyhome::Service::Fan.new(accessory: @accessory)
     end
 
     attr_reader :service
@@ -18,7 +19,7 @@ module Rubyhome
     end
 
     def information
-      AccessoryInformationBuilder.new(accessory_id: 2)
+      AccessoryInformationBuilder.new(accessory: @accessory)
     end
 
     def save

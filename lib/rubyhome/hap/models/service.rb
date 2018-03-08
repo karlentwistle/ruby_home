@@ -1,31 +1,18 @@
 require_relative 'application_record'
-require_relative 'instance'
 
 module Rubyhome
   class Service < ApplicationRecord
-    def self.grouped_by_accessory
-      all.group_by(&:accessory_id)
-    end
-
     validates :type, presence: true
 
+    belongs_to :accessory, required: true
     has_many :characteristics
-    has_one :instance, as: :attributable, required: true
 
-    def instance
-      super || build_instance
-    end
-
-    def iid
-      instance.id
-    end
-
-    before_create :build_associations
+    before_save :set_instance_id
 
     private
 
-      def build_associations
-        instance
+      def set_instance_id
+        self.instance_id ||= accessory.next_available_instance_id
       end
   end
 end

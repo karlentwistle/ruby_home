@@ -1,17 +1,20 @@
+require_relative 'application_record'
+
 module Rubyhome
-  class Accessory
-    def self.all(grouped_services = Service.grouped_by_accessory)
-      grouped_services.inject(Array.new) do |array, (accessory_id, services)|
-        array << new(id: accessory_id, services: services)
-        array
-      end
+  class Accessory < ApplicationRecord
+    has_many :services
+    has_many :characteristics, through: :services
+
+    def next_available_instance_id
+      (largest_instance_id || 0) + 1
     end
 
-    def initialize(id:, services: [])
-      @id = id
-      @services = services
+    def instance_ids
+      services.pluck(:instance_id) + characteristics.pluck(:instance_id)
     end
 
-    attr_reader :id, :services
+    def largest_instance_id
+      instance_ids.max
+    end
   end
 end

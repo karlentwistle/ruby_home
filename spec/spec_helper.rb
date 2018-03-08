@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'rack/test'
 require 'rspec'
+require_relative '../lib/rubyhome'
 
 ENV['RACK_ENV'] = 'test'
 

@@ -4,7 +4,8 @@ require_relative '../models/service'
 module Rubyhome
   class AccessoryInformationBuilder
     def initialize(**options)
-      @service = Rubyhome::Service::AccessoryInformation.new(options)
+      @accessory = options[:accessory] ||= Accessory.create!
+      @service = Rubyhome::Service::AccessoryInformation.new(options.merge(accessory: @accessory))
     end
 
     attr_reader :service

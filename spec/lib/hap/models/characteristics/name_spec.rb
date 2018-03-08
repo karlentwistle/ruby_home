@@ -1,8 +1,8 @@
 require 'spec_helper'
-require_relative '../../../../../lib/rubyhome/hap/models/characteristics/name'
 
 RSpec.describe Rubyhome::Characteristic::Name, type: :model do
-  let(:service) { Rubyhome::Service::AccessoryInformation.create }
+  let(:accessory) { Rubyhome::Accessory.create }
+  let(:service) { Rubyhome::Service::AccessoryInformation.create(accessory: accessory) }
   subject { described_class.new(value: 'Rubyhome', service: service) }
 
   describe 'Validations' do
