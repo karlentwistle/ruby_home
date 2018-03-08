@@ -40,7 +40,7 @@ RSpec.describe 'GET /accessories' do
     end
 
     it 'responds with accessories' do
-      path = File.expand_path('../../../../lib/rubyhome/http/public/example_accessory.json', __FILE__)
+      path = File.expand_path('../../../fixtures/accessories_json/fan.json', __FILE__)
       data = File.read(path)
       expect(JSON.parse(last_response.body)).to eql(JSON.parse(data))
     end
