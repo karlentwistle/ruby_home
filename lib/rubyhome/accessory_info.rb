@@ -6,16 +6,17 @@ module Rubyhome
   class AccessoryInfo
     PERSISTABLE = [ :device_id, :paired_clients, :password, :signature_key, :username ].freeze
 
-    def initialize
+    def initialize(store)
+      @store = store
+
       read
 
       @device_id ||= DeviceID.generate
       @paired_clients ||= []
       @signature_key ||= Ed25519::SigningKey.generate.to_bytes.unpack1('H*')
-
-      save
     end
 
+    attr_reader :store
     attr_reader :device_id, :signature_key, :paired_clients, :password, :username
     attr_writer :device_id, :paired_clients, :password, :username
 
@@ -54,13 +55,11 @@ module Rubyhome
       end
     end
 
-    def store
-      @store ||= YAML::Store.new 'config.yml'
+    def self.pstore=(new_storage)
+      @@accessory_info = AccessoryInfo.new(new_storage)
     end
 
-    @@accessory_info = AccessoryInfo.new
-
-    private_class_method :new
+    @@accessory_info = AccessoryInfo.new(YAML::Store.new 'config.yml')
 
     class << self
       PERSISTABLE.each do |attribute|
