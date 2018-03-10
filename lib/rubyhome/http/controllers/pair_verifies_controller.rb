@@ -64,7 +64,7 @@ module Rubyhome
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
         unpacked_decrypted_data = TLV.unpack(decrypted_data)
 
-        if Pairing.exists?(identifier: unpacked_decrypted_data['kTLVType_Identifier'])
+        if accessory_info.paired_clients.any? {|h| h[:identifier] == unpacked_decrypted_data['kTLVType_Identifier']}
           hkdf = HAP::HKDFEncryption.new(info: 'Control-Write-Encryption-Key', salt: 'Control-Salt')
           cache[:controller_to_accessory_key] = hkdf.encrypt(cache[:shared_secret])
 

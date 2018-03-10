@@ -3,7 +3,6 @@ require 'sinatra/base'
 require_relative '../accessory_info'
 require_relative '../rack/handler/hap_server'
 require_relative 'cache'
-require_relative 'models/pairing'
 
 Rack::Handler.register 'hap_server', Rubyhome::Rack::Handler::HAPServer
 

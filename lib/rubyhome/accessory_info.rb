@@ -7,8 +7,10 @@ module Rubyhome
     include Singleton
 
     def device_id
-      @_device_id ||= DeviceID.generate
+      @device_id ||= DeviceID.generate
     end
+
+    attr_writer :device_id
 
     def username
       'Pair-Setup'
@@ -19,11 +21,25 @@ module Rubyhome
     end
 
     def signing_key
-      @_signing_key ||= Ed25519::SigningKey.generate
+      @signing_key ||= Ed25519::SigningKey.generate
+    end
+
+    attr_writer :signing_key
+
+    def paired_clients
+      @_paired_clients ||= []
     end
 
     def paired?
-      Pairing.any?
+      paired_clients.any?
+    end
+
+    def remove_paired_clients!
+      @_paired_clients = []
+    end
+
+    def remove_paired_client(identifier)
+      paired_clients.delete_if { |h| h[:identifier] == identifier }
     end
   end
 end

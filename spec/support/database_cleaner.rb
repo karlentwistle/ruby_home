@@ -8,4 +8,8 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  config.after(:each) do |example|
+    Rubyhome::AccessoryInfo.instance.remove_paired_clients!
+  end
 end
