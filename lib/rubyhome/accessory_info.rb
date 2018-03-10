@@ -59,7 +59,7 @@ module Rubyhome
       @@accessory_info = AccessoryInfo.new(new_storage)
     end
 
-    @@accessory_info = AccessoryInfo.new(YAML::Store.new 'config.yml')
+    @@accessory_info = AccessoryInfo.new(YAML::Store.new 'accessory_info.yml')
 
     class << self
       PERSISTABLE.each do |attribute|

@@ -1,25 +1,21 @@
-require_relative 'application_record'
+Dir[File.dirname(__FILE__) + '/characteristics/*.rb'].each { |file| require file }
 
 module Rubyhome
-  class Characteristic < ApplicationRecord
-    validates :type, presence: true
+  class Characteristic
+    def initialize(service: , value: nil)
+      @service = service
+      @value = value
+    end
 
-    belongs_to :accessory, required: true
-    belongs_to :service, required: true
+    attr_reader :service, :value
+    attr_accessor :instance_id
 
-    before_save :set_instance_id
-    before_validation :inherit_accessory
+    def accessory
+      service.accessory
+    end
 
-    private
-
-      def set_instance_id
-        self.instance_id ||= accessory.next_available_instance_id
-      end
-
-      def inherit_accessory
-        self.accessory ||= service.accessory
-      end
+    def accessory_id
+      accessory.id
+    end
   end
 end
-
-Dir[File.dirname(__FILE__) + '/characteristics/*.rb'].each { |file| require file }

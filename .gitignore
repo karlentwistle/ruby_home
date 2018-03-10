@@ -1,4 +1,3 @@
-*sqlite3
 .byebug_history
 .rspec_status
 /.bundle/
@@ -10,4 +9,5 @@
 /spec/reports/
 /tmp/
 Gemfile.lock
-config.yml
+accessory_info.yml
+identifier_cache.yml

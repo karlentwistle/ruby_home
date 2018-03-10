@@ -3,8 +3,6 @@ require_relative '../characteristic'
 module Rubyhome
   class Characteristic
     class Manufacturer < Characteristic
-      validates :value, presence: true
-
       def description
         'Manufacturer'
       end

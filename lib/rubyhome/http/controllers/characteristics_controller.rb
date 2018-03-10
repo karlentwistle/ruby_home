@@ -10,7 +10,7 @@ module Rubyhome
         if cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
           accessory_id, instance_id = params[:id].split('.')
 
-          characteristics = Characteristic.where(accessory_id: accessory_id, instance_id: instance_id)
+          characteristics = IdentifierCache.find_characteristics(accessory_id: accessory_id.to_i, instance_id: instance_id.to_i)
           CharacteristicValueSerializer.new(characteristics).serialized_json
         else
           status 401

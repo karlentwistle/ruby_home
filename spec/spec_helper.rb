@@ -1,11 +1,9 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'bundler/setup'
 require 'rack/test'
 require 'rspec'
 require_relative '../lib/rubyhome'
-
-ENV['RACK_ENV'] = 'test'
-
-require_relative '../lib/rubyhome/http/application'
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].sort.each { |file| require file }
 

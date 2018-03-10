@@ -1,11 +1,12 @@
 require_relative '../models/characteristic'
 require_relative '../models/service'
+require_relative '../models/accessory'
 require_relative 'accessory_information_builder'
 
 module Rubyhome
   class FanBuilder
-    def initialize
-      @accessory = Accessory.create!
+    def initialize(**options)
+      @accessory = Rubyhome::Accessory.new
       @service = Rubyhome::Service::Fan.new(accessory: @accessory)
     end
 
@@ -24,7 +25,11 @@ module Rubyhome
 
     def save
       information.save
-      characteristics.each(&:save!)
+      IdentifierCache.add_service(service)
+
+      characteristics.each do |characteristic|
+        IdentifierCache.add_characteristic(characteristic)
+      end
     end
   end
 end

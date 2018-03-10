@@ -1,5 +1,3 @@
-require_relative '../../tlv'
-
 module Rubyhome
   module HTTP
     class ApplicationController < Sinatra::Base
@@ -11,7 +9,11 @@ module Rubyhome
       end
 
       def accessory_info
-        Application.accessory_info
+        AccessoryInfo
+      end
+
+      def identifier_cache
+        IdentifierCache
       end
 
       def request_id

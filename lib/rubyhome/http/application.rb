@@ -1,6 +1,4 @@
-require 'sinatra/activerecord'
 require 'sinatra/base'
-require_relative '../accessory_info'
 require_relative '../rack/handler/hap_server'
 require_relative 'cache'
 
@@ -12,7 +10,6 @@ module Rubyhome
       Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
 
       disable :protection
-      set :accessory_info, AccessoryInfo
       set :bind, '0.0.0.0'
       set :quiet, true
       set :server, :hap_server

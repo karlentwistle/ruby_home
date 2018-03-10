@@ -3,8 +3,6 @@ require_relative '../characteristic'
 module Rubyhome
   class Characteristic
     class SerialNumber < Characteristic
-      validates :value, presence: true
-
       def description
         'Serial Number'
       end

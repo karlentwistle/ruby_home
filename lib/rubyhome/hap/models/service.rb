@@ -1,20 +1,15 @@
-require_relative 'application_record'
+Dir[File.dirname(__FILE__) + '/services/*.rb'].each { |file| require file }
 
 module Rubyhome
-  class Service < ApplicationRecord
-    validates :type, presence: true
+  class Service
+    def initialize(accessory: , primary: false, hidden: false)
+      @accessory = accessory
+      @primary = primary
+      @hidden = hidden
+      @characteristics = []
+    end
 
-    belongs_to :accessory, required: true
-    has_many :characteristics
-
-    before_save :set_instance_id
-
-    private
-
-      def set_instance_id
-        self.instance_id ||= accessory.next_available_instance_id
-      end
+    attr_reader :accessory, :characteristics, :primary, :hidden
+    attr_accessor :instance_id
   end
 end
-
-Dir[File.dirname(__FILE__) + '/services/*.rb'].each { |file| require file }

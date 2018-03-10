@@ -1,14 +1,15 @@
 require_relative '../models/characteristic'
 require_relative '../models/service'
+require_relative '../models/accessory'
 
 module Rubyhome
   class AccessoryInformationBuilder
     def initialize(**options)
-      @accessory = options[:accessory] ||= Accessory.create!
-      @service = Rubyhome::Service::AccessoryInformation.new(options.merge(accessory: @accessory))
+      @accessory = options[:accessory] ||= Rubyhome::Accessory.new
+      @service = Rubyhome::Service::AccessoryInformation.new(options)
     end
 
-    attr_reader :service
+    attr_reader :accessory, :service
 
     def characteristics
       [
@@ -22,7 +23,12 @@ module Rubyhome
     end
 
     def save
-      characteristics.each(&:save!)
+      IdentifierCache.add_accessory(accessory)
+      IdentifierCache.add_service(service)
+
+      characteristics.each do |characteristic|
+        IdentifierCache.add_characteristic(characteristic)
+      end
     end
   end
 end
