@@ -51,7 +51,7 @@ RSpec.describe 'POST /pair-verify' do
 
     context 'iOSDevicePairingID exists in list of paired controllers.' do
       before do
-        Rubyhome::AccessoryInfo.instance.paired_clients << {
+        Rubyhome::AccessoryInfo.paired_clients << {
           admin: true,
           identifier: '349CBC7D-01B9-4DC4-AD98-FB9029BB77F2',
           public_key: '62398c58854a0718b19a64445f5f63761472802dd15ddf19cc74bee253dde525'

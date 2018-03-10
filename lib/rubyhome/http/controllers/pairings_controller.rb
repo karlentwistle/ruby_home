@@ -22,7 +22,7 @@ module Rubyhome
           identifier: unpack_request['kTLVType_Identifier'],
           public_key: unpack_request['kTLVType_PublicKey']
         }
-        accessory_info.paired_clients << pairing_params
+        accessory_info.add_paired_client pairing_params
 
         TLV.pack({'kTLVType_State' => 2})
       end

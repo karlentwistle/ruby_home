@@ -11,9 +11,9 @@ module Rubyhome
     class Application < Sinatra::Base
       Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
 
-      set :accessory_info, AccessoryInfo.instance
+      disable :protection
+      set :accessory_info, AccessoryInfo
       set :bind, '0.0.0.0'
-      set :protection, true
       set :quiet, true
       set :server, :hap_server
       set :server_settings, AcceptCallback: -> (sock) do

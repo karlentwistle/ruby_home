@@ -9,12 +9,8 @@ require_relative '../lib/rubyhome/http/application'
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].sort.each { |file| require file }
 
-Rubyhome::AccessoryInfo.instance.tap do |accessory_info|
-  accessory_info.device_id = 'CB:45:B7:61:74:8C'
-  accessory_info.signing_key = Ed25519::SigningKey.new(
-    ['E2889D17DD141C3A62969E85C7092FDB1080617FECCC08A60A5001AB6C79AB97'].pack('H*')
-  )
-end
+Rubyhome::AccessoryInfo.device_id = 'CB:45:B7:61:74:8C'
+Rubyhome::AccessoryInfo.signature_key = 'E2889D17DD141C3A62969E85C7092FDB1080617FECCC08A60A5001AB6C79AB97'
 
 module RSpecMixin
   include Rack::Test::Methods

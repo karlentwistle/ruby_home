@@ -10,6 +10,6 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do |example|
-    Rubyhome::AccessoryInfo.instance.remove_paired_clients!
+    Rubyhome::AccessoryInfo.paired_clients = []
   end
 end
