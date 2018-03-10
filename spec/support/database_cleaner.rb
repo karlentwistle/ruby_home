@@ -8,8 +8,4 @@ RSpec.configure do |config|
       example.run
     end
   end
-
-  config.after(:each) do |example|
-    Rubyhome::AccessoryInfo.paired_clients = []
-  end
 end

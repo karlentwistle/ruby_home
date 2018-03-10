@@ -108,7 +108,7 @@ module Rubyhome
           nonce = HAP::HexPad.pad('PS-Msg06')
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil).unpack('H*')[0]
 
-          pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk}
+          pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk }
           accessory_info.add_paired_client pairing_params
 
           TLV.pack({

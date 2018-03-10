@@ -85,8 +85,8 @@ module Rubyhome
         @@accessory_info.paired_clients.any?
       end
 
-      def add_paired_client(hash)
-        @@accessory_info.paired_clients << hash
+      def add_paired_client(admin: false, identifier: , public_key: )
+        @@accessory_info.paired_clients << { admin: admin, identifier: identifier, public_key: public_key }
         save
       end
 
