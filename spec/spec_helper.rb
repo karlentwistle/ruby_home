@@ -9,11 +9,13 @@ require_relative '../lib/rubyhome/http/application'
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].sort.each { |file| require file }
 
+Rubyhome::AccessoryInfo.device_id = 'CB:45:B7:61:74:8C'
+Rubyhome::AccessoryInfo.signature_key = 'E2889D17DD141C3A62969E85C7092FDB1080617FECCC08A60A5001AB6C79AB97'
+
 module RSpecMixin
   include Rack::Test::Methods
   def app
     app = Rubyhome::HTTP::Application
-    app.set :accessory_info, FakeAccessoryInfo.instance
     app.set :request_id, 1
     app
   end

@@ -36,7 +36,7 @@ module Rubyhome
       attr_reader :port
 
       def text_record
-        TextRecord.new(accessory_info: AccessoryInfo.instance)
+        TextRecord.new(accessory_info: AccessoryInfo)
       end
     end
   end

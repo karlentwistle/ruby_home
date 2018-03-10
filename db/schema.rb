@@ -25,13 +25,6 @@ ActiveRecord::Schema.define(version: 20180306223336) do
     t.index ["service_id"], name: "index_characteristics_on_service_id"
   end
 
-  create_table "pairings", force: :cascade do |t|
-    t.boolean "admin", default: false, null: false
-    t.string "identifier", null: false
-    t.string "public_key", null: false
-    t.index ["identifier"], name: "index_pairings_on_identifier"
-  end
-
   create_table "services", force: :cascade do |t|
     t.boolean "hidden", default: false, null: false
     t.boolean "primary", default: false, null: false
