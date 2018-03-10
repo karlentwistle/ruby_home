@@ -38,7 +38,7 @@ module Rubyhome
 
       def find_characteristics(attributes)
         characteristics.select do |characteristic|
-          attributes.map { |key, value| characteristic.send(key) == value }.all?(true)
+          attributes.all? { |key, value| characteristic.send(key) == value }
         end
       end
 
