@@ -9,8 +9,6 @@ before_install:
   - gem install bundler -v 1.16.1
   - bundle --version
   - bundle
-  - bundle exec rake db:migrate
-  - bundle exec rake db:test:prepare
 
 rvm:
   - 2.4.3
