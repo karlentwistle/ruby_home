@@ -1,3 +1,4 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/a13f62c597b3746a7ef5/maintainability)](https://codeclimate.com/github/karlentwistle/rubyhome/maintainability)
 [![Build Status](https://travis-ci.org/karlentwistle/rubyhome.svg?branch=master)](https://travis-ci.org/karlentwistle/rubyhome)
 
 # RubyHome
