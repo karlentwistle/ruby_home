@@ -10,6 +10,7 @@ module Rubyhome
       Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
 
       disable :protection
+      disable :logging
       set :bind, '0.0.0.0'
       set :quiet, true
       set :server, :hap_server
