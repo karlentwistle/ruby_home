@@ -1,4 +1,4 @@
-require_relative '../characteristic'
+require_relative '../service'
 
 module Rubyhome
   class Service

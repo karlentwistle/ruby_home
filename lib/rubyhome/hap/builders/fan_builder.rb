@@ -12,10 +12,14 @@ module Rubyhome
 
     attr_reader :service
 
+    def on
+      @on ||= Rubyhome::Characteristic::On.new(service: service)
+    end
+
     def characteristics
       [
         Rubyhome::Characteristic::Name.new(value: 'Fan', service: service),
-        Rubyhome::Characteristic::On.new(service: service),
+        on,
       ]
     end
 

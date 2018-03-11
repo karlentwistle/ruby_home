@@ -3,6 +3,15 @@
 require_relative '../lib/rubyhome'
 
 Rubyhome::AccessoryInformationBuilder.new.save
-Rubyhome::FanBuilder.new.save
+fan = Rubyhome::FanBuilder.new
+fan.save
+
+fan.on.on(:value_updated) do |new_value|
+  if new_value == 1
+    puts "Fan switched on"
+  else
+    puts "Fan switched off"
+  end
+end
 
 Rubyhome::Broadcast.run

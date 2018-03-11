@@ -9,8 +9,11 @@ module Rubyhome
 
         if cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
           accessory_id, instance_id = params[:id].split('.')
+          characteristics = IdentifierCache.find_characteristics(
+            accessory_id: accessory_id.to_i,
+            instance_id: instance_id.to_i
+          )
 
-          characteristics = IdentifierCache.find_characteristics(accessory_id: accessory_id.to_i, instance_id: instance_id.to_i)
           CharacteristicValueSerializer.new(characteristics).serialized_json
         else
           status 401
@@ -22,6 +25,17 @@ module Rubyhome
         content_type 'application/hap+json'
 
         if cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
+          json_body.fetch('characteristics', []).each do |characteristic_params|
+            accessory_id = characteristic_params['aid']
+            instance_id = characteristic_params['iid']
+            characteristic = IdentifierCache.find_characteristics(
+              accessory_id: accessory_id.to_i,
+              instance_id: instance_id.to_i
+            ).first
+
+            characteristic.value = characteristic_params['value']
+          end
+
           status 204
         else
           status 401

@@ -74,21 +74,42 @@ RSpec.describe '/characteristics' do
 
     context 'sufficient privileges and no error occurs' do
       let(:valid_parameters) do
-        JSON.generate({ 'characteristics' => [{ 'aid' => 2, 'iid' => 10, 'ev' => true }] })
+        JSON.generate({
+          'characteristics' => [
+            {
+              'aid' => characteristic.accessory_id,
+              'iid' => characteristic.instance_id,
+              'value' => '1'
+            }
+          ]
+        })
+      end
+
+      let(:characteristic) do
+        Rubyhome::IdentifierCache.find_characteristics(uuid: '00000025-0000-1000-8000-0026BB765291').first
       end
 
       before do
+        Rubyhome::FanBuilder.new.save
         set_cache(:controller_to_accessory_key, ['a' * 64].pack('H*'))
         set_cache(:accessory_to_controller_key, ['b' * 64].pack('H*'))
-        put '/characteristics', valid_parameters, {'CONTENT_TYPE' => 'application/hap+json'}
       end
 
       it 'responds with a 204 No Content HTTP Status Code' do
+        put '/characteristics', valid_parameters, {'CONTENT_TYPE' => 'application/hap+json'}
         expect(last_response.status).to eql(204)
       end
 
       it 'responds with an empty body' do
+        put '/characteristics', valid_parameters, {'CONTENT_TYPE' => 'application/hap+json'}
         expect(last_response.body).to be_empty
+      end
+
+      it 'triggers characteristic listeners' do
+        listener = double('Listener')
+        expect(listener).to receive(:value_updated).with('1')
+        characteristic.subscribe(listener)
+        put '/characteristics', valid_parameters, {'CONTENT_TYPE' => 'application/hap+json'}
       end
     end
   end

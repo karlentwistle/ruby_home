@@ -8,6 +8,13 @@ module Rubyhome
         end
       end
 
+      def json_body
+        @_json_body ||= begin
+          request.body.rewind
+          JSON.parse(request.body.read)
+        end
+      end
+
       def accessory_info
         AccessoryInfo
       end
