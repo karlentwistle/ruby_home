@@ -1,0 +1,35 @@
+# This is an automatically generated file, please do not modify
+
+module Rubyhome
+  class Characteristic
+    class StatusLowBattery < Characteristic
+      def constraints
+        {"ValidValues"=>{"0"=>"Battery Level Normal", "1"=>"Battery Level Low"}}
+      end
+
+      def format
+        "uint8"
+      end
+
+      def description
+        "Status Low Battery"
+      end
+
+      def permissions
+        ["securedRead"]
+      end
+
+      def properties
+        ["read", "cnotify", "uncnotify"]
+      end
+
+      def uuid
+        "00000079-0000-1000-8000-0026BB765291"
+      end
+
+      def unit
+        nil
+      end
+    end
+  end
+end

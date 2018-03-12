@@ -1,4 +1,4 @@
-require_relative '../models/characteristic'
+require_relative '../characteristic'
 require_relative '../models/service'
 require_relative '../models/accessory'
 require_relative 'accessory_information_builder'

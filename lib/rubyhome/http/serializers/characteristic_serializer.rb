@@ -10,7 +10,9 @@ module Rubyhome
 
         record_hash['iid'] = characteristic.instance_id
         record_hash['type'] = characteristic.uuid
-        record_hash['perms'] = characteristic.permissions
+        record_hash['perms'] = characteristic.properties.map do |property|
+          Rubyhome::Characteristic::PROPERTIES[property]
+        end.compact
         record_hash['format'] = characteristic.format
         if characteristic.value != nil
           record_hash['value'] = characteristic.value

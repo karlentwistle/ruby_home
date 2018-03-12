@@ -38,25 +38,87 @@ module Rubyhome
 
     def generate_characteristic_class
       create_file
-
-    end
-
-    def create_file
-      f = File.open(file_path, "w")
-      f.close
-    end
-
-    def file_path
-      File.dirname(__FILE__) + '../lib/rubyhome/hap/characteristics/' + sanitized_name + '.rb'
-    end
-
-    def sanitized_name
-      name.downcase.gsub(' ', '_')
     end
 
     private
 
-    attr_reader :constraints, :format, :name, :permissions, :properties, :uuid, :unit
+      def create_file
+        f = File.open(file_path, 'w')
+        f.write generate_class
+        f.close
+      end
+
+      def generate_class
+        <<~KLASS
+          # This is an automatically generated file, please do not modify
+
+          module Rubyhome
+            class Characteristic
+              class #{class_name} < Characteristic
+                def constraints
+                  #{sanitized_constraints}
+                end
+
+                def format
+                  "#{format}"
+                end
+
+                def description
+                  "#{name}"
+                end
+
+                def permissions
+                  #{permissions}
+                end
+
+                def properties
+                  #{properties}
+                end
+
+                def uuid
+                  "#{uuid}"
+                end
+
+                def unit
+                  #{sanitized_unit}
+                end
+              end
+            end
+          end
+        KLASS
+      end
+
+      def file_path
+        File.dirname(__FILE__) + '/../lib/rubyhome/hap/characteristics/' + sanitized_name + '.rb'
+      end
+
+      def sanitized_name
+        name.downcase.gsub(' ', '_').gsub('.', '_')
+      end
+
+      def class_name
+        name.gsub(' ', '').gsub('.', '_')
+      end
+
+      def sanitized_unit
+        if unit
+          "\"#{unit}\""
+        else
+          "nil"
+        end
+      end
+
+      def sanitized_constraints
+        if constraints
+          constraints
+        else
+          "{}"
+        end
+      end
+
+      private
+
+      attr_reader :constraints, :format, :name, :permissions, :properties, :uuid, :unit
   end
 end
 
