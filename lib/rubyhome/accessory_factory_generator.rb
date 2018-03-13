@@ -1,7 +1,7 @@
 require_relative 'hap/service'
 
 module Rubyhome
-  module AccessoryBuilder
+  module AccessoryBuilderGenerator
     class << self
       def build
         Service.descendants.each do |class_name|
@@ -31,5 +31,5 @@ module Rubyhome
     end
   end
 
-  AccessoryBuilder.build
+  AccessoryBuilderGenerator.build
 end
