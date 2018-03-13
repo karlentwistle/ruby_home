@@ -2,6 +2,10 @@ Dir[File.dirname(__FILE__) + '/services/*.rb'].each { |file| require file }
 
 module Rubyhome
   class Service
+    def self.descendants
+      ObjectSpace.each_object(Class).select { |klass| klass < self }
+    end
+
     def initialize(accessory: , primary: false, hidden: false)
       @accessory = accessory
       @primary = primary
