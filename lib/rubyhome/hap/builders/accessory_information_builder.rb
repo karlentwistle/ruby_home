@@ -1,6 +1,6 @@
+require_relative '../accessory'
 require_relative '../characteristic'
-require_relative '../models/service'
-require_relative '../models/accessory'
+require_relative '../service'
 
 module Rubyhome
   class AccessoryInformationBuilder
