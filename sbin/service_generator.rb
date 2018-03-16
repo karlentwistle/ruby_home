@@ -52,20 +52,22 @@ module Rubyhome
           module Rubyhome
             class Service
               class #{class_name} < Service
+                class << self
+                  def uuid
+                    "#{uuid}"
+                  end
+
+                  def required_characteristic_uuids
+                    #{required_characteristics}
+                  end
+
+                  def optional_characteristic_uuids
+                    #{optional_characteristics}
+                  end
+                end
+
                 def name
                   "#{name}"
-                end
-
-                def required_characteristics
-                  #{required_characteristics}
-                end
-
-                def optional_characteristics
-                  #{optional_characteristics}
-                end
-
-                def uuid
-                  "#{uuid}"
                 end
               end
             end
