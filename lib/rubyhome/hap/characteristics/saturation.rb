@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class Saturation < Characteristic
+      def self.uuid
+        "0000002F-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :saturation
+      end
+
       def constraints
         {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "0000002F-0000-1000-8000-0026BB765291"
       end
 
       def unit

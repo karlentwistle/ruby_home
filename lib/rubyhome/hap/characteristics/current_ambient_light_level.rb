@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class CurrentAmbientLightLevel < Characteristic
+      def self.uuid
+        "0000006B-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :current_ambient_light_level
+      end
+
       def constraints
         {"MaximumValue"=>100000, "MinimumValue"=>0.0001}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "0000006B-0000-1000-8000-0026BB765291"
       end
 
       def unit

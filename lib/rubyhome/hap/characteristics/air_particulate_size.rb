@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class AirParticulateSize < Characteristic
+      def self.uuid
+        "00000065-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :air_particulate_size
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"2.5 μm", "1"=>"10 μm"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "00000065-0000-1000-8000-0026BB765291"
       end
 
       def unit

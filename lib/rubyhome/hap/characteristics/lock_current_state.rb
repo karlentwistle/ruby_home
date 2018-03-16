@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class LockCurrentState < Characteristic
+      def self.uuid
+        "0000001D-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :lock_current_state
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Unsecured", "1"=>"Secured", "2"=>"Jammed", "3"=>"Unknown"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "0000001D-0000-1000-8000-0026BB765291"
       end
 
       def unit

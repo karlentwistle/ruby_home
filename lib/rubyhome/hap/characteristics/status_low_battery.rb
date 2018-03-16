@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class StatusLowBattery < Characteristic
+      def self.uuid
+        "00000079-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :status_low_battery
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Battery Level Normal", "1"=>"Battery Level Low"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "00000079-0000-1000-8000-0026BB765291"
       end
 
       def unit

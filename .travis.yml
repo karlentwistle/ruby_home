@@ -11,7 +11,6 @@ before_install:
   - bundle
 
 rvm:
-  - 2.4.3
   - 2.5.0
   - ruby-head
 

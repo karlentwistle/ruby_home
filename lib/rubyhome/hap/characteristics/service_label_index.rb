@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class ServiceLabelIndex < Characteristic
+      def self.uuid
+        "000000CB-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :service_label_index
+      end
+
       def constraints
         {"MaximumValue"=>255, "MinimumValue"=>1, "StepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read"]
-      end
-
-      def uuid
-        "000000CB-0000-1000-8000-0026BB765291"
       end
 
       def unit

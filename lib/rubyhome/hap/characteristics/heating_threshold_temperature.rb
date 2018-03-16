@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class HeatingThresholdTemperature < Characteristic
+      def self.uuid
+        "00000012-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :heating_threshold_temperature
+      end
+
       def constraints
         {"MaximumValue"=>25, "MinimumValue"=>0, "StepValue"=>0.1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "00000012-0000-1000-8000-0026BB765291"
       end
 
       def unit

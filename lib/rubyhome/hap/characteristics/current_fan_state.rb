@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class CurrentFanState < Characteristic
+      def self.uuid
+        "000000AF-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :current_fan_state
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Inactive", "1"=>"Idle", "2"=>"Blowing Air"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "000000AF-0000-1000-8000-0026BB765291"
       end
 
       def unit

@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class DigitalZoom < Characteristic
+      def self.uuid
+        "0000011D-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :digital_zoom
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "0000011D-0000-1000-8000-0026BB765291"
       end
 
       def unit

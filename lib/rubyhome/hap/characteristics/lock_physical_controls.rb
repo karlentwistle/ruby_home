@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class LockPhysicalControls < Characteristic
+      def self.uuid
+        "000000A7-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :lock_physical_controls
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Control Lock Disabled", "1"=>"Control Lock Enabled"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "000000A7-0000-1000-8000-0026BB765291"
       end
 
       def unit

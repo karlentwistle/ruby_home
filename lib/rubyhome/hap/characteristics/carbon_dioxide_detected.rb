@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class CarbonDioxideDetected < Characteristic
+      def self.uuid
+        "00000092-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :carbon_dioxide_detected
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"CO2 Levels Normal", "1"=>"CO2 Levels Abnormal"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "00000092-0000-1000-8000-0026BB765291"
       end
 
       def unit

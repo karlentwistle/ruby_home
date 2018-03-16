@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class StatusActive < Characteristic
+      def self.uuid
+        "00000075-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :status_active
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "00000075-0000-1000-8000-0026BB765291"
       end
 
       def unit

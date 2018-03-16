@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class TargetTemperature < Characteristic
+      def self.uuid
+        "00000035-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :target_temperature
+      end
+
       def constraints
         {"MaximumValue"=>38, "MinimumValue"=>10, "StepValue"=>0.1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "00000035-0000-1000-8000-0026BB765291"
       end
 
       def unit

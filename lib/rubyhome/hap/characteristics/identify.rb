@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class Identify < Characteristic
+      def self.uuid
+        "00000014-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :identify
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["write"]
-      end
-
-      def uuid
-        "00000014-0000-1000-8000-0026BB765291"
       end
 
       def unit

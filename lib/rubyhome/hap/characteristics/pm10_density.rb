@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class PM10Density < Characteristic
+      def self.uuid
+        "000000C7-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :pm10_density
+      end
+
       def constraints
         {"MaximumValue"=>1000, "MinimumValue"=>0, "StepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "000000C7-0000-1000-8000-0026BB765291"
       end
 
       def unit

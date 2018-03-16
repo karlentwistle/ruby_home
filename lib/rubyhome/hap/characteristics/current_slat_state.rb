@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class CurrentSlatState < Characteristic
+      def self.uuid
+        "000000AA-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :current_slat_state
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Fixed", "1"=>"Jammed", "2"=>"Swinging"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "000000AA-0000-1000-8000-0026BB765291"
       end
 
       def unit

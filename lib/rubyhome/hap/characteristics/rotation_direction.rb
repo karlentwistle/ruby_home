@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class RotationDirection < Characteristic
+      def self.uuid
+        "00000028-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :rotation_direction
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Clockwise", "1"=>"Counter-clockwise"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "00000028-0000-1000-8000-0026BB765291"
       end
 
       def unit

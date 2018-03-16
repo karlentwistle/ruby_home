@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class NitrogenDioxideDensity < Characteristic
+      def self.uuid
+        "000000C4-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :nitrogen_dioxide_density
+      end
+
       def constraints
         {"MaximumValue"=>1000, "MinimumValue"=>0, "StepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "000000C4-0000-1000-8000-0026BB765291"
       end
 
       def unit

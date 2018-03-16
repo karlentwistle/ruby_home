@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class ColorTemperature < Characteristic
+      def self.uuid
+        "000000CE-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :color_temperature
+      end
+
       def constraints
         {"MaximumValue"=>500, "MinimumValue"=>140, "StepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "000000CE-0000-1000-8000-0026BB765291"
       end
 
       def unit

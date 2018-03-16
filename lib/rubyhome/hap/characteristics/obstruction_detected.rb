@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class ObstructionDetected < Characteristic
+      def self.uuid
+        "00000024-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :obstruction_detected
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "00000024-0000-1000-8000-0026BB765291"
       end
 
       def unit

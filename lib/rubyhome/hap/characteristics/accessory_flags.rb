@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class AccessoryFlags < Characteristic
+      def self.uuid
+        "000000A6-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :accessory_flags
+      end
+
       def constraints
         {"ValidBits"=>{"0"=>"Requires Additional Setup"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "000000A6-0000-1000-8000-0026BB765291"
       end
 
       def unit

@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class ChargingState < Characteristic
+      def self.uuid
+        "0000008F-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :charging_state
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Not Charging", "1"=>"Charging", "2"=>"Not Chargeable"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "0000008F-0000-1000-8000-0026BB765291"
       end
 
       def unit
