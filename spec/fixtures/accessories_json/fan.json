@@ -43,7 +43,7 @@
                 "pr"
               ],
               "format": "string",
-              "value": "Node Bridge",
+              "value": "Rubyhome",
               "description": "Name"
             },
             {
@@ -115,7 +115,7 @@
                 "pr"
               ],
               "format": "string",
-              "value": "Node Bridge",
+              "value": "Fan",
               "description": "Name"
             },
             {
@@ -148,16 +148,6 @@
           "characteristics": [
             {
               "iid": 9,
-              "type": "00000023-0000-1000-8000-0026BB765291",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "value": "Fan",
-              "description": "Name"
-            },
-            {
-              "iid": 10,
               "type": "00000025-0000-1000-8000-0026BB765291",
               "perms": [
                 "pr",
@@ -167,6 +157,16 @@
               "format": "bool",
               "value": false,
               "description": "On"
+            },
+            {
+              "iid": 10,
+              "type": "00000023-0000-1000-8000-0026BB765291",
+              "perms": [
+                "pr"
+              ],
+              "format": "string",
+              "value": "Fan",
+              "description": "Name"
             }
           ],
           "primary": false,

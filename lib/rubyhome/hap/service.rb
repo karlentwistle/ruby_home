@@ -15,5 +15,9 @@ module Rubyhome
 
     attr_reader :accessory, :characteristics, :primary, :hidden
     attr_accessor :instance_id
+
+    def uuid
+      self.class.uuid
+    end
   end
 end

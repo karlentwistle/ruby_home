@@ -47,6 +47,8 @@ module Rubyhome
       end
 
       def add_accessory(accessory)
+        return true if accessories.include?(accessory)
+
         accessories << accessory.tap do |a|
           a.id = accessories.size + 1
         end
@@ -55,8 +57,9 @@ module Rubyhome
       end
 
       def add_service(service)
-        accessory = service.accessory
+        return true if services.include?(service)
 
+        accessory = service.accessory
         accessory.services << service.tap do |s|
           s.instance_id = accessory.next_available_instance_id
         end
@@ -65,8 +68,9 @@ module Rubyhome
       end
 
       def add_characteristic(characteristic)
-        service = characteristic.service
+        return true if characteristics.include?(characteristic)
 
+        service = characteristic.service
         service.characteristics << characteristic.tap do |c|
           c.instance_id = characteristic.accessory.next_available_instance_id
         end

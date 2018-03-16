@@ -2,8 +2,8 @@
 
 require_relative '../lib/rubyhome'
 
-Rubyhome::AccessoryInformationBuilder.new.save
-fan = Rubyhome::FanBuilder.new
+Rubyhome::AccessoryInformationFactory.new.save
+fan = Rubyhome::FanFactory.new
 fan.save
 
 fan.on.on(:value_updated) do |new_value|
