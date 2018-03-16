@@ -28,7 +28,9 @@ module Rubyhome
 
     def initialize(accessory: Rubyhome::Accessory.new, **options)
       @accessory = accessory
-      @accessory_information = AccessoryInformationFactory.new(accessory: accessory, service: service, **options)
+      @accessory_information = AccessoryInformationFactory.new(
+        accessory: accessory, service: service, **options
+      )
       @attributes = self.class.characteristics.map(&:attribute_name)
       options.slice(*attributes).each do |key, value|
         self.send("#{key}=", value)
@@ -42,17 +44,16 @@ module Rubyhome
     end
 
     characteristics.each do |characteristic|
-      define_method characteristic.attribute_name do
-        instance_variable_get("@#{characteristic.attribute_name}") ||
-        instance_variable_set(
-          "@#{characteristic.attribute_name}",
-          characteristic.new(service: service)
-        )
+      attribute_name = characteristic.attribute_name
+
+      define_method attribute_name do
+        instance_variable_get("@#{attribute_name}") ||
+          send("#{attribute_name}=", nil)
       end
 
-      define_method "#{characteristic.attribute_name}=" do |value|
+      define_method "#{attribute_name}=" do |value|
         instance_variable_set(
-          "@#{characteristic.attribute_name}",
+          "@#{attribute_name}",
           characteristic.new(value: value, service: service)
         )
       end
