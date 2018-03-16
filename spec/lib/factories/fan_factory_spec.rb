@@ -14,4 +14,11 @@ RSpec.describe Rubyhome::FanFactory do
       expect(fan.accessory_information).to be_a(Rubyhome::AccessoryInformationFactory)
     end
   end
+
+  describe '#on' do
+    it 'returns the same instance' do
+      fan = Rubyhome::FanFactory.new
+      expect(fan.on.object_id).to eql(fan.on.object_id)
+    end
+  end
 end

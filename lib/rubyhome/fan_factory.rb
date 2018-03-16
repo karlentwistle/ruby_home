@@ -43,7 +43,11 @@ module Rubyhome
 
     characteristics.each do |characteristic|
       define_method characteristic.attribute_name do
-        instance_variable_get("@#{characteristic.attribute_name}") || characteristic.new(service: service)
+        instance_variable_get("@#{characteristic.attribute_name}") ||
+        instance_variable_set(
+          "@#{characteristic.attribute_name}",
+          characteristic.new(service: service)
+        )
       end
 
       define_method "#{characteristic.attribute_name}=" do |value|
