@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class SelectedRTPStreamConfiguration < Characteristic
+      def self.uuid
+        "00000117-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :selected_rtp_stream_configuration
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write"]
-      end
-
-      def uuid
-        "00000117-0000-1000-8000-0026BB765291"
       end
 
       def unit

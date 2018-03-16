@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class ResetFilterIndication < Characteristic
+      def self.uuid
+        "000000AD-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :reset_filter_indication
+      end
+
       def constraints
         {"MaximumValue"=>1, "MinimumValue"=>1, "StepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["write"]
-      end
-
-      def uuid
-        "000000AD-0000-1000-8000-0026BB765291"
       end
 
       def unit

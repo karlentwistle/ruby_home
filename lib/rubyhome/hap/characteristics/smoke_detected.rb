@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class SmokeDetected < Characteristic
+      def self.uuid
+        "00000076-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :smoke_detected
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Smoke Not Detected", "1"=>"Smoke Detected"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "00000076-0000-1000-8000-0026BB765291"
       end
 
       def unit

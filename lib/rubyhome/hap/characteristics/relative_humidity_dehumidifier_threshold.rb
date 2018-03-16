@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class RelativeHumidityDehumidifierThreshold < Characteristic
+      def self.uuid
+        "000000C9-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :relative_humidity_dehumidifier_threshold
+      end
+
       def constraints
         {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "000000C9-0000-1000-8000-0026BB765291"
       end
 
       def unit

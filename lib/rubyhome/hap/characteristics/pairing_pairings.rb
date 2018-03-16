@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class PairingPairings < Characteristic
+      def self.uuid
+        "00000050-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :pairing_pairings
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write"]
-      end
-
-      def uuid
-        "00000050-0000-1000-8000-0026BB765291"
       end
 
       def unit

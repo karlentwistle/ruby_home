@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class AdministratorOnlyAccess < Characteristic
+      def self.uuid
+        "00000001-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :administrator_only_access
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "00000001-0000-1000-8000-0026BB765291"
       end
 
       def unit

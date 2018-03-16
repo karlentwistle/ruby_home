@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class Active < Characteristic
+      def self.uuid
+        "000000B0-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :active
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Inactive", "1"=>"Active"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "000000B0-0000-1000-8000-0026BB765291"
       end
 
       def unit

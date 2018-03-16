@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class SwingMode < Characteristic
+      def self.uuid
+        "000000B6-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :swing_mode
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Swing Disabled", "1"=>"Swing Enabled"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "000000B6-0000-1000-8000-0026BB765291"
       end
 
       def unit

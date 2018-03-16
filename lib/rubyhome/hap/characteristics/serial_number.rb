@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class SerialNumber < Characteristic
+      def self.uuid
+        "00000030-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :serial_number
+      end
+
       def constraints
         {"MaximumLength"=>64}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read"]
-      end
-
-      def uuid
-        "00000030-0000-1000-8000-0026BB765291"
       end
 
       def unit

@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class ServiceLabelNamespace < Characteristic
+      def self.uuid
+        "000000CD-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :service_label_namespace
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Dots", "1"=>"Arabic Numerals"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read"]
-      end
-
-      def uuid
-        "000000CD-0000-1000-8000-0026BB765291"
       end
 
       def unit

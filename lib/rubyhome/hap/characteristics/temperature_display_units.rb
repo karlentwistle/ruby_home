@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class TemperatureDisplayUnits < Characteristic
+      def self.uuid
+        "00000036-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :temperature_display_units
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Celsius", "1"=>"Fahrenheit"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "00000036-0000-1000-8000-0026BB765291"
       end
 
       def unit

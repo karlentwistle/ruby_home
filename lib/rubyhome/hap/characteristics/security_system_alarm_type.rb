@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class SecuritySystemAlarmType < Characteristic
+      def self.uuid
+        "0000008E-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :security_system_alarm_type
+      end
+
       def constraints
         {"MaximumValue"=>1, "MinimumValue"=>0, "StepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "0000008E-0000-1000-8000-0026BB765291"
       end
 
       def unit

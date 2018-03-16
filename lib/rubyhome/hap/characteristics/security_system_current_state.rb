@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class SecuritySystemCurrentState < Characteristic
+      def self.uuid
+        "00000066-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :security_system_current_state
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Stay Arm", "1"=>"Away Arm", "2"=>"Night Arm", "3"=>"Disarmed", "4"=>"Alarm Triggered"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "00000066-0000-1000-8000-0026BB765291"
       end
 
       def unit

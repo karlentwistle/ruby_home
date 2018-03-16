@@ -55,6 +55,14 @@ module Rubyhome
           module Rubyhome
             class Characteristic
               class #{class_name} < Characteristic
+                def self.uuid
+                  "#{uuid}"
+                end
+
+                def self.attribute_name
+                  :#{sanitized_name}
+                end
+
                 def constraints
                   #{sanitized_constraints}
                 end
@@ -73,10 +81,6 @@ module Rubyhome
 
                 def properties
                   #{properties}
-                end
-
-                def uuid
-                  "#{uuid}"
                 end
 
                 def unit

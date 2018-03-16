@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class ProgrammableSwitchEvent < Characteristic
+      def self.uuid
+        "00000073-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :programmable_switch_event
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Single Press", "1"=>"Double Press", "2"=>"Long Press"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "00000073-0000-1000-8000-0026BB765291"
       end
 
       def unit

@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class OutletInUse < Characteristic
+      def self.uuid
+        "00000026-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :outlet_in_use
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "00000026-0000-1000-8000-0026BB765291"
       end
 
       def unit

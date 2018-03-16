@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class BatteryLevel < Characteristic
+      def self.uuid
+        "00000068-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :battery_level
+      end
+
       def constraints
         {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "00000068-0000-1000-8000-0026BB765291"
       end
 
       def unit

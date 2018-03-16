@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class TargetAirPurifierState < Characteristic
+      def self.uuid
+        "000000A8-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :target_air_purifier_state
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Manual", "1"=>"Auto"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify"]
-      end
-
-      def uuid
-        "000000A8-0000-1000-8000-0026BB765291"
       end
 
       def unit

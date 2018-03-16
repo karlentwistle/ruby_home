@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class FilterLifeLevel < Characteristic
+      def self.uuid
+        "000000AB-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :filter_life_level
+      end
+
       def constraints
         {"MaximumValue"=>100, "MinimumValue"=>0, "stepValue"=>1}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "000000AB-0000-1000-8000-0026BB765291"
       end
 
       def unit

@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class StatusTampered < Characteristic
+      def self.uuid
+        "0000007A-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :status_tampered
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Not Tampered", "1"=>"Tampered"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "0000007A-0000-1000-8000-0026BB765291"
       end
 
       def unit

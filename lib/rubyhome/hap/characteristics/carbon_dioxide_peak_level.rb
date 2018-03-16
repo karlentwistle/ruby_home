@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class CarbonDioxidePeakLevel < Characteristic
+      def self.uuid
+        "00000094-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :carbon_dioxide_peak_level
+      end
+
       def constraints
         {"MaximumValue"=>100000, "MinimumValue"=>0}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify"]
-      end
-
-      def uuid
-        "00000094-0000-1000-8000-0026BB765291"
       end
 
       def unit

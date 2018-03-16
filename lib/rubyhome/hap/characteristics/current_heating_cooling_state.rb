@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class CurrentHeatingCoolingState < Characteristic
+      def self.uuid
+        "0000000F-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :current_heating_cooling_state
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Off", "1"=>"Heat", "2"=>"Cool"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "0000000F-0000-1000-8000-0026BB765291"
       end
 
       def unit

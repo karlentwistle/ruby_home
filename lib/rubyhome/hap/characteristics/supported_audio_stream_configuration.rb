@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class SupportedAudioStreamConfiguration < Characteristic
+      def self.uuid
+        "00000115-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :supported_audio_stream_configuration
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read"]
-      end
-
-      def uuid
-        "00000115-0000-1000-8000-0026BB765291"
       end
 
       def unit

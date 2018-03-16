@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class LockTargetState < Characteristic
+      def self.uuid
+        "0000001E-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :lock_target_state
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Unsecured", "1"=>"Secured"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "write", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "0000001E-0000-1000-8000-0026BB765291"
       end
 
       def unit

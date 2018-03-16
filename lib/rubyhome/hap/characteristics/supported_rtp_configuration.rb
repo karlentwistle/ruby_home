@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class SupportedRTPConfiguration < Characteristic
+      def self.uuid
+        "00000116-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :supported_rtp_configuration
+      end
+
       def constraints
         {}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read"]
-      end
-
-      def uuid
-        "00000116-0000-1000-8000-0026BB765291"
       end
 
       def unit

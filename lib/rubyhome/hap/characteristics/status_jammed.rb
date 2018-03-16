@@ -3,6 +3,14 @@
 module Rubyhome
   class Characteristic
     class StatusJammed < Characteristic
+      def self.uuid
+        "00000078-0000-1000-8000-0026BB765291"
+      end
+
+      def self.attribute_name
+        :status_jammed
+      end
+
       def constraints
         {"ValidValues"=>{"0"=>"Not Jammed", "1"=>"Jammed"}}
       end
@@ -21,10 +29,6 @@ module Rubyhome
 
       def properties
         ["read", "cnotify", "uncnotify"]
-      end
-
-      def uuid
-        "00000078-0000-1000-8000-0026BB765291"
       end
 
       def unit
