@@ -1,29 +1,11 @@
 require_relative 'hap/accessory'
-require_relative 'hap/characteristic'
 require_relative 'hap/service'
+require_relative 'characteristic_helper'
 
 module Rubyhome
   class FanFactory
-    class << self
-      def characteristics
-        required_characteristics + optional_characteristics
-      end
-
-      def required_characteristics
-        service_class.required_characteristic_uuids.map do |characteristic_uuid|
-          Rubyhome::Characteristic::FROM_UUID[characteristic_uuid]
-        end
-      end
-
-      def optional_characteristics
-        service_class.optional_characteristic_uuids.map do |characteristic_uuid|
-          Rubyhome::Characteristic::FROM_UUID[characteristic_uuid]
-        end
-      end
-
-      def service_class
-        Service::Fan
-      end
+    def self.service_class
+      Service::Fan
     end
 
     def initialize(accessory: Rubyhome::Accessory.new, **options)
@@ -31,7 +13,7 @@ module Rubyhome
       @accessory_information = AccessoryInformationFactory.new(
         accessory: accessory, service: service, **options
       )
-      @attributes = self.class.characteristics.map(&:attribute_name)
+      @attributes = CharacteristicHelper.characteristics(self.class.service_class).map(&:attribute_name)
       options.slice(*attributes).each do |key, value|
         self.send("#{key}=", value)
       end
@@ -43,21 +25,7 @@ module Rubyhome
       @service ||= self.class.service_class.new(accessory: accessory)
     end
 
-    characteristics.each do |characteristic|
-      attribute_name = characteristic.attribute_name
-
-      define_method attribute_name do
-        instance_variable_get("@#{attribute_name}") ||
-          send("#{attribute_name}=", nil)
-      end
-
-      define_method "#{attribute_name}=" do |value|
-        instance_variable_set(
-          "@#{attribute_name}",
-          characteristic.new(value: value, service: service)
-        )
-      end
-    end
+    CharacteristicHelper.define_characteristics(self)
 
     def characteristics
       attributes.map { |attribute| send(attribute) }
