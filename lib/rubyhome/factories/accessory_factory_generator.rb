@@ -1,7 +1,7 @@
+require_relative '../hap/accessory'
+require_relative '../hap/service'
 require_relative 'accessory_base_factory'
 require_relative 'characteristic_helper'
-require_relative 'hap/accessory'
-require_relative 'hap/service'
 
 module Rubyhome
   module AccessoryFactoryGenerator

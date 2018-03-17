@@ -1,4 +1,4 @@
-require_relative 'hap/characteristic'
+require_relative '../hap/characteristic'
 
 module Rubyhome
   module CharacteristicHelper
