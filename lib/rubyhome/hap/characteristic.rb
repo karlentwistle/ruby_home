@@ -16,8 +16,8 @@ module Rubyhome
       'write' => 'pw',
     }.freeze
 
-    FROM_UUID = Hash[descendants.map do |klass_descendant|
-      [klass_descendant.uuid, klass_descendant]
+    FROM_UUID = Hash[descendants.map do |characteristic|
+      [characteristic.uuid, characteristic]
     end].freeze
 
     def initialize(service: , value: nil)
