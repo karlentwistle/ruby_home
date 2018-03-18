@@ -23,12 +23,12 @@ module Rubyhome
     end
 
     def self.factory_name(class_name)
-      demodulize(class_name) + "Factory"
+      demodulize(class_name) + 'Factory'
     end
 
     def self.demodulize(path)
       path = path.to_s
-      if i = path.rindex("::")
+      if i = path.rindex('::')
         path[(i + 2)..-1]
       else
         path
