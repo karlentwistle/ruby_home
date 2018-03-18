@@ -58,7 +58,7 @@ module Rubyhome
     end
 
     def valid?
-      return true if uuid == '00000014-0000-1000-8000-0026BB765291'
+      return true if is_a?(Identify)
       value != nil
     end
 
@@ -71,16 +71,16 @@ module Rubyhome
     private
 
       DEFAULT_VALUES = {
-        '00000014-0000-1000-8000-0026BB765291' => nil,
-        '00000020-0000-1000-8000-0026BB765291' => 'Default-Manufacturer',
-        '00000021-0000-1000-8000-0026BB765291' => 'Default-Model',
-        '00000023-0000-1000-8000-0026BB765291' => 'Rubyhome',
-        '00000030-0000-1000-8000-0026BB765291' => 'Default-SerialNumber',
-        '00000052-0000-1000-8000-0026BB765291' => '1.0',
+        FirmwareRevision => '1.0',
+        Identify => nil,
+        Manufacturer => 'Default-Manufacturer',
+        Model => 'Default-Model',
+        Name => 'Rubyhome',
+        SerialNumber => 'Default-SerialNumber',
       }.freeze
 
       def default_value
-        DEFAULT_VALUES.fetch(uuid) do
+        DEFAULT_VALUES.fetch(self.class) do
           false if format == 'bool'
         end
       end
