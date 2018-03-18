@@ -11,7 +11,7 @@ module Rubyhome
       )
       @attributes = CharacteristicHelper.characteristics(self.class.service_class).map(&:attribute_name)
       options.slice(*attributes).each do |key, value|
-        self.send("#{key}=", value)
+        send("#{key}=", value)
       end
     end
 

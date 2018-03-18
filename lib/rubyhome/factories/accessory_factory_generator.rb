@@ -11,7 +11,7 @@ module Rubyhome
 
     def self.build
       GENERATED_SERVICES.each do |class_name|
-        self.create_factory_class(class_name)
+        create_factory_class(class_name)
       end
     end
 
