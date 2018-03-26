@@ -8,6 +8,10 @@ module Rubyhome
           "000000BC-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :heater_cooler
+        end
+
         def required_characteristic_uuids
           ["000000B0-0000-1000-8000-0026BB765291", "000000B1-0000-1000-8000-0026BB765291", "000000B2-0000-1000-8000-0026BB765291", "00000011-0000-1000-8000-0026BB765291"]
         end

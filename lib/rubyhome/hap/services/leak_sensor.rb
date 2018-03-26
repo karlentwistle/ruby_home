@@ -8,6 +8,10 @@ module Rubyhome
           "00000083-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :leak_sensor
+        end
+
         def required_characteristic_uuids
           ["00000070-0000-1000-8000-0026BB765291"]
         end

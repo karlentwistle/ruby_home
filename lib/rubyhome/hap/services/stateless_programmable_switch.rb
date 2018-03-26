@@ -8,6 +8,10 @@ module Rubyhome
           "00000089-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :stateless_programmable_switch
+        end
+
         def required_characteristic_uuids
           ["00000073-0000-1000-8000-0026BB765291"]
         end

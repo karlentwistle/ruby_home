@@ -8,6 +8,10 @@ module Rubyhome
           "0000008C-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :window_covering
+        end
+
         def required_characteristic_uuids
           ["0000006D-0000-1000-8000-0026BB765291", "0000007C-0000-1000-8000-0026BB765291", "00000072-0000-1000-8000-0026BB765291"]
         end

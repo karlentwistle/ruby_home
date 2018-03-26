@@ -8,6 +8,10 @@ module Rubyhome
           "0000007E-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :security_system
+        end
+
         def required_characteristic_uuids
           ["00000066-0000-1000-8000-0026BB765291", "00000067-0000-1000-8000-0026BB765291"]
         end

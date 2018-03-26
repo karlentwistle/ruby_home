@@ -8,6 +8,10 @@ module Rubyhome
           "000000CC-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :service_label
+        end
+
         def required_characteristic_uuids
           ["000000CD-0000-1000-8000-0026BB765291"]
         end

@@ -8,6 +8,10 @@ module Rubyhome
           "00000084-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :light_sensor
+        end
+
         def required_characteristic_uuids
           ["0000006B-0000-1000-8000-0026BB765291"]
         end

@@ -8,6 +8,10 @@ module Rubyhome
           "00000097-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :carbon_dioxide_sensor
+        end
+
         def required_characteristic_uuids
           ["00000092-0000-1000-8000-0026BB765291"]
         end

@@ -8,6 +8,10 @@ module Rubyhome
           "00000080-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :contact_sensor
+        end
+
         def required_characteristic_uuids
           ["0000006A-0000-1000-8000-0026BB765291"]
         end

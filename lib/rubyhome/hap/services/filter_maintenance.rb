@@ -8,6 +8,10 @@ module Rubyhome
           "000000BA-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :filter_maintenance
+        end
+
         def required_characteristic_uuids
           ["000000AC-0000-1000-8000-0026BB765291"]
         end

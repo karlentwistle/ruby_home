@@ -57,6 +57,10 @@ module Rubyhome
                     "#{uuid}"
                   end
 
+                  def name
+                    :#{sanitized_name}
+                  end
+
                   def required_characteristic_uuids
                     #{required_characteristics}
                   end

@@ -8,6 +8,10 @@ module Rubyhome
           "00000085-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :motion_sensor
+        end
+
         def required_characteristic_uuids
           ["00000022-0000-1000-8000-0026BB765291"]
         end

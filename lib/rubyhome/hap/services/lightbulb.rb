@@ -8,6 +8,10 @@ module Rubyhome
           "00000043-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :lightbulb
+        end
+
         def required_characteristic_uuids
           ["00000025-0000-1000-8000-0026BB765291"]
         end
