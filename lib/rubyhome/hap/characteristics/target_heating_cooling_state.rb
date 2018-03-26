@@ -7,7 +7,7 @@ module Rubyhome
         "00000033-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :target_heating_cooling_state
       end
 

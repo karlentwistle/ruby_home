@@ -49,8 +49,8 @@ module Rubyhome
       self.class.uuid
     end
 
-    def attribute_name
-      name.downcase
+    def name
+      self.class.name
     end
 
     def ==(other)

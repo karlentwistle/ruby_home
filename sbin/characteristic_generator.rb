@@ -59,7 +59,7 @@ module Rubyhome
                   "#{uuid}"
                 end
 
-                def self.attribute_name
+                def self.name
                   :#{sanitized_name}
                 end
 

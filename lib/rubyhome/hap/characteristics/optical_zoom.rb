@@ -7,7 +7,7 @@ module Rubyhome
         "0000011C-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :optical_zoom
       end
 

@@ -7,7 +7,7 @@ module Rubyhome
         "000000A9-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :current_air_purifier_state
       end
 

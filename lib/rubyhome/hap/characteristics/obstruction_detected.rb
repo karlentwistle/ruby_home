@@ -7,7 +7,7 @@ module Rubyhome
         "00000024-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :obstruction_detected
       end
 
