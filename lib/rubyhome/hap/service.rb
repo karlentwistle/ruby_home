@@ -7,11 +7,15 @@ module Rubyhome
       ObjectSpace.each_object(Class).select { |klass| klass < self }
     end
 
-    def initialize(accessory: , primary: false, hidden: false)
+    def initialize(accessory: , primary: false, hidden: false, **options)
       @accessory = accessory
       @primary = primary
       @hidden = hidden
       @characteristics = []
+
+      options.each do |key, value|
+        send("#{key}=", value)
+      end
     end
 
     attr_reader :accessory, :characteristics, :primary, :hidden
@@ -22,7 +26,7 @@ module Rubyhome
     end
 
     def characteristic(characteristic_name)
-      new_characteristic = characteristics.find do |characteristic|
+      characteristics.find do |characteristic|
         characteristic.name == characteristic_name
       end
     end
@@ -34,8 +38,26 @@ module Rubyhome
     end
 
     def optional_characteristics
-      self.class.optional_characteristic_uuids.map do |characteristic_uuid|
+      @optional_characteristics ||= self.class.optional_characteristic_uuids.map do |characteristic_uuid|
         Rubyhome::Characteristic::FROM_UUID[characteristic_uuid]
+      end.map {|characteristic| characteristic.new(service: self)}
+    end
+
+    def available_characteristics
+      required_characteristics + optional_characteristics
+    end
+
+    def method_missing(name, *args)
+      stringy_name = name.to_s
+
+      if stringy_name[-1] == '='
+        available_characteristics
+          .find {|characteristic| characteristic.name == stringy_name.chop.to_sym}
+          .value = args[0]
+      else
+        available_characteristics
+          .find {|characteristic| characteristic.name == stringy_name.to_sym}
+          .value
       end
     end
 
@@ -45,6 +67,12 @@ module Rubyhome
 
       required_characteristics.each do |characteristic|
         if characteristic.valid?
+          IdentifierCache.add_characteristic(characteristic)
+        end
+      end
+
+      optional_characteristics.each do |characteristic|
+        if characteristic.user_defined?
           IdentifierCache.add_characteristic(characteristic)
         end
       end

@@ -25,7 +25,7 @@ module Rubyhome
       @value = value
     end
 
-    attr_reader :service, :value
+    attr_reader :service, :value, :user_defined
     attr_accessor :instance_id
 
     def accessory
@@ -36,8 +36,13 @@ module Rubyhome
       accessory.id
     end
 
+    def user_defined?
+      !!@user_defined
+    end
+
     def value=(new_value)
       @value = new_value
+      @user_defined = true
       broadcast(:value_updated, new_value)
     end
 
