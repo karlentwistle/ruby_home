@@ -11,12 +11,12 @@ module Rubyhome
         :occupancy_detected
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Occupancy Not Detected", "1"=>"Occupancy Detected"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Occupancy Not Detected", "1"=>"Occupancy Detected"}}
       end
 
       def description

@@ -11,12 +11,12 @@ module Rubyhome
         :swing_mode
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Swing Disabled", "1"=>"Swing Enabled"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Swing Disabled", "1"=>"Swing Enabled"}}
       end
 
       def description

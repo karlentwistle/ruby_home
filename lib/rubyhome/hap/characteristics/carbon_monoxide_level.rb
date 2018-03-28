@@ -11,12 +11,12 @@ module Rubyhome
         :carbon_monoxide_level
       end
 
-      def constraints
-        {"MaximumValue"=>100, "MinimumValue"=>0}
+      def self.format
+        "float"
       end
 
-      def format
-        "float"
+      def constraints
+        {"MaximumValue"=>100, "MinimumValue"=>0}
       end
 
       def description

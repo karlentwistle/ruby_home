@@ -11,12 +11,12 @@ module Rubyhome
         :lock_control_point
       end
 
-      def constraints
-        {}
+      def self.format
+        "tlv8"
       end
 
-      def format
-        "tlv8"
+      def constraints
+        {}
       end
 
       def description

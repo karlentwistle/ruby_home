@@ -11,12 +11,12 @@ module Rubyhome
         :security_system_current_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Stay Arm", "1"=>"Away Arm", "2"=>"Night Arm", "3"=>"Disarmed", "4"=>"Alarm Triggered"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Stay Arm", "1"=>"Away Arm", "2"=>"Night Arm", "3"=>"Disarmed", "4"=>"Alarm Triggered"}}
       end
 
       def description

@@ -11,12 +11,12 @@ module Rubyhome
         :obstruction_detected
       end
 
-      def constraints
-        {}
+      def self.format
+        "bool"
       end
 
-      def format
-        "bool"
+      def constraints
+        {}
       end
 
       def description

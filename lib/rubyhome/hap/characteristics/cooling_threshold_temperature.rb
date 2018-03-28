@@ -11,12 +11,12 @@ module Rubyhome
         :cooling_threshold_temperature
       end
 
-      def constraints
-        {"MaximumValue"=>35, "MinimumValue"=>10, "StepValue"=>0.1}
+      def self.format
+        "float"
       end
 
-      def format
-        "float"
+      def constraints
+        {"MaximumValue"=>35, "MinimumValue"=>10, "StepValue"=>0.1}
       end
 
       def description

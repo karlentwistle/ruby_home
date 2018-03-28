@@ -63,12 +63,12 @@ module Rubyhome
                   :#{sanitized_name}
                 end
 
-                def constraints
-                  #{sanitized_constraints}
+                def self.format
+                  "#{format}"
                 end
 
-                def format
-                  "#{format}"
+                def constraints
+                  #{sanitized_constraints}
                 end
 
                 def description

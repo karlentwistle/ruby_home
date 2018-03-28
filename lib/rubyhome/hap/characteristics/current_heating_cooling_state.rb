@@ -11,12 +11,12 @@ module Rubyhome
         :current_heating_cooling_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Off", "1"=>"Heat", "2"=>"Cool"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Off", "1"=>"Heat", "2"=>"Cool"}}
       end
 
       def description

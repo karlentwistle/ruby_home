@@ -11,12 +11,12 @@ module Rubyhome
         :charging_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Not Charging", "1"=>"Charging", "2"=>"Not Chargeable"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Not Charging", "1"=>"Charging", "2"=>"Not Chargeable"}}
       end
 
       def description

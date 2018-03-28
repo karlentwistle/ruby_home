@@ -11,12 +11,12 @@ module Rubyhome
         :color_temperature
       end
 
-      def constraints
-        {"MaximumValue"=>500, "MinimumValue"=>140, "StepValue"=>1}
+      def self.format
+        "uint32"
       end
 
-      def format
-        "uint32"
+      def constraints
+        {"MaximumValue"=>500, "MinimumValue"=>140, "StepValue"=>1}
       end
 
       def description

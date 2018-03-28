@@ -11,12 +11,12 @@ module Rubyhome
         :status_low_battery
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Battery Level Normal", "1"=>"Battery Level Low"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Battery Level Normal", "1"=>"Battery Level Low"}}
       end
 
       def description

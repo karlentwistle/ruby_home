@@ -11,12 +11,12 @@ module Rubyhome
         :current_tilt_angle
       end
 
-      def constraints
-        {"MaximumValue"=>90, "MinimumValue"=>-90, "StepValue"=>1}
+      def self.format
+        "int32"
       end
 
-      def format
-        "int32"
+      def constraints
+        {"MaximumValue"=>90, "MinimumValue"=>-90, "StepValue"=>1}
       end
 
       def description

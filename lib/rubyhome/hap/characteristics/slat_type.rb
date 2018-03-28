@@ -11,12 +11,12 @@ module Rubyhome
         :slat_type
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Horizontal", "1"=>"Vertical"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Horizontal", "1"=>"Vertical"}}
       end
 
       def description

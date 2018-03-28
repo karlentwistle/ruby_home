@@ -11,12 +11,12 @@ module Rubyhome
         :firmware_revision
       end
 
-      def constraints
-        {}
+      def self.format
+        "string"
       end
 
-      def format
-        "string"
+      def constraints
+        {}
       end
 
       def description

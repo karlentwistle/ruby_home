@@ -11,12 +11,12 @@ module Rubyhome
         :status_fault
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"No Fault", "1"=>"General Fault"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"No Fault", "1"=>"General Fault"}}
       end
 
       def description

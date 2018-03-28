@@ -11,12 +11,12 @@ module Rubyhome
         :outlet_in_use
       end
 
-      def constraints
-        {}
+      def self.format
+        "bool"
       end
 
-      def format
-        "bool"
+      def constraints
+        {}
       end
 
       def description

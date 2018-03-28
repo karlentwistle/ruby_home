@@ -11,12 +11,12 @@ module Rubyhome
         :rotation_direction
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Clockwise", "1"=>"Counter-clockwise"}}
+      def self.format
+        "int32"
       end
 
-      def format
-        "int32"
+      def constraints
+        {"ValidValues"=>{"0"=>"Clockwise", "1"=>"Counter-clockwise"}}
       end
 
       def description

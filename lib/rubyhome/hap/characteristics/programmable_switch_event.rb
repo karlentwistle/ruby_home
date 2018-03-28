@@ -11,12 +11,12 @@ module Rubyhome
         :programmable_switch_event
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Single Press", "1"=>"Double Press", "2"=>"Long Press"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Single Press", "1"=>"Double Press", "2"=>"Long Press"}}
       end
 
       def description

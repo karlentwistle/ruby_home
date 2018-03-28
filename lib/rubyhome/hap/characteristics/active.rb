@@ -11,12 +11,12 @@ module Rubyhome
         :active
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Inactive", "1"=>"Active"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Inactive", "1"=>"Active"}}
       end
 
       def description

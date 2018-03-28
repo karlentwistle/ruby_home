@@ -11,12 +11,12 @@ module Rubyhome
         :brightness
       end
 
-      def constraints
-        {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
+      def self.format
+        "int32"
       end
 
-      def format
-        "int32"
+      def constraints
+        {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
       end
 
       def description

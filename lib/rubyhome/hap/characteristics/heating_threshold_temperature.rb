@@ -11,12 +11,12 @@ module Rubyhome
         :heating_threshold_temperature
       end
 
-      def constraints
-        {"MaximumValue"=>25, "MinimumValue"=>0, "StepValue"=>0.1}
+      def self.format
+        "float"
       end
 
-      def format
-        "float"
+      def constraints
+        {"MaximumValue"=>25, "MinimumValue"=>0, "StepValue"=>0.1}
       end
 
       def description

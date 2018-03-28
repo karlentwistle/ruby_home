@@ -11,12 +11,12 @@ module Rubyhome
         :current_position
       end
 
-      def constraints
-        {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
       end
 
       def description

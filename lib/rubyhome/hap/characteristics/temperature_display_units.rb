@@ -11,12 +11,12 @@ module Rubyhome
         :temperature_display_units
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Celsius", "1"=>"Fahrenheit"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Celsius", "1"=>"Fahrenheit"}}
       end
 
       def description

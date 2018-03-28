@@ -11,12 +11,12 @@ module Rubyhome
         :current_ambient_light_level
       end
 
-      def constraints
-        {"MaximumValue"=>100000, "MinimumValue"=>0.0001}
+      def self.format
+        "float"
       end
 
-      def format
-        "float"
+      def constraints
+        {"MaximumValue"=>100000, "MinimumValue"=>0.0001}
       end
 
       def description

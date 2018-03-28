@@ -11,12 +11,12 @@ module Rubyhome
         :streaming_status
       end
 
-      def constraints
-        {}
+      def self.format
+        "tlv8"
       end
 
-      def format
-        "tlv8"
+      def constraints
+        {}
       end
 
       def description

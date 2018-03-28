@@ -11,12 +11,12 @@ module Rubyhome
         :image_rotation
       end
 
-      def constraints
-        {"MaximumValue"=>270, "MinimumValue"=>0, "StepValue"=>90}
+      def self.format
+        "float"
       end
 
-      def format
-        "float"
+      def constraints
+        {"MaximumValue"=>270, "MinimumValue"=>0, "StepValue"=>90}
       end
 
       def description

@@ -11,12 +11,12 @@ module Rubyhome
         :accessory_flags
       end
 
-      def constraints
-        {"ValidBits"=>{"0"=>"Requires Additional Setup"}}
+      def self.format
+        "uint32"
       end
 
-      def format
-        "uint32"
+      def constraints
+        {"ValidBits"=>{"0"=>"Requires Additional Setup"}}
       end
 
       def description

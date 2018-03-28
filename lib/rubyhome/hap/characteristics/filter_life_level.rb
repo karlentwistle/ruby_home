@@ -11,12 +11,12 @@ module Rubyhome
         :filter_life_level
       end
 
-      def constraints
-        {"MaximumValue"=>100, "MinimumValue"=>0, "stepValue"=>1}
+      def self.format
+        "float"
       end
 
-      def format
-        "float"
+      def constraints
+        {"MaximumValue"=>100, "MinimumValue"=>0, "stepValue"=>1}
       end
 
       def description

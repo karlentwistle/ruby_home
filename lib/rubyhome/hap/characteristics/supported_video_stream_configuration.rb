@@ -11,12 +11,12 @@ module Rubyhome
         :supported_video_stream_configuration
       end
 
-      def constraints
-        {}
+      def self.format
+        "tlv8"
       end
 
-      def format
-        "tlv8"
+      def constraints
+        {}
       end
 
       def description

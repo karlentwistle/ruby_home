@@ -11,12 +11,12 @@ module Rubyhome
         :service_label_index
       end
 
-      def constraints
-        {"MaximumValue"=>255, "MinimumValue"=>1, "StepValue"=>1}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"MaximumValue"=>255, "MinimumValue"=>1, "StepValue"=>1}
       end
 
       def description

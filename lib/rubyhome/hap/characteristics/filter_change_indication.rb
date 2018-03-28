@@ -11,12 +11,12 @@ module Rubyhome
         :filter_change_indication
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Filter OK", "1"=>"Change Filter"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Filter OK", "1"=>"Change Filter"}}
       end
 
       def description

@@ -11,12 +11,12 @@ module Rubyhome
         :hue
       end
 
-      def constraints
-        {"MaximumValue"=>360, "MinimumValue"=>0, "StepValue"=>1}
+      def self.format
+        "float"
       end
 
-      def format
-        "float"
+      def constraints
+        {"MaximumValue"=>360, "MinimumValue"=>0, "StepValue"=>1}
       end
 
       def description

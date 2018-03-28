@@ -11,12 +11,12 @@ module Rubyhome
         :air_particulate_size
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"2.5 μm", "1"=>"10 μm"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"2.5 μm", "1"=>"10 μm"}}
       end
 
       def description

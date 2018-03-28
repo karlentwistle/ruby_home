@@ -11,12 +11,12 @@ module Rubyhome
         :current_slat_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Fixed", "1"=>"Jammed", "2"=>"Swinging"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Fixed", "1"=>"Jammed", "2"=>"Swinging"}}
       end
 
       def description

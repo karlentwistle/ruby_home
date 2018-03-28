@@ -11,12 +11,12 @@ module Rubyhome
         :security_system_alarm_type
       end
 
-      def constraints
-        {"MaximumValue"=>1, "MinimumValue"=>0, "StepValue"=>1}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"MaximumValue"=>1, "MinimumValue"=>0, "StepValue"=>1}
       end
 
       def description

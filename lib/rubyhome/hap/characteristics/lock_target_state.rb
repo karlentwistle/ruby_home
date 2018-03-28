@@ -11,12 +11,12 @@ module Rubyhome
         :lock_target_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Unsecured", "1"=>"Secured"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Unsecured", "1"=>"Secured"}}
       end
 
       def description

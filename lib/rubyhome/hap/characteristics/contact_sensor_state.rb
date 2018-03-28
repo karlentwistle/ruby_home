@@ -11,12 +11,12 @@ module Rubyhome
         :contact_sensor_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Contact Detected", "1"=>"Contact Not Detected"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Contact Detected", "1"=>"Contact Not Detected"}}
       end
 
       def description

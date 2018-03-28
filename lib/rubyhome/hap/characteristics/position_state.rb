@@ -11,12 +11,12 @@ module Rubyhome
         :position_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Decreasing", "1"=>"Increasing", "2"=>"Stopped"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Decreasing", "1"=>"Increasing", "2"=>"Stopped"}}
       end
 
       def description

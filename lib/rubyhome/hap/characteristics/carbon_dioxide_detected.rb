@@ -11,12 +11,12 @@ module Rubyhome
         :carbon_dioxide_detected
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"CO2 Levels Normal", "1"=>"CO2 Levels Abnormal"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"CO2 Levels Normal", "1"=>"CO2 Levels Abnormal"}}
       end
 
       def description

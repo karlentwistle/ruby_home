@@ -11,12 +11,12 @@ module Rubyhome
         :pairing_features
       end
 
-      def constraints
-        {}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {}
       end
 
       def description

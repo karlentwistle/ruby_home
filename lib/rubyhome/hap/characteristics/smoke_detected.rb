@@ -11,12 +11,12 @@ module Rubyhome
         :smoke_detected
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Smoke Not Detected", "1"=>"Smoke Detected"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Smoke Not Detected", "1"=>"Smoke Detected"}}
       end
 
       def description

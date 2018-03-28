@@ -11,12 +11,12 @@ module Rubyhome
         :service_label_namespace
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Dots", "1"=>"Arabic Numerals"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Dots", "1"=>"Arabic Numerals"}}
       end
 
       def description

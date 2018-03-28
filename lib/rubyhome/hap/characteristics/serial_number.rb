@@ -11,12 +11,12 @@ module Rubyhome
         :serial_number
       end
 
-      def constraints
-        {"MaximumLength"=>64}
+      def self.format
+        "string"
       end
 
-      def format
-        "string"
+      def constraints
+        {"MaximumLength"=>64}
       end
 
       def description

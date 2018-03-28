@@ -11,12 +11,12 @@ module Rubyhome
         :lock_physical_controls
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Control Lock Disabled", "1"=>"Control Lock Enabled"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Control Lock Disabled", "1"=>"Control Lock Enabled"}}
       end
 
       def description

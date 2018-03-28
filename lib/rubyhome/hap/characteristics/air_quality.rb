@@ -11,12 +11,12 @@ module Rubyhome
         :air_quality
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Unknown", "1"=>"Excellent", "2"=>"Good", "3"=>"Fair", "4"=>"Inferior", "5"=>"Poor"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Unknown", "1"=>"Excellent", "2"=>"Good", "3"=>"Fair", "4"=>"Inferior", "5"=>"Poor"}}
       end
 
       def description

@@ -11,12 +11,12 @@ module Rubyhome
         :relative_humidity_humidifier_threshold
       end
 
-      def constraints
-        {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
+      def self.format
+        "float"
       end
 
-      def format
-        "float"
+      def constraints
+        {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
       end
 
       def description

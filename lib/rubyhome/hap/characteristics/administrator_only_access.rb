@@ -11,12 +11,12 @@ module Rubyhome
         :administrator_only_access
       end
 
-      def constraints
-        {}
+      def self.format
+        "bool"
       end
 
-      def format
-        "bool"
+      def constraints
+        {}
       end
 
       def description

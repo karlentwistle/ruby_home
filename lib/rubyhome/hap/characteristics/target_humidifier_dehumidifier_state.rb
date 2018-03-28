@@ -11,12 +11,12 @@ module Rubyhome
         :target_humidifier_dehumidifier_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Humidifier or Dehumidifier", "1"=>"Humidifier", "2"=>"Dehumidifier"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Humidifier or Dehumidifier", "1"=>"Humidifier", "2"=>"Dehumidifier"}}
       end
 
       def description

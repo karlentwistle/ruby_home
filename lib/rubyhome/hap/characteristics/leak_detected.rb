@@ -11,12 +11,12 @@ module Rubyhome
         :leak_detected
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Leak Not Detected", "1"=>"Leak Detected"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Leak Not Detected", "1"=>"Leak Detected"}}
       end
 
       def description

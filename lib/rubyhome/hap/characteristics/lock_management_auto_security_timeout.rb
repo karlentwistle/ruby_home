@@ -11,12 +11,12 @@ module Rubyhome
         :lock_management_auto_security_timeout
       end
 
-      def constraints
-        {}
+      def self.format
+        "uint32"
       end
 
-      def format
-        "uint32"
+      def constraints
+        {}
       end
 
       def description

@@ -11,12 +11,12 @@ module Rubyhome
         :current_fan_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Inactive", "1"=>"Idle", "2"=>"Blowing Air"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Inactive", "1"=>"Idle", "2"=>"Blowing Air"}}
       end
 
       def description

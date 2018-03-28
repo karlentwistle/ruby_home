@@ -11,12 +11,12 @@ module Rubyhome
         :status_jammed
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Not Jammed", "1"=>"Jammed"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Not Jammed", "1"=>"Jammed"}}
       end
 
       def description

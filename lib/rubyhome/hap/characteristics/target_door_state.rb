@@ -11,12 +11,12 @@ module Rubyhome
         :target_door_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Open", "1"=>"Closed"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Open", "1"=>"Closed"}}
       end
 
       def description

@@ -11,12 +11,12 @@ module Rubyhome
         :digital_zoom
       end
 
-      def constraints
-        {}
+      def self.format
+        "float"
       end
 
-      def format
-        "float"
+      def constraints
+        {}
       end
 
       def description

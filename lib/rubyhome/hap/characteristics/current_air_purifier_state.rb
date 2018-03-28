@@ -11,12 +11,12 @@ module Rubyhome
         :current_air_purifier_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Inactive", "1"=>"Idle", "2"=>"Purifying Air"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Inactive", "1"=>"Idle", "2"=>"Purifying Air"}}
       end
 
       def description

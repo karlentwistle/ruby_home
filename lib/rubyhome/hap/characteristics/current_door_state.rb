@@ -11,12 +11,12 @@ module Rubyhome
         :current_door_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Open", "1"=>"Closed", "2"=>"Opening", "3"=>"Closing", "4"=>"Stopped"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Open", "1"=>"Closed", "2"=>"Opening", "3"=>"Closing", "4"=>"Stopped"}}
       end
 
       def description

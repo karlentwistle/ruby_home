@@ -11,12 +11,12 @@ module Rubyhome
         :target_slat_state
       end
 
-      def constraints
-        {"ValidValues"=>{"0"=>"Manual", "1"=>"Auto"}}
+      def self.format
+        "uint8"
       end
 
-      def format
-        "uint8"
+      def constraints
+        {"ValidValues"=>{"0"=>"Manual", "1"=>"Auto"}}
       end
 
       def description
