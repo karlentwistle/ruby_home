@@ -2,11 +2,10 @@
 
 require_relative '../lib/rubyhome'
 
-Rubyhome::AccessoryInformationFactory.new.save
-fan = Rubyhome::FanFactory.new
-fan.save
+accessory_information = Rubyhome::AccessoryFactory.create(:accessory_information)
+fan = Rubyhome::AccessoryFactory.create(:fan)
 
-fan.on.on(:value_updated) do |new_value|
+fan.characteristic(:on).on(:updated) do |new_value|
   if new_value == 1
     puts "Fan switched on"
   else

@@ -7,16 +7,16 @@ module Rubyhome
         "000000CE-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :color_temperature
+      end
+
+      def self.format
+        "uint32"
       end
 
       def constraints
         {"MaximumValue"=>500, "MinimumValue"=>140, "StepValue"=>1}
-      end
-
-      def format
-        "uint32"
       end
 
       def description

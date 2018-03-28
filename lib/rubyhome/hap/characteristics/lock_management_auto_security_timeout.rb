@@ -7,16 +7,16 @@ module Rubyhome
         "0000001A-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :lock_management_auto_security_timeout
+      end
+
+      def self.format
+        "uint32"
       end
 
       def constraints
         {}
-      end
-
-      def format
-        "uint32"
       end
 
       def description

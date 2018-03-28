@@ -7,16 +7,16 @@ module Rubyhome
         "00000092-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :carbon_dioxide_detected
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"CO2 Levels Normal", "1"=>"CO2 Levels Abnormal"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

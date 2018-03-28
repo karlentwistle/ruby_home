@@ -7,16 +7,16 @@ module Rubyhome
         "00000008-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :brightness
+      end
+
+      def self.format
+        "int32"
       end
 
       def constraints
         {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
-      end
-
-      def format
-        "int32"
       end
 
       def description

@@ -7,16 +7,16 @@ module Rubyhome
         "0000004F-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :pairing_features
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

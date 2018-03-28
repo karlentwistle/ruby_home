@@ -7,16 +7,16 @@ module Rubyhome
         "00000011-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :current_temperature
+      end
+
+      def self.format
+        "float"
       end
 
       def constraints
         {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>0.1}
-      end
-
-      def format
-        "float"
       end
 
       def description

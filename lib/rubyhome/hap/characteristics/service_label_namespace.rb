@@ -7,16 +7,16 @@ module Rubyhome
         "000000CD-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :service_label_namespace
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"Dots", "1"=>"Arabic Numerals"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

@@ -7,16 +7,16 @@ module Rubyhome
         "000000AA-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :current_slat_state
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"Fixed", "1"=>"Jammed", "2"=>"Swinging"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

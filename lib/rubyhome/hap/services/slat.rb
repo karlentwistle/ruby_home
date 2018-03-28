@@ -8,6 +8,10 @@ module Rubyhome
           "000000B9-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :slat
+        end
+
         def required_characteristic_uuids
           ["000000C0-0000-1000-8000-0026BB765291", "000000AA-0000-1000-8000-0026BB765291"]
         end

@@ -8,6 +8,10 @@ module Rubyhome
           "00000041-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :garage_door_opener
+        end
+
         def required_characteristic_uuids
           ["0000000E-0000-1000-8000-0026BB765291", "00000032-0000-1000-8000-0026BB765291", "00000024-0000-1000-8000-0026BB765291"]
         end

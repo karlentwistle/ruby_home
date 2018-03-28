@@ -8,6 +8,10 @@ module Rubyhome
           "000000BB-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :air_purifier
+        end
+
         def required_characteristic_uuids
           ["000000B0-0000-1000-8000-0026BB765291", "000000A9-0000-1000-8000-0026BB765291", "000000A8-0000-1000-8000-0026BB765291"]
         end

@@ -7,16 +7,16 @@ module Rubyhome
         "000000CB-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :service_label_index
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"MaximumValue"=>255, "MinimumValue"=>1, "StepValue"=>1}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

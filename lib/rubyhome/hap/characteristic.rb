@@ -16,8 +16,8 @@ module Rubyhome
       'write' => 'pw',
     }.freeze
 
-    FROM_UUID = Hash[descendants.map do |klass_descendant|
-      [klass_descendant.uuid, klass_descendant]
+    FROM_UUID = Hash[descendants.map do |characteristic|
+      [characteristic.uuid, characteristic]
     end].freeze
 
     def initialize(service: , value: nil)
@@ -36,53 +36,50 @@ module Rubyhome
       accessory.id
     end
 
-    def value=(new_value)
-      @value = new_value
-      broadcast(:value_updated, new_value)
+    def service_iid
+      service.instance_id
     end
 
-    def value
-      @value || default_value
+    def value=(new_value)
+      @value = new_value
+      broadcast(:updated, new_value)
     end
 
     def uuid
       self.class.uuid
     end
 
-    def attribute_name
-      name.downcase
+    def format
+      self.class.format
+    end
+
+    def name
+      self.class.name
+    end
+
+    def inspect
+      {
+        name: name,
+        value: value,
+        accessory_id: accessory_id,
+        service_iid: service_iid,
+        instance_id: instance_id
+      }
+    end
+
+    def save
+      IdentifierCache.add_accessory(accessory)
+      IdentifierCache.add_characteristic(self)
     end
 
     def ==(other)
       other.class == self.class && other.state == self.state
     end
 
-    def valid?
-      return true if uuid == '00000014-0000-1000-8000-0026BB765291'
-      value != nil
-    end
-
     protected
 
-      def state
-        self.instance_variables.map { |variable| self.instance_variable_get variable }
-      end
-
-    private
-
-      DEFAULT_VALUES = {
-        '00000014-0000-1000-8000-0026BB765291' => nil,
-        '00000020-0000-1000-8000-0026BB765291' => 'Default-Manufacturer',
-        '00000021-0000-1000-8000-0026BB765291' => 'Default-Model',
-        '00000023-0000-1000-8000-0026BB765291' => 'Rubyhome',
-        '00000030-0000-1000-8000-0026BB765291' => 'Default-SerialNumber',
-        '00000052-0000-1000-8000-0026BB765291' => '1.0',
-      }.freeze
-
-      def default_value
-        DEFAULT_VALUES.fetch(uuid) do
-          false if format == 'bool'
-        end
-      end
+    def state
+      self.instance_variables.map { |variable| self.instance_variable_get variable }
+    end
   end
 end

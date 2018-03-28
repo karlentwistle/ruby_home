@@ -7,16 +7,16 @@ module Rubyhome
         "00000119-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :volume
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"MaximumValue"=>100, "MinimumValue"=>0, "StepValue"=>1}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

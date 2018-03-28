@@ -7,16 +7,16 @@ module Rubyhome
         "00000036-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :temperature_display_units
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"Celsius", "1"=>"Fahrenheit"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

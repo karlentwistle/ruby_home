@@ -7,16 +7,16 @@ module Rubyhome
         "00000094-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :carbon_dioxide_peak_level
+      end
+
+      def self.format
+        "float"
       end
 
       def constraints
         {"MaximumValue"=>100000, "MinimumValue"=>0}
-      end
-
-      def format
-        "float"
       end
 
       def description

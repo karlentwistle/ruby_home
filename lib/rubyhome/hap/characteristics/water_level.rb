@@ -7,16 +7,16 @@ module Rubyhome
         "000000B5-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :water_level
+      end
+
+      def self.format
+        "float"
       end
 
       def constraints
         {"MaximumValue"=>100, "MinimumValue"=>0}
-      end
-
-      def format
-        "float"
       end
 
       def description

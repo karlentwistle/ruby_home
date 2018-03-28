@@ -7,16 +7,16 @@ module Rubyhome
         "0000001F-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :logs
+      end
+
+      def self.format
+        "tlv8"
       end
 
       def constraints
         {}
-      end
-
-      def format
-        "tlv8"
       end
 
       def description

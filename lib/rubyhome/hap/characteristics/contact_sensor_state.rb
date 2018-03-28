@@ -7,16 +7,16 @@ module Rubyhome
         "0000006A-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :contact_sensor_state
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"Contact Detected", "1"=>"Contact Not Detected"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

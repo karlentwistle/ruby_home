@@ -7,16 +7,16 @@ module Rubyhome
         "0000001D-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :lock_current_state
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"Unsecured", "1"=>"Secured", "2"=>"Jammed", "3"=>"Unknown"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

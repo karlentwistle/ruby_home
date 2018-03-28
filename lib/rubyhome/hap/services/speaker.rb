@@ -8,6 +8,10 @@ module Rubyhome
           "00000113-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :speaker
+        end
+
         def required_characteristic_uuids
           ["0000011A-0000-1000-8000-0026BB765291"]
         end

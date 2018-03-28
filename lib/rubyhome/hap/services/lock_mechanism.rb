@@ -8,6 +8,10 @@ module Rubyhome
           "00000045-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :lock_mechanism
+        end
+
         def required_characteristic_uuids
           ["0000001D-0000-1000-8000-0026BB765291", "0000001E-0000-1000-8000-0026BB765291"]
         end

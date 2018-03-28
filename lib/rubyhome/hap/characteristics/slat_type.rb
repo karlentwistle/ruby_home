@@ -7,16 +7,16 @@ module Rubyhome
         "000000C0-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :slat_type
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"Horizontal", "1"=>"Vertical"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

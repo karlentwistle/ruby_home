@@ -8,6 +8,10 @@ module Rubyhome
           "000000B7-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :fan_v2
+        end
+
         def required_characteristic_uuids
           ["000000B0-0000-1000-8000-0026BB765291"]
         end

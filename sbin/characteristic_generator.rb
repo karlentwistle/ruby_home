@@ -59,16 +59,16 @@ module Rubyhome
                   "#{uuid}"
                 end
 
-                def self.attribute_name
+                def self.name
                   :#{sanitized_name}
+                end
+
+                def self.format
+                  "#{format}"
                 end
 
                 def constraints
                   #{sanitized_constraints}
-                end
-
-                def format
-                  "#{format}"
                 end
 
                 def description

@@ -8,6 +8,10 @@ module Rubyhome
           "00000096-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :battery_service
+        end
+
         def required_characteristic_uuids
           ["00000068-0000-1000-8000-0026BB765291", "0000008F-0000-1000-8000-0026BB765291", "00000079-0000-1000-8000-0026BB765291"]
         end

@@ -7,16 +7,16 @@ module Rubyhome
         "00000077-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :status_fault
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"No Fault", "1"=>"General Fault"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

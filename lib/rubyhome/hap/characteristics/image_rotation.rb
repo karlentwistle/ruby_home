@@ -7,16 +7,16 @@ module Rubyhome
         "0000011E-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :image_rotation
+      end
+
+      def self.format
+        "float"
       end
 
       def constraints
         {"MaximumValue"=>270, "MinimumValue"=>0, "StepValue"=>90}
-      end
-
-      def format
-        "float"
       end
 
       def description

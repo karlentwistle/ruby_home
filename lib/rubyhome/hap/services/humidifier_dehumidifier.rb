@@ -8,6 +8,10 @@ module Rubyhome
           "000000BD-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :humidifier_dehumidifier
+        end
+
         def required_characteristic_uuids
           ["00000010-0000-1000-8000-0026BB765291", "000000B3-0000-1000-8000-0026BB765291", "000000B4-0000-1000-8000-0026BB765291", "000000B0-0000-1000-8000-0026BB765291"]
         end

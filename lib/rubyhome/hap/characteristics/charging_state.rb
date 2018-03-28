@@ -7,16 +7,16 @@ module Rubyhome
         "0000008F-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :charging_state
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"Not Charging", "1"=>"Charging", "2"=>"Not Chargeable"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

@@ -8,6 +8,10 @@ module Rubyhome
           "00000087-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :smoke_sensor
+        end
+
         def required_characteristic_uuids
           ["00000076-0000-1000-8000-0026BB765291"]
         end

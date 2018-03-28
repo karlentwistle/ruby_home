@@ -7,16 +7,16 @@ module Rubyhome
         "00000001-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :administrator_only_access
+      end
+
+      def self.format
+        "bool"
       end
 
       def constraints
         {}
-      end
-
-      def format
-        "bool"
       end
 
       def description

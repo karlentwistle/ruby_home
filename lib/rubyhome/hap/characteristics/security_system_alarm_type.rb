@@ -7,16 +7,16 @@ module Rubyhome
         "0000008E-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :security_system_alarm_type
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"MaximumValue"=>1, "MinimumValue"=>0, "StepValue"=>1}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

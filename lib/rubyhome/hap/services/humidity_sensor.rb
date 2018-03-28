@@ -8,6 +8,10 @@ module Rubyhome
           "00000082-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :humidity_sensor
+        end
+
         def required_characteristic_uuids
           ["00000010-0000-1000-8000-0026BB765291"]
         end

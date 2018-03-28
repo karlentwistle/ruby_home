@@ -7,16 +7,16 @@ module Rubyhome
         "00000028-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :rotation_direction
+      end
+
+      def self.format
+        "int32"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"Clockwise", "1"=>"Counter-clockwise"}}
-      end
-
-      def format
-        "int32"
       end
 
       def description

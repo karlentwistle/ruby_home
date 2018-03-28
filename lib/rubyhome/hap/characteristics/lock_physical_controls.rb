@@ -7,16 +7,16 @@ module Rubyhome
         "000000A7-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :lock_physical_controls
+      end
+
+      def self.format
+        "uint8"
       end
 
       def constraints
         {"ValidValues"=>{"0"=>"Control Lock Disabled", "1"=>"Control Lock Enabled"}}
-      end
-
-      def format
-        "uint8"
       end
 
       def description

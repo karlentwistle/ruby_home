@@ -7,16 +7,16 @@ module Rubyhome
         "000000A6-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :accessory_flags
+      end
+
+      def self.format
+        "uint32"
       end
 
       def constraints
         {"ValidBits"=>{"0"=>"Requires Additional Setup"}}
-      end
-
-      def format
-        "uint32"
       end
 
       def description

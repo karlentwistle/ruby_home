@@ -8,6 +8,10 @@ module Rubyhome
           "00000047-0000-1000-8000-0026BB765291"
         end
 
+        def name
+          :outlet
+        end
+
         def required_characteristic_uuids
           ["00000025-0000-1000-8000-0026BB765291", "00000026-0000-1000-8000-0026BB765291"]
         end

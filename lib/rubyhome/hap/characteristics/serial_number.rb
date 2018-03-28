@@ -7,16 +7,16 @@ module Rubyhome
         "00000030-0000-1000-8000-0026BB765291"
       end
 
-      def self.attribute_name
+      def self.name
         :serial_number
+      end
+
+      def self.format
+        "string"
       end
 
       def constraints
         {"MaximumLength"=>64}
-      end
-
-      def format
-        "string"
       end
 
       def description
