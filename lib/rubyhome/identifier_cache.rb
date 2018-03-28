@@ -1,31 +1,14 @@
-require 'yaml/store'
-
 module Rubyhome
   class IdentifierCache
-    def initialize(store)
-      @store = store
-      @accessories ||= []
-    end
-
-    attr_reader :store
-    attr_accessor :accessories
-
-    def save
-      store.transaction do
-        store[:accessories] = accessories
-      end
-    end
-
-    def self.pstore=(new_storage)
-      @@identifier_cache = IdentifierCache.new(new_storage)
-    end
-
-    @@identifier_cache = IdentifierCache.new(YAML::Store.new 'identifier_cache.yml')
-
     class << self
+      attr_accessor :accessories
 
       def accessories
-        @@identifier_cache.accessories
+        @@accessories ||= []
+      end
+
+      def reset!
+        @@accessories = []
       end
 
       def services
@@ -42,10 +25,6 @@ module Rubyhome
             characteristic.send(key) == value
           end
         end
-      end
-
-      def save
-        @@identifier_cache.save
       end
 
       def add_accessory(accessory)

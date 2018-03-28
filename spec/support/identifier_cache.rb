@@ -1,6 +1,6 @@
 RSpec.configure do |config|
   config.before(:each) do |example|
-    Rubyhome::IdentifierCache.pstore = PStore.new(Tempfile.new)
+    Rubyhome::IdentifierCache.reset!
   end
 end
 
