@@ -43,5 +43,23 @@ module Rubyhome
       IdentifierCache.add_accessory(accessory)
       IdentifierCache.add_service(self)
     end
+
+    def inspect
+      {
+        primary: primary,
+        hidden: hidden,
+        characteristics: characteristics
+      }
+    end
+
+    def ==(other)
+      other.class == self.class && other.state == self.state
+    end
+
+    protected
+
+    def state
+      self.instance_variables.map { |variable| self.instance_variable_get variable }
+    end
   end
 end

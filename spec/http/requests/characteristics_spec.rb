@@ -107,7 +107,7 @@ RSpec.describe '/characteristics' do
 
       it 'triggers characteristic listeners' do
         listener = double('Listener')
-        expect(listener).to receive(:value_updated).with('1')
+        expect(listener).to receive(:updated).with('1')
         characteristic.subscribe(listener)
         put '/characteristics', valid_parameters, {'CONTENT_TYPE' => 'application/hap+json'}
       end

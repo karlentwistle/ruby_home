@@ -1,6 +1,8 @@
 module Rubyhome
   module HTTP
     class ApplicationController < Sinatra::Base
+      disable :protection
+
       def unpack_request
         @_unpack_request ||= begin
           request.body.rewind

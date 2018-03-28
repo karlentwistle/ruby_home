@@ -38,7 +38,9 @@ module Rubyhome
 
       def find_characteristics(attributes)
         characteristics.select do |characteristic|
-          attributes.all? { |key, value| characteristic.send(key) == value }
+          attributes.all? do |key, value|
+            characteristic.send(key) == value
+          end
         end
       end
 
@@ -53,7 +55,6 @@ module Rubyhome
           a.id = accessories.size + 1
         end
 
-        save
       end
 
       def add_service(service)
@@ -64,7 +65,6 @@ module Rubyhome
           s.instance_id = accessory.next_available_instance_id
         end
 
-        save
       end
 
       def add_characteristic(characteristic)
@@ -74,8 +74,6 @@ module Rubyhome
         service.characteristics << characteristic.tap do |c|
           c.instance_id = characteristic.accessory.next_available_instance_id
         end
-
-        save
       end
     end
   end

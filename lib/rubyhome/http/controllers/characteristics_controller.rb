@@ -33,7 +33,9 @@ module Rubyhome
               instance_id: instance_id.to_i
             ).first
 
-            characteristic.value = characteristic_params['value']
+            if characteristic_params['value']
+              characteristic.value = characteristic_params['value']
+            end
           end
 
           status 204

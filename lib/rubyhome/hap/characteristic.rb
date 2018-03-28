@@ -22,7 +22,7 @@ module Rubyhome
 
     def initialize(service: , value: nil)
       @service = service
-      self.value = value
+      @value = value
     end
 
     attr_reader :service, :value
@@ -36,13 +36,13 @@ module Rubyhome
       accessory.id
     end
 
-    def user_defined?
-      !!@user_defined
+    def service_iid
+      service.instance_id
     end
 
     def value=(new_value)
       @value = new_value
-      broadcast(:value_updated, new_value)
+      broadcast(:updated, new_value)
     end
 
     def uuid
@@ -57,9 +57,29 @@ module Rubyhome
       self.class.name
     end
 
+    def inspect
+      {
+        name: name,
+        value: value,
+        accessory_id: accessory_id,
+        service_iid: service_iid,
+        instance_id: instance_id
+      }
+    end
+
     def save
       IdentifierCache.add_accessory(accessory)
       IdentifierCache.add_characteristic(self)
+    end
+
+    def ==(other)
+      other.class == self.class && other.state == self.state
+    end
+
+    protected
+
+    def state
+      self.instance_variables.map { |variable| self.instance_variable_get variable }
     end
   end
 end
