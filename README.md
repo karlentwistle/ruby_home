@@ -1,7 +1,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/a13f62c597b3746a7ef5/maintainability)](https://codeclimate.com/github/karlentwistle/rubyhome/maintainability)
 [![Build Status](https://travis-ci.org/karlentwistle/ruby_home.svg?branch=master)](https://travis-ci.org/karlentwistle/ruby_home)
 
-# RubyHome
+# Ruby Home
 
 RubyHome is a lightweight service you can run on your home network that emulates the iOS HomeKit API. It supports community contributed plugins, which are modules that provide a bridge from HomeKit to various 3rd-party APIs provided by manufacturers of smart home devices.
 
