@@ -2,14 +2,21 @@
 
 require 'byebug'
 require 'plist'
+require 'yaml'
 
 module Rubyhome
   class ServiceGenerator
     class << self
       def run
         convert_binary_plist
-        parsed_xml['Services'].each do |services_xml|
-          new(services_xml).generate_characteristic_class
+        File.open(file_path, 'w') do |file|
+          file.write generate_services.to_yaml
+        end
+      end
+
+      def generate_services
+        parsed_xml['Services'].map do |services_xml|
+          new(services_xml).generate_service_hash
         end
       end
 
@@ -24,6 +31,10 @@ module Rubyhome
       def parsed_xml
         Plist.parse_xml('/tmp/Accessory.xml')
       end
+
+      def file_path
+        File.dirname(__FILE__) + '/../lib/rubyhome/config/services.yml'
+      end
     end
 
     def initialize(xml)
@@ -33,62 +44,20 @@ module Rubyhome
       @uuid = xml["UUID"]
     end
 
-    def generate_characteristic_class
-      create_file
+    def generate_service_hash
+      {
+        name: sanitized_name.to_sym,
+        description: name,
+        uuid: uuid,
+        optional_characteristics: optional_characteristics,
+        required_characteristics: required_characteristics,
+      }
     end
 
     private
 
-      def create_file
-        f = File.open(file_path, 'w')
-        f.write generate_class
-        f.close
-      end
-
-      def generate_class
-        <<~KLASS
-          # This is an automatically generated file, please do not modify
-
-          module Rubyhome
-            class Service
-              class #{class_name} < Service
-                class << self
-                  def uuid
-                    "#{uuid}"
-                  end
-
-                  def name
-                    :#{sanitized_name}
-                  end
-
-                  def required_characteristic_uuids
-                    #{required_characteristics}
-                  end
-
-                  def optional_characteristic_uuids
-                    #{optional_characteristics}
-                  end
-                end
-
-                def name
-                  "#{name}"
-                end
-              end
-            end
-          end
-        KLASS
-      end
-
-      def file_path
-        File.dirname(__FILE__) + '/../lib/rubyhome/hap/services/' + sanitized_name + '.rb'
-      end
-
       def sanitized_name
         name.downcase.gsub(' ', '_')
-      end
-
-      def class_name
-        name.gsub(' ', '')
       end
 
       private

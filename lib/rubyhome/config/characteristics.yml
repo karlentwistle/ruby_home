@@ -1,0 +1,1692 @@
+---
+- :name: :accessory_flags
+  :description: Accessory Flags
+  :uuid: 000000A6-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidBits:
+      '0': Requires Additional Setup
+- :name: :active
+  :description: Active
+  :uuid: 000000B0-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Inactive
+      '1': Active
+- :name: :administrator_only_access
+  :description: Administrator Only Access
+  :uuid: 00000001-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints: 
+- :name: :air_particulate_density
+  :description: Air Particulate Density
+  :uuid: 00000064-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 1000
+    MinimumValue: 0
+    StepValue: 1
+- :name: :air_particulate_size
+  :description: Air Particulate Size
+  :uuid: 00000065-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': 2.5 μm
+      '1': 10 μm
+- :name: :air_quality
+  :description: Air Quality
+  :uuid: '00000095-0000-1000-8000-0026BB765291'
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Unknown
+      '1': Excellent
+      '2': Good
+      '3': Fair
+      '4': Inferior
+      '5': Poor
+- :name: :audio_feedback
+  :description: Audio Feedback
+  :uuid: 00000005-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints: 
+- :name: :battery_level
+  :description: Battery Level
+  :uuid: '00000068-0000-1000-8000-0026BB765291'
+  :format: uint8
+  :unit: '"percentage"'
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :brightness
+  :description: Brightness
+  :uuid: '00000008-0000-1000-8000-0026BB765291'
+  :format: int32
+  :unit: '"percentage"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :carbon_dioxide_detected
+  :description: Carbon Dioxide Detected
+  :uuid: '00000092-0000-1000-8000-0026BB765291'
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': CO2 Levels Normal
+      '1': CO2 Levels Abnormal
+- :name: :carbon_dioxide_level
+  :description: Carbon Dioxide Level
+  :uuid: '00000093-0000-1000-8000-0026BB765291'
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100000
+    MinimumValue: 0
+- :name: :carbon_dioxide_peak_level
+  :description: Carbon Dioxide Peak Level
+  :uuid: '00000094-0000-1000-8000-0026BB765291'
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100000
+    MinimumValue: 0
+- :name: :carbon_monoxide_detected
+  :description: Carbon Monoxide Detected
+  :uuid: '00000069-0000-1000-8000-0026BB765291'
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': CO Levels Normal
+      '1': CO Levels Abnormal
+- :name: :carbon_monoxide_level
+  :description: Carbon Monoxide Level
+  :uuid: '00000090-0000-1000-8000-0026BB765291'
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+- :name: :carbon_monoxide_peak_level
+  :description: Carbon Monoxide Peak Level
+  :uuid: '00000091-0000-1000-8000-0026BB765291'
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+- :name: :charging_state
+  :description: Charging State
+  :uuid: '0000008F-0000-1000-8000-0026BB765291'
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Not Charging
+      '1': Charging
+      '2': Not Chargeable
+- :name: :color_temperature
+  :description: Color Temperature
+  :uuid: 000000CE-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 500
+    MinimumValue: 140
+    StepValue: 1
+- :name: :contact_sensor_state
+  :description: Contact Sensor State
+  :uuid: 0000006A-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Contact Detected
+      '1': Contact Not Detected
+- :name: :cooling_threshold_temperature
+  :description: Cooling Threshold Temperature
+  :uuid: 0000000D-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"celsius"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 35
+    MinimumValue: 10
+    StepValue: 0.1
+- :name: :current_air_purifier_state
+  :description: Current Air Purifier State
+  :uuid: 000000A9-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Inactive
+      '1': Idle
+      '2': Purifying Air
+- :name: :current_ambient_light_level
+  :description: Current Ambient Light Level
+  :uuid: 0000006B-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"lux"'
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100000
+    MinimumValue: 0.0001
+- :name: :current_door_state
+  :description: Current Door State
+  :uuid: 0000000E-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Open
+      '1': Closed
+      '2': Opening
+      '3': Closing
+      '4': Stopped
+- :name: :current_fan_state
+  :description: Current Fan State
+  :uuid: 000000AF-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Inactive
+      '1': Idle
+      '2': Blowing Air
+- :name: :current_heater_cooler_state
+  :description: Current Heater Cooler State
+  :uuid: 000000B1-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Inactive
+      '1': Idle
+      '2': Heating
+      '3': Cooling
+- :name: :current_heating_cooling_state
+  :description: Current Heating Cooling State
+  :uuid: 0000000F-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': 'Off'
+      '1': Heat
+      '2': Cool
+- :name: :current_horizontal_tilt_angle
+  :description: Current Horizontal Tilt Angle
+  :uuid: 0000006C-0000-1000-8000-0026BB765291
+  :format: int32
+  :unit: '"arcdegrees"'
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 90
+    MinimumValue: -90
+    StepValue: 1
+- :name: :current_humidifier_dehumidifier_state
+  :description: Current Humidifier Dehumidifier State
+  :uuid: 000000B3-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Inactive
+      '1': Idle
+      '2': Humidifying
+      '3': Dehumidifying
+- :name: :current_position
+  :description: Current Position
+  :uuid: 0000006D-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: '"percentage"'
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :current_relative_humidity
+  :description: Current Relative Humidity
+  :uuid: 00000010-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"percentage"'
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :current_slat_state
+  :description: Current Slat State
+  :uuid: 000000AA-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Fixed
+      '1': Jammed
+      '2': Swinging
+- :name: :current_temperature
+  :description: Current Temperature
+  :uuid: 00000011-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"celsius"'
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 0.1
+- :name: :current_tilt_angle
+  :description: Current Tilt Angle
+  :uuid: 000000C1-0000-1000-8000-0026BB765291
+  :format: int32
+  :unit: '"arcdegrees"'
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 90
+    MinimumValue: -90
+    StepValue: 1
+- :name: :current_vertical_tilt_angle
+  :description: Current Vertical Tilt Angle
+  :uuid: 0000006E-0000-1000-8000-0026BB765291
+  :format: int32
+  :unit: '"arcdegrees"'
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 90
+    MinimumValue: -90
+    StepValue: 1
+- :name: :digital_zoom
+  :description: Digital Zoom
+  :uuid: 0000011D-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints: 
+- :name: :filter_change_indication
+  :description: Filter Change Indication
+  :uuid: 000000AC-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Filter OK
+      '1': Change Filter
+- :name: :filter_life_level
+  :description: Filter Life Level
+  :uuid: 000000AB-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    stepValue: 1
+- :name: :firmware_revision
+  :description: Firmware Revision
+  :uuid: 00000052-0000-1000-8000-0026BB765291
+  :format: string
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints: 
+- :name: :hardware_revision
+  :description: Hardware Revision
+  :uuid: 00000053-0000-1000-8000-0026BB765291
+  :format: string
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints: 
+- :name: :heating_threshold_temperature
+  :description: Heating Threshold Temperature
+  :uuid: 00000012-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"celsius"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 25
+    MinimumValue: 0
+    StepValue: 0.1
+- :name: :hold_position
+  :description: Hold Position
+  :uuid: 0000006F-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedWrite
+  :properties:
+  - write
+  :constraints: 
+- :name: :hue
+  :description: Hue
+  :uuid: 00000013-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"arcdegrees"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 360
+    MinimumValue: 0
+    StepValue: 1
+- :name: :identify
+  :description: Identify
+  :uuid: 00000014-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedWrite
+  :properties:
+  - write
+  :constraints: 
+- :name: :image_mirroring
+  :description: Image Mirroring
+  :uuid: 0000011F-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints: 
+- :name: :image_rotation
+  :description: Image Rotation
+  :uuid: 0000011E-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"arcdegrees"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 270
+    MinimumValue: 0
+    StepValue: 90
+- :name: :leak_detected
+  :description: Leak Detected
+  :uuid: 00000070-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Leak Not Detected
+      '1': Leak Detected
+- :name: :lock_control_point
+  :description: Lock Control Point
+  :uuid: '00000019-0000-1000-8000-0026BB765291'
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedWrite
+  :properties:
+  - write
+  :constraints: 
+- :name: :lock_current_state
+  :description: Lock Current State
+  :uuid: 0000001D-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Unsecured
+      '1': Secured
+      '2': Jammed
+      '3': Unknown
+- :name: :lock_last_known_action
+  :description: Lock Last Known Action
+  :uuid: 0000001C-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Secured Physically, Interior
+      '1': Unsecured Physically, Interior
+      '2': Secured Physically, Exterior
+      '3': Unsecured Physically, Exterior
+      '4': Secured by Keypad
+      '5': Unsecured by Keypad
+      '6': Secured Remotely
+      '7': Unsecured Remotely
+      '8': Secured by Auto Secure Timeout
+- :name: :lock_management_auto_security_timeout
+  :description: Lock Management Auto Security Timeout
+  :uuid: 0000001A-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: '"seconds"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints: 
+- :name: :lock_physical_controls
+  :description: Lock Physical Controls
+  :uuid: 000000A7-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Control Lock Disabled
+      '1': Control Lock Enabled
+- :name: :lock_target_state
+  :description: Lock Target State
+  :uuid: 0000001E-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Unsecured
+      '1': Secured
+- :name: :logs
+  :description: Logs
+  :uuid: 0000001F-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints: 
+- :name: :manufacturer
+  :description: Manufacturer
+  :uuid: 00000020-0000-1000-8000-0026BB765291
+  :format: string
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints: 
+- :name: :model
+  :description: Model
+  :uuid: 00000021-0000-1000-8000-0026BB765291
+  :format: string
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints: 
+- :name: :motion_detected
+  :description: Motion Detected
+  :uuid: 00000022-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints: 
+- :name: :mute
+  :description: Mute
+  :uuid: 0000011A-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints: 
+- :name: :name
+  :description: Name
+  :uuid: 00000023-0000-1000-8000-0026BB765291
+  :format: string
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints: 
+- :name: :night_vision
+  :description: Night Vision
+  :uuid: 0000011B-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints: 
+- :name: :nitrogen_dioxide_density
+  :description: Nitrogen Dioxide Density
+  :uuid: 000000C4-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    MaximumValue: 1000
+    MinimumValue: 0
+    StepValue: 1
+- :name: :obstruction_detected
+  :description: Obstruction Detected
+  :uuid: 00000024-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints: 
+- :name: :occupancy_detected
+  :description: Occupancy Detected
+  :uuid: 00000071-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Occupancy Not Detected
+      '1': Occupancy Detected
+- :name: :on
+  :description: 'On'
+  :uuid: 00000025-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints: 
+- :name: :optical_zoom
+  :description: Optical Zoom
+  :uuid: 0000011C-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints: 
+- :name: :outlet_in_use
+  :description: Outlet In Use
+  :uuid: 00000026-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints: 
+- :name: :ozone_density
+  :description: Ozone Density
+  :uuid: 000000C3-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    MaximumValue: 1000
+    MinimumValue: 0
+    StepValue: 1
+- :name: :pair_setup
+  :description: Pair Setup
+  :uuid: 0000004C-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - read
+  - write
+  :properties:
+  - read
+  - write
+  :constraints: 
+- :name: :pair_verify
+  :description: Pair Verify
+  :uuid: 0000004E-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - read
+  - write
+  :properties:
+  - read
+  - write
+  :constraints: 
+- :name: :pairing_features
+  :description: Pairing Features
+  :uuid: 0000004F-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - read
+  :properties:
+  - read
+  :constraints: 
+- :name: :pairing_pairings
+  :description: Pairing Pairings
+  :uuid: 00000050-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  :constraints: 
+- :name: :pm10_density
+  :description: PM10 Density
+  :uuid: 000000C7-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    MaximumValue: 1000
+    MinimumValue: 0
+    StepValue: 1
+- :name: :pm2_5_density
+  :description: PM2.5 Density
+  :uuid: 000000C6-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    MaximumValue: 1000
+    MinimumValue: 0
+    StepValue: 1
+- :name: :position_state
+  :description: Position State
+  :uuid: 00000072-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Decreasing
+      '1': Increasing
+      '2': Stopped
+- :name: :programmable_switch_event
+  :description: Programmable Switch Event
+  :uuid: 00000073-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Single Press
+      '1': Double Press
+      '2': Long Press
+- :name: :relative_humidity_dehumidifier_threshold
+  :description: Relative Humidity Dehumidifier Threshold
+  :uuid: 000000C9-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :relative_humidity_humidifier_threshold
+  :description: Relative Humidity Humidifier Threshold
+  :uuid: 000000CA-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :reset_filter_indication
+  :description: Reset Filter Indication
+  :uuid: 000000AD-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedWrite
+  :properties:
+  - write
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 1
+    StepValue: 1
+- :name: :rotation_direction
+  :description: Rotation Direction
+  :uuid: '00000028-0000-1000-8000-0026BB765291'
+  :format: int32
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Clockwise
+      '1': Counter-clockwise
+- :name: :rotation_speed
+  :description: Rotation Speed
+  :uuid: '00000029-0000-1000-8000-0026BB765291'
+  :format: float
+  :unit: '"percentage"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :saturation
+  :description: Saturation
+  :uuid: 0000002F-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"percentage"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :security_system_alarm_type
+  :description: Security System Alarm Type
+  :uuid: '0000008E-0000-1000-8000-0026BB765291'
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    StepValue: 1
+- :name: :security_system_current_state
+  :description: Security System Current State
+  :uuid: 00000066-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Stay Arm
+      '1': Away Arm
+      '2': Night Arm
+      '3': Disarmed
+      '4': Alarm Triggered
+- :name: :security_system_target_state
+  :description: Security System Target State
+  :uuid: 00000067-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Stay Arm
+      '1': Away Arm
+      '2': Night Arm
+      '3': Disarm
+- :name: :selected_rtp_stream_configuration
+  :description: Selected RTP Stream Configuration
+  :uuid: 00000117-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  :constraints: 
+- :name: :serial_number
+  :description: Serial Number
+  :uuid: 00000030-0000-1000-8000-0026BB765291
+  :format: string
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints:
+    MaximumLength: 64
+- :name: :service_label_index
+  :description: Service Label Index
+  :uuid: 000000CB-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints:
+    MaximumValue: 255
+    MinimumValue: 1
+    StepValue: 1
+- :name: :service_label_namespace
+  :description: Service Label Namespace
+  :uuid: 000000CD-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints:
+    ValidValues:
+      '0': Dots
+      '1': Arabic Numerals
+- :name: :setup_endpoints
+  :description: Setup Endpoints
+  :uuid: '00000118-0000-1000-8000-0026BB765291'
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  :constraints: 
+- :name: :slat_type
+  :description: Slat Type
+  :uuid: 000000C0-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints:
+    ValidValues:
+      '0': Horizontal
+      '1': Vertical
+- :name: :smoke_detected
+  :description: Smoke Detected
+  :uuid: 00000076-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Smoke Not Detected
+      '1': Smoke Detected
+- :name: :status_active
+  :description: Status Active
+  :uuid: 00000075-0000-1000-8000-0026BB765291
+  :format: bool
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints: 
+- :name: :status_fault
+  :description: Status Fault
+  :uuid: 00000077-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': No Fault
+      '1': General Fault
+- :name: :status_jammed
+  :description: Status Jammed
+  :uuid: '00000078-0000-1000-8000-0026BB765291'
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Not Jammed
+      '1': Jammed
+- :name: :status_low_battery
+  :description: Status Low Battery
+  :uuid: '00000079-0000-1000-8000-0026BB765291'
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Battery Level Normal
+      '1': Battery Level Low
+- :name: :status_tampered
+  :description: Status Tampered
+  :uuid: 0000007A-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Not Tampered
+      '1': Tampered
+- :name: :streaming_status
+  :description: Streaming Status
+  :uuid: 00000120-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints: 
+- :name: :sulphur_dioxide_density
+  :description: Sulphur Dioxide Density
+  :uuid: 000000C5-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    MaximumValue: 1000
+    MinimumValue: 0
+    StepValue: 1
+- :name: :supported_audio_stream_configuration
+  :description: Supported Audio Stream Configuration
+  :uuid: 00000115-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints: 
+- :name: :supported_rtp_configuration
+  :description: Supported RTP Configuration
+  :uuid: 00000116-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints: 
+- :name: :supported_video_stream_configuration
+  :description: Supported Video Stream Configuration
+  :uuid: 00000114-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints: 
+- :name: :swing_mode
+  :description: Swing Mode
+  :uuid: 000000B6-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Swing Disabled
+      '1': Swing Enabled
+- :name: :target_air_purifier_state
+  :description: Target Air Purifier State
+  :uuid: 000000A8-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Manual
+      '1': Auto
+- :name: :target_air_quality
+  :description: Target Air Quality
+  :uuid: 000000AE-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Excellent
+      '1': Good
+      '2': Fair
+- :name: :target_door_state
+  :description: Target Door State
+  :uuid: 00000032-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Open
+      '1': Closed
+- :name: :target_fan_state
+  :description: Target Fan State
+  :uuid: 000000BF-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Manual
+      '1': Auto
+- :name: :target_heater_cooler_state
+  :description: Target Heater Cooler State
+  :uuid: 000000B2-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Auto
+      '1': Heat
+      '2': Cool
+- :name: :target_heating_cooling_state
+  :description: Target Heating Cooling State
+  :uuid: 00000033-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': 'Off'
+      '1': Heat
+      '2': Cool
+      '3': Auto
+- :name: :target_horizontal_tilt_angle
+  :description: Target Horizontal Tilt Angle
+  :uuid: 0000007B-0000-1000-8000-0026BB765291
+  :format: int32
+  :unit: '"arcdegrees"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 90
+    MinimumValue: -90
+    StepValue: 1
+- :name: :target_humidifier_dehumidifier_state
+  :description: Target Humidifier Dehumidifier State
+  :uuid: 000000B4-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Humidifier or Dehumidifier
+      '1': Humidifier
+      '2': Dehumidifier
+- :name: :target_position
+  :description: Target Position
+  :uuid: 0000007C-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: '"percentage"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :target_relative_humidity
+  :description: Target Relative Humidity
+  :uuid: 00000034-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"percentage"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :target_slat_state
+  :description: Target Slat State
+  :uuid: 000000BE-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Manual
+      '1': Auto
+- :name: :target_temperature
+  :description: Target Temperature
+  :uuid: 00000035-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: '"celsius"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 38
+    MinimumValue: 10
+    StepValue: 0.1
+- :name: :target_tilt_angle
+  :description: Target Tilt Angle
+  :uuid: 000000C2-0000-1000-8000-0026BB765291
+  :format: int32
+  :unit: '"arcdegrees"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 90
+    MinimumValue: -90
+    StepValue: 1
+- :name: :target_vertical_tilt_angle
+  :description: Target Vertical Tilt Angle
+  :uuid: 0000007D-0000-1000-8000-0026BB765291
+  :format: int32
+  :unit: '"arcdegrees"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 90
+    MinimumValue: -90
+    StepValue: 1
+- :name: :temperature_display_units
+  :description: Temperature Display Units
+  :uuid: 00000036-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    ValidValues:
+      '0': Celsius
+      '1': Fahrenheit
+- :name: :version
+  :description: Version
+  :uuid: 00000037-0000-1000-8000-0026BB765291
+  :format: string
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumLength: 64
+- :name: :voc_density
+  :description: VOC Density
+  :uuid: 000000C8-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    MaximumValue: 1000
+    MinimumValue: 0
+    StepValue: 1
+- :name: :volume
+  :description: Volume
+  :uuid: '00000119-0000-1000-8000-0026BB765291'
+  :format: uint8
+  :unit: '"percentage"'
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :water_level
+  :description: Water Level
+  :uuid: 000000B5-0000-1000-8000-0026BB765291
+  :format: float
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 100
+    MinimumValue: 0
