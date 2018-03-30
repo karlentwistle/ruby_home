@@ -6,7 +6,7 @@ module Rubyhome
     DATA = YAML.load_file(FILEPATH).freeze
 
     def self.all
-      @@all ||= DATA.map { |data| new(data) }
+      @all ||= DATA.map { |data| new(data) }
     end
 
     def self.find_by(options)
