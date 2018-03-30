@@ -2,14 +2,21 @@
 
 require 'byebug'
 require 'plist'
+require 'yaml'
 
 module Rubyhome
   class CharacteristicGenerator
     class << self
       def run
         convert_binary_plist
-        parsed_xml['Characteristics'].each do |characteristics_xml|
-          new(characteristics_xml).generate_characteristic_class
+        File.open(file_path, 'w') do |file|
+          file.write generate_characteristics.to_yaml
+        end
+      end
+
+      def generate_characteristics
+        parsed_xml['Characteristics'].map do |characteristics_xml|
+          new(characteristics_xml).generate_characteristic_hash
         end
       end
 
@@ -24,6 +31,10 @@ module Rubyhome
       def parsed_xml
         Plist.parse_xml('/tmp/Accessory.xml')
       end
+
+      def file_path
+        File.dirname(__FILE__) + '/../lib/rubyhome/config/characteristics.yml'
+      end
     end
 
     def initialize(xml)
@@ -36,72 +47,23 @@ module Rubyhome
       @unit = xml["Unit"]
     end
 
-    def generate_characteristic_class
-      create_file
+    def generate_characteristic_hash
+      {
+        name: sanitized_name.to_sym,
+        description: name,
+        uuid: uuid,
+        format: format,
+        unit: sanitized_unit,
+        permissions: permissions,
+        properties: properties,
+        constraints: constraints,
+      }
     end
 
     private
 
-      def create_file
-        f = File.open(file_path, 'w')
-        f.write generate_class
-        f.close
-      end
-
-      def generate_class
-        <<~KLASS
-          # This is an automatically generated file, please do not modify
-
-          module Rubyhome
-            class Characteristic
-              class #{class_name} < Characteristic
-                def self.uuid
-                  "#{uuid}"
-                end
-
-                def self.name
-                  :#{sanitized_name}
-                end
-
-                def self.format
-                  "#{format}"
-                end
-
-                def constraints
-                  #{sanitized_constraints}
-                end
-
-                def description
-                  "#{name}"
-                end
-
-                def permissions
-                  #{permissions}
-                end
-
-                def properties
-                  #{properties}
-                end
-
-                def unit
-                  #{sanitized_unit}
-                end
-              end
-            end
-          end
-        KLASS
-      end
-
-      def file_path
-        File.dirname(__FILE__) + '/../lib/rubyhome/hap/characteristics/' + sanitized_name + '.rb'
-      end
-
       def sanitized_name
         name.downcase.gsub(' ', '_').gsub('.', '_')
-      end
-
-      def class_name
-        name.gsub(' ', '').gsub('.', '_')
       end
 
       def sanitized_unit
@@ -109,14 +71,6 @@ module Rubyhome
           "\"#{unit}\""
         else
           "nil"
-        end
-      end
-
-      def sanitized_constraints
-        if constraints
-          constraints
-        else
-          "{}"
         end
       end
 

@@ -32,24 +32,22 @@ module Rubyhome
 
       attr_reader :characteristic_name, :options
 
-      def characteristic_class
-        @characteristic_class ||= Characteristic.descendants.find do |characteristic|
-          characteristic.name == characteristic_name
-        end
+      def template
+        @template ||= CharacteristicTemplate.find_by(name: characteristic_name.to_sym)
       end
 
       def characteristic
-        @characteristic ||= characteristic_class.new(characteristic_params)
+        @characteristic ||= Characteristic.new(characteristic_params)
       end
 
       def characteristic_params
         options[:value] ||= default_value
-        options
+        options.merge(template.to_hash)
       end
 
       def default_value
-        DEFAULT_VALUES.fetch(characteristic_name) do
-          case characteristic_class.format
+        DEFAULT_VALUES.fetch(characteristic_name.to_sym) do
+          case template.format
           when 'bool'
             false
           end
