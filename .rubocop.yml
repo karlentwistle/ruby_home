@@ -5,3 +5,5 @@ Style:
     Enabled: false
   FrozenStringLiteralComment:
     Enabled: false
+  IndentationConsistency:
+    AllowProtectedAndPrivateMethodsBeIndented: true
