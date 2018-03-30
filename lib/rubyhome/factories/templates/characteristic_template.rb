@@ -15,7 +15,7 @@ module Rubyhome
       end
     end
 
-    def initialize(name: , description: , uuid: , format: , unit: , permissions: , properties: , constraints: )
+    def initialize(name:, description:, uuid:, format:, unit:, permissions:, properties:, constraints:)
       @name = name
       @description = description
       @uuid = uuid
