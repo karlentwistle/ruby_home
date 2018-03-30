@@ -1,3 +1,5 @@
 Style:
   TrailingCommaInLiteral:
     Enabled: false
+  Documentation:
+    Enabled: false
