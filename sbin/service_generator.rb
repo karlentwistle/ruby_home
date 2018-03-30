@@ -49,8 +49,8 @@ module Rubyhome
         name: sanitized_name.to_sym,
         description: name,
         uuid: uuid,
-        optional_characteristics: optional_characteristics,
-        required_characteristics: required_characteristics,
+        optional_characteristics_uuids: optional_characteristics,
+        required_characteristics_uuids: required_characteristics,
       }
     end
 

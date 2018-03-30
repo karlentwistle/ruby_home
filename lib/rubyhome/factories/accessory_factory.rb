@@ -1,11 +1,10 @@
 require_relative '../hap/service'
 require_relative '../hap/accessory'
+require_relative 'templates/service_template'
+require_relative 'templates/characteristic_template'
 
 module Rubyhome
   class AccessoryFactory
-    YAML_STORE_PATH = (File.dirname(__FILE__) + '/../config/services.yml').freeze
-    HAP_SERVICES = YAML.load_file(YAML_STORE_PATH).freeze
-
     def self.create(service_name, characteristics: {}, **options)
       new(service_name, options, characteristics).create
     end
@@ -31,8 +30,8 @@ module Rubyhome
 
       attr_reader :service_name, :accessory_options, :characteristic_options
 
-      def hap_service
-        HAP_SERVICES.find { |service| service[:name].to_sym == service_name.to_sym }
+      def template
+        @template ||= ServiceTemplate.find_by(name: service_name.to_sym)
       end
 
       def create_accessory_information
@@ -46,10 +45,8 @@ module Rubyhome
       end
 
       def create_required_characteristics
-        hap_service[:required_characteristics].map do |characteristic_uuid|
-          hap_characteristic = CharacteristicFactory.find_hap_characteristic(uuid: characteristic_uuid)
-
-          CharacteristicFactory.create(hap_characteristic[:name], service: service) do |characteristic|
+        template.required_characteristics.map do |characteristic_template|
+          CharacteristicFactory.create(characteristic_template.name, service: service) do |characteristic|
             if value = characteristic_options[characteristic.name]
               characteristic.value = value
             end
@@ -58,10 +55,9 @@ module Rubyhome
       end
 
       def create_optional_characteristics
-        hap_service[:optional_characteristics].map do |characteristic_uuid|
-          hap_characteristic = CharacteristicFactory.find_hap_characteristic(uuid: characteristic_uuid)
-          if value = characteristic_options[hap_characteristic[:name]]
-            CharacteristicFactory.create(hap_characteristic[:name], service: service) do |characteristic|
+        template.optional_characteristics.map do |characteristic_template|
+          if value = characteristic_options[characteristic_template.name]
+            CharacteristicFactory.create(characteristic_template.name, service: service) do |characteristic|
               characteristic.value = value
             end
           end
@@ -73,8 +69,8 @@ module Rubyhome
       end
 
       def service_params
-        accessory_options[:accessory] ||= Rubyhome::Accessory.new
-        accessory_options.merge(hap_service)
+        accessory_options[:accessory] ||= Accessory.new
+        accessory_options.merge(template.to_hash)
       end
   end
 end

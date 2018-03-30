@@ -3,7 +3,7 @@ require_relative 'characteristic'
 
 module Rubyhome
   class Service
-    def initialize(accessory: , primary: false, hidden: false, name:, description:, uuid:, optional_characteristics:, required_characteristics:)
+    def initialize(accessory: , primary: false, hidden: false, name:, description:, uuid:)
       @accessory = accessory
       @primary = primary
       @hidden = hidden
@@ -13,7 +13,7 @@ module Rubyhome
       @characteristics = []
     end
 
-    attr_reader :accessory, :characteristics, :primary, :hidden, :name, :description, :uuid, :optional_characteristics, :required_characteristics
+    attr_reader :accessory, :characteristics, :primary, :hidden, :name, :description, :uuid
     attr_accessor :instance_id
 
     def characteristic(characteristic_name)

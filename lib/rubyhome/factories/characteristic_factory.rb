@@ -3,8 +3,6 @@ require_relative '../hap/accessory'
 
 module Rubyhome
   class CharacteristicFactory
-    YAML_STORE_PATH = (File.dirname(__FILE__) + '/../config/characteristics.yml').freeze
-    HAP_CHARACTERISTICS = YAML.load_file(YAML_STORE_PATH).freeze
     DEFAULT_VALUES = {
       firmware_revision: '1.0',
       identify: nil,
@@ -13,14 +11,6 @@ module Rubyhome
       name: 'Rubyhome',
       serial_number: 'Default-SerialNumber',
     }.freeze
-
-    def self.find_hap_characteristic(attributes)
-      HAP_CHARACTERISTICS.find do |characteristic|
-        attributes.all? do |key, value|
-          characteristic[key] == value
-        end
-      end
-    end
 
     def self.create(characteristic_name, options={}, &block)
       new(characteristic_name, options).create(&block)
@@ -42,8 +32,8 @@ module Rubyhome
 
       attr_reader :characteristic_name, :options
 
-      def hap_characteristic
-        HAP_CHARACTERISTICS.find { |characteristic| characteristic[:name].to_sym == characteristic_name.to_sym }
+      def template
+        @template ||= CharacteristicTemplate.find_by(name: characteristic_name.to_sym)
       end
 
       def characteristic
@@ -52,12 +42,12 @@ module Rubyhome
 
       def characteristic_params
         options[:value] ||= default_value
-        options.merge(hap_characteristic)
+        options.merge(template.to_hash)
       end
 
       def default_value
         DEFAULT_VALUES.fetch(characteristic_name.to_sym) do
-          case hap_characteristic[:format]
+          case template.format
           when 'bool'
             false
           end

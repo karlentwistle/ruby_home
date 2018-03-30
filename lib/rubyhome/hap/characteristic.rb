@@ -11,20 +11,18 @@ module Rubyhome
       'write' => 'pw',
     }.freeze
 
-    def initialize(uuid:, name:, description:, format:, unit:, permissions:, properties:, constraints:, service: , value: nil)
-      @service = service
-      @value = value
+    def initialize(uuid:, name:, description:, format:, unit:, properties:, service: , value: nil)
       @uuid = uuid
       @name = name
       @description = description
       @format = format
       @unit = unit
-      @permissions = permissions
       @properties = properties
-      @constraints = constraints
+      @service = service
+      @value = value
     end
 
-    attr_reader :service, :value, :uuid, :name, :description, :format, :unit, :permissions, :properties, :constraints
+    attr_reader :service, :value, :uuid, :name, :description, :format, :unit, :properties
     attr_accessor :instance_id
 
     def accessory
