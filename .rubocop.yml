@@ -3,3 +3,5 @@ Style:
     Enabled: false
   Documentation:
     Enabled: false
+  FrozenStringLiteralComment:
+    Enabled: false
