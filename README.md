@@ -1,9 +1,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/a13f62c597b3746a7ef5/maintainability)](https://codeclimate.com/github/karlentwistle/ruby_home/maintainability)
 [![Build Status](https://travis-ci.org/karlentwistle/ruby_home.svg?branch=master)](https://travis-ci.org/karlentwistle/ruby_home)
 
-# Ruby Home
+# ruby_home
 
-RubyHome is a lightweight service you can run on your home network that emulates the iOS HomeKit API. It supports community contributed plugins, which are modules that provide a bridge from HomeKit to various 3rd-party APIs provided by manufacturers of smart home devices.
+ruby_home is an implementation of the HomeKit Accessory Protocol (HAP) to create your own HomeKit accessory in Ruby. HomeKit is a set of protocols and libraries to access devices for Home Automation. A non-commercial version of the protocol documentation is available on the [HomeKit developer website](https://developer.apple.com/homekit/).
 
 ## Installation
 
@@ -23,13 +23,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Create a fan with an on/off switch.
+
+```ruby
+require 'ruby_home'
+
+accessory_information = RubyHome::AccessoryFactory.create(:accessory_information)
+fan = RubyHome::AccessoryFactory.create(:fan)
+
+fan.characteristic(:on).on(:updated) do |new_value|
+  if new_value == 1
+    puts "Fan switched on"
+  else
+    puts "Fan switched off"
+  end
+end
+
+RubyHome::Broadcast.run
+```
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
