@@ -173,7 +173,7 @@ RSpec.describe 'POST /pair-setup' do
       expected_identifier = '349CBC7D-01B9-4DC4-AD98-FB9029BB77F2'
       expected_public_key = '62398c58854a0718b19a64445f5f63761472802dd15ddf19cc74bee253dde525'
 
-      expect(Rubyhome::AccessoryInfo.paired_clients).to match(
+      expect(RubyHome::AccessoryInfo.paired_clients).to match(
         a_hash_including(
           admin: true,
           identifier: expected_identifier,

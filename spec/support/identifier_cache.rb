@@ -1,6 +1,6 @@
 RSpec.configure do |config|
   config.before(:each) do |example|
-    Rubyhome::IdentifierCache.reset!
+    RubyHome::IdentifierCache.reset!
   end
 end
 

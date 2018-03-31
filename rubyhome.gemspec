@@ -1,11 +1,11 @@
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rubyhome/version'
+require 'ruby_home/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'rubyhome'
-  spec.version       = Rubyhome::VERSION
+  spec.name          = 'ruby_home'
+  spec.version       = RubyHome::VERSION
   spec.authors       = ['Karl Entwistle']
   spec.email         = ['karl@entwistle.com']
   spec.summary       = 'Ruby HomeKit support'
@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
     are modules that provide a bridge from HomeKit to various 3rd-party APIs
     provided by manufacturers of smart home devices.
   DESCRIPTION
-  spec.homepage      = 'https://github.com/karlentwistle/rubyhome'
+  spec.homepage      = 'https://github.com/karlentwistle/ruby_home'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'oj', '~> 3.4'
   spec.add_dependency 'rbnacl', '~> 5.0'
   spec.add_dependency 'rbnacl-libsodium', '~> 1.0', '>= 1.0.16'
-  spec.add_dependency 'rubyhome-srp', '~> 1.0'
+  spec.add_dependency 'ruby_home-srp', '~> 1.1.1'
   spec.add_dependency 'sinatra', '~> 2.0'
   spec.add_dependency 'wisper', '~> 1.6', '>= 1.6.1'
   spec.add_dependency 'x25519', '~> 1.0', '>= 1.0.5'

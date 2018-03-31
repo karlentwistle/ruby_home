@@ -4,7 +4,7 @@ require 'byebug'
 require 'plist'
 require 'yaml'
 
-module Rubyhome
+module RubyHome
   class CharacteristicGenerator
     class << self
       def run
@@ -33,7 +33,7 @@ module Rubyhome
       end
 
       def file_path
-        File.dirname(__FILE__) + '/../lib/rubyhome/config/characteristics.yml'
+        File.dirname(__FILE__) + '/../lib/ruby_home/config/characteristics.yml'
       end
     end
 
@@ -80,4 +80,4 @@ module Rubyhome
   end
 end
 
-Rubyhome::CharacteristicGenerator.run
+RubyHome::CharacteristicGenerator.run

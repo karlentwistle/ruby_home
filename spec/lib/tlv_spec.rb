@@ -1,7 +1,7 @@
 require 'spec_helper'
-require_relative '../../lib/rubyhome/tlv'
+require_relative '../../lib/ruby_home/tlv'
 
-RSpec.describe Rubyhome::TLV do
+RSpec.describe RubyHome::TLV do
   describe '.unpack' do
     subject do
       described_class.unpack([input].pack('H*'))

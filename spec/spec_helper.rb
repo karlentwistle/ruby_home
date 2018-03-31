@@ -4,14 +4,14 @@ require 'bundler/setup'
 require 'byebug'
 require 'rack/test'
 require 'rspec'
-require_relative '../lib/rubyhome'
+require_relative '../lib/ruby_home'
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].sort.each { |file| require file }
 
 module RSpecMixin
   include Rack::Test::Methods
   def app
-    app = Rubyhome::HTTP::Application
+    app = RubyHome::HTTP::Application
     app.set :request_id, 1
     app
   end

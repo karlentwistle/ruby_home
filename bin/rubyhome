@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/rubyhome'
+require_relative '../lib/ruby_home'
 
-accessory_information = Rubyhome::AccessoryFactory.create(:accessory_information)
-fan = Rubyhome::AccessoryFactory.create(:fan)
+accessory_information = RubyHome::AccessoryFactory.create(:accessory_information)
+fan = RubyHome::AccessoryFactory.create(:fan)
 
 fan.characteristic(:on).on(:updated) do |new_value|
   if new_value == 1
@@ -13,4 +13,4 @@ fan.characteristic(:on).on(:updated) do |new_value|
   end
 end
 
-Rubyhome::Broadcast.run
+RubyHome::Broadcast.run

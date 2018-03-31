@@ -27,7 +27,7 @@ RSpec.describe '/characteristics' do
       end
 
       it 'responds with a 204 No Content HTTP Status Code' do
-        fan = Rubyhome::AccessoryFactory.create(:fan)
+        fan = RubyHome::AccessoryFactory.create(:fan)
         characteristic = fan.characteristic(:on)
 
         iid = characteristic.instance_id
@@ -39,7 +39,7 @@ RSpec.describe '/characteristics' do
       end
 
       it 'responds with characteristics' do
-        fan = Rubyhome::AccessoryFactory.create(:fan)
+        fan = RubyHome::AccessoryFactory.create(:fan)
         characteristic = fan.characteristic(:on)
 
         iid = characteristic.instance_id
@@ -86,11 +86,11 @@ RSpec.describe '/characteristics' do
       end
 
       let(:characteristic) do
-        Rubyhome::IdentifierCache.find_characteristics(uuid: '00000025-0000-1000-8000-0026BB765291').first
+        RubyHome::IdentifierCache.find_characteristics(uuid: '00000025-0000-1000-8000-0026BB765291').first
       end
 
       before do
-        fan = Rubyhome::AccessoryFactory.create(:fan)
+        fan = RubyHome::AccessoryFactory.create(:fan)
         set_cache(:controller_to_accessory_key, ['a' * 64].pack('H*'))
         set_cache(:accessory_to_controller_key, ['b' * 64].pack('H*'))
       end

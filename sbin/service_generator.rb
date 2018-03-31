@@ -4,7 +4,7 @@ require 'byebug'
 require 'plist'
 require 'yaml'
 
-module Rubyhome
+module RubyHome
   class ServiceGenerator
     class << self
       def run
@@ -33,7 +33,7 @@ module Rubyhome
       end
 
       def file_path
-        File.dirname(__FILE__) + '/../lib/rubyhome/config/services.yml'
+        File.dirname(__FILE__) + '/../lib/ruby_home/config/services.yml'
       end
     end
 
@@ -66,4 +66,4 @@ module Rubyhome
   end
 end
 
-Rubyhome::ServiceGenerator.run
+RubyHome::ServiceGenerator.run

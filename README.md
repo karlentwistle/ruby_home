@@ -1,4 +1,4 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/a13f62c597b3746a7ef5/maintainability)](https://codeclimate.com/github/karlentwistle/rubyhome/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a13f62c597b3746a7ef5/maintainability)](https://codeclimate.com/github/karlentwistle/ruby_home/maintainability)
 [![Build Status](https://travis-ci.org/karlentwistle/ruby_home.svg?branch=master)](https://travis-ci.org/karlentwistle/ruby_home)
 
 # Ruby Home
@@ -10,7 +10,7 @@ RubyHome is a lightweight service you can run on your home network that emulates
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rubyhome'
+gem 'ruby_home'
 ```
 
 And then execute:
@@ -19,7 +19,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install rubyhome
+    $ gem install ruby_home
 
 ## Usage
 
@@ -33,4 +33,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rubyhome.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ruby_home.
