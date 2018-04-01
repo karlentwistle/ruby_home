@@ -20,28 +20,18 @@ RSpec.describe 'POST /pair-setup' do
       expect(unpacked_body).to include('kTLVType_Salt' => a_kind_of(String))
     end
 
-    it 'body contains kTLVType_Salt at least 31 in length' do
-      salt = unpacked_body['kTLVType_Salt']
-      expect(salt.length).to be >= 31
-    end
-
     it 'body contains kTLVType_PublicKey' do
       expect(unpacked_body).to include('kTLVType_PublicKey' => a_kind_of(String))
-    end
-
-    it 'body contains kTLVType_PublicKey at least 766 in length' do
-      public_key = unpacked_body['kTLVType_PublicKey']
-      expect(public_key.length).to be >= 766
     end
 
     it 'stores proof in cache' do
       salt = unpacked_body['kTLVType_Salt']
       public_key = unpacked_body['kTLVType_PublicKey']
       expect(read_cache(:proof)).to include(
-        B: public_key,
+        B: public_key.unpack1('H*'),
         I: 'Pair-Setup',
         b: a_kind_of(String),
-        s: salt,
+        s: salt.unpack1('H*'),
         v: a_kind_of(String)
       )
     end
@@ -113,7 +103,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     it 'body contains kTLVType_Proof' do
-      public_key = unpacked_body['kTLVType_Proof']
+      public_key = unpacked_body['kTLVType_Proof'].unpack1('H*')
       expected_proof = %w{
         986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
         033B4B94 0583C317 0CD4C326 4BB093C0 B518F8C9 710B6F68 A56E5B03 D0686EDA
@@ -158,7 +148,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     it 'body contains kTLVType_EncryptedData' do
-      encrypted_data = unpacked_body['kTLVType_EncryptedData']
+      encrypted_data = unpacked_body['kTLVType_EncryptedData'].unpack1('H*')
       expected_encrypted_data = %w{
         51445260 6E942707 25D0A470 8708B97B C9A495FB A0900796 A2BCF06F 8388829B
         6F6B7C09 BEE33B8F DEAD373D 83EBB92F 395B0C9B C16A8AA1 8F13EA58 F89ADF8A

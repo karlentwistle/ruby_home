@@ -1,6 +1,6 @@
 module TLVHelpers
   def unpacked_body
-    RubyHome::TLV.unpack(last_response.body)
+    RubyHome::HAP::TLV.read(last_response.body)
   end
 end
 
