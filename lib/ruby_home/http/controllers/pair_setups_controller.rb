@@ -3,7 +3,7 @@ require 'openssl'
 require 'rbnacl/libsodium'
 require 'ruby_home-srp'
 require_relative '../../hap/hex_pad'
-require_relative '../../tlv'
+require_relative '../../hap/tlv'
 require_relative 'application_controller'
 
 module RubyHome
@@ -36,26 +36,25 @@ module RubyHome
         challenge_and_proof = srp_verifier.get_challenge_and_proof(username, verifier, salt)
         store_proof(challenge_and_proof[:proof])
 
-        TLV.pack({
-          'kTLVType_Salt' => challenge_and_proof[:challenge][:salt],
-          'kTLVType_PublicKey' => challenge_and_proof[:challenge][:B],
+        HAP::TLV.encode({
+          'kTLVType_Salt' => [challenge_and_proof[:challenge][:salt]].pack('H*'),
+          'kTLVType_PublicKey' => [challenge_and_proof[:challenge][:B]].pack('H*'),
           'kTLVType_State' => 2
         })
       end
 
       def srp_verify_response
         proof = retrieve_proof.dup
-        proof[:A] = unpack_request['kTLVType_PublicKey']
+        proof[:A] = unpack_request['kTLVType_PublicKey'].unpack1('H*')
 
-        client_m1_proof = unpack_request['kTLVType_Proof']
-        server_m2_proof = srp_verifier.verify_session(proof, unpack_request['kTLVType_Proof'])
+        server_m2_proof = srp_verifier.verify_session(proof, unpack_request['kTLVType_Proof'].unpack1('H*'))
 
         store_session_key(srp_verifier.K)
         forget_proof!
 
-        TLV.pack({
+        HAP::TLV.encode({
           'kTLVType_State' => 4,
-          'kTLVType_Proof' => server_m2_proof
+          'kTLVType_Proof' => [server_m2_proof].pack('H*')
         })
       end
 
@@ -68,8 +67,8 @@ module RubyHome
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
 
         nonce = HAP::HexPad.pad('PS-Msg05')
-        decrypted_data = chacha20poly1305ietf.decrypt(nonce, [encrypted_data].pack('H*'), nil)
-        unpacked_decrypted_data = TLV.unpack(decrypted_data)
+        decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data, nil)
+        unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
         iosdevicepairingid = unpacked_decrypted_data['kTLVType_Identifier']
         iosdevicesignature = unpacked_decrypted_data['kTLVType_Signature']
@@ -79,39 +78,39 @@ module RubyHome
         iosdevicex = hkdf.encrypt([session_key].pack('H*'))
 
         iosdeviceinfo = [
-          iosdevicex.unpack('H*'),
-          TLV::Utf8.pack(iosdevicepairingid),
-          iosdeviceltpk
+          iosdevicex.unpack1('H*'),
+          iosdevicepairingid.unpack1('H*'),
+          iosdeviceltpk.unpack1('H*')
         ].join
-        verify_key = RbNaCl::Signatures::Ed25519::VerifyKey.new([iosdeviceltpk].pack('H*'))
+        verify_key = RbNaCl::Signatures::Ed25519::VerifyKey.new(iosdeviceltpk)
 
-        if verify_key.verify([iosdevicesignature].pack('H*'), [iosdeviceinfo].pack('H*'))
+        if verify_key.verify(iosdevicesignature, [iosdeviceinfo].pack('H*'))
           hkdf = HAP::HKDFEncryption.new(info: 'Pair-Setup-Accessory-Sign-Info', salt: 'Pair-Setup-Accessory-Sign-Salt')
           accessory_x = hkdf.encrypt([session_key].pack('H*'))
 
           signing_key = accessory_info.signing_key
-          accessoryltpk = signing_key.verify_key.to_bytes.unpack('H*')[0]
+          accessoryltpk = signing_key.verify_key.to_bytes
           accessoryinfo = [
-            accessory_x.unpack('H*'),
-            TLV::Utf8.pack(accessory_info.device_id),
-            accessoryltpk
+            accessory_x.unpack1('H*'),
+            accessory_info.device_id.unpack1('H*'),
+            accessoryltpk.unpack1('H*')
           ].join
 
-          accessorysignature = signing_key.sign([accessoryinfo].pack('H*')).unpack('H*')[0]
+          accessorysignature = signing_key.sign([accessoryinfo].pack('H*'))
 
-          subtlv = TLV.pack({
+          subtlv = HAP::TLV.encode({
             'kTLVType_Identifier' => accessory_info.device_id,
             'kTLVType_PublicKey' => accessoryltpk,
             'kTLVType_Signature' => accessorysignature
           })
 
           nonce = HAP::HexPad.pad('PS-Msg06')
-          encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil).unpack('H*')[0]
+          encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil)
 
-          pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk }
+          pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk.unpack1('H*') }
           accessory_info.add_paired_client pairing_params
 
-          TLV.pack({
+          HAP::TLV.encode({
             'kTLVType_State' => 6,
             'kTLVType_EncryptedData' => encrypted_data
           })

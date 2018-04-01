@@ -6,7 +6,7 @@ module RubyHome
       def unpack_request
         @_unpack_request ||= begin
           request.body.rewind
-          TLV.unpack(request.body.read)
+          HAP::TLV.read(request.body.read)
         end
       end
 
