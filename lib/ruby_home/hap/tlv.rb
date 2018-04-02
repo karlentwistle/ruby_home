@@ -31,25 +31,29 @@ module RubyHome
         end
       end
 
+      class Payload < BinData::Choice
+        bytes :default
+
+        uint8       0,  read_length: :len
+        utf8_string 1,  read_length: :len
+        bytes       2,  read_length: :len
+        bytes       3,  read_length: :len
+        bytes       4,  read_length: :len
+        bytes       5,  read_length: :len
+        uint8       6,  read_length: :len
+        uint8       7,  read_length: :len
+        uint8       8,  read_length: :len
+        bytes       9,  read_length: :len
+        bytes      10,  read_length: :len
+        uint8      11,  read_length: :len
+        bytes      12,  read_length: :len
+        bytes      13,  read_length: :len
+      end
+
       class TLV < BinData::Record
         uint8 :type_id, read_length: 2
         uint8 :len, read_length: 2
-        choice :val, selection: :type_id do
-          uint8       0,  read_length: :len
-          utf8_string 1,  read_length: :len
-          bytes       2,  read_length: :len
-          bytes       3,  read_length: :len
-          bytes       4,  read_length: :len
-          bytes       5,  read_length: :len
-          uint8       6,  read_length: :len
-          uint8       7,  read_length: :len
-          uint8       8,  read_length: :len
-          bytes       9,  read_length: :len
-          bytes      10,  read_length: :len
-          uint8      11,  read_length: :len
-          bytes      12,  read_length: :len
-          bytes      13,  read_length: :len
-        end
+        payload :val, selection: :type_id
       end
 
       READER = BinData::Array.new(type: :tlv, read_until: :eof)
@@ -58,26 +62,30 @@ module RubyHome
         READER.clear
         READER.read(input)
         READER.snapshot.each_with_object({}) do |(hash), memo|
-          type  = TYPE_NAMES[hash[:type_id]]
-          value = hash[:val]
+          type = TYPE_NAMES[hash[:type_id]]
+          next unless type
 
           if memo[type]
-            memo[type] << value
+            memo[type] << hash[:val]
           else
-            memo[type] = value
+            memo[type] = hash[:val]
           end
         end
       end
 
       def encode(hash)
         hash.to_hash.each_with_object(String.new) do |(key, value), memo|
+          type_id = NAME_TYPES[key]
+          next unless type_id
+
           if value.is_a?(String)
             value.scan(/.{1,255}/m)
           else
             [value]
           end.each do |frame_value|
-            tlv = TLV.new(type_id: NAME_TYPES[key], val: frame_value)
-            tlv.len = tlv.val.to_binary_s.length
+            tlv = TLV.new(type_id: type_id, val: frame_value).tap do |tlv|
+              tlv.len = tlv.val.to_binary_s.length
+            end
             memo << tlv.to_binary_s
           end
         end

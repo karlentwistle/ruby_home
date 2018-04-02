@@ -111,6 +111,20 @@ RSpec.describe RubyHome::HAP::TLV do
         })
       end
     end
+
+    context 'unrecognized types' do
+      let(:input) { '0f01ff' }
+      it 'TLV items with unrecognized types must be silently ignored' do
+        is_expected.to eql({})
+      end
+    end
+
+    context 'TLV item length' do
+      let(:input) { '0100' }
+      it '0 is a valid length' do
+        is_expected.to eql({'kTLVType_Identifier' => ''})
+      end
+    end
   end
 
   describe '.encode' do
@@ -221,6 +235,20 @@ RSpec.describe RubyHome::HAP::TLV do
           '6161616161616161616161616161610a2d616161616161616161616161616161616161'\
           '616161616161616161616161616161616161616161616161616161010568656c6c6f'
         ].pack('H*'))
+      end
+    end
+
+    context 'unrecognized types' do
+      let(:input) { {'kTLVType_Unrecognized' => 3 } }
+      it 'TLV items with unrecognized types must be silently ignored' do
+        is_expected.to eql('')
+      end
+    end
+
+    context 'TLV item length' do
+      let(:input) { {'kTLVType_Identifier' => ''} }
+      it '0 is a valid length' do
+        is_expected.to eql('')
       end
     end
   end
