@@ -32,7 +32,7 @@ module RubyHome
       end
 
       class Payload < BinData::Choice
-        bytes :default
+        bytes :default, read_length: :len
 
         uint8       0,  read_length: :len
         utf8_string 1,  read_length: :len
