@@ -61,7 +61,7 @@ module RubyHome
       def exchange_response
         encrypted_data = unpack_request['kTLVType_EncryptedData']
 
-        hkdf = HAP::HKDFEncryption.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
+        hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
         key = hkdf.encrypt([session_key].pack('H*'))
 
         chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
@@ -74,7 +74,7 @@ module RubyHome
         iosdevicesignature = unpacked_decrypted_data['kTLVType_Signature']
         iosdeviceltpk = unpacked_decrypted_data['kTLVType_PublicKey']
 
-        hkdf = HAP::HKDFEncryption.new(info: 'Pair-Setup-Controller-Sign-Info', salt: 'Pair-Setup-Controller-Sign-Salt')
+        hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Controller-Sign-Info', salt: 'Pair-Setup-Controller-Sign-Salt')
         iosdevicex = hkdf.encrypt([session_key].pack('H*'))
 
         iosdeviceinfo = [
@@ -85,7 +85,7 @@ module RubyHome
         verify_key = RbNaCl::Signatures::Ed25519::VerifyKey.new(iosdeviceltpk)
 
         if verify_key.verify(iosdevicesignature, [iosdeviceinfo].pack('H*'))
-          hkdf = HAP::HKDFEncryption.new(info: 'Pair-Setup-Accessory-Sign-Info', salt: 'Pair-Setup-Accessory-Sign-Salt')
+          hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Accessory-Sign-Info', salt: 'Pair-Setup-Accessory-Sign-Salt')
           accessory_x = hkdf.encrypt([session_key].pack('H*'))
 
           signing_key = accessory_info.signing_key
