@@ -12,7 +12,8 @@ module RubyHome
         end
 
         def encrypt(source)
-          GEM_HKDF.new(source, hkdf_opts).next_bytes(BYTE_LENGTH)
+          byte_string = convert_string_to_byte_string(source)
+          GEM_HKDF.new(byte_string, hkdf_opts).next_bytes(BYTE_LENGTH)
         end
 
         private
@@ -31,6 +32,14 @@ module RubyHome
 
         def algorithm
           'SHA512'
+        end
+
+        def convert_string_to_byte_string(string)
+          if string.encoding == Encoding::ASCII_8BIT
+            string
+          else
+            [string].pack('H*')
+          end
         end
       end
     end
