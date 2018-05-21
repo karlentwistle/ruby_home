@@ -34,7 +34,7 @@ module RubyHome
       end
 
       def chacha20poly1305ietf
-        RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
+        HAP::Crypto::ChaCha20Poly1305.new(key)
       end
     end
   end

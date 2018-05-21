@@ -45,9 +45,9 @@ module RubyHome
         session_key = hkdf.encrypt(shared_secret)
         cache[:session_key] = session_key
 
-        chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(session_key)
+        chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(session_key)
         nonce = HAP::HexPad.pad('PV-Msg02')
-        encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil)
+        encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
 
         HAP::TLV.encode({
           'kTLVType_State' => 2,
@@ -59,9 +59,9 @@ module RubyHome
       def verify_finish_response
         encrypted_data = unpack_request['kTLVType_EncryptedData']
 
-        chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(cache[:session_key])
+        chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(cache[:session_key])
         nonce = HAP::HexPad.pad('PV-Msg03')
-        decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data, nil)
+        decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
         if accessory_info.paired_clients.any? {|h| h[:identifier] == unpacked_decrypted_data['kTLVType_Identifier']}

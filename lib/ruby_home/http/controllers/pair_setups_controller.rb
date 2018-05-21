@@ -64,10 +64,10 @@ module RubyHome
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
         key = hkdf.encrypt([session_key].pack('H*'))
 
-        chacha20poly1305ietf = RbNaCl::AEAD::ChaCha20Poly1305IETF.new(key)
+        chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(key)
 
         nonce = HAP::HexPad.pad('PS-Msg05')
-        decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data, nil)
+        decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
         iosdevicepairingid = unpacked_decrypted_data['kTLVType_Identifier']
@@ -105,7 +105,7 @@ module RubyHome
           })
 
           nonce = HAP::HexPad.pad('PS-Msg06')
-          encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv, nil)
+          encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
 
           pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk.unpack1('H*') }
           accessory_info.add_paired_client pairing_params
