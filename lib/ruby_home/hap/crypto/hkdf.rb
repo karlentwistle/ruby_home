@@ -18,20 +18,17 @@ module RubyHome
 
         private
 
+        ALGORITHM = 'SHA512'
         BYTE_LENGTH = 32
 
         attr_reader :info, :salt, :source
 
         def hkdf_opts
           {
-            algorithm: algorithm,
+            algorithm: ALGORITHM,
             info: info,
             salt: salt
           }
-        end
-
-        def algorithm
-          'SHA512'
         end
 
         def convert_string_to_byte_string(string)
