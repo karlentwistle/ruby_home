@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'oj', '~> 3.4'
   spec.add_dependency 'rbnacl', '~> 5.0'
   spec.add_dependency 'rbnacl-libsodium', '~> 1.0', '>= 1.0.16'
-  spec.add_dependency 'ruby_home-srp', '~> 1.1.1'
+  spec.add_dependency 'ruby_home-srp', '~> 1.2'
   spec.add_dependency 'sinatra', '~> 2.0.1'
   spec.add_dependency 'wisper', '~> 1.6', '>= 1.6.1'
   spec.add_dependency 'x25519', '~> 1.0', '>= 1.0.5'
