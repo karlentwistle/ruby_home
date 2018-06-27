@@ -1,5 +1,3 @@
-require 'rbnacl/libsodium'
-
 GEM_HKDF = HKDF
 
 module RubyHome
