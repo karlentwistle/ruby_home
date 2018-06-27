@@ -1,4 +1,3 @@
-require 'x25519'
 require_relative '../../hap/crypto/hkdf'
 require_relative '../../hap/hex_pad'
 require_relative '../../hap/tlv'
@@ -21,10 +20,10 @@ module RubyHome
       private
 
       def verify_start_response
-        secret_key = X25519::Scalar.generate
+        secret_key = RbNaCl::PrivateKey.generate
         public_key = secret_key.public_key.to_bytes
-        client_public_key = X25519::MontgomeryU.new(unpack_request['kTLVType_PublicKey'])
-        shared_secret = secret_key.multiply(client_public_key).to_bytes
+        client_public_key = RbNaCl::PublicKey.new(unpack_request['kTLVType_PublicKey'])
+        shared_secret = RbNaCl::GroupElement.new(client_public_key).mult(secret_key).to_bytes
         cache[:shared_secret] = shared_secret
 
         accessoryinfo = [
