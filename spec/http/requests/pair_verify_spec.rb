@@ -3,8 +3,8 @@ require 'spec_helper'
 RSpec.describe 'POST /pair-verify' do
   context 'Verify Start Response' do
     before do
-      stub_secret_key = X25519::Scalar.new(['0000000000000000000000000000000000000000000000000000000000000040'].pack('H*'))
-      allow(X25519::Scalar).to receive(:generate).and_return(stub_secret_key)
+      stub_secret_key = RbNaCl::PrivateKey.new(['0000000000000000000000000000000000000000000000000000000000000040'].pack('H*'))
+      allow(RbNaCl::PrivateKey).to receive(:generate).and_return(stub_secret_key)
 
       path = File.expand_path('../../../fixtures/verify_start_response', __FILE__)
       data = File.read(path)
