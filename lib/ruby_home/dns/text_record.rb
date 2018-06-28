@@ -1,5 +1,3 @@
-require 'dnssd/text_record'
-
 module RubyHome
   class TextRecord < DNSSD::TextRecord
     def initialize(accessory_info:)

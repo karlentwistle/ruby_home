@@ -1,6 +1,3 @@
-require_relative 'application_controller'
-require_relative '../serializers/characteristic_value_serializer'
-
 module RubyHome
   module HTTP
     class CharacteristicsController < ApplicationController

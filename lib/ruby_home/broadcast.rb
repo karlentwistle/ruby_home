@@ -1,6 +1,3 @@
-require_relative 'dns/service'
-require_relative 'http/application'
-
 Thread.abort_on_exception = true
 
 module RubyHome

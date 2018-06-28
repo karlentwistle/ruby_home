@@ -1,5 +1,3 @@
-require_relative 'application_controller'
-
 module RubyHome
   module HTTP
     class PairingsController < ApplicationController

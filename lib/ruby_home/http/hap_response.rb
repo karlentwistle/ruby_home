@@ -1,6 +1,3 @@
-require 'webrick/httpresponse'
-require_relative '../hap/http_encryption'
-
 module RubyHome
   module HTTP
     class HAPResponse < WEBrick::HTTPResponse

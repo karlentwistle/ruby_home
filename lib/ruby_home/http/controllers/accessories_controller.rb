@@ -1,6 +1,3 @@
-require_relative 'application_controller'
-require_relative '../serializers/accessory_serializer'
-
 module RubyHome
   module HTTP
     class AccessoriesController < ApplicationController

@@ -1,11 +1,3 @@
-require 'hkdf'
-require 'openssl'
-require 'rbnacl/libsodium'
-require 'ruby_home-srp'
-require_relative '../../hap/hex_pad'
-require_relative '../../hap/tlv'
-require_relative 'application_controller'
-
 module RubyHome
   module HTTP
     class PairSetupsController < ApplicationController

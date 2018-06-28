@@ -1,6 +1,3 @@
-require_relative '../hap/service'
-require_relative '../hap/accessory'
-
 module RubyHome
   class CharacteristicFactory
     DEFAULT_VALUES = {

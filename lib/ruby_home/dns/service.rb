@@ -1,7 +1,3 @@
-require 'dnssd'
-require_relative '../accessory_info'
-require_relative 'text_record'
-
 module RubyHome
   module DNS
     class Service

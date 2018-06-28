@@ -1,5 +1,3 @@
-require 'wisper'
-
 module RubyHome
   class Characteristic
     include Wisper::Publisher

@@ -1,8 +1,3 @@
-require_relative '../../hap/crypto/hkdf'
-require_relative '../../hap/hex_pad'
-require_relative '../../hap/tlv'
-require_relative 'application_controller'
-
 module RubyHome
   module HTTP
     class PairVerifiesController < ApplicationController

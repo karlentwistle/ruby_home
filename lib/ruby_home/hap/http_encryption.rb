@@ -1,5 +1,3 @@
-require 'rbnacl/libsodium'
-
 module RubyHome
   module HAP
     class HTTPEncryption

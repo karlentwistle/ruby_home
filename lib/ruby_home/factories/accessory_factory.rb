@@ -1,8 +1,3 @@
-require_relative '../hap/service'
-require_relative '../hap/accessory'
-require_relative 'templates/service_template'
-require_relative 'templates/characteristic_template'
-
 module RubyHome
   class AccessoryFactory
     def self.create(service_name, characteristics: {}, **options)

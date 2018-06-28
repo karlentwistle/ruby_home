@@ -1,5 +1,3 @@
-require 'oj'
-
 module RubyHome
   module HTTP
     module ObjectSerializer

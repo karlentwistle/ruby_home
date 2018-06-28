@@ -1,5 +1,3 @@
-require_relative 'characteristic_template'
-
 module RubyHome
   class ServiceTemplate
     FILEPATH = (File.dirname(__FILE__) + '/../../config/services.yml').freeze

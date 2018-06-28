@@ -1,5 +1,3 @@
-require 'singleton'
-
 module RubyHome
   module ActLikeHash
     def [](key)

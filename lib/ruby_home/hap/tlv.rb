@@ -1,5 +1,3 @@
-require 'bindata'
-
 module RubyHome
   module HAP
     module TLV

@@ -1,7 +1,3 @@
-require 'rbnacl/libsodium'
-require 'yaml/store'
-require_relative 'device_id'
-
 module RubyHome
   class AccessoryInfo
     PERSISTABLE = [ :device_id, :paired_clients, :password, :signature_key, :username ].freeze

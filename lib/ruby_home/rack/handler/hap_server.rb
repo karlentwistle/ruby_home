@@ -1,6 +1,3 @@
-require 'webrick'
-require_relative '../../http/hap_server'
-
 module RubyHome
   module Rack
     module Handler

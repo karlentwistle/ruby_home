@@ -1,7 +1,4 @@
-require 'sinatra/base'
 require_relative '../rack/handler/hap_server'
-require_relative 'cache'
-
 Rack::Handler.register 'hap_server', RubyHome::Rack::Handler::HAPServer
 
 module RubyHome

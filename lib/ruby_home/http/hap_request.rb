@@ -1,6 +1,3 @@
-require 'webrick/httprequest'
-require_relative '../hap/http_decryption'
-
 module RubyHome
   module HTTP
     class HAPRequest < WEBrick::HTTPRequest

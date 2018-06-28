@@ -1,6 +1,3 @@
-Dir[File.dirname(__FILE__) + '/services/*.rb'].each { |file| require file }
-require_relative 'characteristic'
-
 module RubyHome
   class Service
     def initialize(accessory: , primary: false, hidden: false, name:, description:, uuid:)

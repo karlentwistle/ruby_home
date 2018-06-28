@@ -1,8 +1,3 @@
-require 'webrick/httpserver'
-require 'webrick/httpstatus'
-require_relative 'hap_request'
-require_relative 'hap_response'
-
 module RubyHome
   module HTTP
     class HAPServer < WEBrick::HTTPServer

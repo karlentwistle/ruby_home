@@ -1,7 +1,15 @@
-require_relative 'ruby_home/version'
-require_relative 'ruby_home/broadcast'
-require_relative 'ruby_home/identifier_cache'
-Dir[File.dirname(__FILE__) + '/ruby_home/factories/*.rb'].each { |file| require file }
-Dir[File.dirname(__FILE__) + '/ruby_home/hap/crypto/*.rb'].each { |file| require file }
+require 'bindata'
+require 'dnssd'
+require 'hkdf'
+require 'oj'
+require 'rack'
+require 'rbnacl/libsodium'
+require 'ruby_home-srp'
+require 'sinatra'
+require 'webrick'
+require 'wisper'
+require 'yaml/store'
 
-module RubyHome; end
+module RubyHome
+  Dir[File.dirname(__FILE__) + '/ruby_home/**/*.rb'].each { |file| require file }
+end
