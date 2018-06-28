@@ -6,6 +6,9 @@ install:
   - 'gem install bundler -v 1.16.1'
   - 'bundle --version'
   - bundle
+rvm:
+  - 2.5.0
+  - ruby-head
 matrix:
   include:
     - os: linux
@@ -14,12 +17,6 @@ matrix:
       before_install:
         - sudo apt-get -qq update
         - sudo apt-get install -y libavahi-compat-libdnssd-dev
-      rvm:
-        - 2.5.0
-        - ruby-head
     - os: osx
       osx_image: xcode9.1
-      rvm:
-        - 2.5.0
-        - ruby-head
 notifications: {email: false}
