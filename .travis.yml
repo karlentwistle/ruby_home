@@ -1,23 +1,24 @@
-language: ruby
 cache: bundler
-before_install:
-    - 'gem update --system'
-    - 'gem --version'
-    - 'gem install bundler -v 1.16.1'
-    - 'bundle --version'
-    - bundle
-rvm:
-    - 2.5.0
-    - ruby-head
+language: ruby
+install:
+  - 'gem update --system'
+  - 'gem --version'
+  - 'gem install bundler -v 1.16.1'
+  - 'bundle --version'
+  - bundle
 matrix:
-    include:
-        -
-            os: linux
-            dist: trusty
-            sudo: false
-            addons: {apt: {packages: [libavahi-compat-libdnssd-dev]}}
-        -
-            os: osx
-            osx_image: xcode9.1
-notifications:
-    email: false
+  include:
+    - os: linux
+      dist: trusty
+      rvm: [2.5.0, ruby-head]
+      sudo: false
+      before_install:
+        - sudo apt-get -qq update
+        - sudo apt-get install -y libavahi-compat-libdnssd-dev
+    - os: osx
+      osx_image: xcode9.1
+      rvm: [2.5.0, ruby-head]
+      before_install:
+        - sudo apt-get -qq update
+        - sudo apt-get install -y libavahi-compat-libdnssd-dev
+notifications: {email: false}
