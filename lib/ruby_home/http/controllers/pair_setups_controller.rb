@@ -17,8 +17,8 @@ module RubyHome
       private
 
       def srp_start_response
-        username = 'Pair-Setup'
-        password = '031-45-154'
+        username = AccessoryInfo.username
+        password = AccessoryInfo.password
 
         auth = srp_verifier.generate_userauth(username, password)
 
