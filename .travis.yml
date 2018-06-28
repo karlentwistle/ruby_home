@@ -6,8 +6,8 @@ install:
   - 'gem install bundler -v 1.16.1'
   - 'bundle --version'
   - bundle
-rvm: 
-  - 2.5.0, 
+rvm:
+  - 2.5.0
   - ruby-head
 matrix:
   include:
