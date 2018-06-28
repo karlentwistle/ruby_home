@@ -1,6 +1,10 @@
 language: ruby
 cache: bundler
 
+os:
+  - linux
+  - osx
+
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libavahi-compat-libdnssd-dev
