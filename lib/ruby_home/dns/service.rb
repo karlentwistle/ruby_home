@@ -37,4 +37,3 @@ module RubyHome
     end
   end
 end
-
