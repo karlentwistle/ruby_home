@@ -1,4 +1,4 @@
-require 'ed25519'
+require 'rbnacl/libsodium'
 require 'yaml/store'
 require_relative 'device_id'
 
@@ -13,7 +13,7 @@ module RubyHome
 
       @device_id ||= DeviceID.generate
       @paired_clients ||= []
-      @signature_key ||= Ed25519::SigningKey.generate.to_bytes.unpack1('H*')
+      @signature_key ||= RbNaCl::Signatures::Ed25519::SigningKey.generate.to_bytes.unpack1('H*')
     end
 
     attr_reader :store
@@ -26,7 +26,7 @@ module RubyHome
     end
 
     def signing_key
-      @signing_key ||= Ed25519::SigningKey.new([signature_key].pack('H*'))
+      @signing_key ||= RbNaCl::Signatures::Ed25519::SigningKey.new([signature_key].pack('H*'))
     end
 
     def username

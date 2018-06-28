@@ -26,7 +26,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'bindata', '~> 2.4', '>= 2.4.3'
   spec.add_dependency 'dnssd', '~> 3.0'
-  spec.add_dependency 'ed25519', '~> 1.2', '>= 1.2.3'
   spec.add_dependency 'hkdf', '~> 0.3.0'
   spec.add_dependency 'oj', '~> 3.4'
   spec.add_dependency 'rbnacl', '~> 5.0'

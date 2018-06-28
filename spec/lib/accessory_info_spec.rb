@@ -15,7 +15,7 @@ RSpec.describe RubyHome::AccessoryInfo do
 
   describe '.signing_key' do
     it 'returns a Ed25519::SigningKey' do
-      expect(RubyHome::AccessoryInfo.signing_key).to be_a(Ed25519::SigningKey)
+      expect(RubyHome::AccessoryInfo.signing_key).to be_a(RbNaCl::Signatures::Ed25519::SigningKey)
     end
   end
 
