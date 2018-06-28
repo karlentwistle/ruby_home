@@ -5,4 +5,3 @@ RSpec.configure do |config|
     RubyHome::AccessoryInfo.signature_key = 'E2889D17DD141C3A62969E85C7092FDB1080617FECCC08A60A5001AB6C79AB97'
   end
 end
-

@@ -3,4 +3,3 @@ RSpec.configure do |config|
     RubyHome::IdentifierCache.reset!
   end
 end
-

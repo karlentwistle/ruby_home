@@ -1,7 +1,6 @@
 module RubyHome
   class DeviceID
     class << self
-
       DELIMITER = ':'
 
       # Device ID of the accessory must be a unique random number generated at every
@@ -24,7 +23,6 @@ module RubyHome
           .times
           .map { random_hexadecimal }
       end
-
     end
   end
 end
