@@ -45,7 +45,7 @@ module RubyHome
       end
 
       def cache
-        GlobalCache.instance[@_request_id] ||= Cache.new
+        RequestStore.store[@_request_id] ||= {}
       end
     end
   end
