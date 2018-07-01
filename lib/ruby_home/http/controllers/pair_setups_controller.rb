@@ -18,6 +18,13 @@ module RubyHome
 
       private
 
+      def pairing_failed_response
+        HAP::TLV.encode({
+          'kTLVType_State' => 4,
+          'kTLVType_Error' => 2
+        })
+      end
+
       def srp_start_response
         start_srp = StartSRPService.new(username: AccessoryInfo.username, password: AccessoryInfo.password)
 
@@ -32,7 +39,10 @@ module RubyHome
 
       def srp_verify_response
         proof = cache[:proof].dup
-        proof[:A] = unpack_request['kTLVType_PublicKey'].unpack1('H*')
+        public_key = unpack_request['kTLVType_PublicKey']
+        return pairing_failed_response unless public_key
+
+        proof[:A] = public_key.unpack1('H*')
 
         server_m2_proof = srp_verifier.verify_session(proof, unpack_request['kTLVType_Proof'].unpack1('H*'))
 

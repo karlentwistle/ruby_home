@@ -3,6 +3,16 @@ module RubyHome
     module TLV
       extend self
 
+      ERROR_CODES = {
+        1 => 'kTLVError_Unknown',
+        2 => 'kTLVError_Authentication',
+        3 => 'kTLVError_Backoff',
+        4 => 'kTLVError_MaxPeers',
+        5 => 'kTLVError_MaxTries',
+        6 => 'kTLVError_Unavailable',
+        7 => 'kTLVError_Busy',
+      }.freeze
+
       TYPE_NAMES = {
         0 => 'kTLVType_Method',
         1 => 'kTLVType_Identifier',
@@ -19,7 +29,6 @@ module RubyHome
        12 => 'kTLVType_FragmentData',
        13 => 'kTLVType_FragmentLast',
       }.freeze
-      NAME_TYPES = TYPE_NAMES.invert.freeze
 
       class Bytes < BinData::String; end
 
@@ -73,7 +82,7 @@ module RubyHome
 
       def encode(hash)
         hash.to_hash.each_with_object(String.new) do |(key, value), memo|
-          type_id = NAME_TYPES[key]
+          type_id = TYPE_NAMES.invert[key]
           next unless type_id
 
           if value.is_a?(String)
