@@ -45,7 +45,7 @@ module RubyHome
       end
 
       def cache
-        RequestStore.store[@_socket] ||= {}
+        RequestStore.store[@_socket]
       end
     end
   end
