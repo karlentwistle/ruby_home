@@ -25,12 +25,8 @@ module RubyHome
         IdentifierCache
       end
 
-      def request_id
-        Application.request_id
-      end
-
       def cache
-        RequestStore.store[request_id] ||= {}
+        RequestStore.store[Application.socket] ||= {}
       end
     end
   end

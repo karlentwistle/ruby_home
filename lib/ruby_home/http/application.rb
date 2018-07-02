@@ -11,8 +11,8 @@ module RubyHome
       set :bind, '0.0.0.0'
       set :quiet, true
       set :server, :hap_server
-      set :server_settings, AcceptCallback: -> (sock) do
-        self.set :request_id, sock.object_id
+      set :server_settings, AcceptCallback: -> (socket) do
+        set :socket, socket
       end
 
       use AccessoriesController

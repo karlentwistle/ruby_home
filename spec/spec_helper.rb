@@ -12,7 +12,7 @@ module RSpecMixin
   include Rack::Test::Methods
   def app
     app = RubyHome::HTTP::Application
-    app.set :request_id, 1
+    app.set :socket, 1
     app
   end
 end

@@ -1,8 +1,8 @@
 module RubyHome
   module HTTP
     class HAPResponse < WEBrick::HTTPResponse
-      def initialize(*args, request_id: )
-        @_request_id = request_id
+      def initialize(*args, socket: )
+        @_socket = socket
         cache[:accessory_to_controller_count] ||= 0
 
         super(*args)
@@ -45,7 +45,7 @@ module RubyHome
       end
 
       def cache
-        RequestStore.store[@_request_id] ||= {}
+        RequestStore.store[@_socket] ||= {}
       end
     end
   end
