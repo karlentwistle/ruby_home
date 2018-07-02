@@ -28,7 +28,7 @@ module RubyHome
         salt = auth[:salt]
 
         challenge_and_proof = srp_verifier.get_challenge_and_proof(username, verifier, salt)
-        store_proof(challenge_and_proof[:proof])
+        cache[:proof] = challenge_and_proof[:proof]
 
         HAP::TLV.encode({
           'kTLVType_Salt' => [challenge_and_proof[:challenge][:salt]].pack('H*'),
@@ -38,13 +38,13 @@ module RubyHome
       end
 
       def srp_verify_response
-        proof = retrieve_proof.dup
+        proof = cache[:proof].dup
         proof[:A] = unpack_request['kTLVType_PublicKey'].unpack1('H*')
 
         server_m2_proof = srp_verifier.verify_session(proof, unpack_request['kTLVType_Proof'].unpack1('H*'))
 
-        store_session_key(srp_verifier.K)
-        forget_proof!
+        cache[:session_key] = srp_verifier.K
+        cache[:proof] = nil
 
         HAP::TLV.encode({
           'kTLVType_State' => 4,
@@ -56,7 +56,7 @@ module RubyHome
         encrypted_data = unpack_request['kTLVType_EncryptedData']
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
-        key = hkdf.encrypt(session_key)
+        key = hkdf.encrypt(cache[:session_key])
 
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(key)
 
@@ -69,7 +69,7 @@ module RubyHome
         iosdeviceltpk = unpacked_decrypted_data['kTLVType_PublicKey']
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Controller-Sign-Info', salt: 'Pair-Setup-Controller-Sign-Salt')
-        iosdevicex = hkdf.encrypt(session_key)
+        iosdevicex = hkdf.encrypt(cache[:session_key])
 
         iosdeviceinfo = [
           iosdevicex.unpack1('H*'),
@@ -80,7 +80,7 @@ module RubyHome
 
         if verify_key.verify(iosdevicesignature, [iosdeviceinfo].pack('H*'))
           hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Accessory-Sign-Info', salt: 'Pair-Setup-Accessory-Sign-Salt')
-          accessory_x = hkdf.encrypt(session_key)
+          accessory_x = hkdf.encrypt(cache[:session_key])
 
           signing_key = accessory_info.signing_key
           accessoryltpk = signing_key.verify_key.to_bytes
@@ -113,26 +113,6 @@ module RubyHome
 
       def srp_verifier
         @_verifier ||= RubyHome::SRP::Verifier.new
-      end
-
-      def store_proof(proof)
-        cache[:proof] = proof
-      end
-
-      def retrieve_proof
-        cache[:proof]
-      end
-
-      def forget_proof!
-        cache[:proof] = nil
-      end
-
-      def store_session_key(key)
-        cache[:session_key] = key
-      end
-
-      def session_key
-        cache[:session_key]
       end
     end
   end
