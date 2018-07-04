@@ -19,6 +19,8 @@ module RubyHome
       private
 
       def pairing_failed_response
+        clear_cache
+
         HAP::TLV.encode({
           'kTLVType_State' => 4,
           'kTLVType_Error' => 2
@@ -45,6 +47,7 @@ module RubyHome
         proof[:A] = public_key.unpack1('H*')
 
         server_m2_proof = srp_verifier.verify_session(proof, unpack_request['kTLVType_Proof'].unpack1('H*'))
+        return pairing_failed_response unless server_m2_proof
 
         cache[:session_key] = srp_verifier.K
         cache[:proof] = nil

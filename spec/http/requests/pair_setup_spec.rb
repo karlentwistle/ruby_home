@@ -133,6 +133,28 @@ RSpec.describe 'POST /pair-setup' do
         it 'responds with error' do
           expect(unpacked_body).to include('kTLVType_State' => 4, 'kTLVType_Error' => 2)
         end
+
+        it 'clears the cache' do
+          expect(read_cache).to be_empty
+        end
+      end
+
+      context 'SRP_verify verification fails' do
+        let(:data) do
+          RubyHome::HAP::TLV.encode(
+            'kTLVType_State' => 3,
+            'kTLVType_PublicKey' => 'foo',
+            'kTLVType_Proof' => 'foo'
+          )
+        end
+
+        it 'responds with error' do
+          expect(unpacked_body).to include('kTLVType_State' => 4, 'kTLVType_Error' => 2)
+        end
+
+        it 'clears the cache' do
+          expect(read_cache).to be_empty
+        end
       end
     end
   end

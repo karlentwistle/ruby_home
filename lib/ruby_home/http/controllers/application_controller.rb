@@ -28,6 +28,10 @@ module RubyHome
       def cache
         RequestStore.store[Application.socket] ||= {}
       end
+
+      def clear_cache
+        RequestStore.store[Application.socket] = {}
+      end
     end
   end
 end
