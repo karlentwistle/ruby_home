@@ -3,8 +3,12 @@ module CacheHelpers
     RequestStore.store[1][key.to_sym] = value
   end
 
-  def read_cache(key)
-    RequestStore.store[1][key.to_sym]
+  def read_cache(key=nil)
+    if key
+      RequestStore.store[1][key.to_sym]
+    else
+      RequestStore.store[1]
+    end
   end
 end
 

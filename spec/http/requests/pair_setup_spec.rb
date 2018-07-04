@@ -80,6 +80,9 @@ RSpec.describe 'POST /pair-setup' do
         D15793F8 02099A46 C8D8FC4F 4D0B1E59 97311C8F DE59CC2E 22A5BF34 8A47D636
       }.join.downcase
     end
+    let(:data) do
+      File.read(File.expand_path('../../../fixtures/srp_verify_request', __FILE__))
+    end
 
     before do
       set_cache(:proof, {
@@ -89,38 +92,70 @@ RSpec.describe 'POST /pair-setup' do
         s: salt,
         v: verifier
       })
-      path = File.expand_path('../../../fixtures/srp_verify_request', __FILE__)
-      data = File.read(path)
       post '/pair-setup', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
     end
 
-    it 'headers contains application/pairing+tlv8 header' do
-      expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+    context 'valid verify response request' do
+      it 'headers contains application/pairing+tlv8 header' do
+        expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+      end
+
+      it 'body contains kTLVType_State' do
+        expect(unpacked_body).to include('kTLVType_State' => 4)
+      end
+
+      it 'body contains kTLVType_Proof' do
+        public_key = unpacked_body['kTLVType_Proof'].unpack1('H*')
+        expected_proof = %w{
+          986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
+          033B4B94 0583C317 0CD4C326 4BB093C0 B518F8C9 710B6F68 A56E5B03 D0686EDA
+        }.join.downcase
+        expect(public_key).to eql(expected_proof)
+      end
+
+      it 'stores session_key' do
+        expected_session_key = %w{
+          2B5F1FA4 046B2E63 2A06F1D9 612B031F 6D0B9676 B602DD36 BFCFEA0F 85D8567E
+          DDEBF2EF B5C24227 DF05D9F8 BECC3F32 518CEAAD BA5F689F 50252F6B E5D77EA6
+        }.join.downcase
+        expect(read_cache(:session_key)).to eql(expected_session_key)
+      end
+
+      it 'destroy proof' do
+        expect(read_cache(:proof)).to be_nil
+      end
     end
 
-    it 'body contains kTLVType_State' do
-      expect(unpacked_body).to include('kTLVType_State' => 4)
-    end
+    context 'invalid verify response request' do
+      context 'no kTLVType_PublicKey supplied' do
+        let(:data) { RubyHome::HAP::TLV.encode('kTLVType_State' => 3) }
 
-    it 'body contains kTLVType_Proof' do
-      public_key = unpacked_body['kTLVType_Proof'].unpack1('H*')
-      expected_proof = %w{
-        986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
-        033B4B94 0583C317 0CD4C326 4BB093C0 B518F8C9 710B6F68 A56E5B03 D0686EDA
-      }.join.downcase
-      expect(public_key).to eql(expected_proof)
-    end
+        it 'responds with error' do
+          expect(unpacked_body).to include('kTLVType_State' => 4, 'kTLVType_Error' => 2)
+        end
 
-    it 'stores session_key' do
-      expected_session_key = %w{
-        2B5F1FA4 046B2E63 2A06F1D9 612B031F 6D0B9676 B602DD36 BFCFEA0F 85D8567E
-        DDEBF2EF B5C24227 DF05D9F8 BECC3F32 518CEAAD BA5F689F 50252F6B E5D77EA6
-      }.join.downcase
-      expect(read_cache(:session_key)).to eql(expected_session_key)
-    end
+        it 'clears the cache' do
+          expect(read_cache).to be_empty
+        end
+      end
 
-    it 'destroy proof' do
-      expect(read_cache(:proof)).to be_nil
+      context 'SRP_verify verification fails' do
+        let(:data) do
+          RubyHome::HAP::TLV.encode(
+            'kTLVType_State' => 3,
+            'kTLVType_PublicKey' => 'foo',
+            'kTLVType_Proof' => 'foo'
+          )
+        end
+
+        it 'responds with error' do
+          expect(unpacked_body).to include('kTLVType_State' => 4, 'kTLVType_Error' => 2)
+        end
+
+        it 'clears the cache' do
+          expect(read_cache).to be_empty
+        end
+      end
     end
   end
 
