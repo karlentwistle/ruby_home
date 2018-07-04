@@ -19,20 +19,13 @@ module RubyHome
       private
 
       def srp_start_response
-        username = AccessoryInfo.username
-        password = AccessoryInfo.password
+        start_srp = StartSRPService.new(username: AccessoryInfo.username, password: AccessoryInfo.password)
 
-        auth = srp_verifier.generate_userauth(username, password)
-
-        verifier = auth[:verifier]
-        salt = auth[:salt]
-
-        challenge_and_proof = srp_verifier.get_challenge_and_proof(username, verifier, salt)
-        cache[:proof] = challenge_and_proof[:proof]
+        cache[:proof] = start_srp.proof
 
         HAP::TLV.encode({
-          'kTLVType_Salt' => [challenge_and_proof[:challenge][:salt]].pack('H*'),
-          'kTLVType_PublicKey' => [challenge_and_proof[:challenge][:B]].pack('H*'),
+          'kTLVType_Salt' => start_srp.salt_bytes,
+          'kTLVType_PublicKey' => start_srp.public_key_bytes,
           'kTLVType_State' => 2
         })
       end
