@@ -8,17 +8,17 @@ module RubyHome
 
         case unpack_request['kTLVType_State']
         when 1
-          srp_start_response
+          start
         when 3
-          srp_verify_response
+          verify
         when 5
-          exchange_response
+          exchange
         end
       end
 
       private
 
-      def pairing_failed_response
+      def pairing_failed
         clear_cache
 
         HAP::TLV.encode({
@@ -27,10 +27,13 @@ module RubyHome
         })
       end
 
-      def srp_start_response
-        start_srp = StartSRPService.new(username: AccessoryInfo.username, password: AccessoryInfo.password)
+      def start
+        start_srp = StartSRPService.new(
+          username: AccessoryInfo.username,
+          password: AccessoryInfo.password
+        )
 
-        cache[:proof] = start_srp.proof
+        cache[:srp_session] = start_srp.proof
 
         HAP::TLV.encode({
           'kTLVType_Salt' => start_srp.salt_bytes,
@@ -39,26 +42,27 @@ module RubyHome
         })
       end
 
-      def srp_verify_response
-        proof = cache[:proof].dup
-        public_key = unpack_request['kTLVType_PublicKey']
-        return pairing_failed_response unless public_key
+      def verify
+        verify_srp = VerifySRPService.new(
+          device_proof: unpack_request['kTLVType_Proof'],
+          srp_session: cache[:srp_session],
+          public_key: unpack_request['kTLVType_PublicKey'],
+        )
 
-        proof[:A] = public_key.unpack1('H*')
+        if verify_srp.valid?
+          cache[:session_key] = verify_srp.session_key
+          cache[:srp_session] = nil
 
-        server_m2_proof = srp_verifier.verify_session(proof, unpack_request['kTLVType_Proof'].unpack1('H*'))
-        return pairing_failed_response unless server_m2_proof
-
-        cache[:session_key] = srp_verifier.K
-        cache[:proof] = nil
-
-        HAP::TLV.encode({
-          'kTLVType_State' => 4,
-          'kTLVType_Proof' => [server_m2_proof].pack('H*')
-        })
+          HAP::TLV.encode({
+            'kTLVType_State' => 4,
+            'kTLVType_Proof' => verify_srp.server_proof
+          })
+        else
+          pairing_failed
+        end
       end
 
-      def exchange_response
+      def exchange
         encrypted_data = unpack_request['kTLVType_EncryptedData']
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
@@ -115,10 +119,6 @@ module RubyHome
             'kTLVType_EncryptedData' => encrypted_data
           })
         end
-      end
-
-      def srp_verifier
-        @_verifier ||= RubyHome::SRP::Verifier.new
       end
     end
   end

@@ -27,7 +27,7 @@ RSpec.describe 'POST /pair-setup' do
     it 'stores proof in cache' do
       salt = unpacked_body['kTLVType_Salt']
       public_key = unpacked_body['kTLVType_PublicKey']
-      expect(read_cache(:proof)).to include(
+      expect(read_cache(:srp_session)).to include(
         B: public_key.unpack1('H*'),
         I: 'Pair-Setup',
         b: a_kind_of(String),
@@ -85,7 +85,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     before do
-      set_cache(:proof, {
+      set_cache(:srp_session, {
         B: b_pub,
         b: b,
         I: 'Pair-Setup',
@@ -121,8 +121,8 @@ RSpec.describe 'POST /pair-setup' do
         expect(read_cache(:session_key)).to eql(expected_session_key)
       end
 
-      it 'destroy proof' do
-        expect(read_cache(:proof)).to be_nil
+      it 'destroy srp_session' do
+        expect(read_cache(:srp_session)).to be_nil
       end
     end
 
