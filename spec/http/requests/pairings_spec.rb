@@ -17,7 +17,7 @@ RSpec.describe 'POST /pairings' do
     end
 
     it 'creates pairing record' do
-      expect(RubyHome::AccessoryInfo.paired_clients).to match(
+      expect(RubyHome::AccessoryInfo.instance.paired_clients).to match(
         a_hash_including(
           admin: true,
           identifier: '1CCBFFE2-C15B-4C47-B722-B7F22D2EC5EB',
@@ -29,7 +29,7 @@ RSpec.describe 'POST /pairings' do
 
   context 'Remove Pairing Response' do
     before do
-      RubyHome::AccessoryInfo.add_paired_client({
+      RubyHome::AccessoryInfo.instance.add_paired_client({
         admin: true,
         identifier: '349CBC7D-01B9-4DC4-AD98-FB9029BB77F2',
         public_key: '8d9686b698958af1497694003e07ff855358619f9633d62e40a6b55952716f17'
@@ -48,7 +48,7 @@ RSpec.describe 'POST /pairings' do
     end
 
     it 'remove all pairing records' do
-      expect(RubyHome::AccessoryInfo.paired_clients).to be_empty
+      expect(RubyHome::AccessoryInfo.instance.paired_clients).to be_empty
     end
   end
 end
