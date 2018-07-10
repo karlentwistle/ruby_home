@@ -29,8 +29,8 @@ module RubyHome
 
       def start
         start_srp = StartSRPService.new(
-          username: AccessoryInfo.username,
-          password: AccessoryInfo.password
+          username: accessory_info.username,
+          password: accessory_info.password
         )
 
         cache[:srp_session] = start_srp.proof

@@ -18,7 +18,7 @@ module RubyHome
       end
 
       def accessory_info
-        AccessoryInfo
+        AccessoryInfo.instance
       end
 
       def identifier_cache
