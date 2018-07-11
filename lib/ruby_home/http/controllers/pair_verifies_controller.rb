@@ -42,7 +42,7 @@ module RubyHome
         cache[:session_key] = session_key
 
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(session_key)
-        nonce = HAP::HexPad.pad('PV-Msg02')
+        nonce = HexHelper.pad('PV-Msg02')
         encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
 
         HAP::TLV.encode({
@@ -56,7 +56,7 @@ module RubyHome
         encrypted_data = unpack_request['kTLVType_EncryptedData']
 
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(cache[:session_key])
-        nonce = HAP::HexPad.pad('PV-Msg03')
+        nonce = HexHelper.pad('PV-Msg03')
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 

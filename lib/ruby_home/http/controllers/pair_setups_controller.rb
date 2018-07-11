@@ -70,7 +70,7 @@ module RubyHome
 
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(key)
 
-        nonce = HAP::HexPad.pad('PS-Msg05')
+        nonce = HexHelper.pad('PS-Msg05')
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
@@ -108,7 +108,7 @@ module RubyHome
             'kTLVType_Signature' => accessorysignature
           })
 
-          nonce = HAP::HexPad.pad('PS-Msg06')
+          nonce = HexHelper.pad('PS-Msg06')
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
 
           pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk.unpack1('H*') }
