@@ -131,9 +131,7 @@ module YamlRecord
     #   @post.column_names => ["foo", "miso"]
     #
     def column_names
-      array = []
-      self.attributes.each_key { |k| array << k.to_s }
-      array
+      self.attributes.keys.map(&:to_s)
     end
 
     # Returns hash of attributes to be persisted to file.
@@ -337,7 +335,7 @@ module YamlRecord
     def self.create(attributes={})
       @fs = self.new(attributes)
       if @fs.save == true
-        @fs.is_created = true;
+        @fs.is_created = true
         @fs
       else
         false

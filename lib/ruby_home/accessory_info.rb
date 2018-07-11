@@ -3,29 +3,18 @@ require_relative 'yaml_record'
 
 module RubyHome
   class AccessoryInfo < YamlRecord::Base
-    properties :device_id, :paired_clients, :password, :signature_key, :username
-    source 'accessory_info.yml'
-
     USERNAME = -'Pair-Setup'
 
-    class << self
-      def generate_signature_key
-        RbNaCl::Signatures::Ed25519::SigningKey.generate.to_bytes.unpack1('H*')
-      end
+    properties :device_id, :paired_clients, :password, :signature_key
+    source 'accessory_info.yml'
 
-      def generate_device_id
-        DeviceID.generate
-      end
+    set_callback :before_create, :set_device_id
+    set_callback :before_create, :set_paired_clients
+    set_callback :before_create, :set_password
+    set_callback :before_create, :set_signature_key
 
-      def instance
-        first || create(
-          device_id: generate_device_id,
-          paired_clients: [],
-          password: '031-45-154',
-          signature_key: generate_signature_key,
-          username: USERNAME
-        )
-      end
+    def self.instance
+      first || create
     end
 
     def add_paired_client(admin: false, identifier: , public_key: )
@@ -44,6 +33,28 @@ module RubyHome
 
     def signing_key
       @signing_key ||= RbNaCl::Signatures::Ed25519::SigningKey.new([signature_key].pack('H*'))
+    end
+
+    def username
+      USERNAME
+    end
+
+    private
+
+    def set_device_id
+      self.device_id ||= DeviceID.generate
+    end
+
+    def set_paired_clients
+      self.paired_clients = []
+    end
+
+    def set_password
+      self.password ||= '031-45-154'
+    end
+
+    def set_signature_key
+      self.signature_key ||= RbNaCl::Signatures::Ed25519::SigningKey.generate.to_bytes.unpack1('H*')
     end
   end
 end

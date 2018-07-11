@@ -6,7 +6,6 @@ RSpec.configure do |config|
       paired_clients: [],
       password: '031-45-154',
       signature_key: 'E2889D17DD141C3A62969E85C7092FDB1080617FECCC08A60A5001AB6C79AB97',
-      username: 'Pair-Setup'
     )
   end
 end
