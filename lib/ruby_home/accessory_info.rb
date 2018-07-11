@@ -1,5 +1,5 @@
 require_relative 'device_id'
-require 'yaml_record'
+require_relative 'yaml_record'
 
 module RubyHome
   class AccessoryInfo < YamlRecord::Base
