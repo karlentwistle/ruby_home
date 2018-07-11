@@ -6,14 +6,26 @@ module RubyHome
     properties :device_id, :paired_clients, :password, :signature_key, :username
     source 'accessory_info.yml'
 
-    def self.instance
-      first || create(
-        device_id: DeviceID.generate,
-        paired_clients: [],
-        password: '031-45-154',
-        signature_key: RbNaCl::Signatures::Ed25519::SigningKey.generate.to_bytes.unpack1('H*'),
-        username: 'Pair-Setup'
-      )
+    USERNAME = -'Pair-Setup'
+
+    class << self
+      def generate_signature_key
+        RbNaCl::Signatures::Ed25519::SigningKey.generate.to_bytes.unpack1('H*')
+      end
+
+      def generate_device_id
+        DeviceID.generate
+      end
+
+      def instance
+        first || create(
+          device_id: generate_device_id,
+          paired_clients: [],
+          password: '031-45-154',
+          signature_key: generate_signature_key,
+          username: USERNAME
+        )
+      end
     end
 
     def add_paired_client(admin: false, identifier: , public_key: )
