@@ -17,6 +17,8 @@ module YamlRecord
       #   @adapter.read("foo") => [{...}, {...}]
       #
       def read(source)
+        return false unless File.exists?(source)
+
         YAML.load_file(source)
       end
 
