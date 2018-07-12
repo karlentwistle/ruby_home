@@ -18,7 +18,7 @@ module RubyHome
 
       def add_pairing
         pairing_params = {
-          admin: !!unpack_request['kTLVType_Permissions'],
+          admin: !!unpack_request[:permissions],
           identifier: unpack_request[:identifier],
           public_key: unpack_request[:public_key].unpack1('H*')
         }

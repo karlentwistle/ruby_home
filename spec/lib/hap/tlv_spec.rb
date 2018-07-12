@@ -66,9 +66,9 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:signature => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
     end
 
-    context 'kTLVType_Permissions' do
+    context 'permissions' do
       let(:input) { '0B0112' }
-      it { is_expected.to eql({'kTLVType_Permissions' => 18}) }
+      it { is_expected.to eql({:permissions => 18}) }
     end
 
     context 'kTLVType_FragmentData' do
@@ -190,8 +190,8 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['0a10c8eb453673a905cc5ca6b64ce85e22e9'].pack('H*')) }
     end
 
-    context 'kTLVType_Permissions' do
-      let(:input) { {'kTLVType_Permissions' => 18} }
+    context 'permissions' do
+      let(:input) { {:permissions => 18} }
       it { is_expected.to eql(['0B0112'].pack('H*')) }
     end
 

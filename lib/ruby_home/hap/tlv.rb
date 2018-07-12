@@ -25,7 +25,7 @@ module RubyHome
         8 => :retry_delay,
         9 => :certificate,
        10 => :signature,
-       11 => 'kTLVType_Permissions',
+       11 => :permissions,
        12 => 'kTLVType_FragmentData',
        13 => 'kTLVType_FragmentLast',
       }.freeze
