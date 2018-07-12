@@ -51,9 +51,9 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:error => 15}) }
     end
 
-    context 'kTLVType_RetryDelay' do
+    context 'retry_delay' do
       let(:input) { '0801aa' }
-      it { is_expected.to eql({'kTLVType_RetryDelay' => 170}) }
+      it { is_expected.to eql({:retry_delay => 170}) }
     end
 
     context 'kTLVType_Certificate' do
@@ -175,8 +175,8 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['07010f'].pack('H*')) }
     end
 
-    context 'kTLVType_RetryDelay' do
-      let(:input) { {'kTLVType_RetryDelay' => 170} }
+    context 'retry_delay' do
+      let(:input) { {:retry_delay => 170} }
       it { is_expected.to eql(['0801aa'].pack('H*')) }
     end
 

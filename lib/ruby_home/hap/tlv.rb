@@ -22,7 +22,7 @@ module RubyHome
         5 => :encrypted_data,
         6 => :state,
         7 => :error,
-        8 => 'kTLVType_RetryDelay',
+        8 => :retry_delay,
         9 => 'kTLVType_Certificate',
        10 => 'kTLVType_Signature',
        11 => 'kTLVType_Permissions',
