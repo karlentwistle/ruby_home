@@ -44,7 +44,7 @@ module RubyHome
 
       def verify
         verify_srp = VerifySRPService.new(
-          device_proof: unpack_request['kTLVType_Proof'],
+          device_proof: unpack_request[:proof],
           srp_session: cache[:srp_session],
           public_key: unpack_request[:public_key],
         )
@@ -55,7 +55,7 @@ module RubyHome
 
           HAP::TLV.encode({
             'kTLVType_State' => 4,
-            'kTLVType_Proof' => verify_srp.server_proof
+            :proof => verify_srp.server_proof
           })
         else
           pairing_failed

@@ -18,7 +18,7 @@ module RubyHome
         1 => :identifier,
         2 => :salt,
         3 => :public_key,
-        4 => 'kTLVType_Proof',
+        4 => :proof,
         5 => 'kTLVType_EncryptedData',
         6 => 'kTLVType_State',
         7 => 'kTLVType_Error',

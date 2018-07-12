@@ -105,7 +105,7 @@ RSpec.describe 'POST /pair-setup' do
       end
 
       it 'body contains kTLVType_Proof' do
-        public_key = unpacked_body['kTLVType_Proof'].unpack1('H*')
+        public_key = unpacked_body[:proof].unpack1('H*')
         expected_proof = %w{
           986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
           033B4B94 0583C317 0CD4C326 4BB093C0 B518F8C9 710B6F68 A56E5B03 D0686EDA
@@ -144,7 +144,7 @@ RSpec.describe 'POST /pair-setup' do
           RubyHome::HAP::TLV.encode(
             'kTLVType_State' => 3,
             :public_key => 'foo',
-            'kTLVType_Proof' => 'foo'
+            :proof => 'foo'
           )
         end
 
