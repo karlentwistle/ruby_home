@@ -75,7 +75,7 @@ module RubyHome
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
         iosdevicepairingid = unpacked_decrypted_data[:identifier]
-        iosdevicesignature = unpacked_decrypted_data['kTLVType_Signature']
+        iosdevicesignature = unpacked_decrypted_data[:signature]
         iosdeviceltpk = unpacked_decrypted_data[:public_key]
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Controller-Sign-Info', salt: 'Pair-Setup-Controller-Sign-Salt')
@@ -105,7 +105,7 @@ module RubyHome
           subtlv = HAP::TLV.encode({
             :identifier => accessory_info.device_id,
             :public_key => accessoryltpk,
-            'kTLVType_Signature' => accessorysignature
+            :signature => accessorysignature
           })
 
           nonce = HexHelper.pad('PS-Msg06')

@@ -34,7 +34,7 @@ module RubyHome
 
         subtlv = HAP::TLV.encode({
           :identifier => accessory_info.device_id,
-          'kTLVType_Signature' => accessorysignature
+          :signature => accessorysignature
         })
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Verify-Encrypt-Info', salt: 'Pair-Verify-Encrypt-Salt')

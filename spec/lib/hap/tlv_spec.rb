@@ -61,9 +61,9 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:certificate => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
     end
 
-    context 'kTLVType_Signature' do
+    context 'signature' do
       let(:input) { '0a10c8eb453673a905cc5ca6b64ce85e22e9' }
-      it { is_expected.to eql({'kTLVType_Signature' => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
+      it { is_expected.to eql({:signature => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
     end
 
     context 'kTLVType_Permissions' do
@@ -106,7 +106,7 @@ RSpec.describe RubyHome::HAP::TLV do
       it do
         is_expected.to eql({
           :error => 3,
-          'kTLVType_Signature' => hex_string('61' * 300),
+          :signature => hex_string('61' * 300),
           :identifier => 'hello'
         })
       end
@@ -185,8 +185,8 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['0910c8eb453673a905cc5ca6b64ce85e22e9'].pack('H*')) }
     end
 
-    context 'kTLVType_Signature' do
-      let(:input) { {'kTLVType_Signature' => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')} }
+    context 'signature' do
+      let(:input) { {:signature => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')} }
       it { is_expected.to eql(['0a10c8eb453673a905cc5ca6b64ce85e22e9'].pack('H*')) }
     end
 
@@ -219,7 +219,7 @@ RSpec.describe RubyHome::HAP::TLV do
       let(:input) do
         {
           :error => 3,
-          'kTLVType_Signature' => hex_string('61' * 300),
+          :signature => hex_string('61' * 300),
           :identifier => 'hello'
         }
       end
