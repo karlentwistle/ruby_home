@@ -27,7 +27,7 @@ module RubyHome
        10 => :signature,
        11 => :permissions,
        12 => :fragment_data,
-       13 => 'kTLVType_FragmentLast',
+       13 => :fragment_last,
       }.freeze
 
       class Bytes < BinData::String; end

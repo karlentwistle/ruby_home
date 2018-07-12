@@ -76,9 +76,9 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:fragment_data => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
     end
 
-    context 'kTLVType_FragmentLast' do
+    context 'fragment_last' do
       let(:input) { '0d10c8eb453673a905cc5ca6b64ce85e22e9' }
-      it { is_expected.to eql({'kTLVType_FragmentLast' => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
+      it { is_expected.to eql({:fragment_last => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
     end
 
     context '2 small TLVs Integer and Integer' do
@@ -200,8 +200,8 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['0c10c8eb453673a905cc5ca6b64ce85e22e9'].pack('H*')) }
     end
 
-    context 'kTLVType_FragmentLast' do
-      let(:input) { {'kTLVType_FragmentLast' => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')} }
+    context 'fragment_last' do
+      let(:input) { {:fragment_last => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')} }
       it { is_expected.to eql(['0d10c8eb453673a905cc5ca6b64ce85e22e9'].pack('H*')) }
     end
 
