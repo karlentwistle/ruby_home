@@ -12,15 +12,15 @@ RSpec.describe 'POST /pair-setup' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it 'body contains kTLVType_State' do
+    it 'body contains state' do
       expect(unpacked_body).to include(state: 2)
     end
 
-    it 'body contains kTLVType_Salt' do
+    it 'body contains salt' do
       expect(unpacked_body).to include(salt: a_kind_of(String))
     end
 
-    it 'body contains kTLVType_PublicKey' do
+    it 'body contains public_key' do
       expect(unpacked_body).to include(public_key: a_kind_of(String))
     end
 
@@ -100,11 +100,11 @@ RSpec.describe 'POST /pair-setup' do
         expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
       end
 
-      it 'body contains kTLVType_State' do
+      it 'body contains state' do
         expect(unpacked_body).to include(state: 4)
       end
 
-      it 'body contains kTLVType_Proof' do
+      it 'body contains proof' do
         public_key = unpacked_body[:proof].unpack1('H*')
         expected_proof = %w{
           986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
@@ -127,7 +127,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     context 'invalid verify response request' do
-      context 'no kTLVType_PublicKey supplied' do
+      context 'no public_key supplied' do
         let(:data) { RubyHome::HAP::TLV.encode(state: 3) }
 
         it 'responds with error' do
@@ -174,11 +174,11 @@ RSpec.describe 'POST /pair-setup' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it 'body contains kTLVType_State' do
+    it 'body contains state' do
       expect(unpacked_body).to include(state: 6)
     end
 
-    it 'body contains kTLVType_EncryptedData' do
+    it 'body contains encrypted_data' do
       encrypted_data = unpacked_body[:encrypted_data].unpack1('H*')
       expected_encrypted_data = %w{
         51445260 6E942707 25D0A470 8708B97B C9A495FB A0900796 A2BCF06F 8388829B

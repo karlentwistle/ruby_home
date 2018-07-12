@@ -16,7 +16,7 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({identifier: 'hello'}) }
     end
 
-    context 'kTLVType_Identifier unicode character' do
+    context 'identifier unicode character' do
       let(:input) { '0103e29087' }
       it { is_expected.to eql({identifier: '␇'}) }
     end
@@ -140,7 +140,7 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['010568656c6c6f'].pack('H*')) }
     end
 
-    context 'kTLVType_Identifier unicode character' do
+    context 'identifier unicode character' do
       let(:input) { {identifier: '␇'} }
       it { is_expected.to eql(['0103e29087'].pack('H*')) }
     end
