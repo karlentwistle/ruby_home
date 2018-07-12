@@ -33,7 +33,7 @@ module RubyHome
         accessorysignature = signing_key.sign([accessoryinfo].pack('H*'))
 
         subtlv = HAP::TLV.encode({
-          'kTLVType_Identifier' => accessory_info.device_id,
+          :identifier => accessory_info.device_id,
           'kTLVType_Signature' => accessorysignature
         })
 
@@ -60,7 +60,7 @@ module RubyHome
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
-        if accessory_info.paired_clients.any? {|h| h[:identifier] == unpacked_decrypted_data['kTLVType_Identifier']}
+        if accessory_info.paired_clients.any? {|h| h[:identifier] == unpacked_decrypted_data[:identifier]}
           hkdf = HAP::Crypto::HKDF.new(info: 'Control-Write-Encryption-Key', salt: 'Control-Salt')
           cache[:controller_to_accessory_key] = hkdf.encrypt(cache[:shared_secret])
 

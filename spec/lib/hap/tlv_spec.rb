@@ -11,14 +11,14 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:method => 255}) }
     end
 
-    context 'kTLVType_Identifier' do
+    context 'identifier' do
       let(:input) { '010568656c6c6f' }
-      it { is_expected.to eql({'kTLVType_Identifier' => 'hello'}) }
+      it { is_expected.to eql({:identifier => 'hello'}) }
     end
 
     context 'kTLVType_Identifier unicode character' do
       let(:input) { '0103e29087' }
-      it { is_expected.to eql({'kTLVType_Identifier' => '␇'}) }
+      it { is_expected.to eql({:identifier => '␇'}) }
     end
 
     context 'kTLVType_Salt' do
@@ -88,7 +88,7 @@ RSpec.describe RubyHome::HAP::TLV do
 
     context '2 small TLVs Integer and ASCII' do
       let(:input) { '060103010568656c6c6f' }
-      it { is_expected.to eql({'kTLVType_State' => 3, 'kTLVType_Identifier' => 'hello'}) }
+      it { is_expected.to eql({'kTLVType_State' => 3, :identifier => 'hello'}) }
     end
 
     context '1 small TLV, 1 300-byte value split into 2 TLVs, 1 small TLV' do
@@ -107,7 +107,7 @@ RSpec.describe RubyHome::HAP::TLV do
         is_expected.to eql({
           'kTLVType_Error' => 3,
           'kTLVType_Signature' => hex_string('61' * 300),
-          'kTLVType_Identifier' => 'hello'
+          :identifier => 'hello'
         })
       end
     end
@@ -122,7 +122,7 @@ RSpec.describe RubyHome::HAP::TLV do
     context 'TLV item length' do
       let(:input) { '0100' }
       it '0 is a valid length' do
-        is_expected.to eql({'kTLVType_Identifier' => ''})
+        is_expected.to eql({:identifier => ''})
       end
     end
   end
@@ -135,13 +135,13 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['0001ff'].pack('H*')) }
     end
 
-    context 'kTLVType_Identifier' do
-      let(:input) { {'kTLVType_Identifier' => 'hello'} }
+    context 'identifier' do
+      let(:input) { {:identifier => 'hello'} }
       it { is_expected.to eql(['010568656c6c6f'].pack('H*')) }
     end
 
     context 'kTLVType_Identifier unicode character' do
-      let(:input) { {'kTLVType_Identifier' => '␇'} }
+      let(:input) { {:identifier => '␇'} }
       it { is_expected.to eql(['0103e29087'].pack('H*')) }
     end
 
@@ -211,7 +211,7 @@ RSpec.describe RubyHome::HAP::TLV do
     end
 
     context '2 small TLVs Integer and ASCII' do
-      let(:input) { {'kTLVType_State' => 3, 'kTLVType_Identifier' => 'hello'} }
+      let(:input) { {'kTLVType_State' => 3, :identifier => 'hello'} }
       it { is_expected.to eql(['060103010568656c6c6f'].pack('H*')) }
     end
 
@@ -220,7 +220,7 @@ RSpec.describe RubyHome::HAP::TLV do
         {
           'kTLVType_Error' => 3,
           'kTLVType_Signature' => hex_string('61' * 300),
-          'kTLVType_Identifier' => 'hello'
+          :identifier => 'hello'
         }
       end
       it do
@@ -246,7 +246,7 @@ RSpec.describe RubyHome::HAP::TLV do
     end
 
     context 'TLV item length' do
-      let(:input) { {'kTLVType_Identifier' => ''} }
+      let(:input) { {:identifier => ''} }
       it '0 is a valid length' do
         is_expected.to eql('')
       end

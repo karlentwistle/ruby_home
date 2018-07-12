@@ -74,7 +74,7 @@ module RubyHome
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
-        iosdevicepairingid = unpacked_decrypted_data['kTLVType_Identifier']
+        iosdevicepairingid = unpacked_decrypted_data[:identifier]
         iosdevicesignature = unpacked_decrypted_data['kTLVType_Signature']
         iosdeviceltpk = unpacked_decrypted_data['kTLVType_PublicKey']
 
@@ -103,7 +103,7 @@ module RubyHome
           accessorysignature = signing_key.sign([accessoryinfo].pack('H*'))
 
           subtlv = HAP::TLV.encode({
-            'kTLVType_Identifier' => accessory_info.device_id,
+            :identifier => accessory_info.device_id,
             'kTLVType_PublicKey' => accessoryltpk,
             'kTLVType_Signature' => accessorysignature
           })
