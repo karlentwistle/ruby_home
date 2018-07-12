@@ -26,7 +26,7 @@ module RubyHome
         9 => :certificate,
        10 => :signature,
        11 => :permissions,
-       12 => 'kTLVType_FragmentData',
+       12 => :fragment_data,
        13 => 'kTLVType_FragmentLast',
       }.freeze
 
