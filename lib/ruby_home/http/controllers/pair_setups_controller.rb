@@ -36,7 +36,7 @@ module RubyHome
         cache[:srp_session] = start_srp.proof
 
         HAP::TLV.encode({
-          'kTLVType_Salt' => start_srp.salt_bytes,
+          :salt => start_srp.salt_bytes,
           'kTLVType_PublicKey' => start_srp.public_key_bytes,
           'kTLVType_State' => 2
         })

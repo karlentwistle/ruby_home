@@ -17,7 +17,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     it 'body contains kTLVType_Salt' do
-      expect(unpacked_body).to include('kTLVType_Salt' => a_kind_of(String))
+      expect(unpacked_body).to include(:salt => a_kind_of(String))
     end
 
     it 'body contains kTLVType_PublicKey' do
@@ -25,7 +25,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     it 'stores proof in cache' do
-      salt = unpacked_body['kTLVType_Salt']
+      salt = unpacked_body[:salt]
       public_key = unpacked_body['kTLVType_PublicKey']
       expect(read_cache(:srp_session)).to include(
         B: public_key.unpack1('H*'),

@@ -16,7 +16,7 @@ module RubyHome
       TYPE_NAMES = {
         0 => :method,
         1 => :identifier,
-        2 => 'kTLVType_Salt',
+        2 => :salt,
         3 => 'kTLVType_PublicKey',
         4 => 'kTLVType_Proof',
         5 => 'kTLVType_EncryptedData',
