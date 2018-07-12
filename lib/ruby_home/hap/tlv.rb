@@ -13,22 +13,24 @@ module RubyHome
         7 => 'kTLVError_Busy',
       }.freeze
 
-      TYPE_NAMES = {
-        0 => :method,
-        1 => :identifier,
-        2 => :salt,
-        3 => :public_key,
-        4 => :proof,
-        5 => :encrypted_data,
-        6 => :state,
-        7 => :error,
-        8 => :retry_delay,
-        9 => :certificate,
-       10 => :signature,
-       11 => :permissions,
-       12 => :fragment_data,
-       13 => :fragment_last,
+      NAME_TYPES = {
+        method: 0,
+        identifier: 1,
+        salt: 2,
+        public_key: 3,
+        proof: 4,
+        encrypted_data: 5,
+        state: 6,
+        error: 7,
+        retry_delay: 8,
+        certificate: 9,
+        signature: 10,
+        permissions: 11,
+        fragment_data: 12,
+        fragment_last: 13,
       }.freeze
+
+      TYPE_NAMES = NAME_TYPES.invert
 
       class Bytes < BinData::String; end
 
@@ -82,7 +84,7 @@ module RubyHome
 
       def encode(hash)
         hash.to_hash.each_with_object(String.new) do |(key, value), memo|
-          type_id = TYPE_NAMES.invert[key]
+          type_id = NAME_TYPES[key]
           next unless type_id
 
           if value.is_a?(String)

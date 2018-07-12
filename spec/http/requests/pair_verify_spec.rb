@@ -16,7 +16,7 @@ RSpec.describe 'POST /pair-verify' do
     end
 
     it 'body contains kTLVType_State' do
-      expect(unpacked_body).to include(:state => 2)
+      expect(unpacked_body).to include(state: 2)
     end
 
     it 'body contains kTLVType_PublicKey' do
@@ -65,7 +65,7 @@ RSpec.describe 'POST /pair-verify' do
 
       it 'body contains only kTLVType_State: 4' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
-        expect(unpacked_body).to eql(:state => 4)
+        expect(unpacked_body).to eql(state: 4)
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe 'POST /pair-verify' do
 
       it 'body contains only kTLVType_State: 4 and kTLVType_Error: 2' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
-        expect(unpacked_body).to eql(:state => 4, :error => 2)
+        expect(unpacked_body).to eql(state: 4, error: 2)
       end
     end
   end
