@@ -19,7 +19,7 @@ module RubyHome
         2 => :salt,
         3 => :public_key,
         4 => :proof,
-        5 => 'kTLVType_EncryptedData',
+        5 => :encrypted_data,
         6 => 'kTLVType_State',
         7 => 'kTLVType_Error',
         8 => 'kTLVType_RetryDelay',

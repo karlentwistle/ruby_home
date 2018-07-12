@@ -28,7 +28,7 @@ RSpec.describe 'POST /pair-verify' do
     end
 
     it 'body contains kTLVType_EncryptedData' do
-      encrypted_data = unpacked_body['kTLVType_EncryptedData'].unpack1('H*')
+      encrypted_data = unpacked_body[:encrypted_data].unpack1('H*')
       expected_encrypted_data = %w{
         A1A9D22A D4DA0E65 EECCA820 A1872E4D 0F8EEAB6 38E37B44 A2228A43 4C305DAB
         AD057CD1 CD65B0C5 837DD92A 4B640CD7 D810D249 E666CAB1 3938CA59 FACB891C

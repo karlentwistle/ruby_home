@@ -183,7 +183,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     it 'body contains kTLVType_EncryptedData' do
-      encrypted_data = unpacked_body['kTLVType_EncryptedData'].unpack1('H*')
+      encrypted_data = unpacked_body[:encrypted_data].unpack1('H*')
       expected_encrypted_data = %w{
         51445260 6E942707 25D0A470 8708B97B C9A495FB A0900796 A2BCF06F 8388829B
         6F6B7C09 BEE33B8F DEAD373D 83EBB92F 395B0C9B C16A8AA1 8F13EA58 F89ADF8A

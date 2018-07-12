@@ -48,12 +48,12 @@ module RubyHome
         HAP::TLV.encode({
           'kTLVType_State' => 2,
           :public_key => public_key,
-          'kTLVType_EncryptedData' => encrypted_data
+          :encrypted_data => encrypted_data
         })
       end
 
       def verify_finish_response
-        encrypted_data = unpack_request['kTLVType_EncryptedData']
+        encrypted_data = unpack_request[:encrypted_data]
 
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(cache[:session_key])
         nonce = HexHelper.pad('PV-Msg03')

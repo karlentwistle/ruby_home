@@ -63,7 +63,7 @@ module RubyHome
       end
 
       def exchange
-        encrypted_data = unpack_request['kTLVType_EncryptedData']
+        encrypted_data = unpack_request[:encrypted_data]
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
         key = hkdf.encrypt(cache[:session_key])
@@ -116,7 +116,7 @@ module RubyHome
 
           HAP::TLV.encode({
             'kTLVType_State' => 6,
-            'kTLVType_EncryptedData' => encrypted_data
+            :encrypted_data => encrypted_data
           })
         end
       end

@@ -36,9 +36,9 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:proof => hex_string('0fab')}) }
     end
 
-    context 'kTLVType_EncryptedData' do
+    context 'encrypted_data' do
       let(:input) { '050449625160' }
-      it { is_expected.to eql({'kTLVType_EncryptedData' => hex_string('49625160')}) }
+      it { is_expected.to eql({:encrypted_data => hex_string('49625160')}) }
     end
 
     context 'kTLVType_State' do
@@ -160,8 +160,8 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['04020fab'].pack('H*')) }
     end
 
-    context 'kTLVType_EncryptedData' do
-      let(:input) { {'kTLVType_EncryptedData' => hex_string('49625160')} }
+    context 'encrypted_data' do
+      let(:input) { {:encrypted_data => hex_string('49625160')} }
       it { is_expected.to eql(['050449625160'].pack('H*')) }
     end
 
