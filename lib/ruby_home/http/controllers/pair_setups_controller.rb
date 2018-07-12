@@ -6,7 +6,7 @@ module RubyHome
       post '/pair-setup' do
         content_type 'application/pairing+tlv8'
 
-        case unpack_request['kTLVType_State']
+        case unpack_request[:state]
         when 1
           start
         when 3
@@ -21,10 +21,7 @@ module RubyHome
       def pairing_failed
         clear_cache
 
-        HAP::TLV.encode({
-          'kTLVType_State' => 4,
-          'kTLVType_Error' => 2
-        })
+        HAP::TLV.encode({state: 4, error: 2})
       end
 
       def start
@@ -35,35 +32,28 @@ module RubyHome
 
         cache[:srp_session] = start_srp.proof
 
-        HAP::TLV.encode({
-          'kTLVType_Salt' => start_srp.salt_bytes,
-          'kTLVType_PublicKey' => start_srp.public_key_bytes,
-          'kTLVType_State' => 2
-        })
+        HAP::TLV.encode({salt: start_srp.salt_bytes, public_key: start_srp.public_key_bytes, state: 2})
       end
 
       def verify
         verify_srp = VerifySRPService.new(
-          device_proof: unpack_request['kTLVType_Proof'],
+          device_proof: unpack_request[:proof],
           srp_session: cache[:srp_session],
-          public_key: unpack_request['kTLVType_PublicKey'],
+          public_key: unpack_request[:public_key],
         )
 
         if verify_srp.valid?
           cache[:session_key] = verify_srp.session_key
           cache[:srp_session] = nil
 
-          HAP::TLV.encode({
-            'kTLVType_State' => 4,
-            'kTLVType_Proof' => verify_srp.server_proof
-          })
+          HAP::TLV.encode({state: 4, proof: verify_srp.server_proof})
         else
           pairing_failed
         end
       end
 
       def exchange
-        encrypted_data = unpack_request['kTLVType_EncryptedData']
+        encrypted_data = unpack_request[:encrypted_data]
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
         key = hkdf.encrypt(cache[:session_key])
@@ -74,9 +64,9 @@ module RubyHome
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
-        iosdevicepairingid = unpacked_decrypted_data['kTLVType_Identifier']
-        iosdevicesignature = unpacked_decrypted_data['kTLVType_Signature']
-        iosdeviceltpk = unpacked_decrypted_data['kTLVType_PublicKey']
+        iosdevicepairingid = unpacked_decrypted_data[:identifier]
+        iosdevicesignature = unpacked_decrypted_data[:signature]
+        iosdeviceltpk = unpacked_decrypted_data[:public_key]
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Controller-Sign-Info', salt: 'Pair-Setup-Controller-Sign-Salt')
         iosdevicex = hkdf.encrypt(cache[:session_key])
@@ -102,11 +92,7 @@ module RubyHome
 
           accessorysignature = signing_key.sign([accessoryinfo].pack('H*'))
 
-          subtlv = HAP::TLV.encode({
-            'kTLVType_Identifier' => accessory_info.device_id,
-            'kTLVType_PublicKey' => accessoryltpk,
-            'kTLVType_Signature' => accessorysignature
-          })
+          subtlv = HAP::TLV.encode({identifier: accessory_info.device_id, public_key: accessoryltpk, signature: accessorysignature})
 
           nonce = HexHelper.pad('PS-Msg06')
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
@@ -114,10 +100,7 @@ module RubyHome
           pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk.unpack1('H*') }
           accessory_info.add_paired_client pairing_params
 
-          HAP::TLV.encode({
-            'kTLVType_State' => 6,
-            'kTLVType_EncryptedData' => encrypted_data
-          })
+          HAP::TLV.encode({state: 6, encrypted_data: encrypted_data})
         end
       end
     end

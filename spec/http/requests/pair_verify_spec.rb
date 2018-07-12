@@ -15,20 +15,20 @@ RSpec.describe 'POST /pair-verify' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it 'body contains kTLVType_State' do
-      expect(unpacked_body).to include('kTLVType_State' => 2)
+    it 'body contains state' do
+      expect(unpacked_body).to include(state: 2)
     end
 
-    it 'body contains kTLVType_PublicKey' do
-      public_key = unpacked_body['kTLVType_PublicKey'].unpack1('H*')
+    it 'body contains public_key' do
+      public_key = unpacked_body[:public_key].unpack1('H*')
       expected_public_key = %w{
         2FE57DA3 47CD6243 1528DAAC 5FBB2907 30FFF684 AFC4CFC2 ED90995F 58CB3B74
       }.join.downcase
       expect(public_key).to eql(expected_public_key)
     end
 
-    it 'body contains kTLVType_EncryptedData' do
-      encrypted_data = unpacked_body['kTLVType_EncryptedData'].unpack1('H*')
+    it 'body contains encrypted_data' do
+      encrypted_data = unpacked_body[:encrypted_data].unpack1('H*')
       expected_encrypted_data = %w{
         A1A9D22A D4DA0E65 EECCA820 A1872E4D 0F8EEAB6 38E37B44 A2228A43 4C305DAB
         AD057CD1 CD65B0C5 837DD92A 4B640CD7 D810D249 E666CAB1 3938CA59 FACB891C
@@ -63,9 +63,9 @@ RSpec.describe 'POST /pair-verify' do
         expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
       end
 
-      it 'body contains only kTLVType_State: 4' do
+      it 'body contains only state: 4' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
-        expect(unpacked_body).to eql('kTLVType_State' => 4)
+        expect(unpacked_body).to eql(state: 4)
       end
     end
 
@@ -75,9 +75,9 @@ RSpec.describe 'POST /pair-verify' do
         expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
       end
 
-      it 'body contains only kTLVType_State: 4 and kTLVType_Error: 2' do
+      it 'body contains only state: 4 and error: 2' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
-        expect(unpacked_body).to eql('kTLVType_State' => 4, 'kTLVType_Error' => 2)
+        expect(unpacked_body).to eql(state: 4, error: 2)
       end
     end
   end

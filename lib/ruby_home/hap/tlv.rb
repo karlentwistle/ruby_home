@@ -1,34 +1,34 @@
 module RubyHome
   module HAP
     module TLV
-      extend self
-
-      ERROR_CODES = {
-        1 => 'kTLVError_Unknown',
-        2 => 'kTLVError_Authentication',
-        3 => 'kTLVError_Backoff',
-        4 => 'kTLVError_MaxPeers',
-        5 => 'kTLVError_MaxTries',
-        6 => 'kTLVError_Unavailable',
-        7 => 'kTLVError_Busy',
+      ERROR_TYPES = {
+        unknown: 1,
+        authentication: 2,
+        backoff: 3,
+        max_peers: 4,
+        max_tries: 5,
+        unavailable: 6,
+        busy: 7,
       }.freeze
+      TYPE_ERRORS = ERROR_TYPES.invert.freeze
 
-      TYPE_NAMES = {
-        0 => 'kTLVType_Method',
-        1 => 'kTLVType_Identifier',
-        2 => 'kTLVType_Salt',
-        3 => 'kTLVType_PublicKey',
-        4 => 'kTLVType_Proof',
-        5 => 'kTLVType_EncryptedData',
-        6 => 'kTLVType_State',
-        7 => 'kTLVType_Error',
-        8 => 'kTLVType_RetryDelay',
-        9 => 'kTLVType_Certificate',
-       10 => 'kTLVType_Signature',
-       11 => 'kTLVType_Permissions',
-       12 => 'kTLVType_FragmentData',
-       13 => 'kTLVType_FragmentLast',
+      NAME_TYPES = {
+        method: 0,
+        identifier: 1,
+        salt: 2,
+        public_key: 3,
+        proof: 4,
+        encrypted_data: 5,
+        state: 6,
+        error: 7,
+        retry_delay: 8,
+        certificate: 9,
+        signature: 10,
+        permissions: 11,
+        fragment_data: 12,
+        fragment_last: 13,
       }.freeze
+      TYPE_NAMES = NAME_TYPES.invert.freeze
 
       class Bytes < BinData::String; end
 
@@ -65,7 +65,7 @@ module RubyHome
 
       READER = BinData::Array.new(type: :tlv, read_until: :eof)
 
-      def read(input)
+      def self.read(input)
         READER.clear
         READER.read(input)
         READER.snapshot.each_with_object({}) do |(hash), memo|
@@ -80,9 +80,9 @@ module RubyHome
         end
       end
 
-      def encode(hash)
+      def self.encode(hash)
         hash.to_hash.each_with_object(String.new) do |(key, value), memo|
-          type_id = TYPE_NAMES.invert[key]
+          type_id = NAME_TYPES[key]
           next unless type_id
 
           if value.is_a?(String)

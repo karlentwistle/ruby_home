@@ -12,21 +12,21 @@ RSpec.describe 'POST /pair-setup' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it 'body contains kTLVType_State' do
-      expect(unpacked_body).to include('kTLVType_State' => 2)
+    it 'body contains state' do
+      expect(unpacked_body).to include(state: 2)
     end
 
-    it 'body contains kTLVType_Salt' do
-      expect(unpacked_body).to include('kTLVType_Salt' => a_kind_of(String))
+    it 'body contains salt' do
+      expect(unpacked_body).to include(salt: a_kind_of(String))
     end
 
-    it 'body contains kTLVType_PublicKey' do
-      expect(unpacked_body).to include('kTLVType_PublicKey' => a_kind_of(String))
+    it 'body contains public_key' do
+      expect(unpacked_body).to include(public_key: a_kind_of(String))
     end
 
     it 'stores proof in cache' do
-      salt = unpacked_body['kTLVType_Salt']
-      public_key = unpacked_body['kTLVType_PublicKey']
+      salt = unpacked_body[:salt]
+      public_key = unpacked_body[:public_key]
       expect(read_cache(:srp_session)).to include(
         B: public_key.unpack1('H*'),
         I: 'Pair-Setup',
@@ -100,12 +100,12 @@ RSpec.describe 'POST /pair-setup' do
         expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
       end
 
-      it 'body contains kTLVType_State' do
-        expect(unpacked_body).to include('kTLVType_State' => 4)
+      it 'body contains state' do
+        expect(unpacked_body).to include(state: 4)
       end
 
-      it 'body contains kTLVType_Proof' do
-        public_key = unpacked_body['kTLVType_Proof'].unpack1('H*')
+      it 'body contains proof' do
+        public_key = unpacked_body[:proof].unpack1('H*')
         expected_proof = %w{
           986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
           033B4B94 0583C317 0CD4C326 4BB093C0 B518F8C9 710B6F68 A56E5B03 D0686EDA
@@ -127,11 +127,11 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     context 'invalid verify response request' do
-      context 'no kTLVType_PublicKey supplied' do
-        let(:data) { RubyHome::HAP::TLV.encode('kTLVType_State' => 3) }
+      context 'no public_key supplied' do
+        let(:data) { RubyHome::HAP::TLV.encode(state: 3) }
 
         it 'responds with error' do
-          expect(unpacked_body).to include('kTLVType_State' => 4, 'kTLVType_Error' => 2)
+          expect(unpacked_body).to include(state: 4, error: 2)
         end
 
         it 'clears the cache' do
@@ -141,15 +141,11 @@ RSpec.describe 'POST /pair-setup' do
 
       context 'SRP_verify verification fails' do
         let(:data) do
-          RubyHome::HAP::TLV.encode(
-            'kTLVType_State' => 3,
-            'kTLVType_PublicKey' => 'foo',
-            'kTLVType_Proof' => 'foo'
-          )
+          RubyHome::HAP::TLV.encode(state: 3, public_key: 'foo', proof: 'foo')
         end
 
         it 'responds with error' do
-          expect(unpacked_body).to include('kTLVType_State' => 4, 'kTLVType_Error' => 2)
+          expect(unpacked_body).to include(state: 4, error: 2)
         end
 
         it 'clears the cache' do
@@ -178,12 +174,12 @@ RSpec.describe 'POST /pair-setup' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it 'body contains kTLVType_State' do
-      expect(unpacked_body).to include('kTLVType_State' => 6)
+    it 'body contains state' do
+      expect(unpacked_body).to include(state: 6)
     end
 
-    it 'body contains kTLVType_EncryptedData' do
-      encrypted_data = unpacked_body['kTLVType_EncryptedData'].unpack1('H*')
+    it 'body contains encrypted_data' do
+      encrypted_data = unpacked_body[:encrypted_data].unpack1('H*')
       expected_encrypted_data = %w{
         51445260 6E942707 25D0A470 8708B97B C9A495FB A0900796 A2BCF06F 8388829B
         6F6B7C09 BEE33B8F DEAD373D 83EBB92F 395B0C9B C16A8AA1 8F13EA58 F89ADF8A

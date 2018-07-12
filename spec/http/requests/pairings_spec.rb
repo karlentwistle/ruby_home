@@ -12,8 +12,8 @@ RSpec.describe 'POST /pairings' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it 'body contains kTLVType_State' do
-      expect(unpacked_body['kTLVType_State']).to eql(2)
+    it 'body contains state' do
+      expect(unpacked_body[:state]).to eql(2)
     end
 
     it 'creates pairing record' do
@@ -43,8 +43,8 @@ RSpec.describe 'POST /pairings' do
       expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
     end
 
-    it 'body contains kTLVType_State' do
-      expect(unpacked_body['kTLVType_State']).to eql(2)
+    it 'body contains state' do
+      expect(unpacked_body[:state]).to eql(2)
     end
 
     it 'remove all pairing records' do

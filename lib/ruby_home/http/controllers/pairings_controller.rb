@@ -6,7 +6,7 @@ module RubyHome
       post '/pairings' do
         content_type 'application/pairing+tlv8'
 
-        case unpack_request['kTLVType_Method']
+        case unpack_request[:method]
         when 3
           add_pairing
         when 4
@@ -18,20 +18,20 @@ module RubyHome
 
       def add_pairing
         pairing_params = {
-          admin: !!unpack_request['kTLVType_Permissions'],
-          identifier: unpack_request['kTLVType_Identifier'],
-          public_key: unpack_request['kTLVType_PublicKey'].unpack1('H*')
+          admin: !!unpack_request[:permissions],
+          identifier: unpack_request[:identifier],
+          public_key: unpack_request[:public_key].unpack1('H*')
         }
         accessory_info.add_paired_client pairing_params
 
-        HAP::TLV.encode({'kTLVType_State' => 2})
+        HAP::TLV.encode({state: 2})
       end
 
       def remove_pairing
-        accessory_info.remove_paired_client(unpack_request['kTLVType_Identifier'])
+        accessory_info.remove_paired_client(unpack_request[:identifier])
 
         response['connection'] = 'close'
-        HAP::TLV.encode({'kTLVType_State' => 2})
+        HAP::TLV.encode({state: 2})
       end
     end
   end
