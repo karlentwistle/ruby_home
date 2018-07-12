@@ -6,7 +6,7 @@ module RubyHome
       post '/pairings' do
         content_type 'application/pairing+tlv8'
 
-        case unpack_request['kTLVType_Method']
+        case unpack_request[:method]
         when 3
           add_pairing
         when 4

@@ -14,7 +14,7 @@ module RubyHome
       }.freeze
 
       TYPE_NAMES = {
-        0 => 'kTLVType_Method',
+        0 => :method,
         1 => 'kTLVType_Identifier',
         2 => 'kTLVType_Salt',
         3 => 'kTLVType_PublicKey',

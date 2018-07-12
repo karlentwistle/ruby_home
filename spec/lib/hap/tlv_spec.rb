@@ -6,9 +6,9 @@ RSpec.describe RubyHome::HAP::TLV do
       described_class.read([input].pack('H*'))
     end
 
-    context 'kTLVType_Method' do
+    context 'method' do
       let(:input) { '0001ff' }
-      it { is_expected.to eql({'kTLVType_Method' => 255}) }
+      it { is_expected.to eql({:method => 255}) }
     end
 
     context 'kTLVType_Identifier' do
@@ -83,7 +83,7 @@ RSpec.describe RubyHome::HAP::TLV do
 
     context '2 small TLVs Integer and Integer' do
       let(:input) { '0001ff07010f' }
-      it { is_expected.to eql({'kTLVType_Method' => 255, 'kTLVType_Error' => 15}) }
+      it { is_expected.to eql({:method => 255, 'kTLVType_Error' => 15}) }
     end
 
     context '2 small TLVs Integer and ASCII' do
@@ -130,8 +130,8 @@ RSpec.describe RubyHome::HAP::TLV do
   describe '.encode' do
     subject { described_class.encode(input) }
 
-    context 'kTLVType_Method' do
-      let(:input) { {'kTLVType_Method' => 255} }
+    context 'method' do
+      let(:input) { {:method => 255} }
       it { is_expected.to eql(['0001ff'].pack('H*')) }
     end
 
@@ -206,7 +206,7 @@ RSpec.describe RubyHome::HAP::TLV do
     end
 
     context '2 small TLVs Integer and Integer' do
-      let(:input) { {'kTLVType_Method' => 255, 'kTLVType_Error' => 15} }
+      let(:input) { {:method => 255, 'kTLVType_Error' => 15} }
       it { is_expected.to eql(['0001ff07010f'].pack('H*')) }
     end
 
