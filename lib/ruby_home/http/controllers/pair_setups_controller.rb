@@ -6,7 +6,7 @@ module RubyHome
       post '/pair-setup' do
         content_type 'application/pairing+tlv8'
 
-        case unpack_request['kTLVType_State']
+        case unpack_request[:state]
         when 1
           start
         when 3
@@ -22,7 +22,7 @@ module RubyHome
         clear_cache
 
         HAP::TLV.encode({
-          'kTLVType_State' => 4,
+          :state => 4,
           'kTLVType_Error' => 2
         })
       end
@@ -38,7 +38,7 @@ module RubyHome
         HAP::TLV.encode({
           :salt => start_srp.salt_bytes,
           :public_key => start_srp.public_key_bytes,
-          'kTLVType_State' => 2
+          :state => 2
         })
       end
 
@@ -54,7 +54,7 @@ module RubyHome
           cache[:srp_session] = nil
 
           HAP::TLV.encode({
-            'kTLVType_State' => 4,
+            :state => 4,
             :proof => verify_srp.server_proof
           })
         else
@@ -115,7 +115,7 @@ module RubyHome
           accessory_info.add_paired_client pairing_params
 
           HAP::TLV.encode({
-            'kTLVType_State' => 6,
+            :state => 6,
             :encrypted_data => encrypted_data
           })
         end

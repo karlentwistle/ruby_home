@@ -20,7 +20,7 @@ module RubyHome
         3 => :public_key,
         4 => :proof,
         5 => :encrypted_data,
-        6 => 'kTLVType_State',
+        6 => :state,
         7 => 'kTLVType_Error',
         8 => 'kTLVType_RetryDelay',
         9 => 'kTLVType_Certificate',

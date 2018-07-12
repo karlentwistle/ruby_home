@@ -13,7 +13,7 @@ RSpec.describe 'POST /pairings' do
     end
 
     it 'body contains kTLVType_State' do
-      expect(unpacked_body['kTLVType_State']).to eql(2)
+      expect(unpacked_body[:state]).to eql(2)
     end
 
     it 'creates pairing record' do
@@ -44,7 +44,7 @@ RSpec.describe 'POST /pairings' do
     end
 
     it 'body contains kTLVType_State' do
-      expect(unpacked_body['kTLVType_State']).to eql(2)
+      expect(unpacked_body[:state]).to eql(2)
     end
 
     it 'remove all pairing records' do

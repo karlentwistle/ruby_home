@@ -41,9 +41,9 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:encrypted_data => hex_string('49625160')}) }
     end
 
-    context 'kTLVType_State' do
+    context 'state' do
       let(:input) { '060100' }
-      it { is_expected.to eql({'kTLVType_State' => 0}) }
+      it { is_expected.to eql({:state => 0}) }
     end
 
     context 'kTLVType_Error' do
@@ -88,7 +88,7 @@ RSpec.describe RubyHome::HAP::TLV do
 
     context '2 small TLVs Integer and ASCII' do
       let(:input) { '060103010568656c6c6f' }
-      it { is_expected.to eql({'kTLVType_State' => 3, :identifier => 'hello'}) }
+      it { is_expected.to eql({:state => 3, :identifier => 'hello'}) }
     end
 
     context '1 small TLV, 1 300-byte value split into 2 TLVs, 1 small TLV' do
@@ -165,8 +165,8 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['050449625160'].pack('H*')) }
     end
 
-    context 'kTLVType_State' do
-      let(:input) { {'kTLVType_State' => 0} }
+    context 'state' do
+      let(:input) { {:state => 0} }
       it { is_expected.to eql(['060100'].pack('H*')) }
     end
 
@@ -211,7 +211,7 @@ RSpec.describe RubyHome::HAP::TLV do
     end
 
     context '2 small TLVs Integer and ASCII' do
-      let(:input) { {'kTLVType_State' => 3, :identifier => 'hello'} }
+      let(:input) { {:state => 3, :identifier => 'hello'} }
       it { is_expected.to eql(['060103010568656c6c6f'].pack('H*')) }
     end
 

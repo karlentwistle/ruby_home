@@ -6,7 +6,7 @@ module RubyHome
       post '/pair-verify' do
         content_type 'application/pairing+tlv8'
 
-        case unpack_request['kTLVType_State']
+        case unpack_request[:state]
         when 1
           verify_start_response
         when 3
@@ -46,7 +46,7 @@ module RubyHome
         encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
 
         HAP::TLV.encode({
-          'kTLVType_State' => 2,
+          :state => 2,
           :public_key => public_key,
           :encrypted_data => encrypted_data
         })
@@ -67,9 +67,9 @@ module RubyHome
           hkdf = HAP::Crypto::HKDF.new(info: 'Control-Read-Encryption-Key', salt: 'Control-Salt')
           cache[:accessory_to_controller_key] = hkdf.encrypt(cache[:shared_secret])
 
-          HAP::TLV.encode({'kTLVType_State' => 4})
+          HAP::TLV.encode({:state => 4})
         else
-          HAP::TLV.encode({'kTLVType_State' => 4, 'kTLVType_Error' => 2})
+          HAP::TLV.encode({:state => 4, 'kTLVType_Error' => 2})
         end
       end
     end
