@@ -37,7 +37,7 @@ module RubyHome
 
         HAP::TLV.encode({
           :salt => start_srp.salt_bytes,
-          'kTLVType_PublicKey' => start_srp.public_key_bytes,
+          :public_key => start_srp.public_key_bytes,
           'kTLVType_State' => 2
         })
       end
@@ -46,7 +46,7 @@ module RubyHome
         verify_srp = VerifySRPService.new(
           device_proof: unpack_request['kTLVType_Proof'],
           srp_session: cache[:srp_session],
-          public_key: unpack_request['kTLVType_PublicKey'],
+          public_key: unpack_request[:public_key],
         )
 
         if verify_srp.valid?
@@ -76,7 +76,7 @@ module RubyHome
 
         iosdevicepairingid = unpacked_decrypted_data[:identifier]
         iosdevicesignature = unpacked_decrypted_data['kTLVType_Signature']
-        iosdeviceltpk = unpacked_decrypted_data['kTLVType_PublicKey']
+        iosdeviceltpk = unpacked_decrypted_data[:public_key]
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Controller-Sign-Info', salt: 'Pair-Setup-Controller-Sign-Salt')
         iosdevicex = hkdf.encrypt(cache[:session_key])
@@ -104,7 +104,7 @@ module RubyHome
 
           subtlv = HAP::TLV.encode({
             :identifier => accessory_info.device_id,
-            'kTLVType_PublicKey' => accessoryltpk,
+            :public_key => accessoryltpk,
             'kTLVType_Signature' => accessorysignature
           })
 

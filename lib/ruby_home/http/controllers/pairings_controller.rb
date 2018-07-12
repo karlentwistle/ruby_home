@@ -20,7 +20,7 @@ module RubyHome
         pairing_params = {
           admin: !!unpack_request['kTLVType_Permissions'],
           identifier: unpack_request[:identifier],
-          public_key: unpack_request['kTLVType_PublicKey'].unpack1('H*')
+          public_key: unpack_request[:public_key].unpack1('H*')
         }
         accessory_info.add_paired_client pairing_params
 

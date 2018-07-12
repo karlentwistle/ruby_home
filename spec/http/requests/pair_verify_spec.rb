@@ -20,7 +20,7 @@ RSpec.describe 'POST /pair-verify' do
     end
 
     it 'body contains kTLVType_PublicKey' do
-      public_key = unpacked_body['kTLVType_PublicKey'].unpack1('H*')
+      public_key = unpacked_body[:public_key].unpack1('H*')
       expected_public_key = %w{
         2FE57DA3 47CD6243 1528DAAC 5FBB2907 30FFF684 AFC4CFC2 ED90995F 58CB3B74
       }.join.downcase

@@ -26,9 +26,9 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:salt => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
     end
 
-    context 'kTLVType_PublicKey' do
+    context 'public_key' do
       let(:input) { '030a596ffa328760d19e7b9d' }
-      it { is_expected.to eql({'kTLVType_PublicKey' => hex_string('596ffa328760d19e7b9d')}) }
+      it { is_expected.to eql({:public_key => hex_string('596ffa328760d19e7b9d')}) }
     end
 
     context 'kTLVType_Proof' do
@@ -150,8 +150,8 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['0210c8eb453673a905cc5ca6b64ce85e22e9'].pack('H*')) }
     end
 
-    context 'kTLVType_PublicKey' do
-      let(:input) { {'kTLVType_PublicKey' => hex_string('596ffa328760d19e7b9d')} }
+    context 'public_key' do
+      let(:input) { {:public_key => hex_string('596ffa328760d19e7b9d')} }
       it { is_expected.to eql(['030a596ffa328760d19e7b9d'].pack('H*')) }
     end
 

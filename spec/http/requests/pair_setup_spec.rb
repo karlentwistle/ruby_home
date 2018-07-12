@@ -21,12 +21,12 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     it 'body contains kTLVType_PublicKey' do
-      expect(unpacked_body).to include('kTLVType_PublicKey' => a_kind_of(String))
+      expect(unpacked_body).to include(:public_key => a_kind_of(String))
     end
 
     it 'stores proof in cache' do
       salt = unpacked_body[:salt]
-      public_key = unpacked_body['kTLVType_PublicKey']
+      public_key = unpacked_body[:public_key]
       expect(read_cache(:srp_session)).to include(
         B: public_key.unpack1('H*'),
         I: 'Pair-Setup',
@@ -143,7 +143,7 @@ RSpec.describe 'POST /pair-setup' do
         let(:data) do
           RubyHome::HAP::TLV.encode(
             'kTLVType_State' => 3,
-            'kTLVType_PublicKey' => 'foo',
+            :public_key => 'foo',
             'kTLVType_Proof' => 'foo'
           )
         end

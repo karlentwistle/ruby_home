@@ -19,7 +19,7 @@ module RubyHome
       def verify_start_response
         secret_key = RbNaCl::PrivateKey.generate
         public_key = secret_key.public_key.to_bytes
-        client_public_key = RbNaCl::PublicKey.new(unpack_request['kTLVType_PublicKey'])
+        client_public_key = RbNaCl::PublicKey.new(unpack_request[:public_key])
         shared_secret = RbNaCl::GroupElement.new(client_public_key).mult(secret_key).to_bytes
         cache[:shared_secret] = shared_secret
 
@@ -47,7 +47,7 @@ module RubyHome
 
         HAP::TLV.encode({
           'kTLVType_State' => 2,
-          'kTLVType_PublicKey' => public_key,
+          :public_key => public_key,
           'kTLVType_EncryptedData' => encrypted_data
         })
       end
