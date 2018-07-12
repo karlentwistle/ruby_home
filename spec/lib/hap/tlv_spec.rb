@@ -56,9 +56,9 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:retry_delay => 170}) }
     end
 
-    context 'kTLVType_Certificate' do
+    context 'certificate' do
       let(:input) { '0910c8eb453673a905cc5ca6b64ce85e22e9' }
-      it { is_expected.to eql({'kTLVType_Certificate' => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
+      it { is_expected.to eql({:certificate => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')}) }
     end
 
     context 'kTLVType_Signature' do
@@ -180,8 +180,8 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['0801aa'].pack('H*')) }
     end
 
-    context 'kTLVType_Certificate' do
-      let(:input) { {'kTLVType_Certificate' => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')} }
+    context 'certificate' do
+      let(:input) { {:certificate => hex_string('c8eb453673a905cc5ca6b64ce85e22e9')} }
       it { is_expected.to eql(['0910c8eb453673a905cc5ca6b64ce85e22e9'].pack('H*')) }
     end
 

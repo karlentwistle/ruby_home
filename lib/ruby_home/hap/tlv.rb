@@ -23,7 +23,7 @@ module RubyHome
         6 => :state,
         7 => :error,
         8 => :retry_delay,
-        9 => 'kTLVType_Certificate',
+        9 => :certificate,
        10 => 'kTLVType_Signature',
        11 => 'kTLVType_Permissions',
        12 => 'kTLVType_FragmentData',
