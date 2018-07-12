@@ -23,7 +23,7 @@ module RubyHome
 
         HAP::TLV.encode({
           :state => 4,
-          'kTLVType_Error' => 2
+          :error => 2
         })
       end
 

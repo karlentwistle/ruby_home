@@ -77,7 +77,7 @@ RSpec.describe 'POST /pair-verify' do
 
       it 'body contains only kTLVType_State: 4 and kTLVType_Error: 2' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
-        expect(unpacked_body).to eql(:state => 4, 'kTLVType_Error' => 2)
+        expect(unpacked_body).to eql(:state => 4, :error => 2)
       end
     end
   end

@@ -131,7 +131,7 @@ RSpec.describe 'POST /pair-setup' do
         let(:data) { RubyHome::HAP::TLV.encode(:state => 3) }
 
         it 'responds with error' do
-          expect(unpacked_body).to include(:state => 4, 'kTLVType_Error' => 2)
+          expect(unpacked_body).to include(:state => 4, :error => 2)
         end
 
         it 'clears the cache' do
@@ -149,7 +149,7 @@ RSpec.describe 'POST /pair-setup' do
         end
 
         it 'responds with error' do
-          expect(unpacked_body).to include(:state => 4, 'kTLVType_Error' => 2)
+          expect(unpacked_body).to include(:state => 4, :error => 2)
         end
 
         it 'clears the cache' do

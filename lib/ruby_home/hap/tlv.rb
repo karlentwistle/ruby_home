@@ -21,7 +21,7 @@ module RubyHome
         4 => :proof,
         5 => :encrypted_data,
         6 => :state,
-        7 => 'kTLVType_Error',
+        7 => :error,
         8 => 'kTLVType_RetryDelay',
         9 => 'kTLVType_Certificate',
        10 => 'kTLVType_Signature',

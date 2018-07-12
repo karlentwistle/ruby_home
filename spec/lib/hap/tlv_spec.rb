@@ -46,9 +46,9 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql({:state => 0}) }
     end
 
-    context 'kTLVType_Error' do
+    context 'error' do
       let(:input) { '07010f' }
-      it { is_expected.to eql({'kTLVType_Error' => 15}) }
+      it { is_expected.to eql({:error => 15}) }
     end
 
     context 'kTLVType_RetryDelay' do
@@ -83,7 +83,7 @@ RSpec.describe RubyHome::HAP::TLV do
 
     context '2 small TLVs Integer and Integer' do
       let(:input) { '0001ff07010f' }
-      it { is_expected.to eql({:method => 255, 'kTLVType_Error' => 15}) }
+      it { is_expected.to eql({:method => 255, :error => 15}) }
     end
 
     context '2 small TLVs Integer and ASCII' do
@@ -105,7 +105,7 @@ RSpec.describe RubyHome::HAP::TLV do
       end
       it do
         is_expected.to eql({
-          'kTLVType_Error' => 3,
+          :error => 3,
           'kTLVType_Signature' => hex_string('61' * 300),
           :identifier => 'hello'
         })
@@ -170,8 +170,8 @@ RSpec.describe RubyHome::HAP::TLV do
       it { is_expected.to eql(['060100'].pack('H*')) }
     end
 
-    context 'kTLVType_Error' do
-      let(:input) { {'kTLVType_Error' => 15} }
+    context 'error' do
+      let(:input) { {:error => 15} }
       it { is_expected.to eql(['07010f'].pack('H*')) }
     end
 
@@ -206,7 +206,7 @@ RSpec.describe RubyHome::HAP::TLV do
     end
 
     context '2 small TLVs Integer and Integer' do
-      let(:input) { {:method => 255, 'kTLVType_Error' => 15} }
+      let(:input) { {:method => 255, :error => 15} }
       it { is_expected.to eql(['0001ff07010f'].pack('H*')) }
     end
 
@@ -218,7 +218,7 @@ RSpec.describe RubyHome::HAP::TLV do
     context '1 small TLV, 1 300-byte value split into 2 TLVs, 1 small TLV' do
       let(:input) do
         {
-          'kTLVType_Error' => 3,
+          :error => 3,
           'kTLVType_Signature' => hex_string('61' * 300),
           :identifier => 'hello'
         }

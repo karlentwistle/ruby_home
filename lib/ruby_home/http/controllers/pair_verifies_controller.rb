@@ -69,7 +69,7 @@ module RubyHome
 
           HAP::TLV.encode({:state => 4})
         else
-          HAP::TLV.encode({:state => 4, 'kTLVType_Error' => 2})
+          HAP::TLV.encode({:state => 4, :error => 2})
         end
       end
     end
