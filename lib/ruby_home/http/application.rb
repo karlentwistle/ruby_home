@@ -18,7 +18,7 @@ module RubyHome
       set :bind, '0.0.0.0'
       set :quiet, true
       set :server, :hap_server
-      set :server_settings, AcceptCallback: self.accept_callback
+      set :server_settings, AcceptCallback: self.accept_callback, ServerSoftware: 'RubyHome'
 
       use AccessoriesController
       use CharacteristicsController
