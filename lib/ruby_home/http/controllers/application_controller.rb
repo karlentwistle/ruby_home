@@ -4,17 +4,11 @@ module RubyHome
       disable :protection
 
       def unpack_request
-        @_unpack_request ||= begin
-          request.body.rewind
-          HAP::TLV.read(request.body.read)
-        end
+        @_unpack_request ||= _unpack_request
       end
 
       def json_body
-        @_json_body ||= begin
-          request.body.rewind
-          JSON.parse(request.body.read)
-        end
+        @_json_body ||= _unpack_json
       end
 
       def accessory_info
@@ -35,6 +29,27 @@ module RubyHome
 
       def tlv(object)
         HAP::TLV.encode(object)
+      end
+
+      private
+
+      def rewind_request
+        if request.body.size > 0
+          request.body.rewind
+        end
+      end
+
+      def _unpack_request
+        HAP::TLV.read(request.body.read).tap do |request_body|
+          logger.debug request_body
+        end
+      end
+
+      def _unpack_json
+        rewind_request
+        JSON.parse(request.body.read).tap do |request_body|
+          logger.debug request_body
+        end
       end
     end
   end
