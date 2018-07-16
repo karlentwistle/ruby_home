@@ -32,6 +32,10 @@ module RubyHome
       def clear_cache
         RequestStore.store[Application.socket] = {}
       end
+
+      def tlv(object)
+        HAP::TLV.encode(object)
+      end
     end
   end
 end

@@ -21,7 +21,7 @@ module RubyHome
       def pairing_failed
         clear_cache
 
-        HAP::TLV.encode({state: 4, error: 2})
+        tlv state: 4, error: 2
       end
 
       def start
@@ -32,7 +32,7 @@ module RubyHome
 
         cache[:srp_session] = start_srp.proof
 
-        HAP::TLV.encode({salt: start_srp.salt_bytes, public_key: start_srp.public_key_bytes, state: 2})
+        tlv salt: start_srp.salt_bytes, public_key: start_srp.public_key_bytes, state: 2
       end
 
       def verify
@@ -46,7 +46,7 @@ module RubyHome
           cache[:session_key] = verify_srp.session_key
           cache[:srp_session] = nil
 
-          HAP::TLV.encode({state: 4, proof: verify_srp.server_proof})
+          tlv state: 4, proof: verify_srp.server_proof
         else
           pairing_failed
         end
@@ -92,7 +92,7 @@ module RubyHome
 
           accessorysignature = signing_key.sign([accessoryinfo].pack('H*'))
 
-          subtlv = HAP::TLV.encode({identifier: accessory_info.device_id, public_key: accessoryltpk, signature: accessorysignature})
+          subtlv = tlv(identifier: accessory_info.device_id, public_key: accessoryltpk, signature: accessorysignature)
 
           nonce = HexHelper.pad('PS-Msg06')
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
@@ -100,7 +100,7 @@ module RubyHome
           pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk.unpack1('H*') }
           accessory_info.add_paired_client pairing_params
 
-          HAP::TLV.encode({state: 6, encrypted_data: encrypted_data})
+          tlv state: 6, encrypted_data: encrypted_data
         end
       end
     end

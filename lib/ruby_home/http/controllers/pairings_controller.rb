@@ -24,14 +24,14 @@ module RubyHome
         }
         accessory_info.add_paired_client pairing_params
 
-        HAP::TLV.encode({state: 2})
+        tlv state: 2
       end
 
       def remove_pairing
         accessory_info.remove_paired_client(unpack_request[:identifier])
 
         response['connection'] = 'close'
-        HAP::TLV.encode({state: 2})
+        tlv state: 2
       end
     end
   end

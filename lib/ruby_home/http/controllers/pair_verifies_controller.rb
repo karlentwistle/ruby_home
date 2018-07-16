@@ -32,7 +32,7 @@ module RubyHome
         signing_key = accessory_info.signing_key
         accessorysignature = signing_key.sign([accessoryinfo].pack('H*'))
 
-        subtlv = HAP::TLV.encode({identifier: accessory_info.device_id, signature: accessorysignature})
+        subtlv = tlv(identifier: accessory_info.device_id, signature: accessorysignature)
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Verify-Encrypt-Info', salt: 'Pair-Verify-Encrypt-Salt')
         session_key = hkdf.encrypt(shared_secret)
@@ -42,7 +42,7 @@ module RubyHome
         nonce = HexHelper.pad('PV-Msg02')
         encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
 
-        HAP::TLV.encode({state: 2, public_key: public_key, encrypted_data: encrypted_data})
+        tlv state: 2, public_key: public_key, encrypted_data: encrypted_data
       end
 
       def verify_finish_response
@@ -60,9 +60,9 @@ module RubyHome
           hkdf = HAP::Crypto::HKDF.new(info: 'Control-Read-Encryption-Key', salt: 'Control-Salt')
           cache[:accessory_to_controller_key] = hkdf.encrypt(cache[:shared_secret])
 
-          HAP::TLV.encode({state: 4})
+          tlv state: 4
         else
-          HAP::TLV.encode({state: 4, error: 2})
+          tlv state: 4, error: 2
         end
       end
     end
