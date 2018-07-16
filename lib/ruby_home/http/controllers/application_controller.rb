@@ -40,6 +40,7 @@ module RubyHome
       end
 
       def _unpack_request
+        rewind_request
         HAP::TLV.read(request.body.read).tap do |request_body|
           logger.debug request_body
         end
