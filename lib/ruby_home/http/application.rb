@@ -3,7 +3,7 @@ Rack::Handler.register 'hap_server', RubyHome::Rack::Handler::HAPServer
 
 module RubyHome
   module HTTP
-    class Application < Sinatra::Base
+    class Application < Sinatra::Application
       def self.accept_callback
         -> (socket) do
           RequestStore.store[socket] = {}
@@ -14,7 +14,13 @@ module RubyHome
       Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
 
       disable :protection
-      disable :logging
+
+      if ENV['DEBUG']
+        enable :logging
+      else
+        disable :logging
+      end
+
       set :bind, '0.0.0.0'
       set :quiet, true
       set :server, :hap_server
