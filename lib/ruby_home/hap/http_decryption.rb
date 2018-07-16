@@ -49,7 +49,7 @@ module RubyHome
       end
 
       def chacha20poly1305ietf
-        HAP::Crypto::ChaCha20Poly1305.new(key)
+        @_chacha20poly1305ietf ||= HAP::Crypto::ChaCha20Poly1305.new(key)
       end
     end
   end
