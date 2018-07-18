@@ -6,7 +6,7 @@ require 'rack'
 require 'rbnacl/libsodium'
 require 'request_store'
 require 'ruby_home-srp'
-require 'sinatra'
+require 'sinatra/base'
 require 'webrick'
 require 'wisper'
 

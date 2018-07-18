@@ -2,6 +2,9 @@ module RubyHome
   module HTTP
     class ApplicationController < Sinatra::Base
       disable :protection
+      enable :logging if ENV['DEBUG']
+
+      protected
 
       def unpack_request
         @_unpack_request ||= _unpack_request
@@ -31,6 +34,10 @@ module RubyHome
         HAP::TLV.encode(object)
       end
 
+      def logger
+        @_logger ||= Logger.new(STDOUT)
+      end
+
       private
 
       def rewind_request
@@ -39,17 +46,20 @@ module RubyHome
         end
       end
 
-      def _unpack_request
+      def request_body
         rewind_request
-        HAP::TLV.read(request.body.read).tap do |request_body|
-          logger.debug request_body
+        request.body.read
+      end
+
+      def _unpack_request
+        HAP::TLV.read(request_body).tap do |request_tlv|
+          logger.debug request_tlv
         end
       end
 
       def _unpack_json
-        rewind_request
-        JSON.parse(request.body.read).tap do |request_body|
-          logger.debug request_body
+        JSON.parse(request_body).tap do |request_json|
+          logger.debug request_json
         end
       end
     end
