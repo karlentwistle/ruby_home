@@ -2,7 +2,11 @@ module RubyHome
   module HTTP
     class ApplicationController < Sinatra::Base
       disable :protection
-      enable :logging if ENV['DEBUG']
+
+      if ENV['DEBUG']
+        enable :logging
+        set :logger, Logger.new(STDOUT)
+      end
 
       protected
 
@@ -35,7 +39,11 @@ module RubyHome
       end
 
       def logger
-        @_logger ||= Logger.new(STDOUT)
+        if settings.respond_to?(:logger)
+          settings.logger
+        else
+          request.logger
+        end
       end
 
       private
