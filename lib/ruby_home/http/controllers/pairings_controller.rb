@@ -29,7 +29,6 @@ module RubyHome
 
       def remove_pairing
         accessory_info.remove_paired_client(unpack_request[:identifier])
-        RubyHome::Broadcast.dns_service.update
 
         response['connection'] = 'close'
         tlv state: 2
