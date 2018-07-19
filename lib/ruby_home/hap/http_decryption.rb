@@ -1,8 +1,9 @@
 module RubyHome
   module HAP
     class HTTPDecryption
-      AAD_LENGTH_BYTES = 2
-      AUTHENTICATE_TAG_LENGTH_BYTES = 16
+      AAD_LENGTH_BYTES = 2.freeze
+      AUTHENTICATE_TAG_LENGTH_BYTES = 16.freeze
+      NONCE_32_BIT_FIX_COMMENT_PART = [0].pack('L').freeze
 
       def initialize(key, count: 0)
         @key = key
@@ -45,7 +46,7 @@ module RubyHome
       end
 
       def nonce
-        RubyHome::HexHelper.pad([count].pack('Q<'))
+        NONCE_32_BIT_FIX_COMMENT_PART + [count].pack('Q')
       end
 
       def chacha20poly1305ietf

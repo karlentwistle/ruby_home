@@ -1,20 +1,34 @@
 module RubyHome
   module HAP
     class HTTPEncryption
+      MAX_FRAME_LENGTH = 1024.freeze
+      NONCE_32_BIT_FIX_COMMENT_PART = [0].pack('L').freeze
+
       def initialize(key, count: 0)
         @key = key
         @count = count
       end
 
       def encrypt(data)
-        data.chars.each_slice(1024).map(&:join).map do |message|
-          additional_data = [message.length].pack('v')
+        encrypted_data = []
+        read_pointer = 0
 
-          encrypted_data = chacha20poly1305ietf.encrypt(nonce, message, additional_data)
+        while read_pointer < data.length
+          encrypted_frame = ""
+
+          frame = data[read_pointer...read_pointer+MAX_FRAME_LENGTH]
+          length_of_encrypted_data = frame.length
+          little_endian_length_of_encrypted_data = [length_of_encrypted_data].pack('v')
+
+          encrypted_frame += little_endian_length_of_encrypted_data
+          encrypted_frame += chacha20poly1305ietf.encrypt(nonce, frame, little_endian_length_of_encrypted_data)
+          encrypted_data << encrypted_frame
+
+          read_pointer += length_of_encrypted_data
           increment_count!
-
-          [additional_data, encrypted_data].join
         end
+
+        encrypted_data
       end
 
       attr_reader :count
@@ -28,7 +42,7 @@ module RubyHome
       end
 
       def nonce
-        RubyHome::HexHelper.pad([count].pack('Q<'))
+        NONCE_32_BIT_FIX_COMMENT_PART + [count].pack('Q')
       end
 
       def chacha20poly1305ietf
