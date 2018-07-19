@@ -60,6 +60,9 @@ module RubyHome
           hkdf = HAP::Crypto::HKDF.new(info: 'Control-Read-Encryption-Key', salt: 'Control-Salt')
           cache[:accessory_to_controller_key] = hkdf.encrypt(cache[:shared_secret])
 
+          cache.delete(:session_key)
+          cache.delete(:shared_secret)
+
           tlv state: 4
         else
           tlv state: 4, error: 2

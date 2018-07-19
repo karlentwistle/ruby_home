@@ -67,6 +67,16 @@ RSpec.describe 'POST /pair-verify' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
         expect(unpacked_body).to eql(state: 4)
       end
+
+      it 'destroys cached shared_secret' do
+        post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+        expect(read_cache).not_to have_key(:shared_secret)
+      end
+
+      it 'destroys cached session_key' do
+        post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+        expect(read_cache).not_to have_key(:session_key)
+      end
     end
 
     context 'iOSDevicePairingID does not exists in list of paired controllers.' do
