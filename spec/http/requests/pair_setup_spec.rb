@@ -122,7 +122,7 @@ RSpec.describe 'POST /pair-setup' do
       end
 
       it 'destroy srp_session' do
-        expect(read_cache(:srp_session)).to be_nil
+        expect(read_cache).not_to have_key(:srp_session)
       end
     end
 

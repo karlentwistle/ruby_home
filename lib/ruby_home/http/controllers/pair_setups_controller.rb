@@ -44,7 +44,7 @@ module RubyHome
 
         if verify_srp.valid?
           cache[:session_key] = verify_srp.session_key
-          cache[:srp_session] = nil
+          cache.delete(:srp_session)
 
           tlv state: 4, proof: verify_srp.server_proof
         else
