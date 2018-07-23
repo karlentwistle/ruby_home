@@ -6,6 +6,8 @@ module RubyHome
       post '/pair-verify' do
         content_type 'application/pairing+tlv8'
 
+        verify_accessory_paired
+
         case unpack_request[:state]
         when 1
           verify_start_response
@@ -67,6 +69,10 @@ module RubyHome
         else
           tlv state: 4, error: 2
         end
+      end
+
+      def verify_accessory_paired
+        halt 403 unless accessory_info.paired?
       end
     end
   end
