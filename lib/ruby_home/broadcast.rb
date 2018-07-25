@@ -5,7 +5,7 @@ module RubyHome
     def self.run
       threads = []
       threads << Thread.new do
-        dns_service
+        dns_service.register
       end
       threads.each(&:join)
 
@@ -13,12 +13,7 @@ module RubyHome
     end
 
     def self.dns_service
-      @_dns_service ||= begin
-        service = RubyHome::DNS::Service.new(http_server.port)
-
-        service.register
-        service
-      end
+      @_dns_service ||= RubyHome::DNS::Service.new(http_server.port)
     end
 
     def self.http_server
