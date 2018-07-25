@@ -8,6 +8,11 @@ module RubyHome
         set :logger, Logger.new(STDOUT)
       end
 
+      before do
+        logger.debug "Cache"
+        logger.debug cache.inspect
+      end
+
       protected
 
       def unpack_request
