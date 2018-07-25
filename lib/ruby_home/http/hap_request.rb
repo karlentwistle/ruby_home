@@ -25,6 +25,12 @@ module RubyHome
         cache[:controller_to_accessory_count] >= 1
       end
 
+      def meta_vars
+        super.tap do |meta|
+          meta["REQUEST_SOCKET"] = @_socket
+        end
+      end
+
       private
 
       def decrypter

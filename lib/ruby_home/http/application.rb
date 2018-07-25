@@ -1,28 +1,35 @@
-require_relative '../rack/handler/hap_server'
-Rack::Handler.register 'hap_server', RubyHome::Rack::Handler::HAPServer
+Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
 
 module RubyHome
   module HTTP
-    class Application < Sinatra::Base
-      def self.accept_callback
+    class Application
+      def accept_callback
         -> (socket) do
           RequestStore.store[socket] = {}
-          set :socket, socket
         end
       end
 
-      set :bind, '0.0.0.0'
-      set :quiet, true
-      set :server, :hap_server
-      set :server_settings, AcceptCallback: self.accept_callback, ServerSoftware: 'RubyHome'
+      def run
+        RubyHome::Rack::Handler::HAPServer.run rack_builder, Port: port, Host: bind_address, ServerSoftware: 'RubyHome', AcceptCallback: accept_callback
+      end
 
-      Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
+      def port
+        @_port ||= Integer(ENV['PORT'] && !ENV['PORT'].empty? ? ENV['PORT'] : 4567)
+      end
 
-      use AccessoriesController
-      use CharacteristicsController
-      use PairSetupsController
-      use PairVerifiesController
-      use PairingsController
+      def bind_address
+        '0.0.0.0'
+      end
+
+      def rack_builder
+        ::Rack::Builder.new do
+          use AccessoriesController
+          use CharacteristicsController
+          use PairSetupsController
+          use PairVerifiesController
+          run PairingsController
+        end
+      end
     end
   end
 end

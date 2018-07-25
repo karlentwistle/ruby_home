@@ -9,7 +9,7 @@ module RubyHome
       end
       threads.each(&:join)
 
-      http_server.run!
+      http_server.run
     end
 
     def self.dns_service
@@ -22,7 +22,7 @@ module RubyHome
     end
 
     def self.http_server
-      @_http_server ||= RubyHome::HTTP::Application
+      @_http_server ||= RubyHome::HTTP::Application.new
     end
   end
 end

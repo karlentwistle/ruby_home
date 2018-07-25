@@ -1,14 +1,18 @@
 module CacheHelpers
   def set_cache(key, value)
-    RequestStore.store[1][key.to_sym] = value
+    stub_request_store[key.to_sym] = value
   end
 
   def read_cache(key=nil)
-    if key
-      RequestStore.store[1][key.to_sym]
-    else
-      RequestStore.store[1]
-    end
+    stub_request_store.fetch(key, stub_request_store)
+  end
+
+  def stub_request_store
+    RequestStore.store[stub_request_key] ||= {}
+  end
+
+  def stub_request_key
+    1
   end
 end
 
@@ -16,7 +20,7 @@ RSpec.configure do |config|
   config.include CacheHelpers
 
   config.before(:each) do
-    RequestStore.store[1] = {}
+    env "REQUEST_SOCKET", stub_request_key
   end
 
   config.after(:each) do |example|
