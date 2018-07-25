@@ -3,7 +3,7 @@ require_relative 'application_controller'
 module RubyHome
   module HTTP
     class PairVerifiesController < ApplicationController
-      post '/pair-verify' do
+      post '/' do
         content_type 'application/pairing+tlv8'
 
         verify_accessory_paired

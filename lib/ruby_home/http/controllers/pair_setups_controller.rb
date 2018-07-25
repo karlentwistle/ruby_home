@@ -3,7 +3,7 @@ require_relative 'application_controller'
 module RubyHome
   module HTTP
     class PairSetupsController < ApplicationController
-      post '/pair-setup' do
+      post '/' do
         content_type 'application/pairing+tlv8'
 
         case unpack_request[:state]
