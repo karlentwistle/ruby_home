@@ -26,7 +26,6 @@ module RubyHome
           map('/accessories', &Proc.new { run AccessoriesController })
           map('/characteristics', &Proc.new { run CharacteristicsController })
           map('/pair-setup', &Proc.new { run PairSetupsController })
-          map('/pair-setup', &Proc.new { run PairSetupsController })
           map('/pair-verify', &Proc.new { run PairVerifiesController })
           map('/pairings', &Proc.new { run PairingsController })
         end
