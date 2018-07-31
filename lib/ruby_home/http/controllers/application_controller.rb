@@ -32,15 +32,11 @@ module RubyHome
       end
 
       def cache
-        RequestStore.store[request_socket] ||= {}
+        RequestStore.store
       end
 
       def clear_cache
-        RequestStore.store[request_socket] = {}
-      end
-
-      def request_socket
-        env["REQUEST_SOCKET"]
+        RequestStore.clear!
       end
 
       def tlv(object)

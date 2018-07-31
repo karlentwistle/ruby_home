@@ -3,18 +3,11 @@ Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file }
 module RubyHome
   module HTTP
     class Application
-      def accept_callback
-        -> (socket) do
-          RequestStore.store[socket] = {}
-        end
-      end
-
       def run
         RubyHome::Rack::Handler::HAPServer.run rack_builder,
           Port: port,
           Host: bind_address,
-          ServerSoftware: 'RubyHome',
-          AcceptCallback: accept_callback
+          ServerSoftware: 'RubyHome'
       end
 
       def port
@@ -33,7 +26,6 @@ module RubyHome
           map('/pair-setup', &Proc.new { run PairSetupsController })
           map('/pair-verify', &Proc.new { run PairVerifiesController })
           map('/pairings', &Proc.new { run PairingsController })
-          #run ErrorsController
         end
       end
     end

@@ -1,8 +1,7 @@
 module RubyHome
   module HTTP
     class HAPRequest < WEBrick::HTTPRequest
-      def initialize(*args, socket: )
-        @_socket = socket
+      def initialize(*args)
         cache[:controller_to_accessory_count] ||= 0
 
         super(*args)
@@ -23,12 +22,6 @@ module RubyHome
 
       def received_encrypted_request?
         cache[:controller_to_accessory_count] >= 1
-      end
-
-      def meta_vars
-        super.tap do |meta|
-          meta["REQUEST_SOCKET"] = @_socket
-        end
       end
 
       private
@@ -52,7 +45,7 @@ module RubyHome
       end
 
       def cache
-        RequestStore.store[@_socket]
+        RequestStore.store
       end
     end
   end

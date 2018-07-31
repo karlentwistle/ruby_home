@@ -122,7 +122,7 @@ RSpec.describe 'POST /pair-setup' do
       end
 
       it 'destroy srp_session' do
-        expect(read_cache).not_to have_key(:srp_session)
+        expect(request_store).not_to have_key(:srp_session)
       end
     end
 
@@ -135,7 +135,7 @@ RSpec.describe 'POST /pair-setup' do
         end
 
         it 'clears the cache' do
-          expect(read_cache).to be_empty
+          expect(request_store).to be_empty
         end
       end
 
@@ -149,7 +149,7 @@ RSpec.describe 'POST /pair-setup' do
         end
 
         it 'clears the cache' do
-          expect(read_cache).to be_empty
+          expect(request_store).to be_empty
         end
       end
     end

@@ -85,12 +85,12 @@ RSpec.describe 'POST /pair-verify' do
 
       it 'destroys cached shared_secret' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
-        expect(read_cache).not_to have_key(:shared_secret)
+        expect(request_store).not_to have_key(:shared_secret)
       end
 
       it 'destroys cached session_key' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
-        expect(read_cache).not_to have_key(:session_key)
+        expect(request_store).not_to have_key(:session_key)
       end
     end
 
