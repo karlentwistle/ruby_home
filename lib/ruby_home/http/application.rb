@@ -10,7 +10,11 @@ module RubyHome
       end
 
       def run
-        RubyHome::Rack::Handler::HAPServer.run rack_builder, Port: port, Host: bind_address, ServerSoftware: 'RubyHome', AcceptCallback: accept_callback
+        RubyHome::Rack::Handler::HAPServer.run rack_builder,
+          Port: port,
+          Host: bind_address,
+          ServerSoftware: 'RubyHome',
+          AcceptCallback: accept_callback
       end
 
       def port
