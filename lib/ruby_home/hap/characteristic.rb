@@ -36,6 +36,8 @@ module RubyHome
     end
 
     def value=(new_value)
+      return if name == :identify
+
       @value = new_value
       broadcast(:updated, new_value)
     end
