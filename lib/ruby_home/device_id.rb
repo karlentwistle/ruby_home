@@ -1,5 +1,5 @@
 module RubyHome
-  class DeviceID
+  module DeviceID
     class << self
       DELIMITER = ':'
 
