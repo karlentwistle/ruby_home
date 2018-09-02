@@ -39,7 +39,7 @@ fan.characteristic(:on).on(:updated) do |new_value|
   end
 end
 
-RubyHome::Broadcast.run
+RubyHome.run
 ```
 
 ## Development
