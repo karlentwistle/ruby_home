@@ -28,7 +28,7 @@ module RubyHome
     end
 
     def threads
-      @@threads ||= []
+      @@_threads ||= []
     end
 
     def shutdown
@@ -36,11 +36,11 @@ module RubyHome
     end
 
     def dns_service
-      @_dns_service ||= RubyHome::DNS::Service.new(http_server.port)
+      @@_dns_service ||= RubyHome::DNS::Service.new(http_server.port)
     end
 
     def http_server
-      @_http_server ||= RubyHome::HTTP::Application.new
+      @@_http_server ||= RubyHome::HTTP::Application.new
     end
   end
 end
