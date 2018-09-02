@@ -4,8 +4,8 @@ module RubyHome
       @services = []
     end
 
-    attr_reader :id, :services
-    attr_writer :id
+    attr_accessor :id
+    attr_reader :services
 
     def characteristics
       services.flat_map(&:characteristics)
