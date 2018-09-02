@@ -18,6 +18,7 @@ module RubyHome
       trap 'INT'  do shutdown end
       trap 'TERM' do shutdown end
 
+      greet
       start
     end
 
@@ -41,6 +42,10 @@ module RubyHome
 
     def http_server
       @@_http_server ||= RubyHome::HTTP::Application.new
+    end
+
+    def greet
+      Greeter.run
     end
   end
 end
