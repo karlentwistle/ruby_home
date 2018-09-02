@@ -50,7 +50,7 @@ module RubyHome
     end
 
     def set_password
-      self.password ||= '031-45-154'
+      self.password ||= Password.generate
     end
 
     def set_signature_key
