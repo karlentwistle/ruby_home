@@ -1,12 +1,7 @@
 module RubyHome
   class CharacteristicFactory
     DEFAULT_VALUES = {
-      firmware_revision: '1.0',
       identify: nil,
-      manufacturer: 'Default-Manufacturer',
-      model: 'Default-Model',
-      name: 'RubyHome',
-      serial_number: 'Default-SerialNumber',
     }.freeze
 
     def self.create(characteristic_name, options={}, &block)
@@ -44,9 +39,13 @@ module RubyHome
 
       def default_value
         DEFAULT_VALUES.fetch(characteristic_name.to_sym) do
-          case template.format
-          when 'bool'
-            false
+          klass = "RubyHome::#{template.format.classify}DefaultValue".safe_constantize || NullDefaultValue
+          default_value = klass.new(template).default
+
+          if default_value.nil?
+            raise "No default value available for characteristic: #{characteristic_name} of type: #{template.format}"
+          else
+            default_value
           end
         end
       end
