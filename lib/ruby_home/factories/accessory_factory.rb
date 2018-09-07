@@ -40,22 +40,19 @@ module RubyHome
       end
 
       def create_required_characteristics
-        template.required_characteristics.map do |characteristic_template|
+        create_characteristics(template.required_characteristics)
+      end
+
+      def create_optional_characteristics
+        create_characteristics(template.optional_characteristics)
+      end
+
+      def create_characteristics(characteristics)
+        characteristics.map do |characteristic_template|
           CharacteristicFactory.create(characteristic_template.name, service: service) do |characteristic|
             value = characteristic_options[characteristic.name]
             next unless value
 
-            characteristic.value = value
-          end
-        end
-      end
-
-      def create_optional_characteristics
-        template.optional_characteristics.map do |characteristic_template|
-          value = characteristic_options[characteristic_template.name]
-          next unless value
-
-          CharacteristicFactory.create(characteristic_template.name, service: service) do |characteristic|
             characteristic.value = value
           end
         end
