@@ -14,7 +14,7 @@ RSpec.describe RubyHome::StringDefaultValue do
       expect(handler.default).to eql('1.0')
     end
 
-    it 'returns 1.0 for Hardware Revision' do
+    it 'returns 1.0 for Version' do
       template = double(name: :version)
       handler = RubyHome::StringDefaultValue.new(template)
       expect(handler.default).to eql('1.0')

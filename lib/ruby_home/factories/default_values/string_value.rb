@@ -17,6 +17,7 @@ module RubyHome
     end
 
     private
+
       def name
         template.name
       end
