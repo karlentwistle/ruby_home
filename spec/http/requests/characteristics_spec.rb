@@ -109,44 +109,66 @@ RSpec.describe '/characteristics' do
     end
 
     context 'sufficient privileges and no error occurs' do
-      let(:valid_parameters) do
-        JSON.generate({
-          'characteristics' => [
-            {
-              'aid' => characteristic.accessory_id,
-              'iid' => characteristic.instance_id,
-              'value' => '1'
-            }
-          ]
-        })
-      end
-
-      let(:characteristic) do
-        RubyHome::IdentifierCache.find_characteristics(uuid: '00000025-0000-1000-8000-0026BB765291').first
-      end
-
       before do
-        fan = RubyHome::AccessoryFactory.create(:fan)
         set_cache(:controller_to_accessory_key, ['a' * 64].pack('H*'))
         set_cache(:accessory_to_controller_key, ['b' * 64].pack('H*'))
       end
 
       it 'responds with a 204 No Content HTTP Status Code' do
-        put '/characteristics', valid_parameters, {'CONTENT_TYPE' => 'application/hap+json'}
+        fan = RubyHome::AccessoryFactory.create(:fan)
+        characteristic = fan.characteristic(:on)
+
+        put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
+
         expect(last_response.status).to eql(204)
       end
 
       it 'responds with an empty body' do
-        put '/characteristics', valid_parameters, {'CONTENT_TYPE' => 'application/hap+json'}
+        fan = RubyHome::AccessoryFactory.create(:fan)
+        characteristic = fan.characteristic(:on)
+
+        put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
+
         expect(last_response.body).to be_empty
       end
 
-      it 'triggers characteristic listeners' do
-        listener = double('Listener')
-        expect(listener).to receive(:updated).with('1')
+      it 'triggers single characteristic listeners' do
+        fan = RubyHome::AccessoryFactory.create(:fan)
+        characteristic = fan.characteristic(:on)
+        listener = spy('listener')
         characteristic.subscribe(listener)
-        put '/characteristics', valid_parameters, {'CONTENT_TYPE' => 'application/hap+json'}
+
+        put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
+
+        expect(listener).to have_received(:updated).with('1')
+      end
+
+      it 'triggers multiple characteristics listeners' do
+        garage_door_opener = RubyHome::AccessoryFactory.create(:garage_door_opener)
+        obstruction_detected = garage_door_opener.characteristic(:obstruction_detected)
+        target_door_state = garage_door_opener.characteristic(:target_door_state)
+        obstruction_detected_listener = spy('listener')
+        target_door_state_listener = spy('listener')
+        obstruction_detected.subscribe(obstruction_detected_listener)
+        target_door_state.subscribe(target_door_state_listener)
+
+        put '/characteristics', characteristic_parameters(obstruction_detected => '1', target_door_state => '0'), {'CONTENT_TYPE' => 'application/hap+json'}
+
+        expect(obstruction_detected_listener).to have_received(:updated).with('1')
+        expect(target_door_state_listener).to have_received(:updated).with('0')
       end
     end
+  end
+
+  def characteristic_parameters(params)
+    {
+      'characteristics' => params.map do |characteristic, value|
+        {
+          'aid' => characteristic.accessory_id,
+          'iid' => characteristic.instance_id,
+          'value' => value
+        }
+      end
+    }.to_json
   end
 end
