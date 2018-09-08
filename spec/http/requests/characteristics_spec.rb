@@ -38,7 +38,7 @@ RSpec.describe '/characteristics' do
         expect(last_response.status).to eql(200)
       end
 
-      it 'responds with characteristics' do
+      it 'responds with single characteristic' do
         fan = RubyHome::AccessoryFactory.create(:fan)
         characteristic = fan.characteristic(:on)
 
@@ -49,6 +49,42 @@ RSpec.describe '/characteristics' do
 
         expected_data = { 'characteristics' => [{ 'aid' => aid, 'iid' => iid, 'value' => false }] }
         expect(last_response.body).to eql(JSON.generate(expected_data))
+      end
+
+      it 'responds with multiple characteristics' do
+        garage_door_opener = RubyHome::AccessoryFactory.create(:garage_door_opener)
+        characteristics = [
+          garage_door_opener.characteristic(:current_door_state),
+          garage_door_opener.characteristic(:target_door_state),
+          garage_door_opener.characteristic(:obstruction_detected),
+        ]
+        characteristics_ids = characteristics.map do |characteristic|
+          [characteristic.accessory_id, characteristic.instance_id].join('.')
+        end
+
+        get '/characteristics', { id: characteristics_ids.join(',') }, headers: { 'CONTENT_TYPE' => 'application/hap+json' }
+
+        expect(JSON.parse(last_response.body)).to match(
+          {
+            'characteristics' => a_collection_containing_exactly(
+              {
+                'aid' => characteristics[0].accessory_id,
+                'iid' => characteristics[0].instance_id,
+                'value' => characteristics[0].value
+              },
+              {
+                'aid' => characteristics[1].accessory_id,
+                'iid' => characteristics[1].instance_id,
+                'value' => characteristics[1].value
+              },
+              {
+                'aid' => characteristics[2].accessory_id,
+                'iid' => characteristics[2].instance_id,
+                'value' => characteristics[2].value
+              },
+            )
+          }
+        )
       end
     end
   end
