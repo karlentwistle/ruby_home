@@ -3,50 +3,46 @@ require_relative 'application_controller'
 module RubyHome
   module HTTP
     class CharacteristicsController < ApplicationController
-      get '/' do
+      before do
         content_type 'application/hap+json'
+        require_session
+      end
 
-        if cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
-          CharacteristicValueSerializer.new(find_characteristics).serialized_json
-        else
-          status 401
-          JSON.generate({"status" => -70401})
-        end
+      get '/' do
+        CharacteristicValueSerializer.new(find_characteristics).serialized_json
       end
 
       put '/' do
-        content_type 'application/hap+json'
-
-        if cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
-          json_body.fetch('characteristics', []).each do |characteristic_params|
-            accessory_id = characteristic_params['aid']
-            instance_id = characteristic_params['iid']
-            characteristic = IdentifierCache.find_characteristics(
-              accessory_id: accessory_id.to_i,
-              instance_id: instance_id.to_i
-            ).first
-
-            if characteristic_params['value']
-              characteristic.value = characteristic_params['value']
-            end
-          end
-
-          status 204
-        else
-          status 401
-          JSON.generate({"status" => -70401})
+        json_body.fetch('characteristics', []).each do |characteristic_params|
+          update_characteristics(characteristic_params)
         end
+
+        status 204
       end
 
       private
 
         def find_characteristics
-          params[:id].split(',').flat_map do |characteristic_params|
-            accessory_id, instance_id = characteristic_params.split('.')
-            IdentifierCache.find_characteristics(
-              accessory_id: accessory_id.to_i,
-              instance_id: instance_id.to_i
-            )
+          params.fetch(:id, "").split(',').flat_map do |characteristic_params|
+            aid, iid = characteristic_params.split('.')
+            find_characteristic(aid: aid, iid: iid)
+          end
+        end
+
+        def update_characteristics(characteristic_params)
+          characteristic = find_characteristic(**characteristic_params.symbolize_keys.slice(:aid, :iid))
+          if characteristic && characteristic_params['value']
+            characteristic.value = characteristic_params['value']
+          end
+        end
+
+        def find_characteristic(aid:, iid:)
+          IdentifierCache.find_characteristic(accessory_id: aid.to_i, instance_id: iid.to_i)
+        end
+
+        def require_session
+          unless cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
+            halt 401, JSON.generate({"status" => -70401})
           end
         end
     end

@@ -19,8 +19,8 @@ module RubyHome
         services.flat_map(&:characteristics)
       end
 
-      def find_characteristics(attributes)
-        characteristics.select do |characteristic|
+      def find_characteristic(attributes)
+        characteristics.find do |characteristic|
           attributes.all? do |key, value|
             characteristic.send(key) == value
           end
