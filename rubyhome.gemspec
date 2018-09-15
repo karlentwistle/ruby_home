@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rbnacl-libsodium', '~> 1.0', '>= 1.0.16'
   spec.add_dependency 'request_store', '~> 1.4', '>= 1.4.1'
   spec.add_dependency 'ruby_home-srp', '~> 1.2'
-  spec.add_dependency 'sinatra', '2.0.3'
+  spec.add_dependency 'sinatra', '2.0.4'
   spec.add_dependency 'wisper', '~> 1.6', '>= 1.6.1'
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'byebug', '~> 10.0'
