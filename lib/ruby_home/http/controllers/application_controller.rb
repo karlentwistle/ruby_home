@@ -31,12 +31,12 @@ module RubyHome
         IdentifierCache
       end
 
-      def cache
-        RequestStore.store
+      def socket
+        env["REQUEST_SOCKET"]
       end
 
-      def clear_cache
-        RequestStore.clear!
+      def cache
+        RubyHome.socket_store[socket]
       end
 
       def tlv(object)
