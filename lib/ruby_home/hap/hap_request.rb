@@ -1,5 +1,5 @@
 module RubyHome
-  module HTTP
+  module HAP
     class HAPRequest < WEBrick::HTTPRequest
       def initialize(config, sock)
         @sock = sock

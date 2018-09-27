@@ -8,16 +8,27 @@ module CacheHelpers
   end
 
   def request_store
-    RequestStore.store
+    RubyHome.socket_store[stub_socket] ||= {}
   end
 
   def clear_cache
-    RequestStore.clear!
+    RubyHome.socket_store[stub_socket] = {}
+  end
+
+  def stub_socket
+    1
   end
 end
 
 RSpec.configure do |config|
   config.include CacheHelpers
 
-  config.after(:each) { clear_cache }
+  config.before(:each) do
+    request_store
+    env "REQUEST_SOCKET", stub_socket
+  end
+
+  config.after(:each) do
+    clear_cache
+  end
 end

@@ -5,7 +5,6 @@ require 'nio'
 require 'oj'
 require 'rack'
 require 'rbnacl/libsodium'
-require 'request_store'
 require 'ruby_home-srp'
 require 'sinatra/base'
 require 'webrick'
@@ -38,11 +37,11 @@ module RubyHome
     end
 
     def dns_service
-      @@_dns_service ||= RubyHome::DNS::Service.new(hap_server.port)
+      @@_dns_service ||= DNS::Service.new(hap_server.port)
     end
 
     def hap_server
-      @@_hap_server ||= EchoServer.new('0.0.0.0', 1234, socket_store)
+      @@_hap_server ||= HAP::Server.new('0.0.0.0', 1234, socket_store)
     end
 
     def socket_store

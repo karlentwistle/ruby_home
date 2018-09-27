@@ -11,7 +11,7 @@ Dir[File.expand_path('../support/**/*.rb', __FILE__)].sort.each { |file| require
 module RSpecMixin
   include Rack::Test::Methods
   def app
-    RubyHome::HTTP::Application.new.rack_builder
+    RubyHome::HTTP::Application.rack_builder
   end
 end
 

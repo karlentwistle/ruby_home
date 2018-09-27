@@ -1,5 +1,5 @@
 module RubyHome
-  module HTTP
+  module HAP
     class HAPResponse < WEBrick::HTTPResponse
       def initialize(config, sock)
         @sock = sock

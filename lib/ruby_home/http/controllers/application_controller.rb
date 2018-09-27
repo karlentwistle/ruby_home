@@ -35,6 +35,10 @@ module RubyHome
         env["REQUEST_SOCKET"]
       end
 
+      def clear_cache
+        RubyHome.socket_store.delete(socket)
+      end
+
       def cache
         RubyHome.socket_store[socket]
       end
