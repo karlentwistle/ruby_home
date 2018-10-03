@@ -42,7 +42,7 @@ module RubyHome
     end
 
     def hap_server
-      @@_hap_server ||= HAP::Server.new('0.0.0.0', 1234, socket_store)
+      @@_hap_server ||= HAP::Server.new('0.0.0.0', 4567, socket_store)
     end
 
     def socket_store
