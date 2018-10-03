@@ -1,7 +1,3 @@
-require 'nio'
-require 'socket'
-require 'webrick'
-
 module RubyHome
   module HAP
     class Server
