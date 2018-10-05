@@ -14,7 +14,11 @@ module RubyHome
 
       put '/' do
         json_body.fetch('characteristics', []).each do |characteristic_params|
-          update_characteristics(characteristic_params)
+          if characteristic_params['value']
+            update_characteristics(characteristic_params)
+          elsif characteristic_params['ev']
+            subscribe_characteristics(characteristic_params)
+          end
         end
 
         status 204
@@ -30,14 +34,24 @@ module RubyHome
         end
 
         def update_characteristics(characteristic_params)
-          characteristic = find_characteristic(**characteristic_params.symbolize_keys.slice(:aid, :iid))
-          if characteristic && characteristic_params['value']
+          find_characteristic(**characteristic_params.symbolize_keys.slice(:aid, :iid)) do |characteristic|
             characteristic.value = characteristic_params['value']
           end
         end
 
+        def subscribe_characteristics(characteristic_params)
+          find_characteristic(**characteristic_params.symbolize_keys.slice(:aid, :iid)) do |characteristic|
+            characteristic.subscribe_socket(socket, :updated, async: true) do |new_value|
+              serialized_characteristic = CharacteristicValueSerializer.new([characteristic]).serialized_json
+              RubyHome::HAP::EVResponse.new(socket, serialized_characteristic).send_response
+            end
+          end
+        end
+
         def find_characteristic(aid:, iid:)
-          IdentifierCache.find_characteristic(accessory_id: aid.to_i, instance_id: iid.to_i)
+          characteristic = IdentifierCache.find_characteristic(accessory_id: aid.to_i, instance_id: iid.to_i)
+          yield characteristic if block_given?
+          characteristic
         end
 
         def require_session
