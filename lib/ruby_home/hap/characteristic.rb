@@ -36,13 +36,10 @@ module RubyHome
     end
 
     def subscribe_socket(socket, *events, &block)
-      if local_sockets.include?(socket)
-        puts "already subscribed"
-      else
-        local_sockets << socket
+      return if local_sockets.include?(socket)
 
-        on(*events, &block)
-      end
+      local_sockets << socket
+      on(*events, &block)
     end
 
     def local_sockets
