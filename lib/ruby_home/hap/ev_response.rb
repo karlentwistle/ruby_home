@@ -13,8 +13,6 @@ module RubyHome
         send_header(response)
         send_body(response)
 
-        puts response
-
         encrypted_response = encrypter.encrypt(response).join
         cache[:accessory_to_controller_count] = encrypter.count
 
