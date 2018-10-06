@@ -1,10 +1,11 @@
 module RubyHome
-  module HTTP
+  module HAP
     class HAPResponse < WEBrick::HTTPResponse
-      def initialize(*args)
+      def initialize(config, sock)
+        @sock = sock
         cache[:accessory_to_controller_count] ||= 0
 
-        super(*args)
+        super(config)
       end
 
       def send_response(socket)
@@ -25,6 +26,8 @@ module RubyHome
 
       private
 
+      attr_reader :sock
+
       def encrypter
         @_encrypter ||= RubyHome::HAP::HTTPEncryption.new(encryption_key, encrypter_params)
       end
@@ -44,7 +47,7 @@ module RubyHome
       end
 
       def cache
-        RequestStore.store
+        RubyHome.socket_store[sock]
       end
     end
   end

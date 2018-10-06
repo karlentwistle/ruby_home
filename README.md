@@ -42,6 +42,27 @@ end
 RubyHome.run
 ```
 
+Create a garage door opener.
+
+```ruby
+require 'ruby_home'
+
+accessory_information = RubyHome::AccessoryFactory.create(:accessory_information)
+door = RubyHome::AccessoryFactory.create(:garage_door_opener)
+
+door.characteristic(:target_door_state).on(:updated, async: true) do |new_value|
+  if new_value == 0 # open
+    sleep 1
+    door.characteristic(:current_door_state).value = 0
+  elsif new_value == 1 #closed
+    sleep 1
+    door.characteristic(:current_door_state).value = 1
+  end
+end
+
+RubyHome.run
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

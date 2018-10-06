@@ -1,13 +1,14 @@
 module RubyHome
-  module HTTP
+  module HAP
     class HAPRequest < WEBrick::HTTPRequest
-      def initialize(*args)
+      def initialize(config, sock)
+        @sock = sock
         cache[:controller_to_accessory_count] ||= 0
 
-        super(*args)
+        super(config)
       end
 
-      def parse(socket=nil)
+      def parse(socket)
         if decryption_time?
           request_line = socket.read_nonblock(@buffer_size)
 
@@ -24,7 +25,13 @@ module RubyHome
         cache[:controller_to_accessory_count] >= 1
       end
 
+      def meta_vars
+        super.merge({"REQUEST_SOCKET" => sock})
+      end
+
       private
+
+      attr_reader :sock
 
       def decrypter
         @_decrypter ||= RubyHome::HAP::HTTPDecryption.new(decryption_key, decrypter_params)
@@ -45,7 +52,7 @@ module RubyHome
       end
 
       def cache
-        RequestStore.store
+        RubyHome.socket_store[sock]
       end
     end
   end

@@ -35,10 +35,23 @@ module RubyHome
       service.instance_id
     end
 
+    def subscribe_socket(socket, *events, &block)
+      return if local_sockets.include?(socket)
+
+      local_sockets << socket
+      on(*events, &block)
+    end
+
+    def local_sockets
+      @local_sockets ||= []
+    end
+
     def value=(new_value)
       return if name == :identify
 
       @value = new_value
+
+
       broadcast(:updated, new_value)
     end
 

@@ -15,7 +15,7 @@ module RubyHome
 
       def serializable_hash
         serializable_hash = if @resource
-          record_hash(resource)
+          record_hash(@resource)
         elsif @resources
           @resources.map do |resource|
             record_hash(resource)

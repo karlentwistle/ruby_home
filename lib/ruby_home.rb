@@ -1,12 +1,13 @@
 require 'bindata'
 require 'dnssd'
 require 'hkdf'
+require 'nio'
 require 'oj'
 require 'rack'
 require 'rbnacl/libsodium'
-require 'request_store'
 require 'ruby_home-srp'
 require 'sinatra/base'
+require 'socket'
 require 'webrick'
 require 'wisper'
 
@@ -24,7 +25,7 @@ module RubyHome
 
     def start
       threads << Thread.start { dns_service.register }
-      threads << Thread.start { http_server.run }
+      threads << Thread.start { hap_server.run }
       threads.each(&:join)
     end
 
@@ -37,11 +38,15 @@ module RubyHome
     end
 
     def dns_service
-      @@_dns_service ||= RubyHome::DNS::Service.new(http_server.port)
+      @@_dns_service ||= DNS::Service.new(hap_server.port)
     end
 
-    def http_server
-      @@_http_server ||= RubyHome::HTTP::Application.new
+    def hap_server
+      @@_hap_server ||= HAP::Server.new('0.0.0.0', 4567, socket_store)
+    end
+
+    def socket_store
+      @@_socket_store ||= {}
     end
 
     def greet
