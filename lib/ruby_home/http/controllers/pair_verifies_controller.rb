@@ -56,11 +56,9 @@ module RubyHome
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
         if accessory_info.paired_clients.any? {|h| h[:identifier] == unpacked_decrypted_data[:identifier]}
-          hkdf = HAP::Crypto::HKDF.new(info: 'Control-Write-Encryption-Key', salt: 'Control-Salt')
-          cache[:controller_to_accessory_key] = hkdf.encrypt(cache[:shared_secret])
-
-          hkdf = HAP::Crypto::HKDF.new(info: 'Control-Read-Encryption-Key', salt: 'Control-Salt')
-          cache[:accessory_to_controller_key] = hkdf.encrypt(cache[:shared_secret])
+          shared_secret = HAP::Crypto::SessionKey.new(cache[:shared_secret])
+          cache[:controller_to_accessory_key] = shared_secret.controller_to_accessory_key
+          cache[:accessory_to_controller_key] = shared_secret.accessory_to_controller_key
 
           cache.delete(:session_key)
           cache.delete(:shared_secret)
