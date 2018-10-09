@@ -8,7 +8,7 @@ module RubyHome
       end
 
       def send_response
-        response = ""
+        response = ''
 
         send_header(response)
         send_body(response)
@@ -21,26 +21,23 @@ module RubyHome
 
       private
 
-        STATUS_LINE = ""
-        CONTENT_TYPE_LINE = ""
-        CONTENT_LENGTH = "application/hap+json \n"
-        CRLF = "\x0d\x0a"
+        CRLF = -"\x0d\x0a"
+        STATUS_LINE = -'EVENT/1.0 200 OK'
+        CONTENT_TYPE_LINE = -'Content-Type: application/hap+json'
 
         def send_header(socket)
-          data = "EVENT/1.0 200 OK#{CRLF}"
-          data << "Content-Type: application/hap+json#{CRLF}"
-          data << "Content-Length: #{content_length}#{CRLF}"
-          data << CRLF
-
-          socket << data
+          socket << STATUS_LINE + CRLF
+          socket << CONTENT_TYPE_LINE + CRLF
+          socket << content_length_line + CRLF
+          socket << CRLF
         end
 
         def send_body(socket)
           socket << body
         end
 
-        def content_length
-          body.length
+        def content_length_line
+          "Content-Length: #{body.length}"
         end
 
         attr_reader :body, :socket
