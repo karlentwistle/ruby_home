@@ -41,7 +41,11 @@ module RubyHome
 
         def subscribe_characteristics(characteristic_params)
           find_characteristic(**characteristic_params.symbolize_keys.slice(:aid, :iid)) do |characteristic|
-            characteristic.subscribe(SocketNotifier.new(socket))
+            notifier = SocketNotifier.new(socket, characteristic)
+
+            unless characteristic.listeners.include?(notifier)
+              characteristic.subscribe(notifier)
+            end
           end
         end
 

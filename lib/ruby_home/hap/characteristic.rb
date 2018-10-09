@@ -2,6 +2,12 @@ module RubyHome
   class Characteristic
     include Wisper::Publisher
 
+    def unsubscribe(listener)
+      registrations.delete_if do |registration|
+        registration.listener == listener
+      end
+    end
+
     PROPERTIES = {
       'cnotify' => 'ev',
       'read' => 'pr',
@@ -33,17 +39,6 @@ module RubyHome
 
     def service_iid
       service.instance_id
-    end
-
-    def subscribe_socket(socket, *events, &block)
-      return if local_sockets.include?(socket)
-
-      local_sockets << socket
-      on(*events, &block)
-    end
-
-    def local_sockets
-      @local_sockets ||= []
     end
 
     def value=(new_value)
