@@ -31,8 +31,8 @@ require 'ruby_home'
 accessory_information = RubyHome::AccessoryFactory.create(:accessory_information)
 fan = RubyHome::AccessoryFactory.create(:fan)
 
-fan.characteristic(:on).on(:updated) do |new_value|
-  if new_value == 1
+fan.characteristic(:on).on(:updated) do |characteristic|
+  if characteristic.value == 1
     puts "Fan switched on"
   else
     puts "Fan switched off"
@@ -50,11 +50,11 @@ require 'ruby_home'
 accessory_information = RubyHome::AccessoryFactory.create(:accessory_information)
 door = RubyHome::AccessoryFactory.create(:garage_door_opener)
 
-door.characteristic(:target_door_state).on(:updated, async: true) do |new_value|
-  if new_value == 0 # open
+door.characteristic(:target_door_state).on(:updated) do |characteristic|
+  if characteristic.value == 0 # open
     sleep 1
     door.characteristic(:current_door_state).value = 0
-  elsif new_value == 1 #closed
+  elsif characteristic.value == 1 #closed
     sleep 1
     door.characteristic(:current_door_state).value = 1
   end

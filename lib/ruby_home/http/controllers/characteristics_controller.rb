@@ -41,10 +41,7 @@ module RubyHome
 
         def subscribe_characteristics(characteristic_params)
           find_characteristic(**characteristic_params.symbolize_keys.slice(:aid, :iid)) do |characteristic|
-            characteristic.subscribe_socket(socket, :updated, async: true) do |new_value|
-              serialized_characteristic = CharacteristicValueSerializer.new([characteristic]).serialized_json
-              RubyHome::HAP::EVResponse.new(socket, serialized_characteristic).send_response
-            end
+            characteristic.subscribe(SocketNotifier.new(socket))
           end
         end
 

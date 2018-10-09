@@ -48,11 +48,8 @@ module RubyHome
 
     def value=(new_value)
       return if name == :identify
-
       @value = new_value
-
-
-      broadcast(:updated, new_value)
+      broadcast(:updated, self)
     end
 
     def inspect
