@@ -2,9 +2,11 @@ module RubyHome
   class Characteristic
     include Wisper::Publisher
 
-    def unsubscribe(listener)
-      registrations.delete_if do |registration|
-        registration.listener == listener
+    public :local_registrations
+
+    def unsubscribe(*listeners)
+      local_registrations.delete_if do |registration|
+        listeners.include?(registration.listener)
       end
     end
 

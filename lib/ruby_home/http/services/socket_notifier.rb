@@ -14,8 +14,10 @@ module RubyHome
         end
       end
 
-      def ==(other_object)
-        self.socket == other_object.socket && self.characteristic == other_object.characteristic
+      def ==(other)
+        self.class == other.class &&
+          self.socket == other.socket &&
+          self.characteristic == other.characteristic
       end
 
       attr_reader :socket, :characteristic
