@@ -140,7 +140,7 @@ RSpec.describe '/characteristics' do
 
         put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
 
-        expect(listener).to have_received(:updated).with(characteristic)
+        expect(listener).to have_received(:after_update).with(characteristic)
       end
 
       it 'triggers multiple characteristics listeners' do
@@ -154,8 +154,8 @@ RSpec.describe '/characteristics' do
 
         put '/characteristics', characteristic_parameters(obstruction_detected => '1', target_door_state => '0'), {'CONTENT_TYPE' => 'application/hap+json'}
 
-        expect(obstruction_detected_listener).to have_received(:updated).with(obstruction_detected)
-        expect(target_door_state_listener).to have_received(:updated).with(target_door_state)
+        expect(obstruction_detected_listener).to have_received(:after_update).with(obstruction_detected)
+        expect(target_door_state_listener).to have_received(:after_update).with(target_door_state)
       end
     end
   end

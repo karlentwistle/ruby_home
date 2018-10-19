@@ -10,6 +10,10 @@ module RubyHome
       end
     end
 
+    def after_update(&block)
+      on(:after_update, &block)
+    end
+
     PROPERTIES = {
       'cnotify' => 'ev',
       'read' => 'pr',
@@ -46,7 +50,7 @@ module RubyHome
     def value=(new_value)
       return if name == :identify
       @value = new_value
-      broadcast(:updated, self)
+      broadcast(:after_update, self)
     end
 
     def inspect
