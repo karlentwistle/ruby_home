@@ -1,5 +1,5 @@
 module RubyHome
-  class AccessoryFactory
+  class ServiceFactory
     def self.create(service_name, characteristics: {}, **options)
       new(service_name, options, characteristics).create
     end
@@ -31,7 +31,7 @@ module RubyHome
 
       def create_accessory_information
         unless service_name == :accessory_information
-          AccessoryFactory.create(:accessory_information, accessory_information_params)
+          ServiceFactory.create(:accessory_information, accessory_information_params)
         end
       end
 

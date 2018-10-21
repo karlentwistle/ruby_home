@@ -44,7 +44,7 @@ RSpec.describe 'GET /accessories' do
   end
 
   def create_accessory
-    RubyHome::AccessoryFactory.create(:accessory_information)
-    RubyHome::AccessoryFactory.create(:fan, characteristics: {name: 'Fan'})
+    RubyHome::ServiceFactory.create(:accessory_information)
+    RubyHome::ServiceFactory.create(:fan, characteristics: {name: 'Fan'})
   end
 end

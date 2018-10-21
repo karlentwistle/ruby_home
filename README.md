@@ -28,8 +28,8 @@ Create a fan with an on/off switch.
 ```ruby
 require 'ruby_home'
 
-accessory_information = RubyHome::AccessoryFactory.create(:accessory_information)
-fan = RubyHome::AccessoryFactory.create(:fan)
+accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
+fan = RubyHome::ServiceFactory.create(:fan)
 
 fan.characteristic(:on).after_update do |characteristic|
   if characteristic.value == 1
@@ -47,8 +47,8 @@ Create a garage door opener.
 ```ruby
 require 'ruby_home'
 
-accessory_information = RubyHome::AccessoryFactory.create(:accessory_information)
-door = RubyHome::AccessoryFactory.create(:garage_door_opener)
+accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
+door = RubyHome::ServiceFactory.create(:garage_door_opener)
 
 door.characteristic(:target_door_state).after_update do |characteristic|
   if characteristic.value == 0 # open

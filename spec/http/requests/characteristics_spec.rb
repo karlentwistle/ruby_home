@@ -27,7 +27,7 @@ RSpec.describe '/characteristics' do
       end
 
       it 'responds with a 204 No Content HTTP Status Code' do
-        fan = RubyHome::AccessoryFactory.create(:fan)
+        fan = RubyHome::ServiceFactory.create(:fan)
         characteristic = fan.characteristic(:on)
 
         iid = characteristic.instance_id
@@ -39,7 +39,7 @@ RSpec.describe '/characteristics' do
       end
 
       it 'responds with single characteristic' do
-        fan = RubyHome::AccessoryFactory.create(:fan)
+        fan = RubyHome::ServiceFactory.create(:fan)
         characteristic = fan.characteristic(:on)
 
         iid = characteristic.instance_id
@@ -52,7 +52,7 @@ RSpec.describe '/characteristics' do
       end
 
       it 'responds with multiple characteristics' do
-        garage_door_opener = RubyHome::AccessoryFactory.create(:garage_door_opener)
+        garage_door_opener = RubyHome::ServiceFactory.create(:garage_door_opener)
         characteristics = [
           garage_door_opener.characteristic(:current_door_state),
           garage_door_opener.characteristic(:target_door_state),
@@ -115,7 +115,7 @@ RSpec.describe '/characteristics' do
       end
 
       it 'responds with a 204 No Content HTTP Status Code' do
-        fan = RubyHome::AccessoryFactory.create(:fan)
+        fan = RubyHome::ServiceFactory.create(:fan)
         characteristic = fan.characteristic(:on)
 
         put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
@@ -124,7 +124,7 @@ RSpec.describe '/characteristics' do
       end
 
       it 'responds with an empty body' do
-        fan = RubyHome::AccessoryFactory.create(:fan)
+        fan = RubyHome::ServiceFactory.create(:fan)
         characteristic = fan.characteristic(:on)
 
         put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
@@ -133,7 +133,7 @@ RSpec.describe '/characteristics' do
       end
 
       it 'triggers single characteristic listeners' do
-        fan = RubyHome::AccessoryFactory.create(:fan)
+        fan = RubyHome::ServiceFactory.create(:fan)
         characteristic = fan.characteristic(:on)
         listener = spy('listener')
         characteristic.subscribe(listener)
@@ -144,7 +144,7 @@ RSpec.describe '/characteristics' do
       end
 
       it 'triggers multiple characteristics listeners' do
-        garage_door_opener = RubyHome::AccessoryFactory.create(:garage_door_opener)
+        garage_door_opener = RubyHome::ServiceFactory.create(:garage_door_opener)
         obstruction_detected = garage_door_opener.characteristic(:obstruction_detected)
         target_door_state = garage_door_opener.characteristic(:target_door_state)
         obstruction_detected_listener = spy('listener')

@@ -4,7 +4,7 @@ RSpec.describe RubyHome::Characteristic do
   describe '#unsubscribe' do
     it 'removes listener from list of listeners' do
       listener = double('listener')
-      door = RubyHome::AccessoryFactory.create(:garage_door_opener)
+      door = RubyHome::ServiceFactory.create(:garage_door_opener)
       characteristic = door.characteristic(:target_door_state)
 
       characteristic.subscribe(listener)
@@ -17,7 +17,7 @@ RSpec.describe RubyHome::Characteristic do
     it 'removes listeners from list of listeners' do
       listener_1 = double('listener')
       listener_2 = double('listener')
-      door = RubyHome::AccessoryFactory.create(:garage_door_opener)
+      door = RubyHome::ServiceFactory.create(:garage_door_opener)
       characteristic = door.characteristic(:target_door_state)
 
       characteristic.subscribe(listener_1)
@@ -32,7 +32,7 @@ RSpec.describe RubyHome::Characteristic do
   describe '#after_update' do
     it 'subscribes to after_update events' do
       listener = spy('listener')
-      fan = RubyHome::AccessoryFactory.create(:fan)
+      fan = RubyHome::ServiceFactory.create(:fan)
       characteristic = fan.characteristic(:on)
 
       characteristic.subscribe listener
