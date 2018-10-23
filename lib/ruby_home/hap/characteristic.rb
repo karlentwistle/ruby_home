@@ -64,8 +64,19 @@ module RubyHome
     end
 
     def save
-      IdentifierCache.add_accessory(accessory)
-      IdentifierCache.add_characteristic(self)
+      IdentifierCache.instance.add_characteristic(self)
+    end
+
+    def ==(other)
+      self.class == other.class &&
+        self.uuid == other.uuid &&
+        self.name == other.name &&
+        self.description == other.description &&
+        self.format == other.format &&
+        self.unit == other.unit &&
+        self.properties == other.properties &&
+        self.service == other.service &&
+        self.value == other.value
     end
   end
 end

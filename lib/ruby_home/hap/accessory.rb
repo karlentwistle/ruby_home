@@ -22,5 +22,11 @@ module RubyHome
     def largest_instance_id
       instance_ids.max
     end
+
+    def ==(other)
+      self.class == other.class &&
+        self.id == other.id &&
+        self.services == other.services
+    end
   end
 end

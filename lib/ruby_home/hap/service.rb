@@ -20,8 +20,7 @@ module RubyHome
     end
 
     def save
-      IdentifierCache.add_accessory(accessory)
-      IdentifierCache.add_service(self)
+      IdentifierCache.instance.add_service(self)
     end
 
     def inspect
@@ -30,6 +29,16 @@ module RubyHome
         hidden: hidden,
         characteristics: characteristics
       }
+    end
+
+    def ==(other)
+      self.class == other.class &&
+        self.primary == other.primary &&
+        self.hidden == other.hidden &&
+        self.name == other.name &&
+        self.description == other.description &&
+        self.uuid == other.uuid &&
+        self.characteristics == other.characteristics
     end
   end
 end
