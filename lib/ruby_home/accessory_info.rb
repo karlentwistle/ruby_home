@@ -1,24 +1,65 @@
-require_relative 'device_id'
-require_relative 'yaml_record'
-
 module RubyHome
-  class AccessoryInfo < YamlRecord::Base
-    USERNAME = -'Pair-Setup'
+  class AccessoryInfo
+    def self.instance
+      persisted || create
+    end
 
-    properties :device_id, :paired_clients, :password, :signature_key
+    def self.persisted
+      new(self.read) if self.read
+    end
+
+    def self.create
+      new.save
+    end
+
+    def self.source(file=nil)
+      file ? @file = (file.to_s) : @file
+    end
+
+    def self.write(collection)
+      File.open(self.source, 'w') {|f| f.write(collection.to_yaml) }
+    end
+
+    def self.read
+      return false unless File.exists?(source)
+
+      YAML.load_file(self.source)
+    end
+
     source 'accessory_info.yml'
 
-    set_callback :before_create, :set_device_id
-    set_callback :before_create, :set_paired_clients
-    set_callback :before_create, :set_password
-    set_callback :before_create, :set_signature_key
+    USERNAME = -'Pair-Setup'
 
-    def self.instance
-      first || create
+    def initialize(device_id: nil, paired_clients: [], password: nil, signature_key: nil)
+      @device_id = device_id
+      @paired_clients = paired_clients
+      @password = password
+      @signature_key = signature_key
+    end
+
+    def save
+      self.class.write(persisted_attributes)
+      self
+    end
+
+    def username
+      USERNAME
+    end
+
+    def password
+      @password ||= Password.generate
+    end
+
+    def device_id
+      @device_id ||= DeviceID.generate
+    end
+
+    def paired_clients
+      @paired_clients ||= []
     end
 
     def add_paired_client(admin: false, identifier: , public_key: )
-      paired_clients << { admin: admin, identifier: identifier, public_key: public_key }
+      @paired_clients << { admin: admin, identifier: identifier, public_key: public_key }
       save
     end
 
@@ -35,26 +76,19 @@ module RubyHome
       @signing_key ||= RbNaCl::Signatures::Ed25519::SigningKey.new([signature_key].pack('H*'))
     end
 
-    def username
-      USERNAME
-    end
-
     private
 
-    def set_device_id
-      self.device_id ||= DeviceID.generate
-    end
+      def signature_key
+        @signature_key ||= RbNaCl::Signatures::Ed25519::SigningKey.generate.to_bytes.unpack1('H*')
+      end
 
-    def set_paired_clients
-      self.paired_clients = []
-    end
-
-    def set_password
-      self.password ||= Password.generate
-    end
-
-    def set_signature_key
-      self.signature_key ||= RbNaCl::Signatures::Ed25519::SigningKey.generate.to_bytes.unpack1('H*')
-    end
+      def persisted_attributes
+        {
+          device_id: device_id,
+          paired_clients: paired_clients,
+          password: password,
+          signature_key: signature_key
+        }
+      end
   end
 end

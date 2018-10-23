@@ -1,3 +1,5 @@
+require 'active_support'
+require 'active_support/core_ext/hash'
 require 'bindata'
 require 'dnssd'
 require 'hkdf'
@@ -6,10 +8,12 @@ require 'oj'
 require 'rack'
 require 'rbnacl/libsodium'
 require 'ruby_home-srp'
+require 'securerandom'
 require 'sinatra/base'
 require 'socket'
 require 'webrick'
 require 'wisper'
+require 'yaml'
 
 module RubyHome
   Dir[File.dirname(__FILE__) + '/ruby_home/**/*.rb'].each { |file| require file }
