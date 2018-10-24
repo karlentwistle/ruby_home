@@ -1,20 +1,33 @@
 module RubyHome
-  class IdentifierCache < YamlRecord::Base
-    properties :accessories
-    source 'identifier_cache.yml'
+  class IdentifierCache
+    include Persistable
 
-    set_callback :before_create, :set_accessories
-
-    def self.instance
-      first || create
+    def self.source(file=nil)
+      file ? @@file = (file.to_s) : @@file
     end
 
+    source 'identifier_cache.yml'
+
+    def self.instance
+      @@_instance ||= persisted || create
+    end
+
+    def self.reload
+      @@_instance = nil
+    end
+
+    def initialize(accessories: [])
+      @accessories = accessories
+    end
+
+    attr_reader :accessories
+
     def services
-      accessories.flat_map(&:services)
+      @services ||= accessories.flat_map(&:services)
     end
 
     def characteristics
-      services.flat_map(&:characteristics)
+      @characteristics ||= services.flat_map(&:characteristics)
     end
 
     def find_characteristic(attributes)
@@ -74,8 +87,8 @@ module RubyHome
         accessories.size + 1
       end
 
-      def set_accessories
-        self.accessories = []
+      def persisted_attributes
+        { accessories: accessories }
       end
   end
 end

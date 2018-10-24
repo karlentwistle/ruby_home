@@ -5,20 +5,12 @@ module RubyHome
     end
 
     module ClassMethods
-      def instance
-        persisted || create
-      end
-
       def persisted
         new(read) if read
       end
 
-      def create
-        new.save
-      end
-
-      def source(file=nil)
-        file ? @file = (file.to_s) : @file
+      def create(**options)
+        new(**options).tap(&:save)
       end
 
       def write(collection)
@@ -30,6 +22,10 @@ module RubyHome
 
         YAML.load_file(source)
       end
+    end
+
+    def reload
+      self.class.reload
     end
 
     def save

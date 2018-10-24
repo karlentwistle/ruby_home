@@ -50,7 +50,7 @@ module RubyHome
         end
 
         def find_characteristic(aid:, iid:)
-          characteristic = IdentifierCache.find_characteristic(accessory_id: aid.to_i, instance_id: iid.to_i)
+          characteristic = identifier_cache.find_characteristic(accessory_id: aid.to_i, instance_id: iid.to_i)
           yield characteristic if block_given?
           characteristic
         end

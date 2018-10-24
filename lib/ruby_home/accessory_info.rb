@@ -2,7 +2,19 @@ module RubyHome
   class AccessoryInfo
     include Persistable
 
+    def self.source(file=nil)
+      file ? @@file = (file.to_s) : @@file
+    end
+
     source 'accessory_info.yml'
+
+    def self.instance
+      @@_instance ||= persisted || create
+    end
+
+    def self.reload
+      @@_instance = nil
+    end
 
     USERNAME = -'Pair-Setup'
 
