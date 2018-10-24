@@ -1,30 +1,6 @@
 module RubyHome
   class AccessoryInfo
-    def self.instance
-      persisted || create
-    end
-
-    def self.persisted
-      new(self.read) if self.read
-    end
-
-    def self.create
-      new.save
-    end
-
-    def self.source(file=nil)
-      file ? @file = (file.to_s) : @file
-    end
-
-    def self.write(collection)
-      File.open(self.source, 'w') {|f| f.write(collection.to_yaml) }
-    end
-
-    def self.read
-      return false unless File.exists?(source)
-
-      YAML.load_file(self.source)
-    end
+    include Persistable
 
     source 'accessory_info.yml'
 
@@ -35,11 +11,6 @@ module RubyHome
       @paired_clients = paired_clients
       @password = password
       @signature_key = signature_key
-    end
-
-    def save
-      self.class.write(persisted_attributes)
-      self
     end
 
     def username
