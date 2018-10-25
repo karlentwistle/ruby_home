@@ -1,6 +1,7 @@
 module RubyHome
   module Persistable
     def self.included(base)
+      base.send(:cattr_accessor, :source)
       base.extend(ClassMethods)
     end
 

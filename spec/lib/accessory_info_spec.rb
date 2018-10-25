@@ -25,7 +25,7 @@ RSpec.describe RubyHome::AccessoryInfo do
     it 'returns a device_id' do
       device_id = double
       expect(RubyHome::DeviceID).to receive(:generate).and_return(device_id)
-      RubyHome::AccessoryInfo.source Tempfile.new.path
+      RubyHome::AccessoryInfo.source = Tempfile.new.path
       expect(instance.device_id).to eql(device_id)
     end
   end

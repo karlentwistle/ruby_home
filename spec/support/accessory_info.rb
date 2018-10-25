@@ -1,7 +1,7 @@
 RSpec.configure do |config|
   config.before(:each) do
     RubyHome::AccessoryInfo.reload
-    RubyHome::AccessoryInfo.source Tempfile.new.path
+    RubyHome::AccessoryInfo.source = Tempfile.new.path
     RubyHome::AccessoryInfo.create(
       device_id: 'CB:45:B7:61:74:8C',
       paired_clients: [],

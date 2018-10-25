@@ -2,11 +2,7 @@ module RubyHome
   class IdentifierCache
     include Persistable
 
-    def self.source(file=nil)
-      file ? @@file = (file.to_s) : @@file
-    end
-
-    source 'identifier_cache.yml'
+    self.source = 'identifier_cache.yml'
 
     def self.instance
       @@_instance ||= persisted || create
