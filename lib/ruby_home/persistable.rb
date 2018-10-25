@@ -30,8 +30,6 @@ module RubyHome
 
     def save
       self.class.write(persisted_attributes)
-
-      return self
     end
   end
 end
