@@ -1,3 +1,5 @@
+require_relative 'persistable'
+
 module RubyHome
   class IdentifierCache
     include Persistable
