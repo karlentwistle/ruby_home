@@ -47,18 +47,19 @@ module RubyHome
       end
 
       def create_optional_characteristics
-        options.each do |name, value|
-          foo = template.optional_characteristics.find do |characteristic_template|
-            characteristic_template.name == name
-          end
+        optional_characteristic_templates.each do |characteristic_template|
+          characteristic_name = characteristic_template.name
+          CharacteristicFactory.create(
+            characteristic_name,
+            service: new_service,
+            value: options[characteristic_name]
+          )
+        end
+      end
 
-          if foo
-            CharacteristicFactory.create(
-              foo.name,
-              service: new_service,
-              value: value
-            )
-          end
+      def optional_characteristic_templates
+        template.optional_characteristics.select do |characteristic_template|
+          options.keys.include?(characteristic_template.name)
         end
       end
 
