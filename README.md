@@ -42,6 +42,41 @@ end
 RubyHome.run
 ```
 
+RubyHome provides sane defaults for all services however you can customize any of the options.
+
+```ruby
+require 'ruby_home'
+
+accessory_information = RubyHome::ServiceFactory.create(:accessory_information,
+  firmware_revision: '4.3.18421',
+  manufacturer: 'Fake Company',
+  model: 'BSB001',
+  name: 'Kickass fan bridge',
+  serial_number: 'AB1-UK-A123456'
+)
+
+fan = RubyHome::ServiceFactory.create(:fan,
+  on: false,
+  rotation_speed: 50,
+  rotation_direction: 1,
+  firmware_revision: '105.0.21169',
+  manufacturer: 'Fake Company',
+  model: 'LWB006',
+  name: 'Kickass fan',
+  serial_number: '123-UK-A12345'
+)
+
+fan.characteristic(:on).after_update do |characteristic|
+  if characteristic.value == 1
+    puts "Fan switched on"
+  else
+    puts "Fan switched off"
+  end
+end
+
+RubyHome.run
+```
+
 Create a garage door opener.
 
 ```ruby
