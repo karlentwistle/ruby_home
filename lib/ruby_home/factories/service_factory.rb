@@ -21,7 +21,6 @@ module RubyHome
     private
       ACCESSORY_INFORMATION_OPTIONS = [
         :firmware_revision,
-        :identify,
         :manufacturer,
         :model,
         :name,

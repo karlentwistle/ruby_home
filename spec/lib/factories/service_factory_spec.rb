@@ -62,7 +62,6 @@ RSpec.describe RubyHome::ServiceFactory do
       service = RubyHome::ServiceFactory.create(
         :fan,
         firmware_revision: 'custom_firmware_revision',
-        identify: 'custom_identify',
         manufacturer: 'custom_manufacturer',
         model: 'custom_model',
         name: 'custom_name',
@@ -73,10 +72,6 @@ RSpec.describe RubyHome::ServiceFactory do
         an_object_having_attributes(
           name: :firmware_revision,
           value: 'custom_firmware_revision'
-        ),
-        an_object_having_attributes(
-          name: :identify,
-          value: 'custom_identify'
         ),
         an_object_having_attributes(
           name: :manufacturer,
