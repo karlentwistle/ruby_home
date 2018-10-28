@@ -21,7 +21,7 @@ Or install it yourself as:
 
     $ gem install ruby_home
 
-## Usage
+## Basic Usage
 
 Create a fan with an on/off switch.
 
@@ -42,7 +42,30 @@ end
 RubyHome.run
 ```
 
-RubyHome provides sane defaults for all services however you can customize any of the options.
+Create a garage door opener.
+
+```ruby
+require 'ruby_home'
+
+accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
+door = RubyHome::ServiceFactory.create(:garage_door_opener)
+
+door.characteristic(:target_door_state).after_update do |characteristic|
+  if characteristic.value == 0 # open
+    sleep 1
+    door.characteristic(:current_door_state).value = 0
+  elsif characteristic.value == 1 #closed
+    sleep 1
+    door.characteristic(:current_door_state).value = 1
+  end
+end
+
+RubyHome.run
+```
+
+## Customization
+
+RubyHome ties to provide sane defaults for all services. Customization of any of the options is possible.
 
 ```ruby
 require 'ruby_home'
@@ -77,26 +100,6 @@ end
 RubyHome.run
 ```
 
-Create a garage door opener.
-
-```ruby
-require 'ruby_home'
-
-accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
-door = RubyHome::ServiceFactory.create(:garage_door_opener)
-
-door.characteristic(:target_door_state).after_update do |characteristic|
-  if characteristic.value == 0 # open
-    sleep 1
-    door.characteristic(:current_door_state).value = 0
-  elsif characteristic.value == 1 #closed
-    sleep 1
-    door.characteristic(:current_door_state).value = 1
-  end
-end
-
-RubyHome.run
-```
 
 ## Development
 
