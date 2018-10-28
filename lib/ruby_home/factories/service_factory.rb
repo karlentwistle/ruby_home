@@ -19,6 +19,14 @@ module RubyHome
     end
 
     private
+      ACCESSORY_INFORMATION_OPTIONS = [
+        :firmware_revision,
+        :identify,
+        :manufacturer,
+        :model,
+        :name,
+        :serial_number
+      ].freeze
 
       def initialize(service_name:, accessory:, **options)
         @service_name = service_name.to_sym
@@ -39,9 +47,11 @@ module RubyHome
 
       def create_required_characteristics
         template.required_characteristics.each do |characteristic_template|
+          characteristic_name = characteristic_template.name
           CharacteristicFactory.create(
             characteristic_template.name,
-            service: new_service
+            service: new_service,
+            value: options[characteristic_name]
           )
         end
       end
@@ -65,7 +75,11 @@ module RubyHome
 
       def create_accessory_information
         unless service_name == :accessory_information
-          ServiceFactory.create(:accessory_information, accessory: accessory)
+          ServiceFactory.create(
+            :accessory_information,
+            accessory: accessory,
+            **options.slice(*ACCESSORY_INFORMATION_OPTIONS)
+          )
         end
       end
 

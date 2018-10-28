@@ -33,16 +33,94 @@ RSpec.describe RubyHome::ServiceFactory do
       expect(service.uuid).to eql('0000008D-0000-1000-8000-0026BB765291')
     end
 
-    it 'assigns required characteristics to the service' do
-      service = RubyHome::ServiceFactory.create(:thermostat)
+    it 'assigns required characteristics' do
+      service = RubyHome::ServiceFactory.create(:fan)
 
-      expect(service.characteristics.count).to eql(5)
+      expect(service.characteristics).to include(
+        an_object_having_attributes(name: :on)
+      )
     end
 
-    it 'assigns optional characteristics to the service' do
-      service = RubyHome::ServiceFactory.create(:fan, name: 'Fan')
+    it 'assigns accessory information to a service\'s accessory' do
+      service = RubyHome::ServiceFactory.create(:fan)
 
-      expect(service.characteristics.count).to eql(2)
+      expect(service.accessory.services).to include(
+        an_object_having_attributes(name: :fan),
+        an_object_having_attributes(name: :accessory_information),
+      )
+    end
+
+    it 'skips assigning accessory information to a accessory_information service' do
+      service = RubyHome::ServiceFactory.create(:accessory_information)
+
+      expect(service.accessory.services).to include(
+        an_object_having_attributes(name: :accessory_information),
+      )
+    end
+
+    it 'allows accessory information to be overridden' do
+      service = RubyHome::ServiceFactory.create(
+        :fan,
+        firmware_revision: 'custom_firmware_revision',
+        identify: 'custom_identify',
+        manufacturer: 'custom_manufacturer',
+        model: 'custom_model',
+        name: 'custom_name',
+        serial_number: 'custom_serial_number'
+      )
+
+      expect(service.accessory.characteristics).to include(
+        an_object_having_attributes(
+          name: :firmware_revision,
+          value: 'custom_firmware_revision'
+        ),
+        an_object_having_attributes(
+          name: :identify,
+          value: 'custom_identify'
+        ),
+        an_object_having_attributes(
+          name: :manufacturer,
+          value: 'custom_manufacturer'
+        ),
+        an_object_having_attributes(
+          name: :model,
+          value: 'custom_model'
+        ),
+        an_object_having_attributes(
+          name: :name,
+          value: 'custom_name'
+        ),
+        an_object_having_attributes(
+          name: :serial_number,
+          value: 'custom_serial_number'
+        )
+      )
+    end
+
+    it 'assigns required characteristics values if they\'re specified' do
+      service = RubyHome::ServiceFactory.create(
+        :thermostat,
+        current_temperature: 18,
+        target_temperature: 20
+      )
+
+      expect(service.characteristics).to include(
+        an_object_having_attributes(name: :current_temperature, value: 18),
+        an_object_having_attributes(name: :target_temperature, value: 20),
+      )
+    end
+
+    it 'assigns optional characteristics if they\'re specified' do
+      service = RubyHome::ServiceFactory.create(
+        :fan,
+        name: 'Fan',
+        rotation_speed: 1
+      )
+
+      expect(service.characteristics).to include(
+        an_object_having_attributes(name: :rotation_speed, value: 1),
+        an_object_having_attributes(name: :name, value: 'Fan')
+      )
     end
   end
 end
