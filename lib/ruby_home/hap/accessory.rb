@@ -1,11 +1,22 @@
 module RubyHome
   class Accessory
-    def initialize
-      @services = []
+    @@all = AccessoryCollection.new
+
+    def self.all
+      @@all
     end
 
-    attr_accessor :id
-    attr_reader :services
+    def self.reset
+      @@all = AccessoryCollection.new
+    end
+
+    def initialize
+      @services = []
+      @id = next_available_accessory_id
+      @@all << self
+    end
+
+    attr_reader :services, :id
 
     def characteristics
       services.flat_map(&:characteristics)
@@ -15,18 +26,22 @@ module RubyHome
       (largest_instance_id || 0) + 1
     end
 
+    private
+
     def instance_ids
-      services.map(&:instance_id) + characteristics.map(&:instance_id)
+      instances.map(&:instance_id)
+    end
+
+    def instances
+      services + characteristics
     end
 
     def largest_instance_id
       instance_ids.max
     end
 
-    def ==(other)
-      self.class == other.class &&
-        self.id == other.id &&
-        self.services == other.services
+    def next_available_accessory_id
+      self.class.all.count + 1
     end
   end
 end

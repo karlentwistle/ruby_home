@@ -15,7 +15,7 @@ module RubyHome
       end
     end
 
-    def initialize(name:, description:, uuid:, format:, unit:, permissions:, properties:, constraints:)
+    def initialize(name:, description:, uuid:, format:, unit:, permissions:, properties:, constraints: )
       @name = name
       @description = description
       @uuid = uuid
@@ -26,7 +26,11 @@ module RubyHome
       @constraints = constraints
     end
 
-    attr_reader :name, :description, :uuid, :format, :unit, :permissions, :properties, :constraints
+    attr_reader :name, :description, :uuid, :format, :unit, :permissions, :properties
+
+    def constraints
+      @constraints || {}
+    end
 
     def to_hash
       {

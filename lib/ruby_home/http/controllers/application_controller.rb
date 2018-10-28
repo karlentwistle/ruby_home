@@ -28,7 +28,7 @@ module RubyHome
       end
 
       def identifier_cache
-        IdentifierCache.instance
+        Accessory.all
       end
 
       def socket

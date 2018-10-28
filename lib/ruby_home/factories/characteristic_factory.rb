@@ -4,37 +4,45 @@ module RubyHome
       identify: nil,
     }.freeze
 
-    def self.create(characteristic_name, options={}, &block)
-      new(characteristic_name, options).create(&block)
-    end
-
-    def initialize(characteristic_name, options)
-      @characteristic_name = characteristic_name
-      @options = options
+    def self.create(characteristic_name, service: , value: nil)
+      new(
+        characteristic_name: characteristic_name,
+        service: service,
+        value: value
+      ).create
     end
 
     def create
-      yield characteristic if block_given?
+      service.characteristics << new_characteristic
 
-      characteristic.save
-      characteristic
+      new_characteristic
     end
 
     private
 
-      attr_reader :characteristic_name, :options
+      def initialize(characteristic_name:, service:, value:)
+        @characteristic_name = characteristic_name.to_sym
+        @service = service
+        @value = value || default_value
+      end
+
+      attr_reader :service, :characteristic_name, :value
+
+      def new_characteristic
+        @new_characteristic ||= Characteristic.new(
+          description: template.description,
+          format: template.format,
+          name: characteristic_name,
+          properties: template.properties,
+          service: service,
+          unit: template.unit,
+          uuid: template.uuid,
+          value: value
+        )
+      end
 
       def template
-        @template ||= CharacteristicTemplate.find_by(name: characteristic_name.to_sym)
-      end
-
-      def characteristic
-        @characteristic ||= Characteristic.new(characteristic_params)
-      end
-
-      def characteristic_params
-        options[:value] ||= default_value
-        options.merge(template.to_hash)
+        @template ||= CharacteristicTemplate.find_by(name: characteristic_name)
       end
 
       def default_value

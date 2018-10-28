@@ -39,12 +39,13 @@ RSpec.describe 'GET /accessories' do
     it 'responds with accessories' do
       path = File.expand_path('../../../fixtures/accessories_json/fan.json', __FILE__)
       data = File.read(path)
+
       expect(JSON.parse(last_response.body)).to eql(JSON.parse(data))
     end
   end
 
   def create_accessory
     RubyHome::ServiceFactory.create(:accessory_information)
-    RubyHome::ServiceFactory.create(:fan, characteristics: {name: 'Fan'})
+    RubyHome::ServiceFactory.create(:fan, name: 'Fan')
   end
 end

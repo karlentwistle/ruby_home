@@ -1,73 +1,75 @@
 module RubyHome
   class ServiceFactory
-    def self.create(service_name, characteristics: {}, **options)
-      new(service_name, options, characteristics).create
-    end
-
-    def initialize(service_name, accessory_options, characteristic_options)
-      @service_name = service_name
-      @accessory_options = accessory_options
-      @characteristic_options = characteristic_options
+    def self.create(service_name, accessory: Accessory.new, **options)
+      new(
+        service_name: service_name,
+        accessory: accessory,
+        **options
+      ).create
     end
 
     def create
-      yield service if block_given?
+      accessory.services << new_service
 
       create_accessory_information
-      service.save
       create_required_characteristics
       create_optional_characteristics
 
-      service
+      new_service
     end
 
     private
 
-      attr_reader :service_name, :accessory_options, :characteristic_options
-
-      def template
-        @template ||= ServiceTemplate.find_by(name: service_name.to_sym)
+      def initialize(service_name:, accessory:, **options)
+        @service_name = service_name.to_sym
+        @accessory = accessory
+        @options = options
       end
 
-      def create_accessory_information
-        unless service_name == :accessory_information
-          ServiceFactory.create(:accessory_information, accessory_information_params)
-        end
-      end
+      attr_reader :service_name, :accessory, :options
 
-      def accessory_information_params
-        accessory_options.merge(accessory: service.accessory)
+      def new_service
+        @new_service ||= Service.new(
+          accessory: accessory,
+          description: template.description,
+          name: service_name,
+          uuid: template.uuid
+        )
       end
 
       def create_required_characteristics
-        template.required_characteristics.map do |characteristic_template|
-          CharacteristicFactory.create(characteristic_template.name, service: service) do |characteristic|
-            value = characteristic_options[characteristic.name]
-            next unless value
-
-            characteristic.value = value
-          end
+        template.required_characteristics.each do |characteristic_template|
+          CharacteristicFactory.create(
+            characteristic_template.name,
+            service: new_service
+          )
         end
       end
 
       def create_optional_characteristics
-        template.optional_characteristics.map do |characteristic_template|
-          value = characteristic_options[characteristic_template.name]
-          next unless value
+        options.each do |name, value|
+          foo = template.optional_characteristics.find do |characteristic_template|
+            characteristic_template.name == name
+          end
 
-          CharacteristicFactory.create(characteristic_template.name, service: service) do |characteristic|
-            characteristic.value = value
+          if foo
+            CharacteristicFactory.create(
+              foo.name,
+              service: new_service,
+              value: value
+            )
           end
         end
       end
 
-      def service
-        @service ||= Service.new(service_params)
+      def create_accessory_information
+        unless service_name == :accessory_information
+          ServiceFactory.create(:accessory_information, accessory: accessory)
+        end
       end
 
-      def service_params
-        accessory_options[:accessory] ||= Accessory.new
-        accessory_options.merge(template.to_hash)
+      def template
+        @template ||= ServiceTemplate.find_by(name: service_name)
       end
   end
 end

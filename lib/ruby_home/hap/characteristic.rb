@@ -30,10 +30,20 @@ module RubyHome
       @properties = properties
       @service = service
       @value = value
+      @instance_id = accessory.next_available_instance_id
     end
 
-    attr_reader :service, :value, :uuid, :name, :description, :format, :unit, :properties
-    attr_accessor :instance_id
+    attr_reader(
+      :service,
+      :value,
+      :uuid,
+      :name,
+      :description,
+      :format,
+      :unit,
+      :properties,
+      :instance_id
+    )
 
     def accessory
       service.accessory
@@ -51,32 +61,6 @@ module RubyHome
       return if name == :identify
       @value = new_value
       broadcast(:after_update, self)
-    end
-
-    def inspect
-      {
-        name: name,
-        value: value,
-        accessory_id: accessory_id,
-        service_iid: service_iid,
-        instance_id: instance_id
-      }
-    end
-
-    def save
-      IdentifierCache.instance.add_characteristic(self)
-    end
-
-    def ==(other)
-      self.class == other.class &&
-        self.uuid == other.uuid &&
-        self.name == other.name &&
-        self.description == other.description &&
-        self.format == other.format &&
-        self.unit == other.unit &&
-        self.properties == other.properties &&
-        self.service == other.service &&
-        self.value == other.value
     end
   end
 end

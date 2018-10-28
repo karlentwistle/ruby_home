@@ -9,7 +9,7 @@ module RubyHome
     private
 
       def minimum_value
-        template.constraints.fetch('MinimumValue')
+        template.constraints.fetch('MinimumValue', 0)
       end
   end
 end
