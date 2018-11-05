@@ -65,7 +65,7 @@ RubyHome.run
 
 ## Customization
 
-RubyHome ties to provide sane defaults for all services. Customization of any of the options is possible.
+RubyHome tries to provide sane defaults for all services. Customization of any of the options is possible.
 
 ```ruby
 require 'ruby_home'
