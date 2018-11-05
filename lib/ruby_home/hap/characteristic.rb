@@ -1,4 +1,6 @@
 module RubyHome
+  class DuplicateCharacteristicError < StandardError; end
+
   class Characteristic
     include Wisper::Publisher
 
@@ -30,7 +32,6 @@ module RubyHome
       @properties = properties
       @service = service
       @value = value
-      @instance_id = accessory.next_available_instance_id
     end
 
     attr_reader(
@@ -45,13 +46,14 @@ module RubyHome
       :instance_id
     )
 
-    def accessory
-      service.accessory
+    def instance_id=(new_id)
+      raise DuplicateCharacteristicError if accessory.contains_instance_id?(new_id)
+
+      @instance_id = new_id
     end
 
-    def accessory_id
-      accessory.id
-    end
+    delegate :accessory, to: :service
+    delegate :id, to: :accessory, prefix: true
 
     def service_iid
       service.instance_id

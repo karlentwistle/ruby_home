@@ -117,5 +117,76 @@ RSpec.describe RubyHome::ServiceFactory do
         an_object_having_attributes(name: :name, value: 'Fan')
       )
     end
+
+    it 'persists the service within identifier cache' do
+      service = RubyHome::ServiceFactory.create(:fan)
+
+      expect(RubyHome::IdentifierCache.all).to include(
+        an_object_having_attributes(
+          accessory_id: 1,
+          instance_id: 1,
+          uuid: '00000040-0000-1000-8000-0026BB765291',
+          subtype: 'default'
+        )
+      )
+    end
+
+    it 'doesnt allow two services within the same accessory with the same subtype' do
+      fan_1 = RubyHome::ServiceFactory.create(:fan)
+
+      expect {
+        RubyHome::ServiceFactory.create(:fan, accessory: fan_1.accessory)
+      }.to raise_error(RubyHome::DuplicateServiceError)
+    end
+
+    it 'allows two services within the same accessory with different subtypes' do
+      garage_door_opener = RubyHome::Accessory.new
+      security_light = RubyHome::ServiceFactory.create(:lightbulb, subtype: "security_light", accessory: garage_door_opener)
+      backlight = RubyHome::ServiceFactory.create(:lightbulb, subtype: "backlight", accessory: garage_door_opener)
+
+      expect(RubyHome::IdentifierCache.all).to include(
+        an_object_having_attributes(
+          accessory_id: 1,
+          instance_id: 1,
+          uuid: '00000043-0000-1000-8000-0026BB765291',
+          subtype: 'security_light'
+        )
+      )
+
+      expect(RubyHome::IdentifierCache.all).to include(
+        an_object_having_attributes(
+          accessory_id: 1,
+          instance_id: 10,
+          uuid: '00000043-0000-1000-8000-0026BB765291',
+          subtype: 'backlight'
+        )
+      )
+    end
+
+    it "assigns the same instance_id to services within an accessory" do
+      RubyHome::IdentifierCache.create(
+        accessory_id: 1,
+        instance_id: 10,
+        uuid: '00000040-0000-1000-8000-0026BB765291',
+        subtype: 'default'
+      )
+
+      service = RubyHome::ServiceFactory.create(:fan)
+
+      expect(service.instance_id).to eql(10)
+    end
+
+    it "doesnt persist existing identifiers again" do
+      RubyHome::IdentifierCache.create(
+        accessory_id: 1,
+        instance_id: 10,
+        uuid: '00000040-0000-1000-8000-0026BB765291',
+        subtype: 'default'
+      )
+
+      RubyHome::ServiceFactory.create(:fan)
+
+      expect(RubyHome::IdentifierCache.all.count).to eql(9)
+    end
   end
 end

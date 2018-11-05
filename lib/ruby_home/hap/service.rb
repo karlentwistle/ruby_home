@@ -1,4 +1,6 @@
 module RubyHome
+  class DuplicateServiceError < StandardError; end
+
   class Service
     def initialize(accessory: , primary: false, hidden: false, name:, description:, uuid:)
       @accessory = accessory
@@ -8,7 +10,6 @@ module RubyHome
       @description = description
       @uuid = uuid
       @characteristics = []
-      @instance_id = accessory.next_available_instance_id
     end
 
     attr_reader(
@@ -21,6 +22,14 @@ module RubyHome
       :uuid,
       :instance_id
     )
+
+    def instance_id=(new_id)
+      raise DuplicateServiceError if accessory.contains_instance_id?(new_id)
+
+      @instance_id = new_id
+    end
+
+    delegate :id, to: :accessory, prefix: true
 
     def characteristic(characteristic_name)
       characteristics.find do |characteristic|

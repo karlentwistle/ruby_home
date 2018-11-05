@@ -28,6 +28,16 @@ module RubyHome
       (largest_instance_id || 0) + 1
     end
 
+    def has_accessory_information?
+      services.any? do |service|
+        service.name == :accessory_information
+      end
+    end
+
+    def contains_instance_id?(instance_id)
+      instance_ids.include?(instance_id)
+    end
+
     private
 
     def instance_ids
@@ -39,7 +49,7 @@ module RubyHome
     end
 
     def largest_instance_id
-      instance_ids.max
+      IdentifierCache.where(accessory_id: id).map(&:instance_id).max
     end
 
     def next_available_accessory_id
