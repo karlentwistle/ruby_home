@@ -10,10 +10,10 @@ module RubyHome
 
       def send_response(socket)
         if encryption_time?
-          response = String.new
+          response = StringIO.new
           super(response)
 
-          encrypted_response = encrypter.encrypt(response).join
+          encrypted_response = encrypter.encrypt(response.string).join
           cache[:accessory_to_controller_count] = encrypter.count
 
           _write_data(socket, encrypted_response)
