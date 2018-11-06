@@ -13,12 +13,11 @@ RSpec.describe RubyHome::HAP::HAPResponse do
   describe '#send_response' do
     context 'encryption_time' do
       it 'returns an encrypted response' do
-        io.write('HTTP/1.1 204 No Content')
-        io.rewind
-
         hap_response.received_encrypted_request = true
         hap_response['date'] = Time.new(2018).httpdate
 
+        io.write('HTTP/1.1 204 No Content')
+        io.rewind
         hap_response.send_response(io)
         io.rewind
 
@@ -31,6 +30,27 @@ RSpec.describe RubyHome::HAP::HAPResponse do
           91EC6B4E FFCE0C
         }.join.downcase
         expect(actual_response).to eql(expected_response)
+      end
+    end
+
+    context 'not encryption_time' do
+      it 'returns an unencrypted response' do
+        hap_response['date'] = Time.new(2018).httpdate
+
+        io.write('HTTP/1.1 204 No Content')
+        io.rewind
+        hap_response.send_response(io)
+        io.rewind
+
+        expected_response = <<~RESPONSE
+          HTTP/1.1 200 OK \x0d
+          Date: Mon, 01 Jan 2018 00:00:00 GMT\x0d
+          Server: WEBrick\x0d
+          Content-Length: 0\x0d
+          Connection: Keep-Alive\x0d
+          \x0d
+        RESPONSE
+        expect(io.read).to eql(expected_response)
       end
     end
   end
