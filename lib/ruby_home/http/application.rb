@@ -17,10 +17,10 @@ module RubyHome
 
             map('/accessories') { run AccessoriesController }
             map('/characteristics') { run CharacteristicsController }
+            map('/identify') { run IdentifyController }
             map('/pair-setup') { run PairSetupsController }
             map('/pair-verify') { run PairVerifiesController }
             map('/pairings') { run PairingsController }
-            map('/identify') { run IdentifyController }
           end
         end
       end
