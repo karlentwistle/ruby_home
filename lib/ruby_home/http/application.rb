@@ -20,6 +20,7 @@ module RubyHome
             map('/pair-setup') { run PairSetupsController }
             map('/pair-verify') { run PairVerifiesController }
             map('/pairings') { run PairingsController }
+            map('/identify') { run IdentifyController }
           end
         end
       end
