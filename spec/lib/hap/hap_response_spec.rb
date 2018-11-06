@@ -16,8 +16,6 @@ RSpec.describe RubyHome::HAP::HAPResponse do
         hap_response.received_encrypted_request = true
         hap_response['date'] = Time.new(2018).httpdate
 
-        io.write('HTTP/1.1 204 No Content')
-        io.rewind
         hap_response.send_response(io)
         io.rewind
 
@@ -37,8 +35,6 @@ RSpec.describe RubyHome::HAP::HAPResponse do
       it 'returns an unencrypted response' do
         hap_response['date'] = Time.new(2018).httpdate
 
-        io.write('HTTP/1.1 204 No Content')
-        io.rewind
         hap_response.send_response(io)
         io.rewind
 
