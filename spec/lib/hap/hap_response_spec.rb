@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe RubyHome::HAP::HAPResponse do
   let(:key) { ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*') }
   let(:io) { StringIO.new }
-  let(:config) { WEBrick::Config::HTTP.dup.update(:ServerSoftware => "WEBrick") }
+  let(:config) { WEBrick::Config::HTTP.dup.update(ServerSoftware: 'WEBrick') }
   subject(:hap_response) { RubyHome::HAP::HAPResponse.new(config, io) }
 
   before do
@@ -13,16 +13,16 @@ RSpec.describe RubyHome::HAP::HAPResponse do
   describe '#send_response' do
     context 'encryption_time' do
       it 'returns an encrypted response' do
-        io.write("HTTP/1.1 204 No Content")
+        io.write('HTTP/1.1 204 No Content')
         io.rewind
 
         hap_response.received_encrypted_request = true
-        hap_response["date"] = Time.new(2018).httpdate
+        hap_response['date'] = Time.new(2018).httpdate
 
         hap_response.send_response(io)
         io.rewind
 
-        actual_response = io.read.unpack1("H*")
+        actual_response = io.read.unpack1('H*')
         expected_response = %w{
           7500582B D036C460 C52BB498 B08E68D4 4673C44D A7555806 1CEEC113 FA20192E
           E76772F9 5C50692E C56F08F0 CC0AEF41 1DB57370 CB5F0A87 562D708E 2D65683A
