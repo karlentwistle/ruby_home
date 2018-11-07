@@ -1,14 +1,16 @@
 require_relative 'object_serializer'
+require_relative 'uuid_helper'
 
 module RubyHome
   module HTTP
     class CharacteristicSerializer
       include ObjectSerializer
+      include UUIDHelper
 
       def record_hash(characteristic)
         {
           'iid' => characteristic.instance_id,
-          'type' => characteristic.uuid,
+          'type' => uuid_short_form(characteristic.uuid),
           'perms' => perms(characteristic),
           'format' => characteristic.format,
           'description' => characteristic.description,
