@@ -7,6 +7,24 @@ ruby_home is an implementation of the HomeKit Accessory Protocol (HAP) to create
 
 ## Installation
 
+### libsodium
+
+To use ruby_home, you will need to install libsodium:
+
+https://github.com/jedisct1/libsodium
+
+At least version `1.0.0` is required.
+
+For OS X users, libsodium is available via homebrew and can be installed with:
+
+    brew install libsodium
+
+For Debian users, libsodium is available both via apt:
+
+    sudo apt-get install libsodium-dev
+
+### ruby_home
+
 Add this line to your application's Gemfile:
 
 ```ruby
