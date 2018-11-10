@@ -9,9 +9,7 @@ ruby_home is an implementation of the HomeKit Accessory Protocol (HAP) to create
 
 ### libsodium
 
-To use ruby_home, you will need to install libsodium:
-
-https://github.com/jedisct1/libsodium
+To use ruby_home, you will need to install [libsodium](https://github.com/jedisct1/libsodium):
 
 At least version `1.0.9` is required.
 
