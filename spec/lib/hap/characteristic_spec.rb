@@ -29,13 +29,13 @@ RSpec.describe RubyHome::Characteristic do
     end
   end
 
-  describe '#after_update' do
-    it 'subscribes to after_update events' do
+  describe '#value=' do
+    it 'broadcasts after_update event to subscribers' do
       listener = spy('listener')
       fan = RubyHome::ServiceFactory.create(:fan)
       characteristic = fan.characteristic(:on)
-
       characteristic.subscribe listener
+
       characteristic.value = true
 
       expect(listener).to have_received(:after_update).with(characteristic)

@@ -6,7 +6,7 @@ module RubyHome
         @characteristic = characteristic
       end
 
-      def updated(_)
+      def after_update(_)
         if socket_still_active?
           send_ev_response
         else
