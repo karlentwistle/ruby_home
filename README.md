@@ -13,7 +13,7 @@ To use ruby_home, you will need to install libsodium:
 
 https://github.com/jedisct1/libsodium
 
-At least version `1.0.0` is required.
+At least version `1.0.9` is required.
 
 For OS X users, libsodium is available via homebrew and can be installed with:
 
