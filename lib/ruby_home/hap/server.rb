@@ -64,6 +64,9 @@ module RubyHome
 
         return close(socket) unless request.keep_alive?
         return close(socket) unless response.keep_alive?
+      rescue Errno::ECONNRESET, Errno::ECONNABORTED,
+             Errno::EPROTO, Errno::EINVAL
+        close(socket)
       rescue EOFError
         close(socket)
       end
