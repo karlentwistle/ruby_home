@@ -34,7 +34,7 @@ module RubyHome
     end
 
     def threads
-      @@_threads ||= []
+      @_threads ||= []
     end
 
     def shutdown
@@ -42,15 +42,15 @@ module RubyHome
     end
 
     def dns_service
-      @@_dns_service ||= DNS::Service.new(hap_server.port)
+      @_dns_service ||= DNS::Service.new(hap_server.port)
     end
 
     def hap_server
-      @@_hap_server ||= HAP::Server.new('0.0.0.0', 4567, socket_store)
+      @_hap_server ||= HAP::Server.new('0.0.0.0', 4567, socket_store)
     end
 
     def socket_store
-      @@_socket_store ||= {}
+      @_socket_store ||= {}
     end
 
     def greet
