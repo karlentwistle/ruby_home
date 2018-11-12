@@ -37,7 +37,7 @@ Or install it yourself as:
 
     $ gem install ruby_home
 
-## Basic Usage
+## Basic usage
 
 Create a fan with an on/off switch.
 
@@ -116,6 +116,39 @@ end
 RubyHome.run
 ```
 
+## Updating a characteristics value
+
+If you have a service with characteristics that can be changed outside of Ruby Home. You'll want to keep Ruby Home in sync with these modifications. Otherwise, the characteristics current value won't correspond with reality. The simplest way to do this is a background job that periodically polls the devices current status and updates the corresponding characteristics value if it's changed.
+
+Given a fan which can be switched on / off with a remote control. Which has a JSON API endpoint at http://example.org/fan_status.json that returns its current status `{ "on": true }` or `{ "on": false }`. We can spawn a thread that keeps polling the fans current status and if its changed update our fan service "on" characteristic.
+
+```ruby
+require 'json'
+require 'open-uri'
+require 'ruby_home'
+
+fan = RubyHome::ServiceFactory.create(:fan)
+on_characteristic = fan.characteristic(:on)
+
+Thread.new do
+  def fetch_fan_status
+    json = JSON.load(open("http://example.org/fan_status.json"))
+    json["on"]
+  end
+
+  loop do
+    sleep 10 # seconds
+
+    current_fan_status = fetch_fan_status
+
+    unless on_characteristic.value == current_fan_status
+      on_characteristic.value = current_fan_status
+    end
+  end
+end
+
+RubyHome.run
+```
 
 ## Development
 
