@@ -27,7 +27,6 @@ module RubyHome
       def accept
         socket = @server.accept
         _, port, host = socket.peeraddr
-        puts "*** #{host}:#{port} connected"
 
         monitor = @selector.register(socket, :r)
         monitor.value = proc { read(socket) }
@@ -72,8 +71,6 @@ module RubyHome
       end
 
       def close(socket)
-        _, port, host = socket.peeraddr
-        puts "*** #{host}:#{port} disconnected"
         @selector.deregister(socket)
         socket_store.delete(socket)
         socket.close
