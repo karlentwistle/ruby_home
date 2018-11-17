@@ -14,9 +14,9 @@ module RubyHome
 
       put '/' do
         json_body.fetch('characteristics', []).each do |characteristic_params|
-          if characteristic_params['value']
+          if characteristic_params.key?("value")
             update_characteristics(characteristic_params)
-          elsif characteristic_params['ev']
+          elsif characteristic_params.key?("ev")
             subscribe_characteristics(characteristic_params)
           end
         end

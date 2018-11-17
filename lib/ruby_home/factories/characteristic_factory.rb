@@ -43,10 +43,10 @@ module RubyHome
         @characteristic_name = characteristic_name.to_sym
         @service = service
         @subtype = subtype
-        @value = value || default_value
+        @requested_value = value
       end
 
-      attr_reader :service, :characteristic_name, :value, :subtype
+      attr_reader :service, :characteristic_name, :subtype
 
       delegate :accessory, to: :service
 
@@ -54,17 +54,12 @@ module RubyHome
         @template ||= CharacteristicTemplate.find_by(name: characteristic_name)
       end
 
-      def default_value
-        DEFAULT_VALUES.fetch(characteristic_name.to_sym) do
-          klass = "RubyHome::#{template.format.classify}DefaultValue".safe_constantize || NullDefaultValue
-          default_value = klass.new(template).default
+      def value
+        value_object.new(template, @requested_value)
+      end
 
-          if default_value.nil?
-            raise "No default value available for characteristic: #{characteristic_name} of type: #{template.format}"
-          else
-            default_value
-          end
-        end
+      def value_object
+        BaseValue.value_for_template(template)
       end
 
       def persisted_characteristic

@@ -1,7 +1,7 @@
 require_relative 'base_value'
 
 module RubyHome
-  class Uint8DefaultValue < BaseValue
+  class Uint8Value < BaseValue
     def default
       first_default_value.to_i
     end

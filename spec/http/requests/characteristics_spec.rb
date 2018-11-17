@@ -143,6 +143,17 @@ RSpec.describe '/characteristics' do
         expect(listener).to have_received(:after_update).with(characteristic)
       end
 
+      it 'triggers single characteristic listeners if value is falsey' do
+        fan = RubyHome::ServiceFactory.create(:fan)
+        characteristic = fan.characteristic(:on)
+        listener = spy('listener')
+        characteristic.subscribe(listener)
+
+        put '/characteristics', characteristic_parameters(characteristic => false), {'CONTENT_TYPE' => 'application/hap+json'}
+
+        expect(listener).to have_received(:after_update).with(characteristic)
+      end
+
       it 'triggers multiple characteristics listeners' do
         garage_door_opener = RubyHome::ServiceFactory.create(:garage_door_opener)
         obstruction_detected = garage_door_opener.characteristic(:obstruction_detected)

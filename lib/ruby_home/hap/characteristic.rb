@@ -36,7 +36,6 @@ module RubyHome
 
     attr_reader(
       :service,
-      :value,
       :uuid,
       :name,
       :description,
@@ -59,9 +58,12 @@ module RubyHome
       service.instance_id
     end
 
+    def value
+      @value.value
+    end
+
     def value=(new_value)
-      return if name == :identify
-      @value = new_value
+      @value.value = new_value
       broadcast(:after_update, self)
     end
   end

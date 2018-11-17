@@ -48,7 +48,7 @@ accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 fan = RubyHome::ServiceFactory.create(:fan)
 
 fan.characteristic(:on).after_update do |characteristic|
-  if characteristic.value == 1
+  if characteristic.value == true
     puts "Fan switched on"
   else
     puts "Fan switched off"
@@ -106,7 +106,7 @@ fan = RubyHome::ServiceFactory.create(:fan,
 )
 
 fan.characteristic(:on).after_update do |characteristic|
-  if characteristic.value == 1
+  if characteristic.value == true
     puts "Fan switched on"
   else
     puts "Fan switched off"

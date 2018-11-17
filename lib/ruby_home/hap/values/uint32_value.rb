@@ -1,7 +1,7 @@
 require_relative 'base_value'
 
 module RubyHome
-  class Uint32DefaultValue < BaseValue
+  class Uint32Value < BaseValue
     DEFAULT_VALUES = {
       color_temperature: 50,
       lock_management_auto_security_timeout: 0,

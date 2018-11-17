@@ -1,7 +1,7 @@
 require_relative 'base_value'
 
 module RubyHome
-  class StringDefaultValue < BaseValue
+  class StringValue < BaseValue
     DEFAULT_VALUES = {
       firmware_revision: '1.0',
       hardware_revision: '1.0',
