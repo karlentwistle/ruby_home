@@ -13,10 +13,6 @@ module RubyHome
       end
     end
 
-    def self.reload
-      @@_instance = nil
-    end
-
     def self.create(**attributes)
       new(**attributes).save
     end

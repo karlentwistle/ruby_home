@@ -7,7 +7,9 @@ module RubyHome
 
     module ClassMethods
       def persisted
-        new(read) if read
+        if yaml = read
+          new(yaml)
+        end
       end
 
       def create(**options)
@@ -19,9 +21,19 @@ module RubyHome
       end
 
       def read
-        return false unless File.exists?(source)
+        return false unless file_exists?
 
         YAML.load_file(source)
+      end
+
+      def truncate
+        return false unless file_exists?
+
+        File.truncate(source, 0)
+      end
+
+      def file_exists?
+        File.exists?(source)
       end
     end
 
