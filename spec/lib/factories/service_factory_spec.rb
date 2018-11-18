@@ -118,6 +118,17 @@ RSpec.describe RubyHome::ServiceFactory do
       )
     end
 
+    it 'ignores identify characteristic even if it\'s specified' do
+      service = RubyHome::ServiceFactory.create(
+        :accessory_information,
+        identify: 'Ignore me',
+      )
+
+      expect(service.characteristics).to include(
+        an_object_having_attributes(name: :identify, value: nil),
+      )
+    end
+
     it 'persists the service within identifier cache' do
       service = RubyHome::ServiceFactory.create(:fan)
 
