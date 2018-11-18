@@ -36,13 +36,5 @@ module RubyHome
         CharacteristicTemplate.find_by(uuid: uuid)
       end
     end
-
-    def to_hash
-      {
-        name: name,
-        description: description,
-        uuid: uuid
-      }
-    end
   end
 end

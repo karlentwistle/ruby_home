@@ -31,16 +31,5 @@ module RubyHome
     def constraints
       @constraints || {}
     end
-
-    def to_hash
-      {
-        name: name,
-        description: description,
-        uuid: uuid,
-        format: format,
-        unit: unit,
-        properties: properties,
-      }
-    end
   end
 end
