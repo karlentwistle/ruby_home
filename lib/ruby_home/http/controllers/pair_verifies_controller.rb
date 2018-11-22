@@ -23,7 +23,7 @@ module RubyHome
         public_key = secret_key.public_key.to_bytes
         client_public_key = RbNaCl::PublicKey.new(unpack_request[:public_key])
         shared_secret = RbNaCl::GroupElement.new(client_public_key).mult(secret_key).to_bytes
-        cache[:shared_secret] = shared_secret
+        session.shared_secret = shared_secret
 
         accessoryinfo = [
           public_key.unpack1('H*'),
@@ -38,7 +38,7 @@ module RubyHome
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Verify-Encrypt-Info', salt: 'Pair-Verify-Encrypt-Salt')
         session_key = hkdf.encrypt(shared_secret)
-        cache[:session_key] = session_key
+        session.session_key = session_key
 
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(session_key)
         nonce = HexHelper.pad('PV-Msg02')
@@ -50,18 +50,19 @@ module RubyHome
       def verify_finish_response
         encrypted_data = unpack_request[:encrypted_data]
 
-        chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(cache[:session_key])
+        chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(session.session_key)
         nonce = HexHelper.pad('PV-Msg03')
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
         unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
 
         if accessory_info.paired_clients.any? {|h| h[:identifier] == unpacked_decrypted_data[:identifier]}
-          shared_secret = HAP::Crypto::SessionKey.new(cache[:shared_secret])
-          cache[:controller_to_accessory_key] = shared_secret.controller_to_accessory_key
-          cache[:accessory_to_controller_key] = shared_secret.accessory_to_controller_key
+          shared_secret = HAP::Crypto::SessionKey.new(session.shared_secret)
 
-          cache.delete(:session_key)
-          cache.delete(:shared_secret)
+          session.controller_to_accessory_key = shared_secret.controller_to_accessory_key
+          session.accessory_to_controller_key = shared_secret.accessory_to_controller_key
+
+          session.session_key = nil
+          session.shared_secret = nil
 
           tlv state: 4
         else

@@ -1,14 +1,13 @@
 module RubyHome
   module HAP
     class Server
-      def initialize(host, port, socket_store)
+      def initialize(host, port)
         @port = port
         @host = host
-        @socket_store = socket_store
         @selector = NIO::Selector.new
       end
 
-      attr_reader :port, :host, :socket_store
+      attr_reader :port, :host
 
       def run
         puts "Listening on #{host}:#{port}"
@@ -24,10 +23,10 @@ module RubyHome
 
       private
 
+      SESSIONS = {}
+
       def accept
         socket = @server.accept
-        _, port, host = socket.peeraddr
-
         monitor = @selector.register(socket, :r)
         monitor.value = proc { read(socket) }
       end
@@ -36,17 +35,20 @@ module RubyHome
         @_upstream ||= HTTP::Application.run
       end
 
+      def webrick_config
+        @_webrick_config ||= WEBrick::Config::HTTP
+      end
+
       def read(socket)
         return close(socket) if socket.eof?
 
-        socket_store[socket] ||= {}
+        session = SESSIONS[socket] ||= Session.new(socket)
 
-        request = HAPRequest.new(WEBrick::Config::HTTP, socket)
-        response = HAPResponse.new(WEBrick::Config::HTTP, socket)
+        request = HAPRequest.new(webrick_config)
+        response = HAPResponse.new(webrick_config)
 
-        request.parse(socket)
+        request.parse(session)
 
-        response.received_encrypted_request = request.received_encrypted_request?
         response.request_method = request.request_method
         response.request_uri = request.request_uri
         response.request_http_version = request.http_version
@@ -58,7 +60,7 @@ module RubyHome
           if request.keep_alive? && response.keep_alive?
             request.fixup()
           end
-          response.send_response(socket)
+          response.send_response(session)
         end
 
         return close(socket) unless request.keep_alive?
@@ -72,7 +74,6 @@ module RubyHome
 
       def close(socket)
         @selector.deregister(socket)
-        socket_store.delete(socket)
         socket.close
       end
     end

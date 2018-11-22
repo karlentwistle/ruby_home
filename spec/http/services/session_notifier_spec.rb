@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-RSpec.describe RubyHome::HTTP::SocketNotifier do
+RSpec.describe RubyHome::HTTP::SessionNotifier do
   let(:socket) { StringIO.new }
+  let(:session) { RubyHome::HAP::Session.new(socket) }
   let(:service) { RubyHome::ServiceFactory.create(:outlet) }
   let(:characteristic) { service.characteristic(:outlet_in_use) }
-  subject { RubyHome::HTTP::SocketNotifier.new(socket, characteristic) }
+  subject { RubyHome::HTTP::SessionNotifier.new(session, characteristic) }
 
   describe '#after_update' do
     context 'socket still active' do
       it 'sends ev_response to socket' do
-        cache_socket(socket)
-
+        set_session_key
         subject.after_update(characteristic)
 
         socket.rewind
@@ -28,6 +28,7 @@ RSpec.describe RubyHome::HTTP::SocketNotifier do
 
     context 'socket no longer active' do
       it 'unsubscribes socket notifier from characteristic' do
+        socket.close
         subject.after_update(characteristic)
 
         expect(characteristic.local_registrations).not_to include(subject)
@@ -35,7 +36,7 @@ RSpec.describe RubyHome::HTTP::SocketNotifier do
     end
 
     it 'receives event from characteristic if value changes' do
-      cache_socket(socket)
+      set_session_key
       characteristic.subscribe(subject)
 
       characteristic.value = false
@@ -47,8 +48,11 @@ RSpec.describe RubyHome::HTTP::SocketNotifier do
 
   private
 
-    def cache_socket(socket)
-      key = ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*')
-      RubyHome.socket_store[socket] = { accessory_to_controller_key: key }
+    def set_session_key
+      session.accessory_to_controller_key = session_key
+    end
+
+    def session_key
+      ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*')
     end
 end

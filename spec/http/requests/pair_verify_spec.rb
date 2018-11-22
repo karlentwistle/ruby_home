@@ -60,8 +60,8 @@ RSpec.describe 'POST /pair-verify' do
     let(:data) { File.read(path) }
 
     before do
-      set_cache(:session_key, ['d741e4ecbf9868e86aab782ddc03ed75767bfc30634a15dabcc895bace33e57e'].pack('H*'))
-      set_cache(:shared_secret, ['4bdd6daf9eb979012962fd0ab33a58c528784cf15ac724d213e494b1ca744e02'].pack('H*'))
+      session.session_key = ['d741e4ecbf9868e86aab782ddc03ed75767bfc30634a15dabcc895bace33e57e'].pack('H*')
+      session.shared_secret = ['4bdd6daf9eb979012962fd0ab33a58c528784cf15ac724d213e494b1ca744e02'].pack('H*')
     end
 
     context 'iOSDevicePairingID exists in list of paired controllers.' do
@@ -85,12 +85,12 @@ RSpec.describe 'POST /pair-verify' do
 
       it 'destroys cached shared_secret' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
-        expect(request_store).not_to have_key(:shared_secret)
+        expect(session.shared_secret).to be_nil
       end
 
       it 'destroys cached session_key' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
-        expect(request_store).not_to have_key(:session_key)
+        expect(session.session_key).to be_nil
       end
     end
 
