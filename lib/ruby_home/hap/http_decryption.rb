@@ -16,7 +16,7 @@ module RubyHome
 
         while read_pointer < data.length
           little_endian_length_of_encrypted_data = data[read_pointer...read_pointer+AAD_LENGTH_BYTES]
-          length_of_encrypted_data = little_endian_length_of_encrypted_data.unpack('v').first
+          length_of_encrypted_data = little_endian_length_of_encrypted_data.unpack1('v')
           read_pointer += AAD_LENGTH_BYTES
 
           message = data[read_pointer...read_pointer+length_of_encrypted_data]
@@ -32,7 +32,7 @@ module RubyHome
           increment_count!
         end
 
-        decrypted_data
+        decrypted_data.join
       end
 
       attr_reader :count

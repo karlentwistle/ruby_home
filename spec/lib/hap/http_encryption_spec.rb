@@ -17,7 +17,7 @@ RSpec.describe RubyHome::HAP::HTTPEncryption do
           0B00781A E80A8471 9C75E6C6 E4DBBA98 C40CBEDB 5B058D3F 331241AC DF
         }.join.downcase
 
-        expect(subject[0].unpack('H*')).to eql([expected_encrypted_data])
+        expect(subject.unpack1('H*')).to eql(expected_encrypted_data)
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe RubyHome::HAP::HTTPEncryption do
           0B00771F 50A03DF3 6B64FE1C A6E0D281 1E83D9F8 0FBD49FA FDA4EB2D B8
         }.join.downcase
 
-        expect(subject[0].unpack('H*')).to eql([expected_encrypted_data])
+        expect(subject.unpack1('H*')).to eql(expected_encrypted_data)
       end
     end
 
@@ -78,8 +78,9 @@ RSpec.describe RubyHome::HAP::HTTPEncryption do
           0100782F 5C81C735 B347E936 DC6E9172 75BD4B
         }.join.downcase
 
-        expect(subject[0].unpack('H*')[0]).to eql(expected_encrypted_data_frame_0)
-        expect(subject[1].unpack('H*')[0]).to eql(expected_encrypted_data_frame_1)
+        expect(subject.unpack1('H*')).to eql(
+          expected_encrypted_data_frame_0 + expected_encrypted_data_frame_1
+        )
       end
     end
   end

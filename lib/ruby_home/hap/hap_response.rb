@@ -10,7 +10,7 @@ module RubyHome
 
           encrypter = session.encrypter
 
-          encrypted_response = encrypter.encrypt(response.string).join
+          encrypted_response = encrypter.encrypt(response.string)
           session.accessory_to_controller_count = encrypter.count
 
           _write_data(socket, encrypted_response)

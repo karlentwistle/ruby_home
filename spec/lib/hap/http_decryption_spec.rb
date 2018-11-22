@@ -19,7 +19,7 @@ RSpec.describe RubyHome::HAP::HTTPDecryption do
       end
 
       it 'decrypts small strings of data' do
-        expect(subject[0]).to eql('hello world')
+        expect(subject).to eql('hello world')
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe RubyHome::HAP::HTTPDecryption do
       let(:count) { 2 }
 
       it 'decrypts using correct nonce' do
-        expect(subject[0]).to eql('hello world')
+        expect(subject).to eql('hello world')
       end
     end
 
@@ -81,8 +81,7 @@ RSpec.describe RubyHome::HAP::HTTPDecryption do
       end
 
       it 'decrypts successfully' do
-        expect(subject[0]).to eql('a' * 1024)
-        expect(subject[1]).to eql('a')
+        expect(subject).to eql('a' * 1025)
       end
     end
   end

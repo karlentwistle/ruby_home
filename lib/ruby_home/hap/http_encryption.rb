@@ -28,7 +28,7 @@ module RubyHome
           increment_count!
         end
 
-        encrypted_data
+        encrypted_data.join
       end
 
       attr_reader :count

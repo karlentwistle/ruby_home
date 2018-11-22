@@ -9,7 +9,7 @@ module RubyHome
           request_line = socket.read_nonblock(@buffer_size)
 
           decrypter = session.decrypter
-          decrypted_request = decrypter.decrypt(request_line).join
+          decrypted_request = decrypter.decrypt(request_line)
           session.controller_to_accessory_count = decrypter.count
 
           super(StringIO.new(decrypted_request))

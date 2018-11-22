@@ -14,7 +14,7 @@ module RubyHome
         send_body(response)
 
         encrypter = session.encrypter
-        encrypted_response = encrypter.encrypt(response).join
+        encrypted_response = encrypter.encrypt(response)
         session.accessory_to_controller_count = encrypter.count
 
         socket << encrypted_response
