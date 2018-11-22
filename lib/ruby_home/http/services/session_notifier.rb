@@ -1,13 +1,13 @@
 module RubyHome
   module HTTP
-    class SocketNotifier
-      def initialize(socket, characteristic)
-        @socket = socket
+    class SessionNotifier
+      def initialize(session, characteristic)
+        @session = session
         @characteristic = characteristic
       end
 
       def after_update(_)
-        if socket_still_active?
+        if session.active?
           send_ev_response
         else
           characteristic.unsubscribe(self)
@@ -16,20 +16,16 @@ module RubyHome
 
       def ==(other)
         self.class == other.class &&
-          self.socket == other.socket &&
+          self.session == other.session &&
           self.characteristic == other.characteristic
       end
 
-      attr_reader :socket, :characteristic
+      attr_reader :session, :characteristic
 
       private
 
-        def socket_still_active?
-          RubyHome.socket_store.include?(socket)
-        end
-
         def send_ev_response
-          HAP::EVResponse.new(socket, serialized_characteristic).send_response
+          HAP::EVResponse.new(session, serialized_characteristic).send_response
         end
 
         def serialized_characteristic

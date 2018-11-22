@@ -41,7 +41,7 @@ module RubyHome
 
         def subscribe_characteristics(characteristic_params)
           find_characteristic(**characteristic_params.symbolize_keys.slice(:aid, :iid)) do |characteristic|
-            notifier = SocketNotifier.new(socket, characteristic)
+            notifier = SessionNotifier.new(session, characteristic)
 
             unless characteristic.listeners.include?(notifier)
               characteristic.subscribe(notifier)
@@ -56,7 +56,7 @@ module RubyHome
         end
 
         def require_session
-          unless cache[:controller_to_accessory_key] && cache[:accessory_to_controller_key]
+          unless session.sufficient_privileges?
             halt 401, JSON.generate({"status" => -70401})
           end
         end

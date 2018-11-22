@@ -19,8 +19,6 @@ module RubyHome
       private
 
       def pairing_failed
-        clear_cache
-
         tlv state: 4, error: 2
       end
 
@@ -30,7 +28,7 @@ module RubyHome
           password: accessory_info.password
         )
 
-        cache[:srp_session] = start_srp.proof
+        session.srp_session = start_srp.proof
 
         tlv salt: start_srp.salt_bytes, public_key: start_srp.public_key_bytes, state: 2
       end
@@ -38,13 +36,13 @@ module RubyHome
       def verify
         verify_srp = VerifySRPService.new(
           device_proof: unpack_request[:proof],
-          srp_session: cache[:srp_session],
+          srp_session: session.srp_session,
           public_key: unpack_request[:public_key],
         )
 
         if verify_srp.valid?
-          cache[:session_key] = verify_srp.session_key
-          cache.delete(:srp_session)
+          session.session_key = verify_srp.session_key
+          session.srp_session = nil
 
           tlv state: 4, proof: verify_srp.server_proof
         else
@@ -56,7 +54,7 @@ module RubyHome
         encrypted_data = unpack_request[:encrypted_data]
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
-        key = hkdf.encrypt(cache[:session_key])
+        key = hkdf.encrypt(session.session_key)
 
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(key)
 
@@ -69,7 +67,7 @@ module RubyHome
         iosdeviceltpk = unpacked_decrypted_data[:public_key]
 
         hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Controller-Sign-Info', salt: 'Pair-Setup-Controller-Sign-Salt')
-        iosdevicex = hkdf.encrypt(cache[:session_key])
+        iosdevicex = hkdf.encrypt(session.session_key)
 
         iosdeviceinfo = [
           iosdevicex.unpack1('H*'),
@@ -80,7 +78,7 @@ module RubyHome
 
         if verify_key.verify(iosdevicesignature, [iosdeviceinfo].pack('H*'))
           hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Accessory-Sign-Info', salt: 'Pair-Setup-Accessory-Sign-Salt')
-          accessory_x = hkdf.encrypt(cache[:session_key])
+          accessory_x = hkdf.encrypt(session.session_key)
 
           signing_key = accessory_info.signing_key
           accessoryltpk = signing_key.verify_key.to_bytes

@@ -22,8 +22,8 @@ RSpec.describe '/characteristics' do
 
     context 'sufficient privileges and no error occurs' do
       before do
-        set_cache(:controller_to_accessory_key, ['a' * 64].pack('H*'))
-        set_cache(:accessory_to_controller_key, ['b' * 64].pack('H*'))
+        session.controller_to_accessory_key = ['a' * 64].pack('H*')
+        session.accessory_to_controller_key = ['b' * 64].pack('H*')
       end
 
       it 'responds with a 204 No Content HTTP Status Code' do
@@ -110,8 +110,8 @@ RSpec.describe '/characteristics' do
 
     context 'sufficient privileges and no error occurs' do
       before do
-        set_cache(:controller_to_accessory_key, ['a' * 64].pack('H*'))
-        set_cache(:accessory_to_controller_key, ['b' * 64].pack('H*'))
+        session.controller_to_accessory_key = ['a' * 64].pack('H*')
+        session.accessory_to_controller_key = ['b' * 64].pack('H*')
       end
 
       it 'responds with a 204 No Content HTTP Status Code' do

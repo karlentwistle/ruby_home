@@ -27,7 +27,7 @@ RSpec.describe 'POST /pair-setup' do
     it 'stores proof in cache' do
       salt = unpacked_body[:salt]
       public_key = unpacked_body[:public_key]
-      expect(read_cache(:srp_session)).to include(
+      expect(session.srp_session).to include(
         B: public_key.unpack1('H*'),
         I: 'Pair-Setup',
         b: a_kind_of(String),
@@ -85,13 +85,13 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     before do
-      set_cache(:srp_session, {
+      session.srp_session = {
         B: b_pub,
         b: b,
         I: 'Pair-Setup',
         s: salt,
         v: verifier
-      })
+      }
       post '/pair-setup', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
     end
 
@@ -118,11 +118,11 @@ RSpec.describe 'POST /pair-setup' do
           2B5F1FA4 046B2E63 2A06F1D9 612B031F 6D0B9676 B602DD36 BFCFEA0F 85D8567E
           DDEBF2EF B5C24227 DF05D9F8 BECC3F32 518CEAAD BA5F689F 50252F6B E5D77EA6
         }.join.downcase
-        expect(read_cache(:session_key)).to eql(expected_session_key)
+        expect(session.session_key).to eql(expected_session_key)
       end
 
       it 'destroy srp_session' do
-        expect(request_store).not_to have_key(:srp_session)
+        expect(session.srp_session).to be_nil
       end
     end
 
@@ -133,10 +133,6 @@ RSpec.describe 'POST /pair-setup' do
         it 'responds with error' do
           expect(unpacked_body).to include(state: 4, error: 2)
         end
-
-        it 'clears the cache' do
-          expect(request_store).to be_empty
-        end
       end
 
       context 'SRP_verify verification fails' do
@@ -146,10 +142,6 @@ RSpec.describe 'POST /pair-setup' do
 
         it 'responds with error' do
           expect(unpacked_body).to include(state: 4, error: 2)
-        end
-
-        it 'clears the cache' do
-          expect(request_store).to be_empty
         end
       end
     end
@@ -164,7 +156,7 @@ RSpec.describe 'POST /pair-setup' do
     end
 
     before do
-      set_cache(:session_key, session_key)
+      session.session_key = session_key
       path = File.expand_path('../../../fixtures/exchange_request', __FILE__)
       data = File.read(path)
       post '/pair-setup', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }

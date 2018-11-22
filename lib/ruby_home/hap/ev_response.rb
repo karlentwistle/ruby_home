@@ -1,10 +1,10 @@
 module RubyHome
   module HAP
     class EVResponse
-      def initialize(socket, body)
-        @socket = socket
+      def initialize(session, body)
+        @session = session
+        @socket = session.socket
         @body = body
-        cache[:accessory_to_controller_count] ||= 0
       end
 
       def send_response
@@ -13,13 +13,16 @@ module RubyHome
         send_header(response)
         send_body(response)
 
+        encrypter = session.encrypter
         encrypted_response = encrypter.encrypt(response).join
-        cache[:accessory_to_controller_count] = encrypter.count
+        session.accessory_to_controller_count = encrypter.count
 
         socket << encrypted_response
       end
 
       private
+
+        attr_reader :body, :socket, :session
 
         CRLF = -"\x0d\x0a"
         STATUS_LINE = -'EVENT/1.0 200 OK'
@@ -38,26 +41,6 @@ module RubyHome
 
         def content_length_line
           "Content-Length: #{body.length}"
-        end
-
-        attr_reader :body, :socket
-
-        def encrypter
-          @_encrypter ||= RubyHome::HAP::HTTPEncryption.new(encryption_key, encrypter_params)
-        end
-
-        def encrypter_params
-          {
-            count: cache[:accessory_to_controller_count]
-          }
-        end
-
-        def encryption_key
-          cache[:accessory_to_controller_key]
-        end
-
-        def cache
-          RubyHome.socket_store[socket]
         end
     end
   end

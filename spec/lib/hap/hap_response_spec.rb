@@ -4,19 +4,20 @@ RSpec.describe RubyHome::HAP::HAPResponse do
   let(:key) { ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*') }
   let(:io) { StringIO.new }
   let(:config) { WEBrick::Config::HTTP.dup.update(ServerSoftware: 'WEBrick') }
-  subject(:hap_response) { RubyHome::HAP::HAPResponse.new(config, io) }
+  let(:session) { RubyHome::HAP::Session.new(io) }
+  subject(:hap_response) { RubyHome::HAP::HAPResponse.new(config) }
 
   before do
-    RubyHome.socket_store[io] = {accessory_to_controller_key: key}
+    session.accessory_to_controller_key = key
   end
 
   describe '#send_response' do
     context 'encryption_time' do
       it 'returns an encrypted response' do
-        hap_response.received_encrypted_request = true
+        session.controller_to_accessory_count = 1
         hap_response['date'] = Time.new(2018).httpdate
 
-        hap_response.send_response(io)
+        hap_response.send_response(session)
         io.rewind
 
         actual_response = io.read.unpack1('H*')
@@ -35,7 +36,7 @@ RSpec.describe RubyHome::HAP::HAPResponse do
       it 'returns an unencrypted response' do
         hap_response['date'] = Time.new(2018).httpdate
 
-        hap_response.send_response(io)
+        hap_response.send_response(session)
         io.rewind
 
         expected_response = <<~RESPONSE
