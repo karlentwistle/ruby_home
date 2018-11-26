@@ -16,16 +16,8 @@ module RubyHome
       attr_accessor :session_key
       attr_accessor :srp_session
 
-      def encryption_time?
-        accessory_to_controller_key? && received_encrypted_request?
-      end
-
       def received_encrypted_request?
         controller_to_accessory_count > 0
-      end
-
-      def encrypter
-        @_encrypter ||= encrypter_class.new(accessory_to_controller_key)
       end
 
       def decryption_time?
@@ -53,6 +45,14 @@ module RubyHome
       end
 
       private
+
+        def encrypter
+          @_encrypter ||= encrypter_class.new(accessory_to_controller_key)
+        end
+
+        def encryption_time?
+          accessory_to_controller_key? && received_encrypted_request?
+        end
 
         attr_reader :controller_to_accessory_count
 

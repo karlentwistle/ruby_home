@@ -5,19 +5,6 @@ RSpec.describe RubyHome::HAP::Session do
     let(:io) { StringIO.new }
     subject(:session) { described_class.new(io, encrypter_class: CaesarCipher) }
 
-    describe '#encryption_time?' do
-      it 'returns true if accessory_to_controller_key is present and received encrypted request' do
-        session.controller_to_accessory_count = 1
-        session.accessory_to_controller_key = 'foo'
-
-        expect(session.encryption_time?).to be true
-      end
-
-      it 'returns false by default' do
-        expect(session.encryption_time?).to be false
-      end
-    end
-
     describe '#received_encrypted_request?' do
       it 'returns true if controller_to_accessory_count is greater than 0' do
         session.controller_to_accessory_count = 1
