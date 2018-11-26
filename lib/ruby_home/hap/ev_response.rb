@@ -3,44 +3,37 @@ module RubyHome
     class EVResponse
       def initialize(session, body)
         @session = session
-        @socket = session.socket
         @body = body
       end
 
       def send_response
-        response = ''
-
-        send_header(response)
-        send_body(response)
-
-        encrypter = session.encrypter
-        encrypted_response = encrypter.encrypt(response)
-        session.accessory_to_controller_count = encrypter.count
-
-        socket << encrypted_response
+        send_header(session)
+        send_body(session)
       end
 
       private
 
-        attr_reader :body, :socket, :session
+        attr_reader :body, :session
 
         CRLF = -"\x0d\x0a"
         STATUS_LINE = -'EVENT/1.0 200 OK'
         CONTENT_TYPE_LINE = -'Content-Type: application/hap+json'
 
-        def send_header(socket)
-          socket << STATUS_LINE + CRLF
-          socket << CONTENT_TYPE_LINE + CRLF
-          socket << content_length_line + CRLF
-          socket << CRLF
-        end
-
-        def send_body(socket)
-          socket << body
-        end
-
         def content_length_line
           "Content-Length: #{body.length}"
+        end
+
+        def send_header(io)
+          data = STATUS_LINE + CRLF
+          data << CONTENT_TYPE_LINE + CRLF
+          data << content_length_line + CRLF
+          data << CRLF
+
+          io.write(data)
+        end
+
+        def send_body(io)
+          io.write(body)
         end
     end
   end

@@ -1,16 +1,16 @@
 module RubyHome
   module HAP
     class Session
-      def initialize(socket)
+      def initialize(socket, encrypter_class: Encrypter)
         @socket = socket
-        @accessory_to_controller_count = 0
         @controller_to_accessory_count = 0
+        @encrypter_class = encrypter_class
       end
 
+      attr_reader :encrypter_class
       attr_reader :socket
       attr_accessor :controller_to_accessory_key
       attr_accessor :accessory_to_controller_key
-      attr_writer :accessory_to_controller_count
       attr_writer :controller_to_accessory_count
       attr_accessor :shared_secret
       attr_accessor :session_key
@@ -25,7 +25,7 @@ module RubyHome
       end
 
       def encrypter
-        HTTPEncryption.new(accessory_to_controller_key, encrypter_params)
+        @_encrypter ||= encrypter_class.new(accessory_to_controller_key)
       end
 
       def decryption_time?
@@ -44,10 +44,17 @@ module RubyHome
         !socket.closed?
       end
 
+      def write(data)
+        if encryption_time?
+          socket.write(encrypter.encrypt(data))
+        else
+          socket.write(data)
+        end
+      end
+
       private
 
-        attr_reader :accessory_to_controller_count,
-                    :controller_to_accessory_count
+        attr_reader :controller_to_accessory_count
 
         def accessory_to_controller_key?
           accessory_to_controller_key.present?
@@ -55,10 +62,6 @@ module RubyHome
 
         def controller_to_accessory_key?
           controller_to_accessory_key.present?
-        end
-
-        def encrypter_params
-          { count: accessory_to_controller_count }
         end
 
         def decrypter_params

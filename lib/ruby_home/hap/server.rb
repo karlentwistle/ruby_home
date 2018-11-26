@@ -45,7 +45,7 @@ module RubyHome
         session = SESSIONS[socket] ||= Session.new(socket)
 
         request = HAPRequest.new(webrick_config)
-        response = HAPResponse.new(webrick_config)
+        response = WEBrick::HTTPResponse.new(webrick_config)
 
         request.parse(session)
 
