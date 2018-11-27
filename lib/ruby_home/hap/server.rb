@@ -42,13 +42,13 @@ module RubyHome
       def read(socket)
         return close(socket) if socket.eof?
 
-        session = SESSIONS[socket] ||= Session.new(socket)
-
         request = HAPRequest.new(webrick_config)
-        response = WEBrick::HTTPResponse.new(webrick_config)
+        response = HAPResponse.new(webrick_config)
 
-        request.parse(session)
+        session = SESSIONS[socket] ||= Session.new(socket)
+        request.session = session
 
+        request.parse(session.parse)
         response.request_method = request.request_method
         response.request_uri = request.request_uri
         response.request_http_version = request.http_version

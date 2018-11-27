@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe RubyHome::HAP::HTTPDecryption do
+RSpec.describe RubyHome::HAP::Decrypter do
   describe '#decrypt' do
     let(:key) { ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*') }
     let(:count) { 0 }

@@ -1,6 +1,6 @@
 module RubyHome
   module HAP
-    class HTTPDecryption
+    class Decrypter
       AAD_LENGTH_BYTES = 2.freeze
       AUTHENTICATE_TAG_LENGTH_BYTES = 16.freeze
       NONCE_32_BIT_FIX_COMMENT_PART = [0].pack('L').freeze

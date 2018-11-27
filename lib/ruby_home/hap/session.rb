@@ -1,32 +1,21 @@
 module RubyHome
   module HAP
     class Session
-      def initialize(socket, encrypter_class: Encrypter)
+      PARSE_BUFFER_SIZE = 65536
+
+      def initialize(socket, decrypter_class: Decrypter, encrypter_class: Encrypter)
         @socket = socket
-        @controller_to_accessory_count = 0
         @encrypter_class = encrypter_class
+        @decrypter_class = decrypter_class
       end
 
-      attr_reader :encrypter_class
-      attr_reader :socket
-      attr_accessor :controller_to_accessory_key
-      attr_accessor :accessory_to_controller_key
-      attr_writer :controller_to_accessory_count
-      attr_accessor :shared_secret
-      attr_accessor :session_key
-      attr_accessor :srp_session
-
-      def received_encrypted_request?
-        controller_to_accessory_count > 0
-      end
-
-      def decryption_time?
-        controller_to_accessory_key.present?
-      end
-
-      def decrypter
-        HTTPDecryption.new(controller_to_accessory_key, decrypter_params)
-      end
+      attr_accessor(
+        :controller_to_accessory_key,
+        :accessory_to_controller_key,
+        :shared_secret,
+        :session_key,
+        :srp_session
+      )
 
       def sufficient_privileges?
         controller_to_accessory_key? && accessory_to_controller_key?
@@ -44,7 +33,30 @@ module RubyHome
         end
       end
 
+      def parse
+        if decryption_time?
+          received_encrypted_request!
+          StringIO.new(
+            decrypter.decrypt(
+              socket.read_nonblock(PARSE_BUFFER_SIZE)
+            )
+          )
+        else
+          socket
+        end
+      end
+
+      def received_encrypted_request!
+        @received_encrypted_request ||= true
+      end
+
       private
+
+        attr_reader :socket, :encrypter_class, :decrypter_class
+
+        def received_encrypted_request?
+          @received_encrypted_request ||= false
+        end
 
         def encrypter
           @_encrypter ||= encrypter_class.new(accessory_to_controller_key)
@@ -54,7 +66,13 @@ module RubyHome
           accessory_to_controller_key? && received_encrypted_request?
         end
 
-        attr_reader :controller_to_accessory_count
+        def decrypter
+          @_decrypter ||= decrypter_class.new(controller_to_accessory_key)
+        end
+
+        def decryption_time?
+          controller_to_accessory_key.present?
+        end
 
         def accessory_to_controller_key?
           accessory_to_controller_key.present?
@@ -62,10 +80,6 @@ module RubyHome
 
         def controller_to_accessory_key?
           controller_to_accessory_key.present?
-        end
-
-        def decrypter_params
-          { count: controller_to_accessory_count }
         end
     end
   end

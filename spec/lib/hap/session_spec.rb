@@ -3,28 +3,12 @@ require 'spec_helper'
 RSpec.describe RubyHome::HAP::Session do
   describe '#decrypt' do
     let(:io) { StringIO.new }
-    subject(:session) { described_class.new(io, encrypter_class: CaesarCipher) }
-
-    describe '#received_encrypted_request?' do
-      it 'returns true if controller_to_accessory_count is greater than 0' do
-        session.controller_to_accessory_count = 1
-        expect(session.received_encrypted_request?).to be true
-      end
-
-      it 'returns false by default' do
-        expect(session.received_encrypted_request?).to be false
-      end
-    end
-
-    describe '#decryption_time?' do
-      it 'returns true if controller_to_accessory_key is present' do
-        session.controller_to_accessory_key = 'foo'
-        expect(session.decryption_time?).to be true
-      end
-
-      it 'returns false by default' do
-        expect(session.decryption_time?).to be false
-      end
+    subject(:session) do
+      described_class.new(
+        io,
+        decrypter_class: CaesarCipher,
+        encrypter_class: CaesarCipher
+      )
     end
 
     describe '#sufficient_privileges?' do
@@ -41,39 +25,53 @@ RSpec.describe RubyHome::HAP::Session do
 
     describe '#active?' do
       it 'returns true if socket is still active' do
-        expect(session.active?).to be true
+        expect(session).to be_active
       end
 
       it 'returns false if socket is no longer active' do
         io.close
-        expect(session.active?).to be false
+        expect(session).not_to be_active
+      end
+    end
+
+    describe 'parse' do
+      it 'by default it returns socket' do
+        expect(session.parse).to eql(io)
+      end
+
+      it 'decrypts data using decrypter if decryption_time' do
+        session.controller_to_accessory_key = 'foo'
+        io.write('ifmmp xpsme')
+        io.rewind
+
+        expect(session.parse.readline).to eql("hello world \n")
       end
     end
 
     describe 'write' do
       it 'by default it writes inputted data' do
-        session.write("hello world")
+        session.write('hello world')
 
         io.rewind
-        expect(io.read).to eql("hello world")
+        expect(io.read).to eql('hello world')
       end
 
-      it 'writes data encrypted if encryption_time?' do
-        session.controller_to_accessory_count = 1
-        session.accessory_to_controller_key = accessory_to_controller_key
+      it 'writes data encrypted if encryption_time' do
+        session.received_encrypted_request!
+        session.accessory_to_controller_key = 'foo'
 
-        session.write("hello world")
+        session.write('hello world')
 
         io.rewind
         expect(io.read).to eql("ifmmp xpsme \n")
       end
 
-      it 'keeps track of count for each write request if encryption_time?' do
-        session.controller_to_accessory_count = 1
-        session.accessory_to_controller_key = accessory_to_controller_key
+      it 'keeps track of count for each write request if encryption_time' do
+        session.received_encrypted_request!
+        session.accessory_to_controller_key = 'foo'
 
-        session.write("hello world")
-        session.write("hello world")
+        session.write('hello world')
+        session.write('hello world')
 
         io.rewind
         expect(io.readline).to eql("ifmmp xpsme \n")
@@ -92,6 +90,11 @@ RSpec.describe RubyHome::HAP::Session do
         caesar_cipher(data)
       end
 
+      def decrypt(data)
+        @count -= 1
+        caesar_cipher(data)
+      end
+
       private
 
         def caesar_cipher(string)
@@ -102,10 +105,6 @@ RSpec.describe RubyHome::HAP::Session do
         end
 
         attr_reader :count
-    end
-
-    def accessory_to_controller_key
-      ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*')
     end
   end
 end
