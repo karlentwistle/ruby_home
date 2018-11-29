@@ -1,7 +1,7 @@
 module RubyHome
   class BaseValue
     def self.value_for_template(template)
-      return NullValue if template.name == :identify
+      return IdentifyValue if template.name == :identify
 
       "::RubyHome::#{template.format.classify}Value".safe_constantize || NullValue
     end

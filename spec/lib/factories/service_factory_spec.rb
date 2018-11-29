@@ -125,7 +125,7 @@ RSpec.describe RubyHome::ServiceFactory do
       )
 
       expect(service.characteristics).to include(
-        an_object_having_attributes(name: :identify, value: nil),
+        an_object_having_attributes(name: :identify, value: true),
       )
     end
 
