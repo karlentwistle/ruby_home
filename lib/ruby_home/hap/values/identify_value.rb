@@ -5,9 +5,5 @@ module RubyHome
     def value
       true
     end
-
-    def value=(new_value)
-      nil
-    end
   end
 end
