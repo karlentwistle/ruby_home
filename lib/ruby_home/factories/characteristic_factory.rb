@@ -1,9 +1,5 @@
 module RubyHome
   class CharacteristicFactory
-    DEFAULT_VALUES = {
-      identify: nil,
-    }.freeze
-
     def self.create(characteristic_name, service: , subtype: 'default' , value: nil)
       new(
         characteristic_name: characteristic_name,
