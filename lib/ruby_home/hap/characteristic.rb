@@ -23,7 +23,7 @@ module RubyHome
       'write' => 'pw',
     }.freeze
 
-    def initialize(uuid:, name:, description:, format:, unit:, properties:, service: , value: nil)
+    def initialize(uuid:, name:, description:, format:, unit:, properties:, service: , value_object: )
       @uuid = uuid
       @name = name
       @description = description
@@ -31,7 +31,7 @@ module RubyHome
       @unit = unit
       @properties = properties
       @service = service
-      @value = value
+      @value_object = value_object
     end
 
     attr_reader(
@@ -42,7 +42,8 @@ module RubyHome
       :format,
       :unit,
       :properties,
-      :instance_id
+      :instance_id,
+      :value_object,
     )
 
     def instance_id=(new_id)
@@ -59,11 +60,11 @@ module RubyHome
     end
 
     def value
-      @value.value
+      value_object.value
     end
 
     def value=(new_value)
-      @value.value = new_value
+      value_object.value = new_value
       broadcast(:after_update, self)
     end
   end

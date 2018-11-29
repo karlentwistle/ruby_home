@@ -14,22 +14,26 @@ module RubyHome
           'perms' => perms(characteristic),
           'format' => characteristic.format,
           'description' => characteristic.description,
-        }.merge(optional_hash(characteristic))
+        }.merge(value_hash(characteristic))
       end
 
-      def perms(characteristic)
-        characteristic.properties.map do |property|
-          RubyHome::Characteristic::PROPERTIES[property]
-        end.compact
-      end
+      private
 
-      def optional_hash(characteristic)
-        Hash.new.tap do |optional_hash|
-          if characteristic.value != nil
-            optional_hash['value'] = characteristic.value
+        HIDDEN_VALUE_OBJECTS = [ IdentifyValue ].freeze
+
+        def perms(characteristic)
+          characteristic.properties.map do |property|
+            RubyHome::Characteristic::PROPERTIES[property]
+          end.compact
+        end
+
+        def value_hash(characteristic)
+          if HIDDEN_VALUE_OBJECTS.include?(characteristic.value_object.class)
+            {}
+          else
+            { 'value' => characteristic.value }.compact
           end
         end
-      end
     end
   end
 end

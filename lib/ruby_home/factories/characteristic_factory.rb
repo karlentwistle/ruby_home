@@ -18,7 +18,7 @@ module RubyHome
         service: service,
         unit: template.unit,
         uuid: template.uuid,
-        value: value
+        value_object: value_object
       )
 
       if persisted_characteristic
@@ -50,11 +50,11 @@ module RubyHome
         @template ||= CharacteristicTemplate.find_by(name: characteristic_name)
       end
 
-      def value
-        value_object.new(template, @requested_value)
+      def value_object
+        value_object_class.new(template, @requested_value)
       end
 
-      def value_object
+      def value_object_class
         BaseValue.value_for_template(template)
       end
 
