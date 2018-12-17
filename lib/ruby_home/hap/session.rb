@@ -33,6 +33,8 @@ module RubyHome
         end
       end
 
+      alias_method :<<, :write
+
       def parse
         if decryption_time?
           received_encrypted_request!

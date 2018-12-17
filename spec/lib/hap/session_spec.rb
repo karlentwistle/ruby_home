@@ -34,7 +34,7 @@ RSpec.describe RubyHome::HAP::Session do
       end
     end
 
-    describe 'parse' do
+    describe '#parse' do
       it 'by default it returns socket' do
         expect(session.parse).to eql(io)
       end
@@ -48,7 +48,7 @@ RSpec.describe RubyHome::HAP::Session do
       end
     end
 
-    describe 'write' do
+    describe '#write' do
       it 'by default it writes inputted data' do
         session.write('hello world')
 
@@ -76,6 +76,12 @@ RSpec.describe RubyHome::HAP::Session do
         io.rewind
         expect(io.readline).to eql("ifmmp xpsme \n")
         expect(io.readline).to eql("jgnnq yqtnf \n")
+      end
+    end
+
+    describe '#<<' do
+      it 'supports writing data with << for backwards compatibility' do
+        expect(session.method(:<<)).to eql(session.method(:write))
       end
     end
 
