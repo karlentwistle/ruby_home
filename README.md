@@ -155,59 +155,59 @@ RubyHome.run
 Create a thermostat.
 
 ```ruby
-  require 'ruby_home'
+require 'ruby_home'
 
-  accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
-  thermostat = RubyHome::ServiceFactory.create(:thermostat,
-    current_heating_cooling_state: 0, # off
-    target_heating_cooling_state: 0, # off
-    current_temperature: 18,
-    target_temperature: 18,
-    temperature_display_units: 0
-  )
+accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
+thermostat = RubyHome::ServiceFactory.create(:thermostat,
+  current_heating_cooling_state: 0, # off
+  target_heating_cooling_state: 0, # off
+  current_temperature: 18,
+  target_temperature: 18,
+  temperature_display_units: 0
+)
 
-  current_heating_cooling_state = thermostat.characteristic(:current_heating_cooling_state)
-  target_heating_cooling_state = thermostat.characteristic(:target_heating_cooling_state)
-  current_temperature = thermostat.characteristic(:current_temperature)
-  target_temperature = thermostat.characteristic(:target_temperature)
-  temperature_display_units = thermostat.characteristic(:temperature_display_units)
+current_heating_cooling_state = thermostat.characteristic(:current_heating_cooling_state)
+target_heating_cooling_state = thermostat.characteristic(:target_heating_cooling_state)
+current_temperature = thermostat.characteristic(:current_temperature)
+target_temperature = thermostat.characteristic(:target_temperature)
+temperature_display_units = thermostat.characteristic(:temperature_display_units)
 
-  target_temperature.after_update do |characteristic|
-    if current_temperature.value < characteristic.value
-      target_heating_cooling_state.value = 1 # heat
-    elsif current_temperature.value > characteristic.value
-      target_heating_cooling_state.value = 2 # cool
-    end
+target_temperature.after_update do |characteristic|
+  if current_temperature.value < characteristic.value
+    target_heating_cooling_state.value = 1 # heat
+  elsif current_temperature.value > characteristic.value
+    target_heating_cooling_state.value = 2 # cool
   end
+end
 
-  target_heating_cooling_state.after_update do |characteristic|
-    if characteristic.value == 1
-      current_heating_cooling_state.value = 1  # heat
-    elsif characteristic.value == 2
-      current_heating_cooling_state.value = 2 # cool
+target_heating_cooling_state.after_update do |characteristic|
+  if characteristic.value == 1
+    current_heating_cooling_state.value = 1  # heat
+  elsif characteristic.value == 2
+    current_heating_cooling_state.value = 2 # cool
+  else
+    current_heating_cooling_state.value = 0 # off
+  end
+end
+
+Thread.new do
+  loop do
+    sleep 5 # seconds
+
+    puts "current_temperature: #{current_temperature.value.to_i}"
+    puts "target_temperature: #{target_temperature.value.to_i}"
+
+    if target_temperature.value.to_i > current_temperature.value.to_i
+      current_temperature.value += 1
+    elsif target_temperature.value.to_i < current_temperature.value.to_i
+      current_temperature.value -= 1
     else
-      current_heating_cooling_state.value = 0 # off
+      target_heating_cooling_state.value = 3 # auto
     end
   end
+end
 
-  Thread.new do
-    loop do
-      sleep 5 # seconds
-
-      puts "current_temperature: #{current_temperature.value.to_i}"
-      puts "target_temperature: #{target_temperature.value.to_i}"
-
-      if target_temperature.value.to_i > current_temperature.value.to_i
-        current_temperature.value += 1
-      elsif target_temperature.value.to_i < current_temperature.value.to_i
-        current_temperature.value -= 1
-      else
-        target_heating_cooling_state.value = 3 # auto
-      end
-    end
-  end
-
-  RubyHome.run
+RubyHome.run
 ```
 
 ## Development
