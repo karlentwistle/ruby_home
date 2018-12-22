@@ -131,7 +131,7 @@ RubyHome.run
 
 ## More examples
 
-Create a garage door opener.
+### Create a garage door opener.
 
 ```ruby
 require 'ruby_home'
@@ -152,7 +152,7 @@ end
 RubyHome.run
 ```
 
-Create a thermostat.
+### Create a thermostat.
 
 ```ruby
 require 'ruby_home'
