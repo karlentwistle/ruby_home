@@ -38,6 +38,8 @@ module RubyHome
     end
 
     def shutdown
+      hap_server.shutdown
+
       threads.each(&:exit)
     end
 

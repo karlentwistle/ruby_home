@@ -5,6 +5,7 @@ module RubyHome
         @port = port
         @host = host
         @selector = NIO::Selector.new
+        @status = :running
       end
 
       attr_reader :port, :host
@@ -17,8 +18,16 @@ module RubyHome
         monitor.value = proc { accept }
 
         loop do
-          @selector.select { |monitor| monitor.value.call(monitor) }
+          if @status == :running
+            @selector.select { |monitor| monitor.value.call(monitor) }
+          else
+            @selector.close
+          end
         end
+      end
+
+      def shutdown
+        @status = :shutdown
       end
 
       private
