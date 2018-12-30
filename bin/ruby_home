@@ -5,8 +5,8 @@ require_relative '../lib/ruby_home'
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 fan = RubyHome::ServiceFactory.create(:fan)
 
-fan.characteristic(:on).after_update do |characteristic|
-  if characteristic.value == true
+fan.on.after_update do |updated_value|
+  if updated_value
     puts "Fan switched on"
   else
     puts "Fan switched off"

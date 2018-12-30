@@ -61,7 +61,7 @@ module RubyHome
       service.instance_id
     end
 
-    delegate :==, :>, :<, :<=, :>=, to: :value
+    delegate :==, :>, :<, :<=, :>=, :+, :-, to: :value
 
     def value
       value_object.value

@@ -165,21 +165,21 @@ thermostat = RubyHome::ServiceFactory.create(:thermostat,
   temperature_display_units: 0
 )
 
-themostat.target_temperature.after_update do |updated_value|
-  if themostat.current_temperature < updated_value
-    themostat.target_heating_cooling_state = 1 # heat
-  elsif themostat.current_temperature > updated_value
-    themostat.target_heating_cooling_state = 2 # cool
+thermostat.target_temperature.after_update do |updated_value|
+  if thermostat.current_temperature < updated_value
+    thermostat.target_heating_cooling_state = 1 # heat
+  elsif thermostat.current_temperature > updated_value
+    thermostat.target_heating_cooling_state = 2 # cool
   end
 end
 
-themostat.target_heating_cooling_state.after_update do |updated_value|
+thermostat.target_heating_cooling_state.after_update do |updated_value|
   if updated_value == 1
-    themostat.current_heating_cooling_state = 1  # heat
+    thermostat.current_heating_cooling_state = 1  # heat
   elsif updated_value == 2
-    themostat.current_heating_cooling_state = 2 # cool
+    thermostat.current_heating_cooling_state = 2 # cool
   else
-    themostat.current_heating_cooling_state = 0 # off
+    thermostat.current_heating_cooling_state = 0 # off
   end
 end
 
@@ -187,15 +187,15 @@ Thread.new do
   loop do
     sleep 5 # seconds
 
-    puts "current_temperature: #{current_temperature.value.to_i}"
-    puts "target_temperature: #{target_temperature.value.to_i}"
+    puts "current_temperature: #{thermostat.current_temperature.value.to_i}"
+    puts "target_temperature: #{thermostat.target_temperature.value.to_i}"
 
-    if themostat.target_temperature.value.to_i > themostat.current_temperature.value.to_i
-      themostat.current_temperature += 1
-    elsif target_temperature.value.to_i < current_temperature.value.to_i
-      current_temperature.value -= 1
+    if thermostat.target_temperature.value.to_i > thermostat.current_temperature.value.to_i
+      thermostat.current_temperature += 1
+    elsif thermostat.target_temperature.value.to_i < thermostat.current_temperature.value.to_i
+      thermostat.current_temperature -= 1
     else
-      target_heating_cooling_state = 3 # auto
+      thermostat.target_heating_cooling_state = 3 # auto
     end
   end
 end
