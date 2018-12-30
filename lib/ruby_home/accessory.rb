@@ -13,7 +13,7 @@ module RubyHome
     end
 
     def initialize
-      @services = []
+      @services = ServiceCollection.new
       @id = next_available_accessory_id
       @@all << self
     end
@@ -21,7 +21,7 @@ module RubyHome
     attr_reader :services, :id
 
     def characteristics
-      services.flat_map(&:characteristics)
+      services.characteristics
     end
 
     def next_available_instance_id
@@ -35,18 +35,12 @@ module RubyHome
     end
 
     def contains_instance_id?(instance_id)
-      instance_ids.include?(instance_id)
+      services.any? do |service|
+        service.contains_instance_id?(instance_id)
+      end
     end
 
     private
-
-    def instance_ids
-      instances.map(&:instance_id)
-    end
-
-    def instances
-      services + characteristics
-    end
 
     def largest_instance_id
       IdentifierCache.where(accessory_id: id).map(&:instance_id).max

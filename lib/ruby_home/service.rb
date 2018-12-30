@@ -1,3 +1,5 @@
+require_relative 'service_collection'
+
 module RubyHome
   class DuplicateServiceError < StandardError; end
 
@@ -9,7 +11,7 @@ module RubyHome
       @name = name
       @description = description
       @uuid = uuid
-      @characteristics = []
+      @characteristics = CharacteristicCollection.new
     end
 
     attr_reader(
@@ -27,6 +29,10 @@ module RubyHome
       raise DuplicateServiceError if accessory.contains_instance_id?(new_id)
 
       @instance_id = new_id
+    end
+
+    def contains_instance_id?(instance_id)
+      self.instance_id == instance_id || characteristics.contains_instance_id?(instance_id)
     end
 
     delegate :id, to: :accessory, prefix: true

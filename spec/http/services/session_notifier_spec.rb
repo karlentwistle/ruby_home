@@ -4,7 +4,7 @@ RSpec.describe RubyHome::HTTP::SessionNotifier do
   let(:socket) { StringIO.new }
   let(:session) { RubyHome::HAP::Session.new(socket) }
   let(:service) { RubyHome::ServiceFactory.create(:outlet) }
-  let(:characteristic) { service.characteristic(:outlet_in_use) }
+  let(:characteristic) { service.outlet_in_use }
   subject { RubyHome::HTTP::SessionNotifier.new(session, characteristic) }
 
   describe '#after_update' do

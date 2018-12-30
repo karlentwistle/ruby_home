@@ -47,8 +47,8 @@ require 'ruby_home'
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 fan = RubyHome::ServiceFactory.create(:fan)
 
-fan.characteristic(:on).after_update do |characteristic|
-  if characteristic.value == true
+fan.on.after_update do |updated_value|
+  if updated_value
     puts "Fan switched on"
   else
     puts "Fan switched off"
@@ -84,8 +84,8 @@ fan = RubyHome::ServiceFactory.create(:fan,
   serial_number: '123-UK-A12345'
 )
 
-fan.characteristic(:on).after_update do |characteristic|
-  if characteristic.value == true
+fan.on.after_update do |updated_value|
+  if updated_value
     puts "Fan switched on"
   else
     puts "Fan switched off"
@@ -107,7 +107,6 @@ require 'open-uri'
 require 'ruby_home'
 
 fan = RubyHome::ServiceFactory.create(:fan)
-on_characteristic = fan.characteristic(:on)
 
 Thread.new do
   def fetch_fan_status
@@ -120,8 +119,8 @@ Thread.new do
 
     current_fan_status = fetch_fan_status
 
-    unless on_characteristic.value == current_fan_status
-      on_characteristic.value = current_fan_status
+    unless fan.on == current_fan_status
+      fan.on = current_fan_status
     end
   end
 end
@@ -139,13 +138,13 @@ require 'ruby_home'
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 door = RubyHome::ServiceFactory.create(:garage_door_opener)
 
-door.characteristic(:target_door_state).after_update do |characteristic|
-  if characteristic.value == 0 # open
+door.target_door_state.after_update do |updated_value|
+  if updated_value == 0 # open
     sleep 1
-    door.characteristic(:current_door_state).value = 0
-  elsif characteristic.value == 1 #closed
+    door.current_door_state = 0
+  elsif updated_value == 1 #closed
     sleep 1
-    door.characteristic(:current_door_state).value = 1
+    door.current_door_state = 1
   end
 end
 
@@ -166,27 +165,21 @@ thermostat = RubyHome::ServiceFactory.create(:thermostat,
   temperature_display_units: 0
 )
 
-current_heating_cooling_state = thermostat.characteristic(:current_heating_cooling_state)
-target_heating_cooling_state = thermostat.characteristic(:target_heating_cooling_state)
-current_temperature = thermostat.characteristic(:current_temperature)
-target_temperature = thermostat.characteristic(:target_temperature)
-temperature_display_units = thermostat.characteristic(:temperature_display_units)
-
-target_temperature.after_update do |characteristic|
-  if current_temperature.value < characteristic.value
-    target_heating_cooling_state.value = 1 # heat
-  elsif current_temperature.value > characteristic.value
-    target_heating_cooling_state.value = 2 # cool
+themostat.target_temperature.after_update do |updated_value|
+  if themostat.current_temperature < updated_value
+    themostat.target_heating_cooling_state = 1 # heat
+  elsif themostat.current_temperature > updated_value
+    themostat.target_heating_cooling_state = 2 # cool
   end
 end
 
-target_heating_cooling_state.after_update do |characteristic|
-  if characteristic.value == 1
-    current_heating_cooling_state.value = 1  # heat
-  elsif characteristic.value == 2
-    current_heating_cooling_state.value = 2 # cool
+themostat.target_heating_cooling_state.after_update do |updated_value|
+  if updated_value == 1
+    themostat.current_heating_cooling_state = 1  # heat
+  elsif updated_value == 2
+    themostat.current_heating_cooling_state = 2 # cool
   else
-    current_heating_cooling_state.value = 0 # off
+    themostat.current_heating_cooling_state = 0 # off
   end
 end
 
@@ -197,12 +190,12 @@ Thread.new do
     puts "current_temperature: #{current_temperature.value.to_i}"
     puts "target_temperature: #{target_temperature.value.to_i}"
 
-    if target_temperature.value.to_i > current_temperature.value.to_i
-      current_temperature.value += 1
+    if themostat.target_temperature.value.to_i > themostat.current_temperature.value.to_i
+      themostat.current_temperature += 1
     elsif target_temperature.value.to_i < current_temperature.value.to_i
       current_temperature.value -= 1
     else
-      target_heating_cooling_state.value = 3 # auto
+      target_heating_cooling_state = 3 # auto
     end
   end
 end
