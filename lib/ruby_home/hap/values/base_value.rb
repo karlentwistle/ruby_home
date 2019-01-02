@@ -1,9 +1,11 @@
+require 'facets/string/modulize'
+
 module RubyHome
   class BaseValue
     def self.value_for_template(template)
       return IdentifyValue if template.name == :identify
 
-      "::RubyHome::#{template.format.classify}Value".safe_constantize || NullValue
+      Object.const_get("::RubyHome::#{template.format.modulize}Value") || NullValue
     end
 
     def initialize(characteristic_template=nil, initial_value=nil)

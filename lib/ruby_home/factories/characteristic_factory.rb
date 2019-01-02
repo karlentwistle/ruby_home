@@ -44,7 +44,9 @@ module RubyHome
 
       attr_reader :service, :characteristic_name, :subtype
 
-      delegate :accessory, to: :service
+      def accessory
+        service.accessory
+      end
 
       def template
         @template ||= CharacteristicTemplate.find_by(name: characteristic_name)

@@ -14,7 +14,7 @@ module RubyHome
       end
 
       def trim_leading_zeros(input)
-        input.remove(/^0*/)
+        input.gsub(/^0*/, '')
       end
     end
   end

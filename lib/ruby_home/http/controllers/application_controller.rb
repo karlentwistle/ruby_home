@@ -1,3 +1,5 @@
+require 'logger'
+
 module RubyHome
   module HTTP
     class ApplicationController < Sinatra::Base

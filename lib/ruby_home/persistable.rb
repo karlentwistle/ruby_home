@@ -1,3 +1,5 @@
+require 'facets/cattr'
+
 module RubyHome
   module Persistable
     def self.included(base)
