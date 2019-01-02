@@ -35,7 +35,9 @@ module RubyHome
       self.instance_id == instance_id || characteristics.contains_instance_id?(instance_id)
     end
 
-    delegate :id, to: :accessory, prefix: true
+    def accessory_id
+      accessory.id
+    end
 
     def characteristic(characteristic_name)
       characteristics.find do |characteristic|

@@ -73,15 +73,15 @@ module RubyHome
         end
 
         def decryption_time?
-          controller_to_accessory_key.present?
+          !!controller_to_accessory_key
         end
 
         def accessory_to_controller_key?
-          accessory_to_controller_key.present?
+          !!accessory_to_controller_key
         end
 
         def controller_to_accessory_key?
-          controller_to_accessory_key.present?
+          !!controller_to_accessory_key
         end
     end
   end

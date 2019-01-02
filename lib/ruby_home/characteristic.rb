@@ -54,8 +54,13 @@ module RubyHome
       @instance_id = new_id
     end
 
-    delegate :accessory, to: :service
-    delegate :id, to: :accessory, prefix: true
+    def accessory
+      service.accessory
+    end
+
+    def accessory_id
+      accessory.id
+    end
 
     def service_iid
       service.instance_id

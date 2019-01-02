@@ -1,5 +1,3 @@
-require 'active_support'
-require 'active_support/core_ext/hash'
 require 'bindata'
 require 'dnssd'
 require 'hkdf'

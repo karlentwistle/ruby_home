@@ -1,3 +1,5 @@
+require 'facets/hash/symbolize_keys'
+
 module RubyHome
   module HTTP
     module ObjectSerializer

@@ -25,9 +25,9 @@ Gem::Specification.new do |spec|
   spec.executables   = ['ruby_home']
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activesupport', '~> 5.0'
   spec.add_dependency 'bindata', '~> 2.4', '>= 2.4.3'
   spec.add_dependency 'dnssd', '~> 3.0'
+  spec.add_dependency 'facets', '~> 3.1'
   spec.add_dependency 'hkdf', '~> 0.3.0'
   spec.add_dependency 'nio4r', '~> 2.3', '>= 2.3.1'
   spec.add_dependency 'oj', '3.7.6'
@@ -35,6 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'ruby_home-srp', '~> 1.2'
   spec.add_dependency 'sinatra', '2.0.5'
   spec.add_dependency 'wisper', '~> 2.0'
+
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'byebug', '~> 10.0'
   spec.add_development_dependency 'plist', '~> 3.4'
