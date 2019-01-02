@@ -28,7 +28,7 @@ RSpec.describe '/characteristics' do
 
       it 'responds with a 204 No Content HTTP Status Code' do
         fan = RubyHome::ServiceFactory.create(:fan)
-        characteristic = fan.characteristic(:on)
+        characteristic = fan.on
 
         iid = characteristic.instance_id
         aid = characteristic.accessory_id
@@ -40,7 +40,7 @@ RSpec.describe '/characteristics' do
 
       it 'responds with single characteristic' do
         fan = RubyHome::ServiceFactory.create(:fan)
-        characteristic = fan.characteristic(:on)
+        characteristic = fan.on
 
         iid = characteristic.instance_id
         aid = characteristic.accessory_id
@@ -54,9 +54,9 @@ RSpec.describe '/characteristics' do
       it 'responds with multiple characteristics' do
         garage_door_opener = RubyHome::ServiceFactory.create(:garage_door_opener)
         characteristics = [
-          garage_door_opener.characteristic(:current_door_state),
-          garage_door_opener.characteristic(:target_door_state),
-          garage_door_opener.characteristic(:obstruction_detected),
+          garage_door_opener.current_door_state,
+          garage_door_opener.target_door_state,
+          garage_door_opener.obstruction_detected
         ]
         characteristics_ids = characteristics.map do |characteristic|
           [characteristic.accessory_id, characteristic.instance_id].join('.')
@@ -116,7 +116,7 @@ RSpec.describe '/characteristics' do
 
       it 'responds with a 204 No Content HTTP Status Code' do
         fan = RubyHome::ServiceFactory.create(:fan)
-        characteristic = fan.characteristic(:on)
+        characteristic = fan.on
 
         put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
 
@@ -125,7 +125,7 @@ RSpec.describe '/characteristics' do
 
       it 'responds with an empty body' do
         fan = RubyHome::ServiceFactory.create(:fan)
-        characteristic = fan.characteristic(:on)
+        characteristic = fan.on
 
         put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
 
@@ -134,30 +134,30 @@ RSpec.describe '/characteristics' do
 
       it 'triggers single characteristic listeners' do
         fan = RubyHome::ServiceFactory.create(:fan)
-        characteristic = fan.characteristic(:on)
+        characteristic = fan.on
         listener = spy('listener')
         characteristic.subscribe(listener)
 
         put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
 
-        expect(listener).to have_received(:after_update).with(characteristic)
+        expect(listener).to have_received(:after_update).with('1')
       end
 
       it 'triggers single characteristic listeners if value is falsey' do
         fan = RubyHome::ServiceFactory.create(:fan)
-        characteristic = fan.characteristic(:on)
+        characteristic = fan.on
         listener = spy('listener')
         characteristic.subscribe(listener)
 
         put '/characteristics', characteristic_parameters(characteristic => false), {'CONTENT_TYPE' => 'application/hap+json'}
 
-        expect(listener).to have_received(:after_update).with(characteristic)
+        expect(listener).to have_received(:after_update).with(false)
       end
 
       it 'triggers multiple characteristics listeners' do
         garage_door_opener = RubyHome::ServiceFactory.create(:garage_door_opener)
-        obstruction_detected = garage_door_opener.characteristic(:obstruction_detected)
-        target_door_state = garage_door_opener.characteristic(:target_door_state)
+        obstruction_detected = garage_door_opener.obstruction_detected
+        target_door_state = garage_door_opener.target_door_state
         obstruction_detected_listener = spy('listener')
         target_door_state_listener = spy('listener')
         obstruction_detected.subscribe(obstruction_detected_listener)
@@ -165,8 +165,8 @@ RSpec.describe '/characteristics' do
 
         put '/characteristics', characteristic_parameters(obstruction_detected => '1', target_door_state => '0'), {'CONTENT_TYPE' => 'application/hap+json'}
 
-        expect(obstruction_detected_listener).to have_received(:after_update).with(obstruction_detected)
-        expect(target_door_state_listener).to have_received(:after_update).with(target_door_state)
+        expect(obstruction_detected_listener).to have_received(:after_update).with('1')
+        expect(target_door_state_listener).to have_received(:after_update).with('0')
       end
     end
   end

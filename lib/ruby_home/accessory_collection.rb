@@ -7,10 +7,8 @@ module RubyHome
       @accessories = accessories
     end
 
-    def each
-      @accessories.map do |accessory|
-        yield accessory
-      end
+    def each(&block)
+      accessories.each(&block)
     end
 
     def <<(accessory)
@@ -27,12 +25,12 @@ module RubyHome
 
     private
 
-    def services
-      accessories.flat_map(&:services)
-    end
+      def services
+        accessories.flat_map(&:services)
+      end
 
-    def characteristics
-      services.flat_map(&:characteristics)
-    end
+      def characteristics
+        services.flat_map(&:characteristics)
+      end
   end
 end

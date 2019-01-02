@@ -5,7 +5,7 @@ RSpec.describe RubyHome::Characteristic do
     it 'removes listener from list of listeners' do
       listener = double('listener')
       door = RubyHome::ServiceFactory.create(:garage_door_opener)
-      characteristic = door.characteristic(:target_door_state)
+      characteristic = door.target_door_state
 
       characteristic.subscribe(listener)
       expect(characteristic.listeners).to eq [listener]
@@ -18,7 +18,7 @@ RSpec.describe RubyHome::Characteristic do
       listener_1 = double('listener')
       listener_2 = double('listener')
       door = RubyHome::ServiceFactory.create(:garage_door_opener)
-      characteristic = door.characteristic(:target_door_state)
+      characteristic = door.target_door_state
 
       characteristic.subscribe(listener_1)
       characteristic.subscribe(listener_2)
@@ -33,12 +33,12 @@ RSpec.describe RubyHome::Characteristic do
     it 'broadcasts after_update event to subscribers' do
       listener = spy('listener')
       fan = RubyHome::ServiceFactory.create(:fan)
-      characteristic = fan.characteristic(:on)
+      characteristic = fan.on
       characteristic.subscribe listener
 
       characteristic.value = true
 
-      expect(listener).to have_received(:after_update).with(characteristic)
+      expect(listener).to have_received(:after_update).with(true)
     end
   end
 end

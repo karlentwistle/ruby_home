@@ -1,3 +1,5 @@
+require_relative 'characteristic_collection'
+
 module RubyHome
   class DuplicateCharacteristicError < StandardError; end
 
@@ -59,13 +61,21 @@ module RubyHome
       service.instance_id
     end
 
+    def method_missing(method_name, *args, &block)
+      value.send(method_name, *args, &block)
+    end
+
+    def respond_to_missing?(method_name, *args)
+      value.respond_to?(method_name, *args) || super
+    end
+
     def value
       value_object.value
     end
 
     def value=(new_value)
       value_object.value = new_value
-      broadcast(:after_update, self)
+      broadcast(:after_update, new_value)
     end
   end
 end
