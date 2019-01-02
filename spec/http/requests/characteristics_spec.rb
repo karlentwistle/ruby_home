@@ -140,7 +140,7 @@ RSpec.describe '/characteristics' do
 
         put '/characteristics', characteristic_parameters(characteristic => '1'), {'CONTENT_TYPE' => 'application/hap+json'}
 
-        expect(listener).to have_received(:after_update).with('1')
+        expect(listener).to have_received(:after_update).with(true)
       end
 
       it 'triggers single characteristic listeners if value is falsey' do
@@ -165,7 +165,7 @@ RSpec.describe '/characteristics' do
 
         put '/characteristics', characteristic_parameters(obstruction_detected => '1', target_door_state => '0'), {'CONTENT_TYPE' => 'application/hap+json'}
 
-        expect(obstruction_detected_listener).to have_received(:after_update).with('1')
+        expect(obstruction_detected_listener).to have_received(:after_update).with(true)
         expect(target_door_state_listener).to have_received(:after_update).with('0')
       end
     end

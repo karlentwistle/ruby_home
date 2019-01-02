@@ -80,7 +80,7 @@ module RubyHome
 
     def value=(new_value)
       value_object.value = new_value
-      broadcast(:after_update, new_value)
+      broadcast(:after_update, value)
     end
   end
 end
