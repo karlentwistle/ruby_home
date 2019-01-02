@@ -13,8 +13,6 @@ module RubyHome
 
         def rack_builder
           ::Rack::Builder.new do
-            use ::Rack::CommonLogger
-
             map('/accessories') { run AccessoriesController }
             map('/characteristics') { run CharacteristicsController }
             map('/identify') { run IdentifyController }
