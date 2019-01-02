@@ -6,8 +6,8 @@ module RubyHome
       @services = services
     end
 
-    def each
-      services.map { |service| yield service }
+    def each(&block)
+      services.each(&block)
     end
 
     def <<(service)

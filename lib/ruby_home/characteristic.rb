@@ -61,7 +61,13 @@ module RubyHome
       service.instance_id
     end
 
-    delegate :==, :>, :<, :<=, :>=, :+, :-, to: :value
+    def method_missing(method_name, *args, &block)
+      value.send(method_name, *args, &block)
+    end
+
+    def respond_to_missing?(method_name, *args)
+      value.respond_to?(method_name, *args) || super
+    end
 
     def value
       value_object.value

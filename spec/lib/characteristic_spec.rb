@@ -38,7 +38,7 @@ RSpec.describe RubyHome::Characteristic do
 
       characteristic.value = true
 
-      expect(listener).to have_received(:after_update).with(characteristic)
+      expect(listener).to have_received(:after_update).with(true)
     end
   end
 end

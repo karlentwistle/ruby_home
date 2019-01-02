@@ -7,8 +7,8 @@ module RubyHome
       @accessories = accessories
     end
 
-    def each
-      accessories.map { |accessory| yield accessory }
+    def each(&block)
+      accessories.each(&block)
     end
 
     def <<(accessory)

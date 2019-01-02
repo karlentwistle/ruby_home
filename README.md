@@ -190,9 +190,9 @@ Thread.new do
     puts "current_temperature: #{thermostat.current_temperature.value.to_i}"
     puts "target_temperature: #{thermostat.target_temperature.value.to_i}"
 
-    if thermostat.target_temperature.value.to_i > thermostat.current_temperature.value.to_i
+    if thermostat.target_temperature.to_i > thermostat.current_temperature.to_i
       thermostat.current_temperature += 1
-    elsif thermostat.target_temperature.value.to_i < thermostat.current_temperature.value.to_i
+    elsif thermostat.target_temperature.to_i < thermostat.current_temperature.to_i
       thermostat.current_temperature -= 1
     else
       thermostat.target_heating_cooling_state = 3 # auto

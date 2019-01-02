@@ -6,8 +6,8 @@ module RubyHome
       @characteristics = characteristics
     end
 
-    def each
-      characteristics.map { |characteristic| yield characteristic }
+    def each(&block)
+      characteristics.each(&block)
     end
 
     def <<(characteristic)
