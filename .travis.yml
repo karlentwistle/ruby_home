@@ -8,7 +8,7 @@ before_install:
 install:
   - 'gem update --system'
   - 'gem --version'
-  - 'gem install bundler -v 1.17.1'
+  - 'gem install bundler -v 2.0.1'
   - 'bundle --version'
   - bundle
 rvm:
