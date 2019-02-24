@@ -13,6 +13,18 @@ RSpec.describe RubyHome::AccessoryInfo do
     it 'returns 031-45-154' do
       expect(instance.password).to eql('031-45-154')
     end
+
+    it 'returns customised password if it\'s been set' do
+      instance.password = '999-66-333'
+      expect(instance.password).to eql('999-66-333')
+    end
+
+    it 'persists customised password' do
+      instance.password = '999-66-333'
+      instance.reload
+
+      expect(RubyHome::AccessoryInfo.persisted.password).to eql('999-66-333')
+    end
   end
 
   describe '#model_name' do
