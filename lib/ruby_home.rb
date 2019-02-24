@@ -57,7 +57,7 @@ module RubyHome
     end
 
     def hap_server
-      @_hap_server ||= HAP::Server.new('0.0.0.0', configuration.port)
+      @_hap_server ||= HAP::Server.new(configuration.bind, configuration.port)
     end
 
     def greet

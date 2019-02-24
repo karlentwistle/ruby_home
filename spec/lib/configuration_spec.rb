@@ -38,4 +38,15 @@ RSpec.describe RubyHome::Configuration do
       expect(configuration.port).to eql(8080)
     end
   end
+
+  describe "#bind" do
+    it 'defaults to 0.0.0.0' do
+      expect(configuration.bind).to eql('0.0.0.0')
+    end
+
+    it 'allows configuration of bind' do
+      configuration.bind = '127.0.0.1'
+      expect(configuration.bind).to eql('127.0.0.1')
+    end
+  end
 end
