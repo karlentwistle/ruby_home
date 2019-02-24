@@ -74,7 +74,7 @@ module RubyHome
     # Model name of the accessory (e.g. "Device1,1"). Required.
 
     def model_name
-      'RubyHome'
+      accessory_info.model_name
     end
 
     # Protocol version string <major>.<minor> (e.g. "1.0"). Required if value is

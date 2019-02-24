@@ -58,6 +58,22 @@ end
 RubyHome.run
 ```
 
+## Configuration
+
+The configuration options can be set by using the `configure` helper
+
+```ruby
+RubyHome.configure do |c|
+  c.model_name = 'My House'
+end
+```
+
+The following is the full list of available configuration options:
+
+```ruby
+model_name # The user-visible name of the accessory, e.g. "LED Bulb M123"
+```
+
 ## Customization
 
 RubyHome tries to provide sane defaults for all services. Customization of any of the options is possible.

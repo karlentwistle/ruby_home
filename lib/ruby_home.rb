@@ -18,6 +18,16 @@ module RubyHome
   Dir[File.dirname(__FILE__) + '/ruby_home/**/*.rb'].each { |file| require file }
 
   class << self
+    def configuration
+      @_configuration ||= Configuration.new
+    end
+
+    alias_method :config, :configuration
+
+    def configure
+      yield configuration
+    end
+
     def run
       trap 'INT'  do shutdown end
       trap 'TERM' do shutdown end

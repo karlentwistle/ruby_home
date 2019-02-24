@@ -22,7 +22,7 @@ module RubyHome
       end
 
       def name
-        'RubyHome'
+        accessory_info.model_name
       end
 
       def type
@@ -32,7 +32,11 @@ module RubyHome
       attr_reader :port
 
       def text_record
-        TextRecord.new(accessory_info: AccessoryInfo.instance)
+        TextRecord.new(accessory_info: accessory_info)
+      end
+
+      def accessory_info
+        AccessoryInfo.instance
       end
     end
   end

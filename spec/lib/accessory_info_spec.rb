@@ -15,6 +15,17 @@ RSpec.describe RubyHome::AccessoryInfo do
     end
   end
 
+  describe '#model_name' do
+    it 'returns RubyHome by default' do
+      expect(instance.model_name).to eql('RubyHome')
+    end
+
+    it 'returns customised model_name if it\'s been set' do
+      instance.model_name = 'Custom Model Name'
+      expect(instance.model_name).to eql('Custom Model Name')
+    end
+  end
+
   describe '#signing_key' do
     it 'returns a Ed25519::SigningKey' do
       expect(instance.signing_key).to be_a(RbNaCl::Signatures::Ed25519::SigningKey)
