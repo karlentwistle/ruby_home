@@ -27,4 +27,15 @@ RSpec.describe RubyHome::Configuration do
       expect(accessory_info.password).to eql('031-45-154')
     end
   end
+
+  describe '#port' do
+    it 'defaults to 4567' do
+      expect(configuration.port).to eql(4567)
+    end
+
+    it 'allows configuration of port' do
+      configuration.port = 8080
+      expect(configuration.port).to eql(8080)
+    end
+  end
 end
