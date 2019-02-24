@@ -5,14 +5,13 @@ RSpec.describe RubyHome::Configuration do
   subject(:configuration) { described_class.new }
 
   describe '#model_name' do
+    it 'defaults to RubyHome' do
+      expect(configuration.model_name).to eql('RubyHome')
+    end
+
     it 'allows configuration of model_name' do
       configuration.model_name = 'Custom Model Name'
       expect(configuration.model_name).to eql('Custom Model Name')
-    end
-
-    it 'sets model_name within accessory info' do
-      configuration.model_name = 'Custom Model Name'
-      expect(accessory_info.model_name).to eql('Custom Model Name')
     end
   end
 

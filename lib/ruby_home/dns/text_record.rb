@@ -1,13 +1,14 @@
 module RubyHome
   class TextRecord < DNSSD::TextRecord
-    def initialize(accessory_info:)
+    def initialize(accessory_info:, configuration:)
+      @configuration = configuration
       @accessory_info = accessory_info
       super(to_hash)
     end
 
     private
 
-    attr_reader :accessory_info
+    attr_reader :accessory_info, :configuration
 
     def to_hash
       {
@@ -74,7 +75,7 @@ module RubyHome
     # Model name of the accessory (e.g. "Device1,1"). Required.
 
     def model_name
-      accessory_info.model_name
+      configuration.model_name
     end
 
     # Protocol version string <major>.<minor> (e.g. "1.0"). Required if value is

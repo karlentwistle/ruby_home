@@ -1,8 +1,8 @@
 module RubyHome
   module DNS
     class Service
-      def initialize(port)
-        @port = port
+      def initialize(configuration: )
+        @configuration = configuration
       end
 
       def update
@@ -15,6 +15,8 @@ module RubyHome
 
       private
 
+      attr_reader :configuration
+
       def dnssd_service
         @_dnssd_service ||= begin
           DNSSD::Service.register(name, type, nil, port, nil, text_record)
@@ -22,17 +24,19 @@ module RubyHome
       end
 
       def name
-        accessory_info.model_name
+        configuration.model_name
       end
 
       def type
         '_hap._tcp'
       end
 
-      attr_reader :port
+      def port
+        configuration.port
+      end
 
       def text_record
-        TextRecord.new(accessory_info: accessory_info)
+        TextRecord.new(accessory_info: accessory_info, configuration: configuration)
       end
 
       def accessory_info

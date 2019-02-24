@@ -53,7 +53,7 @@ module RubyHome
     end
 
     def dns_service
-      @_dns_service ||= DNS::Service.new(hap_server.port)
+      @_dns_service ||= DNS::Service.new(configuration: configuration)
     end
 
     def hap_server

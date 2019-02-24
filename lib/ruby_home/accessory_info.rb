@@ -15,11 +15,9 @@ module RubyHome
     end
 
     USERNAME = -'Pair-Setup'
-    DEFAULT_MODEL_NAME = -'RubyHome'
 
-    def initialize(device_id: nil, model_name: nil, paired_clients: [], password: nil, signature_key: nil)
+    def initialize(device_id: nil, paired_clients: [], password: nil, signature_key: nil)
       @device_id = device_id
-      @model_name = model_name
       @paired_clients = paired_clients
       @password = password
       @signature_key = signature_key
@@ -41,12 +39,6 @@ module RubyHome
     def device_id
       @device_id ||= DeviceID.generate
     end
-
-    def model_name
-      @model_name ||= DEFAULT_MODEL_NAME
-    end
-
-    attr_writer :model_name
 
     def paired_clients
       @paired_clients ||= []
