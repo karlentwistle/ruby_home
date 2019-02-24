@@ -24,7 +24,7 @@ module RubyHome
       end
 
       def name
-        configuration.model_name
+        configuration.discovery_name
       end
 
       def type

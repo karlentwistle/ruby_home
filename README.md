@@ -71,7 +71,8 @@ end
 The following is the full list of available configuration options:
 
 ```ruby
-model_name # The user-visible name of the accessory, e.g. "LED Bulb M123" (String)
+discovery_name # The user-visible name of the accessory, e.g. "LED Bulb M123" (String)
+model_name # The model name of the accessory, e.g. "Device1,1" (String)
 password # Used for pairing must conform to the format XXX-XX-XXX where each X is a 0-9 digit and dashes are required, e.g. "101-48-005" (String)
 bind # The hostname or IP address of the interface to listen on, e.g. "192.168.0.2" (String)
 port # The port that should be used when starting the built-in web server, e.g. 8080 (Integer)
