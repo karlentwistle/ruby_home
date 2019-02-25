@@ -18,6 +18,16 @@ module RubyHome
   Dir[File.dirname(__FILE__) + '/ruby_home/**/*.rb'].each { |file| require file }
 
   class << self
+    def configuration
+      @_configuration ||= Configuration.new
+    end
+
+    alias_method :config, :configuration
+
+    def configure
+      yield configuration
+    end
+
     def run
       trap 'INT'  do shutdown end
       trap 'TERM' do shutdown end
@@ -43,11 +53,11 @@ module RubyHome
     end
 
     def dns_service
-      @_dns_service ||= DNS::Service.new(hap_server.port)
+      @_dns_service ||= DNS::Service.new(configuration: configuration)
     end
 
     def hap_server
-      @_hap_server ||= HAP::Server.new('0.0.0.0', 4567)
+      @_hap_server ||= HAP::Server.new(configuration.host, configuration.port)
     end
 
     def greet

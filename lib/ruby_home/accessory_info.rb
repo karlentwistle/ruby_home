@@ -31,6 +31,11 @@ module RubyHome
       @password ||= Password.generate
     end
 
+    def password=(new_password)
+      @password = new_password
+      save
+    end
+
     def device_id
       @device_id ||= DeviceID.generate
     end
