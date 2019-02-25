@@ -75,7 +75,7 @@ The following is the full list of available configuration options:
 | `discovery_name` |  The user-visible name of the accessory | `"RubyHome"` | `"My Home"` | String |
 | `model_name` |  The model name of the accessory | `"RubyHome"` | `"Device1,1"` | String |
 | `password` | Used for pairing must conform to the format XXX-XX-XXX where each X is a 0-9 digit and dashes are required | Randomly generated | `"101-48-005"` | String |
-| `bind` | The hostname or IP address of the interface to listen on | `"0.0.0.0"` | `"192.168.0.2"` | String  |
+| `host` | The hostname or IP address of the interface to listen on | `"0.0.0.0"` | `"192.168.0.2"` | String  |
 | `port` | The port that should be used when starting the built-in web server | `4567` | `8080` | Integer |
 
 ## Customization

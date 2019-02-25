@@ -7,7 +7,7 @@ module RubyHome
     end
 
     DEFAULT_NAME = -'RubyHome'
-    DEFAULT_BIND = -'0.0.0.0'
+    DEFAULT_HOST = -'0.0.0.0'
     DEFAULT_PORT = 4567
     DEFAULT_MODEL_NAME = DEFAULT_NAME
     DEFAULT_DISCOVERY_NAME = DEFAULT_NAME
@@ -24,11 +24,11 @@ module RubyHome
       @port || DEFAULT_PORT
     end
 
-    def bind
-      @bind || DEFAULT_BIND
+    def host
+      @host || DEFAULT_HOST
     end
 
-    attr_writer :discovery_name, :model_name,:bind, :port
+    attr_writer :discovery_name, :model_name, :host, :port
 
     def_delegators :@accessory_info, :password, :password=
   end

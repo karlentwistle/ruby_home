@@ -49,14 +49,14 @@ RSpec.describe RubyHome::Configuration do
     end
   end
 
-  describe "#bind" do
+  describe "#host" do
     it 'defaults to 0.0.0.0' do
-      expect(configuration.bind).to eql('0.0.0.0')
+      expect(configuration.host).to eql('0.0.0.0')
     end
 
-    it 'allows configuration of bind' do
-      configuration.bind = '127.0.0.1'
-      expect(configuration.bind).to eql('127.0.0.1')
+    it 'allows configuration of host' do
+      configuration.host = '127.0.0.1'
+      expect(configuration.host).to eql('127.0.0.1')
     end
   end
 end
