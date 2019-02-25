@@ -19,7 +19,7 @@ module RubyHome
 
       def dnssd_service
         @_dnssd_service ||= begin
-          DNSSD::Service.register(name, type, nil, port, nil, text_record)
+          DNSSD::Service.register(name, type, nil, port, host, text_record)
         end
       end
 
@@ -28,11 +28,17 @@ module RubyHome
       end
 
       def type
-        '_hap._tcp'
+        -'_hap._tcp'
       end
 
       def port
         configuration.port
+      end
+
+      def host
+        return nil if configuration.host == Configuration::DEFAULT_HOST
+
+        configuration.host
       end
 
       def text_record
