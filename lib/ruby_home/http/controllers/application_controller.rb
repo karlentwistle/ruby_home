@@ -40,7 +40,7 @@ module RubyHome
       def tlv(object)
         logger.debug "Response"
         logger.debug object.inspect
-        HAP::TLV.encode(object)
+        TLV.encode(object)
       end
 
       def logger
@@ -65,7 +65,7 @@ module RubyHome
       end
 
       def _unpack_request
-        HAP::TLV.read(request_body).tap do |request_tlv|
+        TLV.decode(request_body).tap do |request_tlv|
           logger.debug "Request"
           logger.debug request_tlv.inspect
         end

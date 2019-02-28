@@ -53,7 +53,7 @@ module RubyHome
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(session.session_key)
         nonce = HexHelper.pad('PV-Msg03')
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
-        unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
+        unpacked_decrypted_data = TLV.decode(decrypted_data)
 
         if accessory_info.paired_clients.any? {|h| h[:identifier] == unpacked_decrypted_data[:identifier]}
           shared_secret = HAP::Crypto::SessionKey.new(session.shared_secret)

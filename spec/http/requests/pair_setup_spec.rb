@@ -128,7 +128,7 @@ RSpec.describe 'POST /pair-setup' do
 
     context 'invalid verify response request' do
       context 'no public_key supplied' do
-        let(:data) { RubyHome::HAP::TLV.encode(state: 3) }
+        let(:data) { RubyHome::TLV.encode(state: 3) }
 
         it 'responds with error' do
           expect(unpacked_body).to include(state: 4, error: 2)
@@ -137,7 +137,7 @@ RSpec.describe 'POST /pair-setup' do
 
       context 'SRP_verify verification fails' do
         let(:data) do
-          RubyHome::HAP::TLV.encode(state: 3, public_key: 'foo', proof: 'foo')
+          RubyHome::TLV.encode(state: 3, public_key: 'foo', proof: 'foo')
         end
 
         it 'responds with error' do

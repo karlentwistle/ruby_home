@@ -60,7 +60,7 @@ module RubyHome
 
         nonce = HexHelper.pad('PS-Msg05')
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
-        unpacked_decrypted_data = HAP::TLV.read(decrypted_data)
+        unpacked_decrypted_data = TLV.decode(decrypted_data)
 
         iosdevicepairingid = unpacked_decrypted_data[:identifier]
         iosdevicesignature = unpacked_decrypted_data[:signature]
