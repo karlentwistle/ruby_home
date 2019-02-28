@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'nio4r', '~> 2.3', '>= 2.3.1'
   spec.add_dependency 'oj', '3.7.9'
   spec.add_dependency 'rbnacl', '~> 6.0'
-  spec.add_dependency 'ruby_home-srp', '~> 1.2'
+  spec.add_dependency 'ruby_home-srp', '~> 1.3'
   spec.add_dependency 'ruby_home-tlv', '~> 0.1.0'
   spec.add_dependency 'sinatra', '2.0.5'
   spec.add_dependency 'wisper', '~> 2.0'
