@@ -1,89 +1,54 @@
 module RubyHome
   module HAP
-    class Server
-      def initialize(host, port)
-        @port = port
-        @host = host
-        @selector = NIO::Selector.new
-        @status = :running
-      end
+    class Server < ::WEBrick::HTTPServer
+      def run(sock)
+        session = Session.new(sock)
 
-      attr_reader :port, :host
+        while true
+          req = HAPRequest.new(@config, session: session)
+          res = HAPResponse.new(@config)
+          server = self
+          begin
+            timeout = @config[:RequestTimeout]
+            while timeout > 0
+              break if sock.to_io.wait_readable(0.5)
+              break if @status != :Running
+              timeout -= 0.5
+            end
+            raise ::WEBrick::HTTPStatus::EOFError if timeout <= 0 || @status != :Running
+            raise ::WEBrick::HTTPStatus::EOFError if sock.eof?
 
-      def run
-        puts "Listening on #{host}:#{port}"
-        @server = TCPServer.new(host, port)
+            req.parse(session.parse)
 
-        monitor = @selector.register(@server, :r)
-        monitor.value = proc { accept }
+            res.request_method = req.request_method
+            res.request_uri = req.request_uri
+            res.request_http_version = req.http_version
+            res.keep_alive = req.keep_alive?
+            server = lookup_server(req) || self
 
-        loop do
-          if @status == :running
-            @selector.select { |monitor| monitor.value.call(monitor) }
-          else
-            @selector.close
+            server.service(req, res)
+          rescue ::WEBrick::HTTPStatus::EOFError, ::WEBrick::HTTPStatus::RequestTimeout => ex
+            res.set_error(ex)
+          rescue ::WEBrick::HTTPStatus::Error => ex
+            @logger.error(ex.message)
+            res.set_error(ex)
+          rescue ::WEBrick::HTTPStatus::Status => ex
+            res.status = ex.code
+          rescue StandardError => ex
+            @logger.error(ex)
+            res.set_error(ex, true)
+          ensure
+            if req.request_line
+              if req.keep_alive? && res.keep_alive?
+                req.fixup()
+              end
+              res.send_response(session)
+              server.access_log(@config, req, res)
+            end
           end
+          break unless req.keep_alive?
+          break unless res.keep_alive?
         end
-      end
-
-      def shutdown
-        @status = :shutdown
-      end
-
-      private
-
-      SESSIONS = {}
-
-      def accept
-        socket = @server.accept
-        monitor = @selector.register(socket, :r)
-        monitor.value = proc { read(socket) }
-      end
-
-      def upstream
-        @_upstream ||= HTTP::Application.run
-      end
-
-      def webrick_config
-        @_webrick_config ||= WEBrick::Config::HTTP
-      end
-
-      def read(socket)
-        return close(socket) if socket.eof?
-
-        request = HAPRequest.new(webrick_config)
-        response = HAPResponse.new(webrick_config)
-
-        session = SESSIONS[socket] ||= Session.new(socket)
-        request.session = session
-
-        request.parse(session.parse)
-        response.request_method = request.request_method
-        response.request_uri = request.request_uri
-        response.request_http_version = request.http_version
-        response.keep_alive = request.keep_alive?
-
-        upstream.service(request, response)
-
-        if request.request_line
-          if request.keep_alive? && response.keep_alive?
-            request.fixup()
-          end
-          response.send_response(session)
-        end
-
-        return close(socket) unless request.keep_alive?
-        return close(socket) unless response.keep_alive?
-      rescue Errno::ECONNABORTED, Errno::ECONNRESET, Errno::EHOSTUNREACH,
-             Errno::EINVAL, Errno::ENOPROTOOPT, Errno::EPROTO, Errno::ETIMEDOUT
-        close(socket)
-      rescue EOFError
-        close(socket)
-      end
-
-      def close(socket)
-        @selector.deregister(socket)
-        socket.close
       end
     end
   end
