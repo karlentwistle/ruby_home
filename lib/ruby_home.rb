@@ -2,7 +2,6 @@ require 'bindata'
 require 'dnssd'
 require 'facets/hash/slice'
 require 'hkdf'
-require 'nio'
 require 'oj'
 require 'rack'
 require 'rbnacl'
@@ -66,7 +65,7 @@ module RubyHome
     end
 
     def hap_server
-      @_hap_server ||= HAP::Server.new(configuration.host, configuration.port)
+      @_hap_server ||= HAP::ServerHandler.new(configuration: configuration)
     end
 
     def greet
