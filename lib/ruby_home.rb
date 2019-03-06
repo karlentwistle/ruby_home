@@ -15,7 +15,15 @@ require 'wisper'
 require 'yaml'
 
 module RubyHome
-  Dir[File.dirname(__FILE__) + '/ruby_home/**/*.rb'].each { |file| require file }
+  [
+    '/ruby_home/hap/**/*.rb',
+    '/ruby_home/http/**/*.rb',
+    '/ruby_home/factories/**/*.rb',
+    '/ruby_home/dns/**/*.rb',
+    '/ruby_home/*.rb'
+  ].each do |pattern|
+    Dir[File.dirname(__FILE__) + pattern].each { |file| require file }
+  end
 
   class << self
     def configuration
