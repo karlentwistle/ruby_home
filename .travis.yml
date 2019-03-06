@@ -19,7 +19,7 @@ os:
 addons:
   apt:
     packages:
-      - libsodium-dev
+      - libavahi-compat-libdnssd-dev 
   homebrew:
     packages:
       - libsodium
