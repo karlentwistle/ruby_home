@@ -1,5 +1,4 @@
 dist: xenial
-osx_image: xcode10.1
 cache: bundler
 language: ruby
 install:
@@ -19,7 +18,7 @@ os:
 addons:
   apt:
     packages:
-      - libavahi-compat-libdnssd-dev 
+      - libavahi-compat-libdnssd-dev
   homebrew:
     packages:
       - libsodium
