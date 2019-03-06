@@ -16,9 +16,12 @@ rvm:
   - 2.5
   - 2.6
   - ruby-head
-os:
-  - linux
-  - osx
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+    - os: osx
+      osx_image: xcode10.1
 addons:
   apt:
     packages:
