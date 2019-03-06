@@ -1,6 +1,11 @@
 dist: xenial
 cache: bundler
 language: ruby
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y software-properties-common; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libsodium-dev; fi
 install:
   - 'gem update --system'
   - 'gem --version'
@@ -18,7 +23,7 @@ os:
 addons:
   apt:
     packages:
-      - libavahi-compat-libdnssd-dev libsodium-dev
+      - libavahi-compat-libdnssd-dev
   homebrew:
     packages:
       - libsodium
