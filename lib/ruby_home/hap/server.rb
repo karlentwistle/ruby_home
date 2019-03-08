@@ -9,13 +9,6 @@ module RubyHome
           res = HAPResponse.new(@config)
           server = self
           begin
-            timeout = @config[:RequestTimeout]
-            while timeout > 0
-              break if sock.to_io.wait_readable(0.5)
-              break if @status != :Running
-              timeout -= 0.5
-            end
-            raise ::WEBrick::HTTPStatus::EOFError if timeout <= 0 || @status != :Running
             raise ::WEBrick::HTTPStatus::EOFError if sock.eof?
 
             req.parse(session.parse)
