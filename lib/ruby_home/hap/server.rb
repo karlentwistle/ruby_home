@@ -9,6 +9,11 @@ module RubyHome
           res = HAPResponse.new(@config)
           server = self
           begin
+            while true
+              break if sock.to_io.wait_readable(0.5)
+              break if @status != :Running
+            end
+            raise ::WEBrick::HTTPStatus::EOFError if @status != :Running
             raise ::WEBrick::HTTPStatus::EOFError if sock.eof?
 
             req.parse(session.parse)
