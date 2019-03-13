@@ -7,7 +7,6 @@ module RubyHome
         while true
           req = HAPRequest.new(@config, session: session)
           res = HAPResponse.new(@config)
-          server = self
           begin
             while true
               break if sock.to_io.wait_readable(0.5)
@@ -22,9 +21,8 @@ module RubyHome
             res.request_uri = req.request_uri
             res.request_http_version = req.http_version
             res.keep_alive = req.keep_alive?
-            server = lookup_server(req) || self
 
-            server.service(req, res)
+            service(req, res)
           rescue ::WEBrick::HTTPStatus::EOFError, ::WEBrick::HTTPStatus::RequestTimeout => ex
             res.set_error(ex)
           rescue ::WEBrick::HTTPStatus::Error => ex
@@ -41,7 +39,7 @@ module RubyHome
                 req.fixup()
               end
               res.send_response(session)
-              server.access_log(@config, req, res)
+              access_log(@config, req, res)
             end
           end
           break unless req.keep_alive?
