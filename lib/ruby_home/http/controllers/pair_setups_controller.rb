@@ -38,9 +38,9 @@ module RubyHome
           device_proof: unpack_request[:proof],
           srp_session: session.srp_session,
           public_key: unpack_request[:public_key],
-        )
+        ).run
 
-        if verify_srp.valid?
+        if verify_srp.success?
           session.session_key = verify_srp.session_key
           session.srp_session = nil
 
