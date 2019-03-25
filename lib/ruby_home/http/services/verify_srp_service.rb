@@ -9,7 +9,7 @@ module RubyHome
     def run
       if valid_session?
         OpenStruct.new(
-          success?: valid_session?,
+          success?: true,
           session_key: session_key,
           server_proof: verify_session_bytes
         )

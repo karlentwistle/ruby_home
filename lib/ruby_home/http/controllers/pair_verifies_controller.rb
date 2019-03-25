@@ -48,18 +48,16 @@ module RubyHome
       end
 
       def verify_finish_response
-        encrypted_data = unpack_request[:encrypted_data]
+        verify_finish = VerifyFinishService.new(
+          encrypted_data: unpack_request[:encrypted_data],
+          session_key: session.session_key,
+          shared_secret: session.shared_secret,
+          accessory_info: accessory_info
+        ).run
 
-        chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(session.session_key)
-        nonce = HexHelper.pad('PV-Msg03')
-        decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
-        unpacked_decrypted_data = TLV.decode(decrypted_data)
-
-        if accessory_info.paired_clients.any? {|h| h[:identifier] == unpacked_decrypted_data[:identifier]}
-          shared_secret = HAP::Crypto::SessionKey.new(session.shared_secret)
-
-          session.controller_to_accessory_key = shared_secret.controller_to_accessory_key
-          session.accessory_to_controller_key = shared_secret.accessory_to_controller_key
+        if verify_finish.success?
+          session.controller_to_accessory_key = verify_finish.controller_to_accessory_key
+          session.accessory_to_controller_key = verify_finish.accessory_to_controller_key
 
           session.session_key = nil
           session.shared_secret = nil
