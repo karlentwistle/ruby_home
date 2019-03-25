@@ -92,6 +92,12 @@ RSpec.describe 'POST /pair-verify' do
         post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
         expect(session.session_key).to be_nil
       end
+
+      it 'updates dns service status_flags' do
+        post '/pair-verify', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+
+        expect(dns_text_record('sf')).to eql('0')
+      end
     end
 
     context 'iOSDevicePairingID does not exists in list of paired controllers.' do

@@ -9,6 +9,8 @@ module RubyHome
 
     def run
       if paired_client_exists?
+        RubyHome.dns_service.update
+
         OpenStruct.new(
           success?: true,
           controller_to_accessory_key: shared_secret.controller_to_accessory_key,
