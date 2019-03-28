@@ -24,7 +24,6 @@ addons:
   apt:
     packages:
       - libavahi-compat-libdnssd-dev
-      - avahi-discover
   homebrew:
     packages:
       - libsodium

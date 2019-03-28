@@ -6,6 +6,8 @@ module RubyHome
       end
 
       def update
+        return if RbConfig::CONFIG['target_os'] =~ /linux/
+
         dnssd_service.add_record(DNSSD::Record::TXT, text_record.encode)
       end
 

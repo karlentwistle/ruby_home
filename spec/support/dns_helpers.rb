@@ -1,5 +1,7 @@
 module DNSHelpers
   def dns_text_record(key)
+    skip "not supported" if RbConfig::CONFIG['target_os'] =~ /linux/
+
     service = DNSSD::Service.browse '_hap._tcp'
     reply = service.each.find { |r| r.name == "RubyHome" }
     service.stop
