@@ -35,26 +35,17 @@ module RubyHome
           Host: bind_address,
           ServerSoftware: 'RubyHome',
           Logger: server_logger,
-          AccessLog: access_logger
+          AccessLog: []
         }
       end
 
       def server_logger
-        if ENV['DEBUG']
+        if ENV['DEBUG'] == 'debug'
           WEBrick::Log::new(STDOUT, WEBrick::BasicLog::DEBUG)
+        elsif ENV['DEBUG'] == 'info'
+          WEBrick::Log::new(STDOUT, WEBrick::BasicLog::INFO)
         else
           WEBrick::Log::new("/dev/null", WEBrick::BasicLog::WARN)
-        end
-      end
-
-      def access_logger
-        if ENV['DEBUG']
-          [
-            [ STDOUT, WEBrick::AccessLog::COMMON_LOG_FORMAT ],
-            [ STDOUT, WEBrick::AccessLog::REFERER_LOG_FORMAT ]
-          ]
-        else
-          []
         end
       end
 

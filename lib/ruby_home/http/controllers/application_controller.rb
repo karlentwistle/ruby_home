@@ -5,10 +5,17 @@ module RubyHome
     class ApplicationController < Sinatra::Base
       disable :protection
 
-      if ENV['DEBUG']
-        enable :logging
-        set :logger, Logger.new(STDOUT)
+      logger = Logger.new(STDOUT)
+      logger.level = case ENV['DEBUG']
+      when 'debug'
+        Logger::DEBUG
+      when 'info'
+        Logger::INFO
+      else
+        Logger::WARN
       end
+      set :logger, logger
+      enable :logging if ENV['DEBUG']
 
       before do
         logger.debug "Session"
