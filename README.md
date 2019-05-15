@@ -17,7 +17,7 @@ For OS X users, libsodium is available via homebrew and can be installed with:
 
     brew install libsodium
 
-For Debian users, libsodium is available both via apt:
+For Debian users, libsodium is available via apt:
 
     sudo apt-get install libsodium-dev
 
@@ -33,13 +33,13 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Or install it yourself with:
 
     $ gem install ruby_home
 
 ## Basic usage
 
-Create a fan with an on/off switch.
+Create a fan with an on/off switch:
 
 ```ruby
 require 'ruby_home'
@@ -60,7 +60,7 @@ RubyHome.run
 
 ## Configuration
 
-The configuration options can be set by using the `configure` helper
+The configuration options can be set by using the `configure` helper:
 
 ```ruby
 RubyHome.configure do |c|
@@ -74,7 +74,7 @@ The following is the full list of available configuration options:
 |---|---|---|---|---|
 | `discovery_name` |  The user-visible name of the accessory | `"RubyHome"` | `"My Home"` | String |
 | `model_name` |  The model name of the accessory | `"RubyHome"` | `"Device1,1"` | String |
-| `password` | Used for pairing must conform to the format XXX-XX-XXX where each X is a 0-9 digit and dashes are required | Randomly generated | `"101-48-005"` | String |
+| `password` | Used for pairing, must conform to the format XXX-XX-XXX where each X is a 0-9 digit and dashes are required | Randomly generated | `"101-48-005"` | String |
 | `host` | The hostname or IP address of the interface to listen on | `"0.0.0.0"` | `"192.168.0.2"` | String  |
 | `port` | The port that should be used when starting the built-in web server | `4567` | `8080` | Integer |
 
@@ -117,9 +117,9 @@ RubyHome.run
 
 ## Updating a characteristics value
 
-If you have a service with characteristics that can be changed outside of Ruby Home. You'll want to keep Ruby Home in sync with these modifications. Otherwise, the characteristics current value won't correspond with reality. The simplest way to do this is a background job that periodically polls the devices current status and updates the corresponding characteristics value if it's changed.
+If you have a service with characteristics that can be changed outside of Ruby Home, you'll want to keep Ruby Home in sync with these modifications. Otherwise, the characteristics current value won't correspond with reality. The simplest way to do this is a background job that periodically polls the devices current status and updates the corresponding characteristics value if it's changed.
 
-Given a fan which can be switched on / off with a remote control. Which has a JSON API endpoint at http://example.org/fan_status.json that returns its current status `{ "on": true }` or `{ "on": false }`. We can spawn a thread that keeps polling the fans current status and if its changed update our fan service "on" characteristic.
+Given a fan which can be switched on / off with a remote control, which has a JSON API endpoint at http://example.org/fan_status.json that returns its current status `{ "on": true }` or `{ "on": false }`, we can spawn a thread that keeps polling the fans current status and if it's changed update our fan service "on" characteristic.
 
 ```ruby
 require 'json'
@@ -150,7 +150,7 @@ RubyHome.run
 
 ## More examples
 
-### Create a garage door opener.
+### Create a garage door opener
 
 ```ruby
 require 'ruby_home'
@@ -171,7 +171,7 @@ end
 RubyHome.run
 ```
 
-### Create a thermostat.
+### Create a thermostat
 
 ```ruby
 require 'ruby_home'
