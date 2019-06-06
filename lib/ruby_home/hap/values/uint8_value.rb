@@ -13,7 +13,24 @@ module RubyHome
       end
 
       def valid_values
-        template.constraints.fetch('ValidValues')
+        defined_values || range_values
+      end
+
+      def defined_values
+        template.constraints.dig('ValidValues')
+      end
+
+      def range_values
+        values = {}
+        min = template.constraints.dig('MinimumValue')
+        max = template.constraints.dig('MaximumValue')
+        step = template.constraints.dig('StepValue')
+
+        (min..max).step(step) do |n|
+          values[n.to_s] = n.to_s
+        end
+
+        values
       end
   end
 end
