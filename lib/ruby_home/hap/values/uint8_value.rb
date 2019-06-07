@@ -13,7 +13,17 @@ module RubyHome
       end
 
       def valid_values
-        template.constraints.fetch('ValidValues')
+        defined_values || range_values || raise(UnknownValueError, "Constraint contains an unrecognized list of values: #{template.constraints.inspect }")
+      end
+
+      def defined_values
+        template.constraints.dig('ValidValues')
+      end
+
+      def range_values
+        if min = template.constraints.dig('MinimumValue')
+          { min.to_s => min }
+        end
       end
   end
 end
