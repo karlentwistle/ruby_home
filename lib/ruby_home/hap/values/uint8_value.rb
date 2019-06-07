@@ -13,7 +13,7 @@ module RubyHome
       end
 
       def valid_values
-        defined_values || range_values
+        defined_values || range_values || raise(UnknownValueError, "Constraint contains an unrecognized list of values: #{template.constraints.inspect }")
       end
 
       def defined_values
@@ -21,16 +21,9 @@ module RubyHome
       end
 
       def range_values
-        values = {}
-        min = template.constraints.dig('MinimumValue')
-        max = template.constraints.dig('MaximumValue')
-        step = template.constraints.dig('StepValue')
-
-        (min..max).step(step) do |n|
-          values[n.to_s] = n.to_s
+        if min = template.constraints.dig('MinimumValue')
+          { min.to_s => min }
         end
-
-        values
       end
   end
 end
