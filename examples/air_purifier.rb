@@ -5,7 +5,7 @@ air_purifier = RubyHome::ServiceFactory.create(:air_purifier,
   target_air_purifier_state: 0, # required
   current_air_purifier_state: 0, # required
   active: 0, # required
-  name: "air_purifier", # optional
+  name: "air purifier", # optional
   rotation_speed: 0, # optional
   swing_mode: 1, # optional
   lock_physical_controls: 0, # optional
