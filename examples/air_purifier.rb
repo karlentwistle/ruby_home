@@ -11,22 +11,23 @@ air_purifier = RubyHome::ServiceFactory.create(:air_purifier,
   lock_physical_controls: 0, # optional
 )
 
+target_air_purifier_state_values = {
+  0 => 'Manual',
+  1 => 'Auto',
+}
 air_purifier.target_air_purifier_state.after_update do |target_air_purifier_state|
-  if target_air_purifier_state == 0
-    puts "air purifier target air purifier state disabled"
-  elsif target_air_purifier_state == 1
-    puts "air purifier target air purifier state enabled"
-  end
+  state = target_air_purifier_state_values[target_air_purifier_state]
+  puts "air purifier target air purifier state #{state}"
 end
 
+current_air_purifier_state_values = {
+  0 => 'Inactive',
+  1 => 'Idle',
+  2 => 'Purifying Air',
+}
 air_purifier.current_air_purifier_state.after_update do |current_air_purifier_state|
-  if current_air_purifier_state == 0
-    puts "air purifier current air purifier state is inactive"
-  elsif current_air_purifier_state == 1
-    puts "air purifier current air purifier state is idle"
-  elsif current_air_purifier_state == 2
-    puts "air purifier current air purifier state is purifying air"
-  end
+  state = current_air_purifier_state_values[current_air_purifier_state]
+  puts "air purifier current air purifier state is #{state}"
 end
 
 air_purifier.active.after_update do |active|
