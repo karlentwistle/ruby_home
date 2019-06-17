@@ -2,10 +2,10 @@ require 'ruby_home'
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 fan = RubyHome::ServiceFactory.create(:fan,
-  name: "Fan",
-  on: false,
-  rotation_speed: 50,
-  rotation_direction: 0 # clockwise
+  on: false, # required
+  name: "fan", # optional
+  rotation_speed: 50, # optional
+  rotation_direction: 0 # optional
 )
 
 fan.on.after_update do |on|

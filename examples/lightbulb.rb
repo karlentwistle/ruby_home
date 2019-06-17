@@ -2,11 +2,11 @@ require 'ruby_home'
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 lightbulb = RubyHome::ServiceFactory.create(:lightbulb,
-  name: "lightbulb",
-  on: true,
-  brightness: 100,
-  saturation: 100,
-  hue: 360
+  on: true, # required
+  name: "lightbulb", # optional
+  brightness: 100, # optional
+  saturation: 100, # optional
+  hue: 360 # optional
 )
 
 lightbulb.on.after_update do |on|
