@@ -38,9 +38,9 @@ end
 
 carbon_monoxide_sensor.status_low_battery.after_update do |status_low_battery|
   if status_low_battery == 0
-    puts "battery service status low battery is battery level normal"
+    puts "carbon monoxide sensor low battery is battery level normal"
   elsif status_low_battery == 1
-    puts "battery service status low battery is battery level low"
+    puts "carbon monoxide sensor low battery is battery level low"
   end
 end
 
