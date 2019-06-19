@@ -34,7 +34,6 @@ contact_sensor.status_tampered.after_update do |status_tampered|
   end
 end
 
-
 contact_sensor.status_fault.after_update do |status_fault|
   if status_fault == 0
     puts "contact sensor status_fault no fault"
