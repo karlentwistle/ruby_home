@@ -61,6 +61,8 @@ carbon_monoxide_sensor.status_active.after_update do |active|
 end
 
 Thread.new do
+  sleep 30
+  
   loop do
     carbon_monoxide_sensor.carbon_monoxide_detected = (0..1).to_a.sample
     carbon_monoxide_sensor.carbon_monoxide_peak_level = (0..100).to_a.sample
