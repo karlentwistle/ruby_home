@@ -29,5 +29,4 @@ lightbulb.hue.after_update do |hue|
   puts "lightbulb is at #{hue} hue"
 end
 
-
 RubyHome.run
