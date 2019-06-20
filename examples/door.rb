@@ -1,5 +1,6 @@
 require 'ruby_home'
 
+accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 door = RubyHome::ServiceFactory.create(:door,
   target_position: 0, # required
   position_state: 1, # required
