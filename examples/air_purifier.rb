@@ -46,9 +46,9 @@ end
 
 air_purifier.swing_mode.after_update do |swing_mode|
   if swing_mode == 0
-    puts "air purifier swing is enabled"
-  elsif swing_mode == 1
     puts "air purifier swing is disabled"
+  elsif swing_mode == 1
+    puts "air purifier swing is enabled"
   end
 end
 
