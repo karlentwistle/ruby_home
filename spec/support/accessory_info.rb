@@ -1,5 +1,8 @@
 RSpec.configure do |config|
   config.before(:suite) do
+    if File.exists?(RubyHome::AccessoryInfo.source)
+      File.delete(RubyHome::AccessoryInfo.source)
+    end
     source = File.join(File.dirname(__FILE__), '/../tmp/accessory_info.yml')
     RubyHome::AccessoryInfo.source = source
   end
@@ -16,11 +19,5 @@ RSpec.configure do |config|
 
   config.after(:each) do
     RubyHome::AccessoryInfo.truncate
-  end
-
-  config.after(:suite) do
-    if File.exists?(RubyHome::AccessoryInfo.source)
-      File.delete(RubyHome::AccessoryInfo.source)
-    end
   end
 end
