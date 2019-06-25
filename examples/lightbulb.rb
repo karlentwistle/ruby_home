@@ -11,9 +11,9 @@ lightbulb = RubyHome::ServiceFactory.create(:lightbulb,
 
 lightbulb.on.after_update do |on|
   if on
-    puts "lightbulb is off"
-  else
     puts "lightbulb is on"
+  else
+    puts "lightbulb is off"
   end
 end
 

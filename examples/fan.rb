@@ -10,9 +10,9 @@ fan = RubyHome::ServiceFactory.create(:fan,
 
 fan.on.after_update do |on|
   if on
-    puts "fan is off"
-  else
     puts "fan is on"
+  else
+    puts "fan is off"
   end
 end
 
