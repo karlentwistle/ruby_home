@@ -7,6 +7,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libsodium-dev; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install libsodium; fi
 install:
   - 'gem update --system'
   - 'gem --version'
@@ -25,8 +26,5 @@ addons:
   apt:
     packages:
       - libavahi-compat-libdnssd-dev
-  homebrew:
-    packages:
-      - libsodium
 notifications:
   email: false
