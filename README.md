@@ -58,6 +58,42 @@ end
 RubyHome.run
 ```
 
+## Examples
+
+The following example services are available:
+
+### Sensors
+- [Air quality sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/air_quality_sensor.rb)
+- [Carbon dioxide sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/carbon_dioxide_sensor.rb)
+- [Carbon monoxide sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/carbon_monoxide_sensor.rb)
+- [Contact sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/contact_sensor.rb)
+- [Humidity sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/humidity_sensor.rb)
+- [Leak sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/leak_sensor.rb)
+- [Light sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/light_sensor.rb)
+- [Motion sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/motion_sensor.rb)
+- [Occupancy sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/occupancy_sensor.rb)
+- [Smoke sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/smoke_sensor.rb)
+- [Temperature sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/temperature_sensor.rb)
+
+### Controlables 
+- [Air purifier](https://github.com/karlentwistle/ruby_home/blob/master/examples/air_purifier.rb)
+- [Battery service](https://github.com/karlentwistle/ruby_home/blob/master/examples/battery_service.rb)
+- [Door](https://github.com/karlentwistle/ruby_home/blob/master/examples/door.rb)
+- [Fan](https://github.com/karlentwistle/ruby_home/blob/master/examples/fan.rb)
+- [Fan V2](https://github.com/karlentwistle/ruby_home/blob/master/examples/fan_v2.rb)
+- [Garage door opener](https://github.com/karlentwistle/ruby_home/blob/master/examples/garage_door_opener.rb)
+- [Heater cooler](https://github.com/karlentwistle/ruby_home/blob/master/examples/heater_cooler.rb)
+- [Humidifier dehumidifier](https://github.com/karlentwistle/ruby_home/blob/master/examples/humidifier_dehumidifier.rb)
+- [Lightbulb](https://github.com/karlentwistle/ruby_home/blob/master/examples/lightbulb.rb)
+- [Lock mechanism](https://github.com/karlentwistle/ruby_home/blob/master/examples/lock_mechanism.rb)
+- [Outlet](https://github.com/karlentwistle/ruby_home/blob/master/examples/outlet.rb)
+- [Security system](https://github.com/karlentwistle/ruby_home/blob/master/examples/security_system.rb)
+- [Switch](https://github.com/karlentwistle/ruby_home/blob/master/examples/switch.rb)
+- [Thermostat](https://github.com/karlentwistle/ruby_home/blob/master/examples/thermostat.rb)
+- [Window](https://github.com/karlentwistle/ruby_home/blob/master/examples/window.rb)
+- [Window covering](https://github.com/karlentwistle/ruby_home/blob/master/examples/window_covering.rb)
+
+
 ## Configuration
 
 The configuration options can be set by using the `configure` helper:
@@ -147,42 +183,6 @@ end
 
 RubyHome.run
 ```
-
-## More examples
-
-The following example services are available:
-
-### Sensors
-- [Air quality sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/air_quality_sensor.rb)
-- [Carbon dioxide sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/carbon_dioxide_sensor.rb)
-- [Carbon monoxide sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/carbon_monoxide_sensor.rb)
-- [Contact sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/contact_sensor.rb)
-- [Humidity sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/humidity_sensor.rb)
-- [Leak sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/leak_sensor.rb)
-- [Light sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/light_sensor.rb)
-- [Motion sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/motion_sensor.rb)
-- [Occupancy sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/occupancy_sensor.rb)
-- [Smoke sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/smoke_sensor.rb)
-- [Temperature sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/temperature_sensor.rb)
-
-### Controlables 
-- [Air purifier](https://github.com/karlentwistle/ruby_home/blob/master/examples/air_purifier.rb)
-- [Battery service](https://github.com/karlentwistle/ruby_home/blob/master/examples/battery_service.rb)
-- [Door](https://github.com/karlentwistle/ruby_home/blob/master/examples/door.rb)
-- [Fan](https://github.com/karlentwistle/ruby_home/blob/master/examples/fan.rb)
-- [Fan V2](https://github.com/karlentwistle/ruby_home/blob/master/examples/fan_v2.rb)
-- [Garage door opener](https://github.com/karlentwistle/ruby_home/blob/master/examples/garage_door_opener.rb)
-- [Heater cooler](https://github.com/karlentwistle/ruby_home/blob/master/examples/heater_cooler.rb)
-- [Humidifier dehumidifier](https://github.com/karlentwistle/ruby_home/blob/master/examples/humidifier_dehumidifier.rb)
-- [Lightbulb](https://github.com/karlentwistle/ruby_home/blob/master/examples/lightbulb.rb)
-- [Lock mechanism](https://github.com/karlentwistle/ruby_home/blob/master/examples/lock_mechanism.rb)
-- [Outlet](https://github.com/karlentwistle/ruby_home/blob/master/examples/outlet.rb)
-- [Security system](https://github.com/karlentwistle/ruby_home/blob/master/examples/security_system.rb)
-- [Switch](https://github.com/karlentwistle/ruby_home/blob/master/examples/switch.rb)
-- [Thermostat](https://github.com/karlentwistle/ruby_home/blob/master/examples/thermostat.rb)
-- [Window](https://github.com/karlentwistle/ruby_home/blob/master/examples/window.rb)
-- [Window covering](https://github.com/karlentwistle/ruby_home/blob/master/examples/window_covering.rb)
-
 
 ## Development
 
