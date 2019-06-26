@@ -150,78 +150,35 @@ RubyHome.run
 
 ## More examples
 
-### Create a garage door opener
+The following example services are available:
 
-```ruby
-require 'ruby_home'
-
-accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
-door = RubyHome::ServiceFactory.create(:garage_door_opener)
-
-door.target_door_state.after_update do |updated_value|
-  if updated_value == 0 # open
-    sleep 1
-    door.current_door_state = 0
-  elsif updated_value == 1 #closed
-    sleep 1
-    door.current_door_state = 1
-  end
-end
-
-RubyHome.run
-```
-
-### Create a thermostat
-
-```ruby
-require 'ruby_home'
-
-accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
-thermostat = RubyHome::ServiceFactory.create(:thermostat,
-  current_heating_cooling_state: 0, # off
-  target_heating_cooling_state: 0, # off
-  current_temperature: 18,
-  target_temperature: 18,
-  temperature_display_units: 0
-)
-
-thermostat.target_temperature.after_update do |updated_value|
-  if thermostat.current_temperature < updated_value
-    thermostat.target_heating_cooling_state = 1 # heat
-  elsif thermostat.current_temperature > updated_value
-    thermostat.target_heating_cooling_state = 2 # cool
-  end
-end
-
-thermostat.target_heating_cooling_state.after_update do |updated_value|
-  if updated_value == 1
-    thermostat.current_heating_cooling_state = 1  # heat
-  elsif updated_value == 2
-    thermostat.current_heating_cooling_state = 2 # cool
-  else
-    thermostat.current_heating_cooling_state = 0 # off
-  end
-end
-
-Thread.new do
-  loop do
-    sleep 5 # seconds
-
-    puts "current_temperature: #{thermostat.current_temperature.value.to_i}"
-    puts "target_temperature: #{thermostat.target_temperature.value.to_i}"
-
-    if thermostat.target_temperature.to_i > thermostat.current_temperature.to_i
-      thermostat.current_temperature += 1
-    elsif thermostat.target_temperature.to_i < thermostat.current_temperature.to_i
-      thermostat.current_temperature -= 1
-    else
-      thermostat.target_heating_cooling_state = 3 # auto
-    end
-  end
-end
-
-RubyHome.run
-```
+- [Air purifier](https://github.com/karlentwistle/ruby_home/blob/master/examples/air_purifier)
+- [Air quality sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/air_quality_sensor)
+- [Battery service](https://github.com/karlentwistle/ruby_home/blob/master/examples/battery_service)
+- [Carbon dioxide sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/carbon_dioxide_sensor)
+- [Carbon monoxide sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/carbon_monoxide_sensor)
+- [Contact sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/contact_sensor)
+- [Door](https://github.com/karlentwistle/ruby_home/blob/master/examples/door)
+- [Fan](https://github.com/karlentwistle/ruby_home/blob/master/examples/fan)
+- [Fan V2](https://github.com/karlentwistle/ruby_home/blob/master/examples/fan_v2)
+- [Garage door opener](https://github.com/karlentwistle/ruby_home/blob/master/examples/garage_door_opener)
+- [Heater cooler](https://github.com/karlentwistle/ruby_home/blob/master/examples/heater_cooler)
+- [Humidifier dehumidifier](https://github.com/karlentwistle/ruby_home/blob/master/examples/humidifier_dehumidifier)
+- [Humidity sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/humidity_sensor)
+- [Leak sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/leak_sensor)
+- [Light sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/light_sensor)
+- [Lightbulb](https://github.com/karlentwistle/ruby_home/blob/master/examples/lightbulb)
+- [Lock mechanism](https://github.com/karlentwistle/ruby_home/blob/master/examples/lock_mechanism)
+- [Motion sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/motion_sensor)
+- [Occupancy sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/occupancy_sensor)
+- [Outlet](https://github.com/karlentwistle/ruby_home/blob/master/examples/outlet)
+- [Security system](https://github.com/karlentwistle/ruby_home/blob/master/examples/security_system)
+- [Smoke sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/smoke_sensor)
+- [Switch](https://github.com/karlentwistle/ruby_home/blob/master/examples/switch)
+- [Temperature sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/temperature_sensor)
+- [Thermostat](https://github.com/karlentwistle/ruby_home/blob/master/examples/thermostat)
+- [Window](https://github.com/karlentwistle/ruby_home/blob/master/examples/window)
+- [Window covering](https://github.com/karlentwistle/ruby_home/blob/master/examples/window_covering)
 
 ## Development
 
