@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rbnacl', '~> 7.0'
   spec.add_dependency 'ruby_home-srp', '~> 1.3'
   spec.add_dependency 'ruby_home-tlv', '~> 0.1.0'
-  spec.add_dependency 'sinatra', '2.0.5'
+  spec.add_dependency 'sinatra', '2.0.7'
   spec.add_dependency 'wisper', '~> 2.0'
 
   spec.add_development_dependency 'byebug', '~> 11.0'
