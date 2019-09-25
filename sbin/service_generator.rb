@@ -60,9 +60,19 @@ module RubyHome
         name.downcase.gsub(' ', '_')
       end
 
-      private
+      COLOR_TEMPERATURE_UUID = -'000000CE-0000-1000-8000-0026BB765291'
 
-      attr_reader :name, :optional_characteristics, :required_characteristics, :uuid
+      def optional_characteristics
+        if sanitized_name == 'lightbulb'
+          # HomeKit Accessory Simulator doesnt include color temperature as a characteristic
+          # HAP-Specification-Non-Commercial-Version lists it as a valid optional characteristic
+          @optional_characteristics + [COLOR_TEMPERATURE_UUID]
+        else
+          @optional_characteristics
+        end
+      end
+
+      attr_reader :name, :required_characteristics, :uuid
   end
 end
 

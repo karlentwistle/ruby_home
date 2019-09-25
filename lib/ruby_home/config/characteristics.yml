@@ -1690,3 +1690,19 @@
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
+- :name: :color_temperature
+  :description: Color Temperature
+  :uuid: 000000CE-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    :MaximumValue: 400
+    :MinimumValue: 50
+    :StepValue: 1
