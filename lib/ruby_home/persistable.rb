@@ -23,19 +23,9 @@ module RubyHome
       end
 
       def read
-        return false unless file_exists?
+        return false unless File.exists?(source)
 
         YAML.load_file(source)
-      end
-
-      def truncate
-        return false unless file_exists?
-
-        File.truncate(source, 0)
-      end
-
-      def file_exists?
-        File.exists?(source)
       end
     end
 
