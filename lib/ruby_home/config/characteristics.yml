@@ -25,6 +25,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Inactive
@@ -41,6 +42,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :air_particulate_density
   :description: Air Particulate Density
@@ -52,6 +54,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 1000
     MinimumValue: 0
@@ -66,6 +69,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': 2.5 μm
@@ -101,6 +105,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :battery_level
   :description: Battery Level
@@ -112,6 +117,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -128,6 +134,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -157,6 +164,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100000
     MinimumValue: 0
@@ -170,6 +178,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100000
     MinimumValue: 0
@@ -198,6 +207,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -211,6 +221,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -224,6 +235,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Not Charging
@@ -241,6 +253,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 500
     MinimumValue: 140
@@ -272,6 +285,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 35
     MinimumValue: 10
@@ -286,6 +300,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Inactive
@@ -301,6 +316,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100000
     MinimumValue: 0.0001
@@ -332,6 +348,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Inactive
@@ -347,6 +364,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Inactive
@@ -379,6 +397,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 90
     MinimumValue: -90
@@ -393,6 +412,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Inactive
@@ -409,6 +429,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -423,6 +444,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -437,6 +459,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Fixed
@@ -452,6 +475,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -466,6 +490,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 90
     MinimumValue: -90
@@ -480,6 +505,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 90
     MinimumValue: -90
@@ -496,6 +522,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :filter_change_indication
   :description: Filter Change Indication
@@ -507,6 +534,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Filter OK
@@ -521,6 +549,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -557,6 +586,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 25
     MinimumValue: 0
@@ -583,6 +613,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 360
     MinimumValue: 0
@@ -609,6 +640,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :image_rotation
   :description: Image Rotation
@@ -622,10 +654,43 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 270
     MinimumValue: 0
     StepValue: 90
+- :name: :in_use
+  :description: In Use
+  :uuid: 000000D2-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Not in use
+      '1': In use
+- :name: :is_configured
+  :description: Is Configured
+  :uuid: 000000D6-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Not Configured
+      '1': Configured
 - :name: :leak_detected
   :description: Leak Detected
   :uuid: 00000070-0000-1000-8000-0026BB765291
@@ -678,6 +743,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Secured Physically, Interior
@@ -701,6 +767,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :lock_physical_controls
   :description: Lock Physical Controls
@@ -714,6 +781,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Control Lock Disabled
@@ -745,6 +813,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :manufacturer
   :description: Manufacturer
@@ -790,6 +859,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :name
   :description: Name
@@ -813,6 +883,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :nitrogen_dioxide_density
   :description: Nitrogen Dioxide Density
@@ -868,6 +939,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :optical_zoom
   :description: Optical Zoom
@@ -881,6 +953,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :outlet_in_use
   :description: Outlet In Use
@@ -892,6 +965,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :ozone_density
   :description: Ozone Density
@@ -994,11 +1068,28 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Decreasing
       '1': Increasing
       '2': Stopped
+- :name: :program_mode
+  :description: Program Mode
+  :uuid: 000000D1-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': No program scheduled
+      '1': Program scheduled
+      '2': Program scheduled (Manual Mode)
 - :name: :programmable_switch_event
   :description: Programmable Switch Event
   :uuid: 00000073-0000-1000-8000-0026BB765291
@@ -1009,6 +1100,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Single Press
@@ -1018,7 +1110,7 @@
   :description: Relative Humidity Dehumidifier Threshold
   :uuid: 000000C9-0000-1000-8000-0026BB765291
   :format: float
-  :unit: nil
+  :unit: '"percentage"'
   :permissions:
   - securedRead
   - securedWrite
@@ -1026,6 +1118,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -1034,7 +1127,7 @@
   :description: Relative Humidity Humidifier Threshold
   :uuid: 000000CA-0000-1000-8000-0026BB765291
   :format: float
-  :unit: nil
+  :unit: '"percentage"'
   :permissions:
   - securedRead
   - securedWrite
@@ -1042,8 +1135,24 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
+    MinimumValue: 0
+    StepValue: 1
+- :name: :remaining_duration
+  :description: Remaining Duration
+  :uuid: 000000D4-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    MaximumValue: 3600
     MinimumValue: 0
     StepValue: 1
 - :name: :reset_filter_indication
@@ -1071,6 +1180,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Clockwise
@@ -1087,6 +1197,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -1103,6 +1214,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -1117,6 +1229,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 1
     MinimumValue: 0
@@ -1151,6 +1264,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Stay Arm
@@ -1206,6 +1320,23 @@
     ValidValues:
       '0': Dots
       '1': Arabic Numerals
+- :name: :set_duration
+  :description: Set Duration
+  :uuid: 000000D3-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: nil
+  :permissions:
+  - securedRead
+  - securedWrite
+  :properties:
+  - read
+  - write
+  - cnotify
+  - uncnotify
+  :constraints:
+    MaximumValue: 3600
+    MinimumValue: 0
+    StepValue: 1
 - :name: :setup_endpoints
   :description: Setup Endpoints
   :uuid: '00000118-0000-1000-8000-0026BB765291'
@@ -1256,6 +1387,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :status_fault
   :description: Status Fault
@@ -1327,6 +1459,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints: 
 - :name: :sulphur_dioxide_density
   :description: Sulphur Dioxide Density
@@ -1385,6 +1518,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Swing Disabled
@@ -1401,6 +1535,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Manual
@@ -1417,6 +1552,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Excellent
@@ -1434,6 +1570,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Open
@@ -1450,6 +1587,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Manual
@@ -1466,6 +1604,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Auto
@@ -1483,6 +1622,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': 'Off'
@@ -1501,6 +1641,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 90
     MinimumValue: -90
@@ -1517,6 +1658,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Humidifier or Dehumidifier
@@ -1534,6 +1676,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -1550,6 +1693,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -1566,6 +1710,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Manual
@@ -1582,6 +1727,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 38
     MinimumValue: 10
@@ -1598,6 +1744,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 90
     MinimumValue: -90
@@ -1614,6 +1761,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 90
     MinimumValue: -90
@@ -1630,10 +1778,28 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     ValidValues:
       '0': Celsius
       '1': Fahrenheit
+- :name: :valve_type
+  :description: Valve Type
+  :uuid: 000000D5-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  - uncnotify
+  :constraints:
+    ValidValues:
+      '0': Generic valve
+      '1': Irrigation
+      '2': Shower head
+      '3': Water faucet
 - :name: :version
   :description: Version
   :uuid: 00000037-0000-1000-8000-0026BB765291
@@ -1644,6 +1810,7 @@
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumLength: 64
 - :name: :voc_density
@@ -1673,6 +1840,7 @@
   - read
   - write
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
@@ -1681,28 +1849,13 @@
   :description: Water Level
   :uuid: 000000B5-0000-1000-8000-0026BB765291
   :format: float
-  :unit: nil
+  :unit: '"percentage"'
   :permissions:
   - securedRead
   :properties:
   - read
   - cnotify
+  - uncnotify
   :constraints:
     MaximumValue: 100
     MinimumValue: 0
-- :name: :color_temperature
-  :description: Color Temperature
-  :uuid: 000000CE-0000-1000-8000-0026BB765291
-  :format: uint32
-  :unit: nil
-  :permissions:
-  - securedRead
-  - securedWrite
-  :properties:
-  - read
-  - write
-  - cnotify
-  :constraints:
-    :MaximumValue: 400
-    :MinimumValue: 50
-    :StepValue: 1
