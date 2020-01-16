@@ -15,9 +15,10 @@ install:
   - 'bundle --version'
   - bundle
 rvm:
-  - 2.4.1
+  - 2.4
   - 2.5
   - 2.6
+  - 2.7
   - ruby-head
 os:
   - linux
