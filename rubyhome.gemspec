@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.4.1'
 
-  spec.add_dependency 'bindata', '~> 2.4', '>= 2.4.3'
+  spec.add_dependency 'bindata', '2.4.6'
   spec.add_dependency 'dnssd', '~> 3.0'
   spec.add_dependency 'facets', '~> 3.1'
   spec.add_dependency 'hkdf', '~> 0.3.0'
