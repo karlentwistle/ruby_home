@@ -4,11 +4,11 @@ RSpec.describe '/identify' do
   context 'POST' do
     context 'Request denied due to accessory being paired' do
       before do
-        RubyHome::AccessoryInfo.instance.add_paired_client({
+        RubyHome::AccessoryInfo.instance.add_paired_client(
           admin: true,
           identifier: '349CBC7D-01B9-4DC4-AD98-FB9029BB77F2',
           public_key: '8d9686b698958af1497694003e07ff855358619f9633d62e40a6b55952716f17'
-        })
+        )
       end
 
       it 'response headers contains application/hap+json' do

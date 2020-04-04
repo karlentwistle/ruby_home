@@ -22,7 +22,7 @@ module RubyHome
           identifier: unpack_request[:identifier],
           public_key: unpack_request[:public_key].unpack1('H*')
         }
-        accessory_info.add_paired_client pairing_params
+        accessory_info.add_paired_client(**pairing_params)
 
         tlv state: 2
       end

@@ -96,7 +96,7 @@ module RubyHome
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
 
           pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk.unpack1('H*') }
-          accessory_info.add_paired_client pairing_params
+          accessory_info.add_paired_client(**pairing_params)
 
           tlv state: 6, encrypted_data: encrypted_data
         end
