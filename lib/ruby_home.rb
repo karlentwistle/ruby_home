@@ -1,4 +1,3 @@
-require 'bindata'
 require 'dnssd'
 require 'facets/hash/slice'
 require 'hkdf'
