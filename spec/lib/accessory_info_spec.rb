@@ -54,7 +54,7 @@ RSpec.describe RubyHome::AccessoryInfo do
 
     context 'has paired clients' do
       it 'returns true' do
-        instance.add_paired_client({identifier: double, public_key: double})
+        instance.add_paired_client(identifier: double, public_key: double)
         expect(instance).to be_paired
       end
     end
@@ -64,7 +64,7 @@ RSpec.describe RubyHome::AccessoryInfo do
     it 'adds a client to paired_clients' do
       public_key = 'public_key'
       identifier = 'identifier'
-      instance.add_paired_client({identifier: identifier, public_key: public_key})
+      instance.add_paired_client(identifier: identifier, public_key: public_key)
       expect(instance.paired_clients).to match(
         a_hash_including(
           admin: false,

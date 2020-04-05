@@ -29,11 +29,11 @@ RSpec.describe 'POST /pairings' do
 
   context 'Remove Pairing Response' do
     before do
-      RubyHome::AccessoryInfo.instance.add_paired_client({
+      RubyHome::AccessoryInfo.instance.add_paired_client(
         admin: true,
         identifier: '349CBC7D-01B9-4DC4-AD98-FB9029BB77F2',
         public_key: '8d9686b698958af1497694003e07ff855358619f9633d62e40a6b55952716f17'
-      })
+      )
       path = File.expand_path('../../../fixtures/remove_pairing_request', __FILE__)
       data = File.read(path)
       post '/pairings', data, {'CONTENT_TYPE' => 'application/pairing+tlv8'}
