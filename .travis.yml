@@ -28,3 +28,6 @@ addons:
       - libavahi-compat-libdnssd-dev
 notifications:
   email: false
+jobs:
+  allow_failures:
+  - rvm: ruby-head
