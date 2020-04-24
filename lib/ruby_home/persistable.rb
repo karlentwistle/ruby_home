@@ -23,7 +23,7 @@ module RubyHome
       end
 
       def read
-        return false unless File.exists?(source)
+        return false unless File.exist?(source)
 
         YAML.load_file(source)
       end
