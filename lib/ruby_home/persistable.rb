@@ -26,6 +26,8 @@ module RubyHome
         return false unless File.exist?(source)
 
         YAML.load_file(source)
+      rescue Errno::EBADF
+        return false
       end
     end
 
