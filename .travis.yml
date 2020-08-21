@@ -18,7 +18,7 @@ rvm:
   - 2.5
   - 2.6
   - 2.7
-  - ruby-head
+  - 2.8.0-dev
 os:
   - linux
   - osx
@@ -30,4 +30,4 @@ notifications:
   email: false
 jobs:
   allow_failures:
-  - rvm: ruby-head
+  - rvm: 2.8.0-dev
