@@ -15,6 +15,10 @@ module RubyHome
         dnssd_service
       end
 
+      def text_record
+        TextRecord.new(accessory_info: accessory_info, configuration: configuration)
+      end
+
       private
 
       attr_reader :configuration
@@ -41,10 +45,6 @@ module RubyHome
         return nil if configuration.host == Configuration::DEFAULT_HOST
 
         configuration.host
-      end
-
-      def text_record
-        TextRecord.new(accessory_info: accessory_info, configuration: configuration)
       end
 
       def accessory_info
