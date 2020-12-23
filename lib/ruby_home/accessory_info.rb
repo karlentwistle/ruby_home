@@ -16,11 +16,12 @@ module RubyHome
 
     USERNAME = -'Pair-Setup'
 
-    def initialize(device_id: nil, paired_clients: [], password: nil, signature_key: nil)
+    def initialize(device_id: nil, paired_clients: [], password: nil, signature_key: nil, setup_id: nil)
       @device_id = device_id
       @paired_clients = paired_clients
       @password = password
       @signature_key = signature_key
+      @setup_id = setup_id
     end
 
     def username
@@ -62,6 +63,10 @@ module RubyHome
       @signing_key ||= RbNaCl::Signatures::Ed25519::SigningKey.new([signature_key].pack('H*'))
     end
 
+    def setup_id
+      @setup_id ||= SetupID.generate
+    end
+
     private
 
       def signature_key
@@ -73,7 +78,8 @@ module RubyHome
           device_id: device_id,
           paired_clients: paired_clients,
           password: password,
-          signature_key: signature_key
+          signature_key: signature_key,
+          setup_id: setup_id
         }
       end
   end

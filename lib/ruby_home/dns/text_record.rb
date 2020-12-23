@@ -1,3 +1,5 @@
+require 'digest'
+require 'base64'
 module RubyHome
   class TextRecord < DNSSD::TextRecord
     def initialize(accessory_info:, configuration:)
@@ -45,7 +47,8 @@ module RubyHome
         'md' => model_name,
         'pv' => protocol_version,
         's#' => current_state_number,
-        'sf' => status_flags
+        'sf' => status_flags,
+        'sh' => setup_hash
       }
     end
 
@@ -94,6 +97,23 @@ module RubyHome
 
     def current_state_number
       1
+    end
+
+    # Setup id
+
+    def setup_id
+      accessory_info.setup_id
+    end
+
+    def setup_hash
+      # concat setup_id and whatever accessory_info.username is (id field in the record)
+      input = setup_id + device_id
+      # sha512 digest that
+      hashvalue = Digest::SHA2.new(512).digest(input)
+      # first 4 bytes of that
+      payload = hashvalue.slice(0,4)
+      # bas64 to string that
+      Base64.strict_encode64(payload)
     end
   end
 end
