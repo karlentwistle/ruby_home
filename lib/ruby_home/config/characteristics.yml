@@ -585,6 +585,18 @@
   - cnotify
   - uncnotify
   :constraints: 
+- :name: :display_order
+  :description: Display Order
+  :uuid: 00000136-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
 - :name: :filter_change_indication
   :description: Filter Change Indication
   :uuid: 000000AC-0000-1000-8000-0026BB765291
