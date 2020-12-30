@@ -747,6 +747,31 @@
     ValidValues:
       '0': Not in use
       '1': In use
+- :name: :input_source_type
+  :description: Input Source Type
+  :uuid: 000000DB-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 10
+    MinimumValue: 0
+    ValidValues:
+      '0': Other
+      '1': Home Screen
+      '2': Tuner
+      '3': HDMI
+      '4': Composite Video
+      '5': S Video
+      '6': Component Video
+      '7': DVI
+      '8': Airplay
+      '9': USB
+      '10': Application
 - :name: :is_configured
   :description: Is Configured
   :uuid: 000000D6-0000-1000-8000-0026BB765291
