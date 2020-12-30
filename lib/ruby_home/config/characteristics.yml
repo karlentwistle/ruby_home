@@ -30,6 +30,18 @@
     ValidValues:
       '0': Inactive
       '1': Active
+- :name: :active_identifier
+  :description: Active Identifier
+  :uuid: 000000E7-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
 - :name: :administrator_only_access
   :description: Administrator Only Access
   :uuid: 00000001-0000-1000-8000-0026BB765291
