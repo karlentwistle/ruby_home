@@ -1176,6 +1176,21 @@
       '0': Decreasing
       '1': Increasing
       '2': Stopped
+- :name: :power_mode_selection
+  :description: Power Mode Selection
+  :uuid: 000000DF-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - write
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    ValidValues:
+      '0': Show
+      '1': Hide
 - :name: :program_mode
   :description: Program Mode
   :uuid: 000000D1-0000-1000-8000-0026BB765291
