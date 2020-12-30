@@ -2119,6 +2119,24 @@
     MaximumValue: 100
     MinimumValue: 0
     StepValue: 1
+- :name: :volume_control_type
+  :description: Volume Control Type
+  :uuid: 000000E9-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 3
+    MinimumValue: 0
+    ValidValues:
+      '0': None
+      '1': Relative
+      '2': Relative with Current
+      '3': Absolute
 - :name: :water_level
   :description: Water Level
   :uuid: 000000B5-0000-1000-8000-0026BB765291
