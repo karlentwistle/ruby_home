@@ -253,6 +253,23 @@
       '0': Not Charging
       '1': Charging
       '2': Not Chargeable
+- :name: :closed_captions
+  :description: Closed Captions
+  :uuid: 000000DD-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    ValidValues:
+      '0': Disabled
+      '1': Enabled
 - :name: :color_temperature
   :description: Color Temperature
   :uuid: 000000CE-0000-1000-8000-0026BB765291
