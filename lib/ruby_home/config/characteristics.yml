@@ -2023,6 +2023,23 @@
     MaximumValue: 90
     MinimumValue: -90
     StepValue: 1
+- :name: :target_visibility_state
+  :description: Target Visibility State
+  :uuid: 00000134-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    ValidValues:
+      '0': Shown
+      '1': Hidden
 - :name: :temperature_display_units
   :description: Temperature Display Units
   :uuid: 00000036-0000-1000-8000-0026BB765291
