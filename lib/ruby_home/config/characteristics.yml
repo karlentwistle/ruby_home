@@ -1509,6 +1509,22 @@
     ValidValues:
       '0': Horizontal
       '1': Vertical
+- :name: :sleep_discovery_mode
+  :description: Sleep Discovery Mode
+  :uuid: 000000E8-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    ValidValues:
+      '0': Not Discoverable
+      '1': Always Discoverable
 - :name: :smoke_detected
   :description: Smoke Detected
   :uuid: 00000076-0000-1000-8000-0026BB765291
