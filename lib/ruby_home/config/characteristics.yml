@@ -1827,6 +1827,24 @@
       '0': Humidifier or Dehumidifier
       '1': Humidifier
       '2': Dehumidifier
+- :name: :target_media_state
+  :description: Target Media State
+  :uuid: 00000137-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 2
+    MinimumValue: 0
+    ValidValues:
+      '0': Play
+      '1': Pause
+      '2': Stop
 - :name: :target_position
   :description: Target Position
   :uuid: 0000007C-0000-1000-8000-0026BB765291
