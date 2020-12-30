@@ -777,6 +777,27 @@
     ValidValues:
       '0': Not in use
       '1': In use
+- :name: :input_device_type
+  :description: Input Device Type
+  :uuid: 000000DC-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 6
+    MinimumValue: 0
+    ValidValues:
+      '0': Other
+      '1': Television
+      '2': Recording
+      '3': Tuner
+      '4': Playback
+      '5': Audio System
+      '6':
 - :name: :input_source_type
   :description: Input Source Type
   :uuid: 000000DB-0000-1000-8000-0026BB765291
