@@ -1272,6 +1272,36 @@
     MaximumValue: 3600
     MinimumValue: 0
     StepValue: 1
+- :name: :remote_key
+  :description: Remote Key
+  :uuid: 000000E1-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - write
+  :constraints:
+    MaximumValue: 16
+    MinimumValue: 0
+    ValidValues:
+      '0': Rewind
+      '1': Fast Forward
+      '2': Next Track
+      '3': Previous Track
+      '4': Arrow Up
+      '5': Arrow Down
+      '6': Arrow Left
+      '7': Arrow Right
+      '8': Select
+      '9': Back
+      '10': Exit
+      '11': Play Pause
+      '12':
+      '13':
+      '14':
+      '15': Information
+      '16':
 - :name: :reset_filter_indication
   :description: Reset Filter Indication
   :uuid: 000000AD-0000-1000-8000-0026BB765291
