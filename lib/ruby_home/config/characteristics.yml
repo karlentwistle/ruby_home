@@ -1101,6 +1101,35 @@
   - read
   - write
   :constraints: 
+- :name: :picture_mode
+  :description: Picture Mode
+  :uuid: 000000E2-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 13
+    MinimumValue: 0
+    ValidValues:
+      '0': Other
+      '1': Standard
+      '2': Calibrated
+      '3': Calibrated Dark
+      '4': Vivid
+      '5': Game
+      '6': Computer
+      '7': Custom
+      '8':
+      '9':
+      '10':
+      '11':
+      '12':
+      '13':
 - :name: :pm10_density
   :description: PM10 Density
   :uuid: 000000C7-0000-1000-8000-0026BB765291
