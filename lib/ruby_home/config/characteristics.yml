@@ -709,6 +709,18 @@
     MaximumValue: 360
     MinimumValue: 0
     StepValue: 1
+- :name: :identifier
+  :description: Identifier
+  :uuid: 000000E6-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  :constraints:
+    MinimumValue: 0
+    StepValue: 1
 - :name: :identify
   :description: Identify
   :uuid: 00000014-0000-1000-8000-0026BB765291
