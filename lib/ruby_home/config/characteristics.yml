@@ -571,6 +571,24 @@
     MaximumValue: 90
     MinimumValue: -90
     StepValue: 1
+- :name: :current_visibility_state
+  :description: Current Visibility State
+  :uuid: 00000135-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 3
+    MinimumValue: 0
+    ValidValues:
+      '0': Shown
+      '1': Hidden
+      '2':
+      '3':
 - :name: :digital_zoom
   :description: Digital Zoom
   :uuid: 0000011D-0000-1000-8000-0026BB765291
