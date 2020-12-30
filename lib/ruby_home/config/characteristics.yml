@@ -460,6 +460,26 @@
       '1': Idle
       '2': Humidifying
       '3': Dehumidifying
+- :name: :current_media_state
+  :description: Current Media State
+  :uuid: 000000E0-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 5
+    MinimumValue: 0
+    ValidValues:
+      '0': Play
+      '1': Pause
+      '2': Stop
+      '3':
+      '4': Loading
+      '5': Interrupted
 - :name: :current_position
   :description: Current Position
   :uuid: 0000006D-0000-1000-8000-0026BB765291
