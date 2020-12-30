@@ -287,6 +287,18 @@
     MaximumValue: 500
     MinimumValue: 140
     StepValue: 1
+- :name: :configured_name
+  :description: Configured Name
+  :uuid: 000000E3-0000-1000-8000-0026BB765291
+  :format: string
+  :unit: nil
+  :permissions:
+  - securedRead
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
 - :name: :contact_sensor_state
   :description: Contact Sensor State
   :uuid: 0000006A-0000-1000-8000-0026BB765291
