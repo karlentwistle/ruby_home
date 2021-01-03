@@ -34,6 +34,7 @@ module RubyHome
       @properties = properties
       @service = service
       @value_object = value_object
+      @valid_values = nil
     end
 
     attr_reader(
@@ -47,6 +48,8 @@ module RubyHome
       :instance_id,
       :value_object,
     )
+    
+    attr_accessor :valid_values
 
     def instance_id=(new_id)
       raise DuplicateCharacteristicError if accessory.contains_instance_id?(new_id)

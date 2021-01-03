@@ -28,10 +28,13 @@ module RubyHome
         end
 
         def value_hash(characteristic)
-          if HIDDEN_VALUE_OBJECTS.include?(characteristic.value_object.class)
-            {}
+          valid_values = characteristic.valid_values || {}
+          valid_values = { 'valid-values' => valid_values} if valid_values.is_a?(Array)
+          
+          if HIDDEN_VALUE_OBJECTS.include?(characteristic.value_object.class) || !characteristic.properties.include?("read")
+            valid_values
           else
-            { 'value' => characteristic.value }.compact
+            valid_values.merge({'value' => characteristic.value}.compact)
           end
         end
     end
