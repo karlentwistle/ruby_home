@@ -12,6 +12,7 @@ module RubyHome
       @description = description
       @uuid = uuid
       @characteristics = CharacteristicCollection.new
+      @linked = []
     end
 
     attr_reader(
@@ -24,6 +25,8 @@ module RubyHome
       :uuid,
       :instance_id
     )
+    
+    attr_accessor :linked
 
     def instance_id=(new_id)
       raise DuplicateServiceError if accessory.contains_instance_id?(new_id)
