@@ -42,7 +42,7 @@ module RubyHome
     def category_identifier=(value)
       if value.is_a?(Symbol)
         raise UnknownCategoriyIdentifierError if !CATEGORIES.include?(value)
-        @category_identifier = value
+        @category_identifier = CATEGORIES[value]
       else
         @category_identifier = value.to_i
       end
