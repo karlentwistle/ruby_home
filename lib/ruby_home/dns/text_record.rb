@@ -38,7 +38,7 @@ module RubyHome
     # 1-65535.
 
     def accessory_category_identifier
-      @configuration.category_indentifier
+      @configuration.category_identifier
     end
 
     # Feature flags (e.g. "0x3" for bits 0 and 1). Required if non-zero.

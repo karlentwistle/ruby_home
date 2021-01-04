@@ -2,7 +2,7 @@ require 'ruby_home'
 
 RubyHome.configure do |c|
   c.discovery_name = 'Television'
-  c.category_indentifier = 26
+  c.category_identifier = :television
 end
 
 accessory = RubyHome::Accessory.new
