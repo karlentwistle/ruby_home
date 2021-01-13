@@ -9,19 +9,22 @@ module RubyHome
       include UUIDHelper
 
       def record_hash(service)
-        result = {
+        {
           'iid' => service.instance_id,
           'type' => uuid_short_form(service.uuid),
           'characteristics' => CharacteristicSerializer.new(service.characteristics).serializable_hash,
           'primary' => service.primary,
           'hidden' => service.hidden,
-        }
+        }.merge(linked_services(service))
+      end
 
-        linked = service.linked
-        if linked.nil? || linked.empty?
-          result
+      private
+
+      def linked_services(service)
+        if service.linked.empty?
+          {}
         else
-          result.merge({'linked' => linked.map { |s| s.instance_id }})
+          { 'linked' => service.linked.map(&:instance_id) }
         end
       end
     end
