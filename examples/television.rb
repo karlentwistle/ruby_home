@@ -1,4 +1,4 @@
-require_relative '../lib/ruby_home'
+require 'ruby_home'
 
 RubyHome.configure do |c|
   c.discovery_name = 'Television'
