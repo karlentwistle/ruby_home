@@ -25,16 +25,16 @@ module RubyHome
       'write' => 'pw',
     }.freeze
 
-    def initialize(uuid:, name:, description:, format:, unit:, properties:, service: , value_object: )
+    def initialize(uuid:, name:, description:, format:, unit:, properties:, constraints:, service: , value_object: )
       @uuid = uuid
       @name = name
       @description = description
       @format = format
       @unit = unit
       @properties = properties
+      @constraints = constraints
       @service = service
       @value_object = value_object
-      @valid_values = nil
     end
 
     attr_reader(
@@ -45,11 +45,10 @@ module RubyHome
       :format,
       :unit,
       :properties,
+      :constraints,
       :instance_id,
       :value_object,
     )
-    
-    attr_accessor :valid_values
 
     def instance_id=(new_id)
       raise DuplicateCharacteristicError if accessory.contains_instance_id?(new_id)
@@ -67,6 +66,10 @@ module RubyHome
 
     def service_iid
       service.instance_id
+    end
+
+    def valid_values
+      constraints.fetch('ValidValues', {}).keys.map(&:to_i)
     end
 
     def method_missing(method_name, *args, &block)

@@ -53,6 +53,15 @@ RSpec.describe 'GET /accessories' do
       linked_value = JSON.parse(last_response.body)["accessories"][0]["services"][0]["linked"]
       expect(linked_value).to eql([14])
     end
+
+    it 'includes accessories services valid values' do
+      create_television_accessory
+
+      get '/accessories', nil, {'CONTENT_TYPE' => 'application/hap+json'}
+
+      valid_values = JSON.parse(last_response.body)["accessories"][0]["services"][0]["characteristics"][0]["valid-values"]
+      expect(valid_values).to eql([0,1])
+    end
   end
 
   def create_fan_accessory

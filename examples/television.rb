@@ -1,4 +1,4 @@
-require 'ruby_home'
+require_relative '../lib/ruby_home'
 
 RubyHome.configure do |c|
   c.discovery_name = 'Television'
@@ -21,7 +21,6 @@ television = RubyHome::ServiceFactory.create(:television,
   sleep_discovery_mode: 1,
   remote_key: nil
 )
-television.remote_key.valid_values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15]
 television.active.after_update do |active|
   puts "active = #{active}"
 end
@@ -40,7 +39,6 @@ speaker = RubyHome::ServiceFactory.create(:television_speaker,
   volume_control_type: 1,
   volume_selector: 0
 )
-speaker.volume_selector.valid_values = [0, 1]
 speaker.volume_selector.after_update do |value|
   puts "volume #{value == 0 ? "up" : "down"}"
 end

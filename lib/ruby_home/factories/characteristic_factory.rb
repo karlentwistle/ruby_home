@@ -15,6 +15,7 @@ module RubyHome
         format: template.format,
         name: characteristic_name,
         properties: template.properties,
+        constraints: template.constraints,
         service: service,
         unit: template.unit,
         uuid: template.uuid,
