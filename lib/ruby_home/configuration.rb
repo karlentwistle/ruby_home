@@ -1,5 +1,4 @@
 module RubyHome
-
   class UnknownCategoriyIdentifierError < StandardError; end
 
   class Configuration
@@ -47,7 +46,6 @@ module RubyHome
         @category_identifier = value.to_i
       end
     end
-
 
     attr_writer :discovery_name, :model_name, :host, :port
 
