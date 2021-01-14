@@ -14,7 +14,9 @@ module RubyHome
           'perms' => perms(characteristic),
           'format' => characteristic.format,
           'description' => characteristic.description,
-        }.merge(value_hash(characteristic), valid_values_hash(characteristic))
+        }
+          .merge(value_hash(characteristic))
+          .merge(valid_values_hash(characteristic))
       end
 
       private
