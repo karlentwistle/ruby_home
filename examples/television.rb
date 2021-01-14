@@ -7,7 +7,9 @@ end
 
 accessory = RubyHome::Accessory.new
 
-RubyHome::ServiceFactory.create(:accessory_information, accessory: accessory)
+RubyHome::ServiceFactory.create(:accessory_information,
+  accessory: accessory, # required
+)
 
 television = RubyHome::ServiceFactory.create(:television,
   accessory: accessory, # required
