@@ -35,7 +35,7 @@ speaker = RubyHome::ServiceFactory.create(:television_speaker,
   accessory: accessory,
   name: "Television Volume",
   active: 1,
-  mute: 0,
+  mute: false,
   volume_control_type: 1,
   volume_selector: 0
 )
