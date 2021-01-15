@@ -51,7 +51,7 @@ speaker = RubyHome::ServiceFactory.create(:television_speaker,
   volume_control_type: 1, # optional
   volume_selector: 0, # optional
 )
-speaker.volume_selector.after_update do |value|
+speaker.volume_selector.after_update do |volume|
   if volume == 0
     "television volume up"
   else
