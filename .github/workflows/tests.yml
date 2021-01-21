@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, macos-11.0]
     strategy:
       matrix:
         ruby-version: [2.7, 2.6, 2.5]
