@@ -1,0 +1,41 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.6, 2.5]
+    steps:
+    - name: Install libdnssd
+      run: sudo apt-get install libavahi-compat-libdnssd-dev
+    - uses: actions/checkout@v2
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+    - name: Install dependencies
+      run: bundle
+    - name: Run tests
+      run: bundle exec rake
+  mac:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.6, 2.5]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+    - name: Install dependencies
+      run: bundle
+    - name: Run tests
+      run: bundle exec rake
