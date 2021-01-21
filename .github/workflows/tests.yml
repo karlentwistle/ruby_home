@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: [3.0, 2.7, 2.6, 2.5]
+        ruby-version: [2.7, 2.6, 2.5]
     steps:
+    - name: Install libdnssd
+      run: sudo apt-get install libavahi-compat-libdnssd-dev
     - uses: actions/checkout@v2
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
