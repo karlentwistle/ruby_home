@@ -1,5 +1,4 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/c81f4cfdf5c13d716487/maintainability)](https://codeclimate.com/github/karlentwistle/ruby_home/maintainability)
-[![Build Status](https://www.travis-ci.com/karlentwistle/ruby_home.svg?branch=master)](https://www.travis-ci.com/karlentwistle/ruby_home)
 
 # ruby_home
 
