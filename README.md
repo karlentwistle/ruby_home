@@ -88,6 +88,7 @@ The following example services are available:
 - [Outlet](https://github.com/karlentwistle/ruby_home/blob/master/examples/outlet.rb)
 - [Security system](https://github.com/karlentwistle/ruby_home/blob/master/examples/security_system.rb)
 - [Switch](https://github.com/karlentwistle/ruby_home/blob/master/examples/switch.rb)
+- [Television](https://github.com/karlentwistle/ruby_home/blob/master/examples/television.rb)
 - [Thermostat](https://github.com/karlentwistle/ruby_home/blob/master/examples/thermostat.rb)
 - [Window](https://github.com/karlentwistle/ruby_home/blob/master/examples/window.rb)
 - [Window covering](https://github.com/karlentwistle/ruby_home/blob/master/examples/window_covering.rb)
