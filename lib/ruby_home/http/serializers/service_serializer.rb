@@ -15,7 +15,17 @@ module RubyHome
           'characteristics' => CharacteristicSerializer.new(service.characteristics).serializable_hash,
           'primary' => service.primary,
           'hidden' => service.hidden,
-        }
+        }.merge(linked_services(service))
+      end
+
+      private
+
+      def linked_services(service)
+        if service.linked.empty?
+          {}
+        else
+          { 'linked' => service.linked.map(&:instance_id) }
+        end
       end
     end
   end
