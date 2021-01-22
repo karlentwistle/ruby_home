@@ -74,7 +74,7 @@ The following example services are available:
 - [Smoke sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/smoke_sensor.rb)
 - [Temperature sensor](https://github.com/karlentwistle/ruby_home/blob/master/examples/temperature_sensor.rb)
 
-### Controlables 
+### Controlables
 - [Air purifier](https://github.com/karlentwistle/ruby_home/blob/master/examples/air_purifier.rb)
 - [Battery service](https://github.com/karlentwistle/ruby_home/blob/master/examples/battery_service.rb)
 - [Door](https://github.com/karlentwistle/ruby_home/blob/master/examples/door.rb)
@@ -112,6 +112,7 @@ The following is the full list of available configuration options:
 | `password` | Used for pairing, must conform to the format XXX-XX-XXX where each X is a 0-9 digit and dashes are required | Randomly generated | `"101-48-005"` | String |
 | `host` | The hostname or IP address of the interface to listen on | `"0.0.0.0"` | `"192.168.0.2"` | String  |
 | `port` | The port that should be used when starting the built-in web server | `4567` | `8080` | Integer |
+| `category_identifier` | Indicates the [category](https://github.com/karlentwistle/ruby_home/blob/master/lib/ruby_home/config/categories.yml) that best describes the primary function of the accessory. | `:bridge` | `:fan` | Symbol |
 
 ## Customization
 
@@ -125,7 +126,8 @@ accessory_information = RubyHome::ServiceFactory.create(:accessory_information,
   manufacturer: 'Fake Company',
   model: 'BSB001',
   name: 'Kickass fan bridge',
-  serial_number: 'AB1-UK-A123456'
+  serial_number: 'AB1-UK-A123456',
+  category_identifier: :fan
 )
 
 fan = RubyHome::ServiceFactory.create(:fan,
