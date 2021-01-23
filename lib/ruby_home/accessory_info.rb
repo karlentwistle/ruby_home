@@ -10,10 +10,6 @@ module RubyHome
       @@_instance ||= persisted || create
     end
 
-    def self.reload
-      @@_instance = nil
-    end
-
     USERNAME = -'Pair-Setup'
 
     def initialize(device_id: nil, paired_clients: [], password: nil, signature_key: nil)
