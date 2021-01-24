@@ -6,7 +6,7 @@ EXAMPLE_SIGNATURE_KEY = -'E2889D17DD141C3A62969E85C7092FDB1080617FECCC08A60A5001
 RSpec.configure do |config|
   config.around(:each) do |example|
     begin
-      tempfile = Tempfile.new('accessory_info.yml')
+      tempfile = StringIO.new
       RubyHome::AccessoryInfo.source = tempfile
       RubyHome::AccessoryInfo.reload
       RubyHome::AccessoryInfo.create(
@@ -18,7 +18,6 @@ RSpec.configure do |config|
       example.run
     ensure
       tempfile.close
-      tempfile.unlink
     end
   end
 end
