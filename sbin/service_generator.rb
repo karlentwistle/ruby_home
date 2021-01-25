@@ -3,6 +3,7 @@
 require 'byebug'
 require 'plist'
 require 'yaml'
+require_relative '../lib/ruby_home'
 
 module RubyHome
   class ServiceGenerator
@@ -39,8 +40,8 @@ module RubyHome
 
     def initialize(xml)
       @name = xml["Name"]
-      @optional_characteristics = xml["OptionalCharacteristics"]
-      @required_characteristics = xml["RequiredCharacteristics"]
+      @optional_characteristic_uuids = xml["OptionalCharacteristics"]
+      @required_characteristic_uuids = xml["RequiredCharacteristics"]
       @uuid = xml["UUID"]
     end
 
@@ -49,8 +50,8 @@ module RubyHome
         name: sanitized_name.to_sym,
         description: name,
         uuid: uuid,
-        optional_characteristics_uuids: optional_characteristics,
-        required_characteristics_uuids: required_characteristics,
+        optional_characteristic_names: optional_characteristic_names.sort,
+        required_characteristic_names: required_characteristic_names.sort,
       }
     end
 
@@ -60,19 +61,27 @@ module RubyHome
         name.downcase.gsub(' ', '_')
       end
 
-      COLOR_TEMPERATURE_UUID = -'000000CE-0000-1000-8000-0026BB765291'
-
-      def optional_characteristics
-        if sanitized_name == 'lightbulb'
-          # HomeKit Accessory Simulator doesnt include color temperature as a characteristic
-          # HAP-Specification-Non-Commercial-Version lists it as a valid optional characteristic
-          @optional_characteristics + [COLOR_TEMPERATURE_UUID]
-        else
-          @optional_characteristics
+      def optional_characteristic_names
+        optional_characteristic_uuids.map do |uuid|
+          RubyHome::CharacteristicTemplate.find_by(uuid: uuid).name
         end
       end
 
-      attr_reader :name, :required_characteristics, :uuid
+      def required_characteristic_names
+        required_characteristic_uuids.map do |uuid|
+          RubyHome::CharacteristicTemplate.find_by(uuid: uuid).name
+        end + additional_required_characteristic_names
+      end
+
+      ADDITIONAL_REQUIRED_CHARACTERISTIC_NAMES = {
+        'lightbulb' => [:color_temperature]
+      }.freeze
+
+      def additional_required_characteristic_names
+        ADDITIONAL_REQUIRED_CHARACTERISTIC_NAMES.fetch(sanitized_name, [])
+      end
+
+      attr_reader :name, :required_characteristic_uuids, :optional_characteristic_uuids, :uuid
   end
 end
 

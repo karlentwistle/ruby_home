@@ -1,178 +1,178 @@
 {
-  "accessories": [
-    {
-      "aid": 1,
-      "services": [
-        {
-          "iid": 1,
-          "type": "3E",
-          "characteristics": [
+   "accessories":[
+      {
+         "aid":1,
+         "services":[
             {
-              "iid": 2,
-              "type": "14",
-              "perms": [
-                "pw"
-              ],
-              "format": "bool",
-              "description": "Identify"
-            },
-            {
-              "iid": 3,
-              "type": "20",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Manufacturer",
-              "value": "Default-Manufacturer"
-            },
-            {
-              "iid": 4,
-              "type": "21",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Model",
-              "value": "Default-Model"
-            },
-            {
-              "iid": 5,
-              "type": "23",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Name",
-              "value": "RubyHome"
-            },
-            {
-              "iid": 6,
-              "type": "30",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Serial Number",
-              "value": "Default-SerialNumber"
-            },
-            {
-              "iid": 7,
-              "type": "52",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Firmware Revision",
-              "value": "1.0"
+               "iid":1,
+               "type":"3E",
+               "characteristics":[
+                  {
+                     "iid":2,
+                     "type":"52",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Firmware Revision",
+                     "value":"1.0"
+                  },
+                  {
+                     "iid":3,
+                     "type":"14",
+                     "perms":[
+                        "pw"
+                     ],
+                     "format":"bool",
+                     "description":"Identify"
+                  },
+                  {
+                     "iid":4,
+                     "type":"20",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Manufacturer",
+                     "value":"Default-Manufacturer"
+                  },
+                  {
+                     "iid":5,
+                     "type":"21",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Model",
+                     "value":"Default-Model"
+                  },
+                  {
+                     "iid":6,
+                     "type":"23",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Name",
+                     "value":"RubyHome"
+                  },
+                  {
+                     "iid":7,
+                     "type":"30",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Serial Number",
+                     "value":"Default-SerialNumber"
+                  }
+               ],
+               "primary":false,
+               "hidden":false
             }
-          ],
-          "primary": false,
-          "hidden": false
-        }
-      ]
-    },
-    {
-      "aid": 2,
-      "services": [
-        {
-          "iid": 1,
-          "type": "40",
-          "characteristics": [
+         ]
+      },
+      {
+         "aid":2,
+         "services":[
             {
-              "iid": 2,
-              "type": "25",
-              "perms": [
-                "pr",
-                "pw",
-                "ev"
-              ],
-              "format": "bool",
-              "description": "On",
-              "value": false
+               "iid":1,
+               "type":"40",
+               "characteristics":[
+                  {
+                     "iid":2,
+                     "type":"25",
+                     "perms":[
+                        "pr",
+                        "pw",
+                        "ev"
+                     ],
+                     "format":"bool",
+                     "description":"On",
+                     "value":false
+                  },
+                  {
+                     "iid":3,
+                     "type":"23",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Name",
+                     "value":"Fan"
+                  }
+               ],
+               "primary":false,
+               "hidden":false
             },
             {
-              "iid": 3,
-              "type": "23",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Name",
-              "value": "Fan"
+               "iid":4,
+               "type":"3E",
+               "characteristics":[
+                  {
+                     "iid":5,
+                     "type":"52",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Firmware Revision",
+                     "value":"1.0"
+                  },
+                  {
+                     "iid":6,
+                     "type":"14",
+                     "perms":[
+                        "pw"
+                     ],
+                     "format":"bool",
+                     "description":"Identify"
+                  },
+                  {
+                     "iid":7,
+                     "type":"20",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Manufacturer",
+                     "value":"Default-Manufacturer"
+                  },
+                  {
+                     "iid":8,
+                     "type":"21",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Model",
+                     "value":"Default-Model"
+                  },
+                  {
+                     "iid":9,
+                     "type":"23",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Name",
+                     "value":"Fan"
+                  },
+                  {
+                     "iid":10,
+                     "type":"30",
+                     "perms":[
+                        "pr"
+                     ],
+                     "format":"string",
+                     "description":"Serial Number",
+                     "value":"Default-SerialNumber"
+                  }
+               ],
+               "primary":false,
+               "hidden":false
             }
-          ],
-          "primary": false,
-          "hidden": false
-        },
-        {
-          "iid": 4,
-          "type": "3E",
-          "characteristics": [
-            {
-              "iid": 5,
-              "type": "14",
-              "perms": [
-                "pw"
-              ],
-              "format": "bool",
-              "description": "Identify"
-            },
-            {
-              "iid": 6,
-              "type": "20",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Manufacturer",
-              "value": "Default-Manufacturer"
-            },
-            {
-              "iid": 7,
-              "type": "21",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Model",
-              "value": "Default-Model"
-            },
-            {
-              "iid": 8,
-              "type": "23",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Name",
-              "value": "Fan"
-            },
-            {
-              "iid": 9,
-              "type": "30",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Serial Number",
-              "value": "Default-SerialNumber"
-            },
-            {
-              "iid": 10,
-              "type": "52",
-              "perms": [
-                "pr"
-              ],
-              "format": "string",
-              "description": "Firmware Revision",
-              "value": "1.0"
-            }
-          ],
-          "primary": false,
-          "hidden": false
-        }
-      ]
-    }
-  ]
+         ]
+      }
+   ]
 }
