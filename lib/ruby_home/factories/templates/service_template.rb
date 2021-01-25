@@ -1,7 +1,8 @@
 module RubyHome
   class ServiceTemplate
-    FILEPATH = (File.dirname(__FILE__) + '/../../config/services.yml').freeze
-    DATA = YAML.load_file(FILEPATH).freeze
+    FILENAMES = %w(services.yml manual_services.yml).freeze
+    FILEPATHS = FILENAMES.map { |filename| File.join(__dir__, '..', '..', 'config', filename) }.freeze
+    DATA = FILEPATHS.flat_map { |filepath| YAML.load_file(filepath) }.freeze
 
     def self.all
       @all ||= DATA.map { |data| new(**data) }

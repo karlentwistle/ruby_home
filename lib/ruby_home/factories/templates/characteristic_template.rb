@@ -1,7 +1,8 @@
 module RubyHome
   class CharacteristicTemplate
-    FILEPATH = (File.dirname(__FILE__) + '/../../config/characteristics.yml').freeze
-    DATA = YAML.load_file(FILEPATH).freeze
+    FILENAMES = %w(characteristics.yml manual_characteristics.yml).freeze
+    FILEPATHS = FILENAMES.map { |filename| File.join(__dir__, '..', '..', 'config', filename) }.freeze
+    DATA = FILEPATHS.flat_map { |filepath| YAML.load_file(filepath) }.freeze
 
     def self.all
       @@all ||= DATA.map { |data| new(**data) }
