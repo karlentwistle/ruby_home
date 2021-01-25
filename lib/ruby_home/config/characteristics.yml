@@ -30,18 +30,6 @@
     ValidValues:
       '0': Inactive
       '1': Active
-- :name: :active_identifier
-  :description: Active Identifier
-  :uuid: 000000E7-0000-1000-8000-0026BB765291
-  :format: uint32
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - write
-  - cnotify
-  :constraints:
 - :name: :administrator_only_access
   :description: Administrator Only Access
   :uuid: 00000001-0000-1000-8000-0026BB765291
@@ -55,7 +43,7 @@
   - write
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :air_particulate_density
   :description: Air Particulate Density
   :uuid: 00000064-0000-1000-8000-0026BB765291
@@ -118,7 +106,7 @@
   - write
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :battery_level
   :description: Battery Level
   :uuid: '00000068-0000-1000-8000-0026BB765291'
@@ -253,23 +241,6 @@
       '0': Not Charging
       '1': Charging
       '2': Not Chargeable
-- :name: :closed_captions
-  :description: Closed Captions
-  :uuid: 000000DD-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - write
-  - cnotify
-  :constraints:
-    MaximumValue: 1
-    MinimumValue: 0
-    ValidValues:
-      '0': Disabled
-      '1': Enabled
 - :name: :color_temperature
   :description: Color Temperature
   :uuid: 000000CE-0000-1000-8000-0026BB765291
@@ -287,18 +258,6 @@
     MaximumValue: 500
     MinimumValue: 140
     StepValue: 1
-- :name: :configured_name
-  :description: Configured Name
-  :uuid: 000000E3-0000-1000-8000-0026BB765291
-  :format: string
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - write
-  - cnotify
-  :constraints:
 - :name: :contact_sensor_state
   :description: Contact Sensor State
   :uuid: 0000006A-0000-1000-8000-0026BB765291
@@ -460,26 +419,6 @@
       '1': Idle
       '2': Humidifying
       '3': Dehumidifying
-- :name: :current_media_state
-  :description: Current Media State
-  :uuid: 000000E0-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - cnotify
-  :constraints:
-    MaximumValue: 5
-    MinimumValue: 0
-    ValidValues:
-      '0': Play
-      '1': Pause
-      '2': Stop
-      '3':
-      '4': Loading
-      '5': Interrupted
 - :name: :current_position
   :description: Current Position
   :uuid: 0000006D-0000-1000-8000-0026BB765291
@@ -571,24 +510,6 @@
     MaximumValue: 90
     MinimumValue: -90
     StepValue: 1
-- :name: :current_visibility_state
-  :description: Current Visibility State
-  :uuid: 00000135-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - cnotify
-  :constraints:
-    MaximumValue: 3
-    MinimumValue: 0
-    ValidValues:
-      '0': Shown
-      '1': Hidden
-      '2':
-      '3':
 - :name: :digital_zoom
   :description: Digital Zoom
   :uuid: 0000011D-0000-1000-8000-0026BB765291
@@ -602,18 +523,6 @@
   - write
   - cnotify
   - uncnotify
-  :constraints: 
-- :name: :display_order
-  :description: Display Order
-  :uuid: 00000136-0000-1000-8000-0026BB765291
-  :format: tlv8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - write
-  - cnotify
   :constraints:
 - :name: :filter_change_indication
   :description: Filter Change Indication
@@ -654,7 +563,7 @@
   - securedRead
   :properties:
   - read
-  :constraints: 
+  :constraints:
 - :name: :hardware_revision
   :description: Hardware Revision
   :uuid: 00000053-0000-1000-8000-0026BB765291
@@ -664,7 +573,7 @@
   - securedRead
   :properties:
   - read
-  :constraints: 
+  :constraints:
 - :name: :heating_threshold_temperature
   :description: Heating Threshold Temperature
   :uuid: 00000012-0000-1000-8000-0026BB765291
@@ -691,7 +600,7 @@
   - securedWrite
   :properties:
   - write
-  :constraints: 
+  :constraints:
 - :name: :hue
   :description: Hue
   :uuid: 00000013-0000-1000-8000-0026BB765291
@@ -709,18 +618,6 @@
     MaximumValue: 360
     MinimumValue: 0
     StepValue: 1
-- :name: :identifier
-  :description: Identifier
-  :uuid: 000000E6-0000-1000-8000-0026BB765291
-  :format: uint32
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  :constraints:
-    MinimumValue: 0
-    StepValue: 1
 - :name: :identify
   :description: Identify
   :uuid: 00000014-0000-1000-8000-0026BB765291
@@ -730,7 +627,7 @@
   - securedWrite
   :properties:
   - write
-  :constraints: 
+  :constraints:
 - :name: :image_mirroring
   :description: Image Mirroring
   :uuid: 0000011F-0000-1000-8000-0026BB765291
@@ -744,7 +641,7 @@
   - write
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :image_rotation
   :description: Image Rotation
   :uuid: 0000011E-0000-1000-8000-0026BB765291
@@ -777,52 +674,6 @@
     ValidValues:
       '0': Not in use
       '1': In use
-- :name: :input_device_type
-  :description: Input Device Type
-  :uuid: 000000DC-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - cnotify
-  :constraints:
-    MaximumValue: 6
-    MinimumValue: 0
-    ValidValues:
-      '0': Other
-      '1': Television
-      '2': Recording
-      '3': Tuner
-      '4': Playback
-      '5': Audio System
-      '6':
-- :name: :input_source_type
-  :description: Input Source Type
-  :uuid: 000000DB-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - cnotify
-  :constraints:
-    MaximumValue: 10
-    MinimumValue: 0
-    ValidValues:
-      '0': Other
-      '1': Home Screen
-      '2': Tuner
-      '3': HDMI
-      '4': Composite Video
-      '5': S Video
-      '6': Component Video
-      '7': DVI
-      '8': Airplay
-      '9': USB
-      '10': Application
 - :name: :is_configured
   :description: Is Configured
   :uuid: 000000D6-0000-1000-8000-0026BB765291
@@ -864,7 +715,7 @@
   - securedWrite
   :properties:
   - write
-  :constraints: 
+  :constraints:
 - :name: :lock_current_state
   :description: Lock Current State
   :uuid: 0000001D-0000-1000-8000-0026BB765291
@@ -917,7 +768,7 @@
   - write
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :lock_physical_controls
   :description: Lock Physical Controls
   :uuid: 000000A7-0000-1000-8000-0026BB765291
@@ -963,7 +814,7 @@
   - read
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :manufacturer
   :description: Manufacturer
   :uuid: 00000020-0000-1000-8000-0026BB765291
@@ -973,7 +824,7 @@
   - securedRead
   :properties:
   - read
-  :constraints: 
+  :constraints:
 - :name: :model
   :description: Model
   :uuid: 00000021-0000-1000-8000-0026BB765291
@@ -983,7 +834,7 @@
   - securedRead
   :properties:
   - read
-  :constraints: 
+  :constraints:
 - :name: :motion_detected
   :description: Motion Detected
   :uuid: 00000022-0000-1000-8000-0026BB765291
@@ -995,7 +846,7 @@
   - read
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :mute
   :description: Mute
   :uuid: 0000011A-0000-1000-8000-0026BB765291
@@ -1009,7 +860,7 @@
   - write
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :name
   :description: Name
   :uuid: 00000023-0000-1000-8000-0026BB765291
@@ -1019,7 +870,7 @@
   - securedRead
   :properties:
   - read
-  :constraints: 
+  :constraints:
 - :name: :night_vision
   :description: Night Vision
   :uuid: 0000011B-0000-1000-8000-0026BB765291
@@ -1033,7 +884,7 @@
   - write
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :nitrogen_dioxide_density
   :description: Nitrogen Dioxide Density
   :uuid: 000000C4-0000-1000-8000-0026BB765291
@@ -1060,7 +911,7 @@
   - read
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :occupancy_detected
   :description: Occupancy Detected
   :uuid: 00000071-0000-1000-8000-0026BB765291
@@ -1089,7 +940,7 @@
   - write
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :optical_zoom
   :description: Optical Zoom
   :uuid: 0000011C-0000-1000-8000-0026BB765291
@@ -1103,7 +954,7 @@
   - write
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :outlet_in_use
   :description: Outlet In Use
   :uuid: 00000026-0000-1000-8000-0026BB765291
@@ -1115,7 +966,7 @@
   - read
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :ozone_density
   :description: Ozone Density
   :uuid: 000000C3-0000-1000-8000-0026BB765291
@@ -1142,7 +993,7 @@
   :properties:
   - read
   - write
-  :constraints: 
+  :constraints:
 - :name: :pair_verify
   :description: Pair Verify
   :uuid: 0000004E-0000-1000-8000-0026BB765291
@@ -1154,7 +1005,7 @@
   :properties:
   - read
   - write
-  :constraints: 
+  :constraints:
 - :name: :pairing_features
   :description: Pairing Features
   :uuid: 0000004F-0000-1000-8000-0026BB765291
@@ -1164,7 +1015,7 @@
   - read
   :properties:
   - read
-  :constraints: 
+  :constraints:
 - :name: :pairing_pairings
   :description: Pairing Pairings
   :uuid: 00000050-0000-1000-8000-0026BB765291
@@ -1176,36 +1027,7 @@
   :properties:
   - read
   - write
-  :constraints: 
-- :name: :picture_mode
-  :description: Picture Mode
-  :uuid: 000000E2-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - write
-  - cnotify
   :constraints:
-    MaximumValue: 13
-    MinimumValue: 0
-    ValidValues:
-      '0': Other
-      '1': Standard
-      '2': Calibrated
-      '3': Calibrated Dark
-      '4': Vivid
-      '5': Game
-      '6': Computer
-      '7': Custom
-      '8':
-      '9':
-      '10':
-      '11':
-      '12':
-      '13':
 - :name: :pm10_density
   :description: PM10 Density
   :uuid: 000000C7-0000-1000-8000-0026BB765291
@@ -1252,21 +1074,6 @@
       '0': Decreasing
       '1': Increasing
       '2': Stopped
-- :name: :power_mode_selection
-  :description: Power Mode Selection
-  :uuid: 000000DF-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - write
-  :constraints:
-    MaximumValue: 1
-    MinimumValue: 0
-    ValidValues:
-      '0': Show
-      '1': Hide
 - :name: :program_mode
   :description: Program Mode
   :uuid: 000000D1-0000-1000-8000-0026BB765291
@@ -1348,36 +1155,6 @@
     MaximumValue: 3600
     MinimumValue: 0
     StepValue: 1
-- :name: :remote_key
-  :description: Remote Key
-  :uuid: 000000E1-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - write
-  :constraints:
-    MaximumValue: 16
-    MinimumValue: 0
-    ValidValues:
-      '0': Rewind
-      '1': Fast Forward
-      '2': Next Track
-      '3': Previous Track
-      '4': Arrow Up
-      '5': Arrow Down
-      '6': Arrow Left
-      '7': Arrow Right
-      '8': Select
-      '9': Back
-      '10': Exit
-      '11': Play Pause
-      '12':
-      '13':
-      '14':
-      '15': Information
-      '16':
 - :name: :reset_filter_indication
   :description: Reset Filter Indication
   :uuid: 000000AD-0000-1000-8000-0026BB765291
@@ -1505,7 +1282,7 @@
   :properties:
   - read
   - write
-  :constraints: 
+  :constraints:
 - :name: :serial_number
   :description: Serial Number
   :uuid: 00000030-0000-1000-8000-0026BB765291
@@ -1571,7 +1348,7 @@
   :properties:
   - read
   - write
-  :constraints: 
+  :constraints:
 - :name: :slat_type
   :description: Slat Type
   :uuid: 000000C0-0000-1000-8000-0026BB765291
@@ -1585,22 +1362,6 @@
     ValidValues:
       '0': Horizontal
       '1': Vertical
-- :name: :sleep_discovery_mode
-  :description: Sleep Discovery Mode
-  :uuid: 000000E8-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - cnotify
-  :constraints:
-    MaximumValue: 1
-    MinimumValue: 0
-    ValidValues:
-      '0': Not Discoverable
-      '1': Always Discoverable
 - :name: :smoke_detected
   :description: Smoke Detected
   :uuid: 00000076-0000-1000-8000-0026BB765291
@@ -1627,7 +1388,7 @@
   - read
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :status_fault
   :description: Status Fault
   :uuid: 00000077-0000-1000-8000-0026BB765291
@@ -1699,7 +1460,7 @@
   - read
   - cnotify
   - uncnotify
-  :constraints: 
+  :constraints:
 - :name: :sulphur_dioxide_density
   :description: Sulphur Dioxide Density
   :uuid: 000000C5-0000-1000-8000-0026BB765291
@@ -1724,7 +1485,7 @@
   - securedRead
   :properties:
   - read
-  :constraints: 
+  :constraints:
 - :name: :supported_rtp_configuration
   :description: Supported RTP Configuration
   :uuid: 00000116-0000-1000-8000-0026BB765291
@@ -1734,7 +1495,7 @@
   - securedRead
   :properties:
   - read
-  :constraints: 
+  :constraints:
 - :name: :supported_video_stream_configuration
   :description: Supported Video Stream Configuration
   :uuid: 00000114-0000-1000-8000-0026BB765291
@@ -1744,7 +1505,7 @@
   - securedRead
   :properties:
   - read
-  :constraints: 
+  :constraints:
 - :name: :swing_mode
   :description: Swing Mode
   :uuid: 000000B6-0000-1000-8000-0026BB765291
@@ -1903,24 +1664,6 @@
       '0': Humidifier or Dehumidifier
       '1': Humidifier
       '2': Dehumidifier
-- :name: :target_media_state
-  :description: Target Media State
-  :uuid: 00000137-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - write
-  - cnotify
-  :constraints:
-    MaximumValue: 2
-    MinimumValue: 0
-    ValidValues:
-      '0': Play
-      '1': Pause
-      '2': Stop
 - :name: :target_position
   :description: Target Position
   :uuid: 0000007C-0000-1000-8000-0026BB765291
@@ -2023,23 +1766,6 @@
     MaximumValue: 90
     MinimumValue: -90
     StepValue: 1
-- :name: :target_visibility_state
-  :description: Target Visibility State
-  :uuid: 00000134-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - write
-  - cnotify
-  :constraints:
-    MaximumValue: 1
-    MinimumValue: 0
-    ValidValues:
-      '0': Shown
-      '1': Hidden
 - :name: :temperature_display_units
   :description: Temperature Display Units
   :uuid: 00000036-0000-1000-8000-0026BB765291
@@ -2119,39 +1845,6 @@
     MaximumValue: 100
     MinimumValue: 0
     StepValue: 1
-- :name: :volume_control_type
-  :description: Volume Control Type
-  :uuid: 000000E9-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - read
-  - cnotify
-  :constraints:
-    MaximumValue: 3
-    MinimumValue: 0
-    ValidValues:
-      '0': None
-      '1': Relative
-      '2': Relative with Current
-      '3': Absolute
-- :name: :volume_selector
-  :description: Volume Selector
-  :uuid: 000000EA-0000-1000-8000-0026BB765291
-  :format: uint8
-  :unit: nil
-  :permissions:
-  - securedRead
-  :properties:
-  - write
-  :constraints:
-    MaximumValue: 1
-    MinimumValue: 0
-    ValidValues:
-      '0': Increment
-      '1': Decrement
 - :name: :water_level
   :description: Water Level
   :uuid: 000000B5-0000-1000-8000-0026BB765291
