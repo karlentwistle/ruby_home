@@ -19,17 +19,15 @@ module RubyHome
       end
 
       def write(collection)
-        source.rewind
-        source.write(collection.to_yaml)
+        File.open(source, 'w') {|f| f.write(collection.to_yaml) }
       end
 
       def read
-        source.rewind
-        YAML.load(source.read)
-      end
+        return false unless File.exist?(source)
 
-      def reload
-        self.class_variable_set(:@@_instance, nil)
+        YAML.load_file(source)
+      rescue Errno::EBADF
+        return false
       end
     end
 
