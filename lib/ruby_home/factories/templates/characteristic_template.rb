@@ -16,18 +16,17 @@ module RubyHome
       end
     end
 
-    def initialize(name:, description:, uuid:, format:, unit:, permissions:, properties:, constraints: )
+    def initialize(name:, description:, uuid:, format:, unit:, properties:, constraints: )
       @name = name
       @description = description
       @uuid = uuid
       @format = format
       @unit = unit
-      @permissions = permissions
       @properties = properties
       @constraints = constraints
     end
 
-    attr_reader :name, :description, :uuid, :format, :unit, :permissions, :properties
+    attr_reader :name, :description, :uuid, :format, :unit, :properties
 
     def constraints
       @constraints || {}
