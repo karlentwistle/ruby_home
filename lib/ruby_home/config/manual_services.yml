@@ -1,0 +1,45 @@
+# These services are unavailable within HomeKit Accessory Simulator
+# running sbin/service_generator.rb wont automatically generate them
+
+---
+- :name: :television
+  :description: Television
+  :uuid: '000000D8-0000-1000-8000-0026BB765291'
+  :optional_characteristic_names:
+  - :brightness
+  - :closed_captions
+  - :current_media_state
+  - :display_order
+  - :name
+  - :picture_mode
+  - :power_mode_selection
+  - :target_media_state
+  :required_characteristic_names:
+  - :active
+  - :active_identifier
+  - :configured_name
+  - :remote_key
+  - :sleep_discovery_mode
+- :name: :television_speaker
+  :description: Television Speaker
+  :uuid: 00000113-0000-1000-8000-0026BB765291
+  :optional_characteristic_names:
+  - :active
+  - :volume
+  - :volume_control_type
+  - :volume_selector
+  :required_characteristic_names:
+  - :mute
+- :name: :input_source
+  :description: Input Source
+  :uuid: 000000D9-0000-1000-8000-0026BB765291
+  :optional_characteristic_names:
+  - :identifier
+  - :input_device_type
+  - :target_visibility_state
+  :required_characteristic_names:
+  - :configured_name
+  - :current_visibility_state
+  - :input_source_type
+  - :is_configured
+  - :name

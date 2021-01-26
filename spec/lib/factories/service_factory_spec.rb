@@ -167,7 +167,7 @@ RSpec.describe RubyHome::ServiceFactory do
       expect(RubyHome::IdentifierCache.all).to include(
         an_object_having_attributes(
           accessory_id: 1,
-          instance_id: 10,
+          instance_id: 11,
           uuid: '00000043-0000-1000-8000-0026BB765291',
           subtype: 'backlight'
         )

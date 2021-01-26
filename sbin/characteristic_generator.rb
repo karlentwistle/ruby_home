@@ -41,7 +41,6 @@ module RubyHome
       @constraints = xml["Constraints"]
       @format = xml["Format"]
       @name = xml["Name"]
-      @permissions = xml["Permissions"]
       @properties = xml["Properties"]
       @uuid = xml["UUID"]
       @unit = xml["Unit"]
@@ -54,7 +53,6 @@ module RubyHome
         uuid: uuid,
         format: format,
         unit: sanitized_unit,
-        permissions: permissions,
         properties: properties,
         constraints: constraints,
       }
@@ -76,7 +74,7 @@ module RubyHome
 
       private
 
-      attr_reader :constraints, :format, :name, :permissions, :properties, :uuid, :unit
+      attr_reader :constraints, :format, :name, :properties, :uuid, :unit
   end
 end
 

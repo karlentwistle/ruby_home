@@ -1,7 +1,8 @@
 module RubyHome
   class CharacteristicTemplate
-    FILEPATH = (File.dirname(__FILE__) + '/../../config/characteristics.yml').freeze
-    DATA = YAML.load_file(FILEPATH).freeze
+    FILENAMES = %w(characteristics.yml manual_characteristics.yml).freeze
+    FILEPATHS = FILENAMES.map { |filename| File.join(__dir__, '..', '..', 'config', filename) }.freeze
+    DATA = FILEPATHS.flat_map { |filepath| YAML.load_file(filepath) }.freeze
 
     def self.all
       @@all ||= DATA.map { |data| new(**data) }
@@ -15,18 +16,17 @@ module RubyHome
       end
     end
 
-    def initialize(name:, description:, uuid:, format:, unit:, permissions:, properties:, constraints: )
+    def initialize(name:, description:, uuid:, format:, unit:, properties:, constraints: )
       @name = name
       @description = description
       @uuid = uuid
       @format = format
       @unit = unit
-      @permissions = permissions
       @properties = properties
       @constraints = constraints
     end
 
-    attr_reader :name, :description, :uuid, :format, :unit, :permissions, :properties
+    attr_reader :name, :description, :uuid, :format, :unit, :properties
 
     def constraints
       @constraints || {}

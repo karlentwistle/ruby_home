@@ -1,7 +1,8 @@
 module RubyHome
   class ServiceTemplate
-    FILEPATH = (File.dirname(__FILE__) + '/../../config/services.yml').freeze
-    DATA = YAML.load_file(FILEPATH).freeze
+    FILENAMES = %w(services.yml manual_services.yml).freeze
+    FILEPATHS = FILENAMES.map { |filename| File.join(__dir__, '..', '..', 'config', filename) }.freeze
+    DATA = FILEPATHS.flat_map { |filepath| YAML.load_file(filepath) }.freeze
 
     def self.all
       @all ||= DATA.map { |data| new(**data) }
@@ -15,25 +16,25 @@ module RubyHome
       end
     end
 
-    def initialize(name:, description:, uuid:, optional_characteristics_uuids:, required_characteristics_uuids:)
+    def initialize(name:, description:, uuid:, optional_characteristic_names:, required_characteristic_names:)
       @name = name
       @description = description
       @uuid = uuid
-      @optional_characteristics_uuids = optional_characteristics_uuids
-      @required_characteristics_uuids = required_characteristics_uuids
+      @optional_characteristic_names = optional_characteristic_names
+      @required_characteristic_names = required_characteristic_names
     end
 
-    attr_reader :name, :description, :uuid, :optional_characteristics_uuids, :required_characteristics_uuids
+    attr_reader :name, :description, :uuid, :optional_characteristic_names, :required_characteristic_names
 
     def optional_characteristics
-      @optional_characteristics ||= optional_characteristics_uuids.map do |uuid|
-        CharacteristicTemplate.find_by(uuid: uuid)
+      @optional_characteristics ||= optional_characteristic_names.map do |name|
+        CharacteristicTemplate.find_by(name: name)
       end
     end
 
     def required_characteristics
-      @required_characteristics ||= required_characteristics_uuids.map do |uuid|
-        CharacteristicTemplate.find_by(uuid: uuid)
+      @required_characteristics ||= required_characteristic_names.map do |name|
+        CharacteristicTemplate.find_by(name: name)
       end
     end
   end

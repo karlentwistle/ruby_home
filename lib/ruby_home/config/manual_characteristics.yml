@@ -1,0 +1,278 @@
+# These characteristics are unavailable within HomeKit Accessory Simulator
+# running sbin/characteristic_generator.rb wont automatically generate them
+
+---
+- :name: :active_identifier
+  :description: Active Identifier
+  :uuid: 000000E7-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: nil
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+- :name: :closed_captions
+  :description: Closed Captions
+  :uuid: 000000DD-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    ValidValues:
+      '0': Disabled
+      '1': Enabled
+- :name: :configured_name
+  :description: Configured Name
+  :uuid: 000000E3-0000-1000-8000-0026BB765291
+  :format: string
+  :unit: nil
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+- :name: :current_media_state
+  :description: Current Media State
+  :uuid: 000000E0-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 5
+    MinimumValue: 0
+    ValidValues:
+      '0': Play
+      '1': Pause
+      '2': Stop
+      '3':
+      '4': Loading
+      '5': Interrupted
+- :name: :current_visibility_state
+  :description: Current Visibility State
+  :uuid: 00000135-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 3
+    MinimumValue: 0
+    ValidValues:
+      '0': Shown
+      '1': Hidden
+      '2':
+      '3':
+  :constraints:
+- :name: :display_order
+  :description: Display Order
+  :uuid: 00000136-0000-1000-8000-0026BB765291
+  :format: tlv8
+  :unit: nil
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+- :name: :identifier
+  :description: Identifier
+  :uuid: 000000E6-0000-1000-8000-0026BB765291
+  :format: uint32
+  :unit: nil
+  :properties:
+  - read
+  :constraints:
+    MinimumValue: 0
+    StepValue: 1
+- :name: :input_device_type
+  :description: Input Device Type
+  :uuid: 000000DC-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 6
+    MinimumValue: 0
+    ValidValues:
+      '0': Other
+      '1': Television
+      '2': Recording
+      '3': Tuner
+      '4': Playback
+      '5': Audio System
+      '6':
+- :name: :input_source_type
+  :description: Input Source Type
+  :uuid: 000000DB-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 10
+    MinimumValue: 0
+    ValidValues:
+      '0': Other
+      '1': Home Screen
+      '2': Tuner
+      '3': HDMI
+      '4': Composite Video
+      '5': S Video
+      '6': Component Video
+      '7': DVI
+      '8': Airplay
+      '9': USB
+      '10': Application
+- :name: :picture_mode
+  :description: Picture Mode
+  :uuid: 000000E2-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 13
+    MinimumValue: 0
+    ValidValues:
+      '0': Other
+      '1': Standard
+      '2': Calibrated
+      '3': Calibrated Dark
+      '4': Vivid
+      '5': Game
+      '6': Computer
+      '7': Custom
+      '8':
+      '9':
+      '10':
+      '11':
+      '12':
+      '13':
+- :name: :power_mode_selection
+  :description: Power Mode Selection
+  :uuid: 000000DF-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - write
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    ValidValues:
+      '0': Show
+      '1': Hide
+- :name: :remote_key
+  :description: Remote Key
+  :uuid: 000000E1-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - write
+  :constraints:
+    MaximumValue: 16
+    MinimumValue: 0
+    ValidValues:
+      '0': Rewind
+      '1': Fast Forward
+      '2': Next Track
+      '3': Previous Track
+      '4': Arrow Up
+      '5': Arrow Down
+      '6': Arrow Left
+      '7': Arrow Right
+      '8': Select
+      '9': Back
+      '10': Exit
+      '11': Play Pause
+      '12':
+      '13':
+      '14':
+      '15': Information
+      '16':
+- :name: :sleep_discovery_mode
+  :description: Sleep Discovery Mode
+  :uuid: 000000E8-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    ValidValues:
+      '0': Not Discoverable
+      '1': Always Discoverable
+- :name: :target_media_state
+  :description: Target Media State
+  :uuid: 00000137-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 2
+    MinimumValue: 0
+    ValidValues:
+      '0': Play
+      '1': Pause
+      '2': Stop
+- :name: :target_visibility_state
+  :description: Target Visibility State
+  :uuid: 00000134-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - write
+  - cnotify
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    ValidValues:
+      '0': Shown
+      '1': Hidden
+- :name: :volume_control_type
+  :description: Volume Control Type
+  :uuid: 000000E9-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - read
+  - cnotify
+  :constraints:
+    MaximumValue: 3
+    MinimumValue: 0
+    ValidValues:
+      '0': None
+      '1': Relative
+      '2': Relative with Current
+      '3': Absolute
+- :name: :volume_selector
+  :description: Volume Selector
+  :uuid: 000000EA-0000-1000-8000-0026BB765291
+  :format: uint8
+  :unit: nil
+  :properties:
+  - write
+  :constraints:
+    MaximumValue: 1
+    MinimumValue: 0
+    ValidValues:
+      '0': Increment
+      '1': Decrement
