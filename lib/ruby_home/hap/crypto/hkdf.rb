@@ -11,7 +11,7 @@ module RubyHome
 
         def encrypt(source)
           byte_string = convert_string_to_byte_string(source)
-          GEM_HKDF.new(byte_string, hkdf_opts).next_bytes(BYTE_LENGTH)
+          GEM_HKDF.new(byte_string, hkdf_opts).read(BYTE_LENGTH)
         end
 
         private
