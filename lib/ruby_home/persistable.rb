@@ -19,7 +19,11 @@ module RubyHome
       end
 
       def write(collection)
-        File.open(source, 'w') {|f| f.write(collection.to_yaml) }
+        File.open(source, 'w') do |file|
+          file.write(collection.to_yaml)
+        end
+      rescue Errno::EBADF
+        false
       end
 
       def read
