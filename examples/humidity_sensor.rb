@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 humidity_sensor = RubyHome::ServiceFactory.create(:humidity_sensor,
@@ -7,8 +7,7 @@ humidity_sensor = RubyHome::ServiceFactory.create(:humidity_sensor,
   status_low_battery: 0, # optional
   status_tampered: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 humidity_sensor.current_relative_humidity.after_update do |current_relative_humidity|
   puts "humidity sensor current relative humidity #{current_relative_humidity}"

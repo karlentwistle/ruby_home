@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 humidifier_dehumidifier = RubyHome::ServiceFactory.create(:humidifier_dehumidifier,
@@ -12,8 +12,7 @@ humidifier_dehumidifier = RubyHome::ServiceFactory.create(:humidifier_dehumidifi
   relative_humidity_dehumidifier_threshold: 0, # optional
   water_level: 50, # optional
   swing_mode: 1, # optional
-  lock_physical_controls: 0, # optional
-)
+  lock_physical_controls: 0) # optional
 
 humidifier_dehumidifier.active.after_update do |active|
   if active == 0
@@ -24,9 +23,9 @@ humidifier_dehumidifier.active.after_update do |active|
 end
 
 target_humidifier_dehumidifier_state_values = {
-  0 => 'Humidifier or Dehumidifier',
-  1 => 'Humidifier',
-  2 => 'Dehumidifier'
+  0 => "Humidifier or Dehumidifier",
+  1 => "Humidifier",
+  2 => "Dehumidifier"
 }
 humidifier_dehumidifier.target_humidifier_dehumidifier_state.after_update do |target_humidifier_dehumidifier_state|
   state = target_humidifier_dehumidifier_state_values[target_humidifier_dehumidifier_state]
@@ -34,10 +33,10 @@ humidifier_dehumidifier.target_humidifier_dehumidifier_state.after_update do |ta
 end
 
 current_humidifier_dehumidifier_state_values = {
-  0 => 'Inactive',
-  1 => 'Idle',
-  2 => 'Humidifying',
-  3 => 'Dehumidifying'
+  0 => "Inactive",
+  1 => "Idle",
+  2 => "Humidifying",
+  3 => "Dehumidifying"
 }
 humidifier_dehumidifier.current_humidifier_dehumidifier_state.after_update do |current_humidifier_dehumidifier_state|
   state = current_humidifier_dehumidifier_state_values[current_humidifier_dehumidifier_state]

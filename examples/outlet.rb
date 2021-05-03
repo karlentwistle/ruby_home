@@ -1,11 +1,10 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 outlet = RubyHome::ServiceFactory.create(:outlet,
   outlet_in_use: false, # required
   on: false, # required
-  name: "occupancy sensor", # optional
-)
+  name: "occupancy sensor") # optional
 
 outlet.outlet_in_use.after_update do |outlet_in_use|
   if outlet_in_use

@@ -1,10 +1,10 @@
-require_relative 'application_controller'
+require_relative "application_controller"
 
 module RubyHome
   module HTTP
     class PairVerifiesController < ApplicationController
-      post '/' do
-        content_type 'application/pairing+tlv8'
+      post "/" do
+        content_type "application/pairing+tlv8"
 
         verify_accessory_paired
 
@@ -26,22 +26,22 @@ module RubyHome
         session.shared_secret = shared_secret
 
         accessoryinfo = [
-          public_key.unpack1('H*'),
-          accessory_info.device_id.unpack1('H*'),
-          client_public_key.to_bytes.unpack1('H*')
+          public_key.unpack1("H*"),
+          accessory_info.device_id.unpack1("H*"),
+          client_public_key.to_bytes.unpack1("H*")
         ].join
 
         signing_key = accessory_info.signing_key
-        accessorysignature = signing_key.sign([accessoryinfo].pack('H*'))
+        accessorysignature = signing_key.sign([accessoryinfo].pack("H*"))
 
         subtlv = tlv(identifier: accessory_info.device_id, signature: accessorysignature)
 
-        hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Verify-Encrypt-Info', salt: 'Pair-Verify-Encrypt-Salt')
+        hkdf = HAP::Crypto::HKDF.new(info: "Pair-Verify-Encrypt-Info", salt: "Pair-Verify-Encrypt-Salt")
         session_key = hkdf.encrypt(shared_secret)
         session.session_key = session_key
 
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(session_key)
-        nonce = HexHelper.pad('PV-Msg02')
+        nonce = HexHelper.pad("PV-Msg02")
         encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
 
         tlv state: 2, public_key: public_key, encrypted_data: encrypted_data

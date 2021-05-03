@@ -54,35 +54,35 @@ module RubyHome
 
       private
 
-        attr_reader :socket, :encrypter_class, :decrypter_class
+      attr_reader :socket, :encrypter_class, :decrypter_class
 
-        def received_encrypted_request?
-          @received_encrypted_request ||= false
-        end
+      def received_encrypted_request?
+        @received_encrypted_request ||= false
+      end
 
-        def encrypter
-          @_encrypter ||= encrypter_class.new(accessory_to_controller_key)
-        end
+      def encrypter
+        @_encrypter ||= encrypter_class.new(accessory_to_controller_key)
+      end
 
-        def encryption_time?
-          accessory_to_controller_key? && received_encrypted_request?
-        end
+      def encryption_time?
+        accessory_to_controller_key? && received_encrypted_request?
+      end
 
-        def decrypter
-          @_decrypter ||= decrypter_class.new(controller_to_accessory_key)
-        end
+      def decrypter
+        @_decrypter ||= decrypter_class.new(controller_to_accessory_key)
+      end
 
-        def decryption_time?
-          !!controller_to_accessory_key
-        end
+      def decryption_time?
+        !!controller_to_accessory_key
+      end
 
-        def accessory_to_controller_key?
-          !!accessory_to_controller_key
-        end
+      def accessory_to_controller_key?
+        !!accessory_to_controller_key
+      end
 
-        def controller_to_accessory_key?
-          !!controller_to_accessory_key
-        end
+      def controller_to_accessory_key?
+        !!controller_to_accessory_key
+      end
     end
   end
 end

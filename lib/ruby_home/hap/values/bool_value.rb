@@ -1,12 +1,12 @@
-require_relative 'base_value'
+require_relative "base_value"
 
 module RubyHome
   class BoolValue < BaseValue
     REMAPPED_VALUES = {
-      '0' => false,
+      "0" => false,
       0 => false,
-      '1' => true,
-      1 => true,
+      "1" => true,
+      1 => true
     }.freeze
 
     def default

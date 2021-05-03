@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 window_covering = RubyHome::ServiceFactory.create(:window_covering,
@@ -10,8 +10,7 @@ window_covering = RubyHome::ServiceFactory.create(:window_covering,
   current_vertical_tilt_angle: 0, # optional
   target_vertical_tilt_angle: 0, # optional
   current_horizontal_tilt_angle: 0, # optional
-  target_horizontal_tilt_angle: 0 # optional
-)
+  target_horizontal_tilt_angle: 0) # optional
 
 window_covering.target_position.after_update do |target_position|
   puts "window covering target position #{target_position}"
@@ -29,9 +28,9 @@ window_covering.target_position.after_update do |target_position|
 end
 
 position_state_values = {
-  0 => 'Decreasing',
-  1 => 'Increasing',
-  2 => 'Stopped'
+  0 => "Decreasing",
+  1 => "Increasing",
+  2 => "Stopped"
 }
 window_covering.position_state.after_update do |position_state|
   state = position_state_values[position_state]

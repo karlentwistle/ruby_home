@@ -1,4 +1,4 @@
-require 'facets/string/modulize'
+require "facets/string/modulize"
 
 module RubyHome
   class BaseValue
@@ -8,7 +8,7 @@ module RubyHome
       Object.const_get("::RubyHome::#{template.format.modulize}Value") || NullValue
     end
 
-    def initialize(characteristic_template=nil, initial_value=nil)
+    def initialize(characteristic_template = nil, initial_value = nil)
       @template = characteristic_template
       @value = initial_value
     end
@@ -25,6 +25,6 @@ module RubyHome
 
     private
 
-      attr_reader :template
+    attr_reader :template
   end
 end

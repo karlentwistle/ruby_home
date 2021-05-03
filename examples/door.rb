@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 door = RubyHome::ServiceFactory.create(:door,
@@ -6,8 +6,7 @@ door = RubyHome::ServiceFactory.create(:door,
   position_state: 1, # required
   current_position: 0, # required
   name: "door", # optional
-  obstruction_detected: false, # optional
-)
+  obstruction_detected: false) # optional
 
 door.target_position.after_update do |target_position|
   puts "door target position #{target_position}"
@@ -25,9 +24,9 @@ door.target_position.after_update do |target_position|
 end
 
 position_state_values = {
-  0 => 'Decreasing',
-  1 => 'Increasing',
-  2 => 'Stopped'
+  0 => "Decreasing",
+  1 => "Increasing",
+  2 => "Stopped"
 }
 door.position_state.after_update do |position_state|
   state = position_state_values[position_state]

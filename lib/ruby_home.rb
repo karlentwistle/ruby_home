@@ -1,25 +1,25 @@
-require 'dnssd'
-require 'facets/hash/slice'
-require 'hkdf'
-require 'oj'
-require 'rack'
-require 'rbnacl'
-require 'ruby_home/srp'
-require 'ruby_home/tlv'
-require 'securerandom'
-require 'sinatra/base'
-require 'socket'
-require 'webrick'
-require 'wisper'
-require 'yaml'
+require "dnssd"
+require "facets/hash/slice"
+require "hkdf"
+require "oj"
+require "rack"
+require "rbnacl"
+require "ruby_home/srp"
+require "ruby_home/tlv"
+require "securerandom"
+require "sinatra/base"
+require "socket"
+require "webrick"
+require "wisper"
+require "yaml"
 
 module RubyHome
   [
-    '/ruby_home/hap/**/*.rb',
-    '/ruby_home/http/**/*.rb',
-    '/ruby_home/factories/**/*.rb',
-    '/ruby_home/dns/**/*.rb',
-    '/ruby_home/*.rb'
+    "/ruby_home/hap/**/*.rb",
+    "/ruby_home/http/**/*.rb",
+    "/ruby_home/factories/**/*.rb",
+    "/ruby_home/dns/**/*.rb",
+    "/ruby_home/*.rb"
   ].each do |pattern|
     Dir[File.dirname(__FILE__) + pattern].each { |file| require file }
   end
@@ -36,8 +36,8 @@ module RubyHome
     end
 
     def run
-      trap 'INT'  do shutdown end
-      trap 'TERM' do shutdown end
+      trap "INT" do shutdown end
+      trap "TERM" do shutdown end
 
       greet
       start

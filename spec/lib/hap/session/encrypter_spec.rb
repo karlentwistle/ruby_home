@@ -1,44 +1,44 @@
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe RubyHome::HAP::Session::Encrypter do
-  describe '#encrypt' do
-    let(:key) { ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*') }
+  describe "#encrypt" do
+    let(:key) { ["273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895"].pack("H*") }
     let(:count) { 0 }
 
     subject do
       described_class.new(key, count: count).encrypt(data)
     end
 
-    context 'short data' do
-      let(:data) { 'hello world' }
+    context "short data" do
+      let(:data) { "hello world" }
 
-      it 'encrypts small strings of data' do
-        expected_encrypted_data = %w{
+      it "encrypts small strings of data" do
+        expected_encrypted_data = %w[
           0B00781A E80A8471 9C75E6C6 E4DBBA98 C40CBEDB 5B058D3F 331241AC DF
-        }.join.downcase
+        ].join.downcase
 
-        expect(subject.unpack1('H*')).to eql(expected_encrypted_data)
+        expect(subject.unpack1("H*")).to eql(expected_encrypted_data)
       end
     end
 
-    context 'custom count' do
-      let(:data) { 'hello world' }
+    context "custom count" do
+      let(:data) { "hello world" }
       let(:count) { 2 }
 
-      it 'encrypts using correct nonce' do
-        expected_encrypted_data = %w{
+      it "encrypts using correct nonce" do
+        expected_encrypted_data = %w[
           0B00771F 50A03DF3 6B64FE1C A6E0D281 1E83D9F8 0FBD49FA FDA4EB2D B8
-        }.join.downcase
+        ].join.downcase
 
-        expect(subject.unpack1('H*')).to eql(expected_encrypted_data)
+        expect(subject.unpack1("H*")).to eql(expected_encrypted_data)
       end
     end
 
-    context 'long data' do
-      let(:data) { 'a' * 1025 }
+    context "long data" do
+      let(:data) { "a" * 1025 }
 
-      it 'encrypts small strings of data' do
-        expected_encrypted_data_frame_0 = %w{
+      it "encrypts small strings of data" do
+        expected_encrypted_data_frame_0 = %w[
           0004711E E5078A30 8A7BF5CB E1DF29FA 6C32A826 82554D02 47AFED1D F56D587F
           B72659F9 53113A7F 953649A1 9D51BE10 46E42231 ED733FEB 3D1F749D 3A617B61
           DBDE1410 CA33D0D8 7027D1AA F5AF7F15 D7E2F19C DC774720 A32F6960 EA0D3E58
@@ -72,13 +72,13 @@ RSpec.describe RubyHome::HAP::Session::Encrypter do
           5DC26D6C A5AC4737 19DC2CD9 5D0E6BAD 0ED54B3A CB0E79E0 CF4871EA FC1F354E
           BCE740B1 C652CF87 DB7219E9 41A71E50 9F421229 5B12DDFE 612FA627 D3DA755E
           615E4004 64D7B368 EEFE200C 2A95F22C 287E
-        }.join.downcase
+        ].join.downcase
 
-        expected_encrypted_data_frame_1 = %w{
+        expected_encrypted_data_frame_1 = %w[
           0100782F 5C81C735 B347E936 DC6E9172 75BD4B
-        }.join.downcase
+        ].join.downcase
 
-        expect(subject.unpack1('H*')).to eql(
+        expect(subject.unpack1("H*")).to eql(
           expected_encrypted_data_frame_0 + expected_encrypted_data_frame_1
         )
       end

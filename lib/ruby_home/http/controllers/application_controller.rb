@@ -1,4 +1,4 @@
-require 'logger'
+require "logger"
 
 module RubyHome
   module HTTP
@@ -6,16 +6,16 @@ module RubyHome
       disable :protection
 
       logger = Logger.new(STDOUT)
-      logger.level = case ENV['DEBUG']
-      when 'debug'
+      logger.level = case ENV["DEBUG"]
+      when "debug"
         Logger::DEBUG
-      when 'info'
+      when "info"
         Logger::INFO
       else
         Logger::WARN
       end
       set :logger, logger
-      enable :logging if ENV['DEBUG']
+      enable :logging if ENV["DEBUG"]
 
       before do
         logger.debug "Session"

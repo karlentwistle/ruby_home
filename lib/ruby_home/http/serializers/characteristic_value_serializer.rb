@@ -1,4 +1,4 @@
-require_relative 'object_serializer'
+require_relative "object_serializer"
 
 module RubyHome
   module HTTP
@@ -6,14 +6,14 @@ module RubyHome
       include ObjectSerializer
 
       def root
-        'characteristics'
+        "characteristics"
       end
 
       def record_hash(characteristic)
         {
-          'aid' => characteristic.accessory_id,
-          'iid' => characteristic.instance_id,
-          'value' => characteristic.value,
+          "aid" => characteristic.accessory_id,
+          "iid" => characteristic.instance_id,
+          "value" => characteristic.value
         }
       end
     end

@@ -1,4 +1,4 @@
-require_relative 'base_value'
+require_relative "base_value"
 
 module RubyHome
   class Uint8Value < BaseValue
@@ -8,22 +8,22 @@ module RubyHome
 
     private
 
-      def first_default_value
-        valid_values.keys.first
-      end
+    def first_default_value
+      valid_values.keys.first
+    end
 
-      def valid_values
-        defined_values || range_values || raise(UnknownValueError, "Constraint contains an unrecognized list of values: #{template.constraints.inspect }")
-      end
+    def valid_values
+      defined_values || range_values || raise(UnknownValueError, "Constraint contains an unrecognized list of values: #{template.constraints.inspect}")
+    end
 
-      def defined_values
-        template.constraints.dig('ValidValues')
-      end
+    def defined_values
+      template.constraints.dig("ValidValues")
+    end
 
-      def range_values
-        if min = template.constraints.dig('MinimumValue')
-          { min.to_s => min }
-        end
+    def range_values
+      if min = template.constraints.dig("MinimumValue")
+        {min.to_s => min}
       end
+    end
   end
 end

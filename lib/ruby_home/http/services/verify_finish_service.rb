@@ -1,6 +1,6 @@
 module RubyHome
   class VerifyFinishService
-    def initialize(accessory_info: , encrypted_data: , session_key:, shared_secret:)
+    def initialize(accessory_info:, encrypted_data:, session_key:, shared_secret:)
       @accessory_info = accessory_info
       @encrypted_data = encrypted_data
       @session_key = session_key
@@ -23,34 +23,34 @@ module RubyHome
 
     private
 
-      NONCE = -'PV-Msg03'
+    NONCE = -"PV-Msg03"
 
-      attr_reader :accessory_info, :encrypted_data, :session_key, :shared_secret
+    attr_reader :accessory_info, :encrypted_data, :session_key, :shared_secret
 
-      def paired_client_exists?
-        accessory_info.paired_clients.any? do |paired_client|
-          paired_client[:identifier] == identifier
-        end
+    def paired_client_exists?
+      accessory_info.paired_clients.any? do |paired_client|
+        paired_client[:identifier] == identifier
       end
+    end
 
-      def chacha20poly1305
-        HAP::Crypto::ChaCha20Poly1305.new(session_key)
-      end
+    def chacha20poly1305
+      HAP::Crypto::ChaCha20Poly1305.new(session_key)
+    end
 
-      def nonce
-        HexHelper.pad(NONCE)
-      end
+    def nonce
+      HexHelper.pad(NONCE)
+    end
 
-      def decrypted_data
-        chacha20poly1305.decrypt(nonce, encrypted_data)
-      end
+    def decrypted_data
+      chacha20poly1305.decrypt(nonce, encrypted_data)
+    end
 
-      def unpacked_decrypted_data
-        TLV.decode(decrypted_data)
-      end
+    def unpacked_decrypted_data
+      TLV.decode(decrypted_data)
+    end
 
-      def identifier
-        unpacked_decrypted_data[:identifier]
-      end
+    def identifier
+      unpacked_decrypted_data[:identifier]
+    end
   end
 end

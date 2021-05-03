@@ -1,4 +1,4 @@
-require_relative 'base_value'
+require_relative "base_value"
 
 module RubyHome
   class IdentifyValue < BaseValue

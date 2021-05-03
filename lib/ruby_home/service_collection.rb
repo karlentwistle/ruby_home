@@ -20,6 +20,6 @@ module RubyHome
 
     private
 
-      attr_reader :services
+    attr_reader :services
   end
 end

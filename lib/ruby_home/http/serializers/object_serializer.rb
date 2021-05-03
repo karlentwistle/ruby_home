@@ -1,4 +1,4 @@
-require 'facets/hash/symbolize_keys'
+require "facets/hash/symbolize_keys"
 
 module RubyHome
   module HTTP

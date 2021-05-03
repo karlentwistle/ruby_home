@@ -1,10 +1,10 @@
-require_relative 'persistable'
+require_relative "persistable"
 
 module RubyHome
   class IdentifierCache
     include Persistable
 
-    self.source = 'identifier_cache.yml'
+    self.source = "identifier_cache.yml"
 
     def self.all
       raw_items = read || []
@@ -33,7 +33,7 @@ module RubyHome
       end
     end
 
-    def initialize(accessory_id:, instance_id:, service_uuid: nil, subtype: , uuid: )
+    def initialize(accessory_id:, instance_id:, subtype:, uuid:, service_uuid: nil)
       @accessory_id = accessory_id
       @instance_id = instance_id
       @subtype = subtype
@@ -52,10 +52,9 @@ module RubyHome
           instance_id: identifier.instance_id,
           subtype: identifier.subtype,
           service_uuid: identifier.service_uuid,
-          uuid: identifier.uuid,
+          uuid: identifier.uuid
         }
       end
     end
   end
 end
-

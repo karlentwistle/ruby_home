@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 window = RubyHome::ServiceFactory.create(:window,
@@ -6,8 +6,7 @@ window = RubyHome::ServiceFactory.create(:window,
   position_state: 1, # required
   current_position: 0, # required
   name: "window", # optional
-  obstruction_detected: false, # optional
-)
+  obstruction_detected: false) # optional
 
 window.target_position.after_update do |target_position|
   puts "window target position #{target_position}"
@@ -25,9 +24,9 @@ window.target_position.after_update do |target_position|
 end
 
 position_state_values = {
-  0 => 'Decreasing',
-  1 => 'Increasing',
-  2 => 'Stopped'
+  0 => "Decreasing",
+  1 => "Increasing",
+  2 => "Stopped"
 }
 window.position_state.after_update do |position_state|
   state = position_state_values[position_state]

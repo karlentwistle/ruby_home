@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 thermostat = RubyHome::ServiceFactory.create(:thermostat,
@@ -11,8 +11,7 @@ thermostat = RubyHome::ServiceFactory.create(:thermostat,
   heating_threshold_temperature: 20, # optional
   cooling_threshold_temperature: 10, # optional
   target_relative_humidity: 0, # optional
-  current_relative_humidity: 0, # optional
-)
+  current_relative_humidity: 0) # optional
 
 thermostat.temperature_display_units.after_update do |temperature_display_unit|
   if temperature_display_unit == 0
@@ -47,10 +46,10 @@ thermostat.current_temperature.after_update do |current_temperature|
 end
 
 target_heating_cooling_state_values = {
-  0 => 'Off',
-  1 => 'Heat',
-  2 => 'Cool',
-  3 => 'Auto',
+  0 => "Off",
+  1 => "Heat",
+  2 => "Cool",
+  3 => "Auto"
 }
 thermostat.target_heating_cooling_state.after_update do |target_heating_cooling_state|
   state = target_heating_cooling_state_values[target_heating_cooling_state]
@@ -68,9 +67,9 @@ thermostat.target_heating_cooling_state.after_update do |target_heating_cooling_
 end
 
 current_heating_cooling_state_values = {
-  0 => 'Off',
-  1 => 'Heat',
-  2 => 'Cool',
+  0 => "Off",
+  1 => "Heat",
+  2 => "Cool"
 }
 thermostat.current_heating_cooling_state.after_update do |current_heating_cooling_state|
   state = current_heating_cooling_state_values[current_heating_cooling_state]

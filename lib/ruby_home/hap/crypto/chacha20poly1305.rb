@@ -6,11 +6,11 @@ module RubyHome
           @key = key
         end
 
-        def encrypt(nonce, message, additional_data=nil)
+        def encrypt(nonce, message, additional_data = nil)
           chacha20poly1305ietf.encrypt(nonce, message, additional_data)
         end
 
-        def decrypt(nonce, ciphertext, additional_data=nil)
+        def decrypt(nonce, ciphertext, additional_data = nil)
           chacha20poly1305ietf.decrypt(nonce, ciphertext, additional_data)
         end
 

@@ -1,9 +1,9 @@
 module RubyHome
   module HAP
     class Decrypter
-      AAD_LENGTH_BYTES = 2.freeze
-      AUTHENTICATE_TAG_LENGTH_BYTES = 16.freeze
-      NONCE_32_BIT_FIX_COMMENT_PART = [0].pack('L').freeze
+      AAD_LENGTH_BYTES = 2
+      AUTHENTICATE_TAG_LENGTH_BYTES = 16
+      NONCE_32_BIT_FIX_COMMENT_PART = [0].pack("L").freeze
 
       def initialize(key, count: 0)
         @key = key
@@ -15,14 +15,14 @@ module RubyHome
         read_pointer = 0
 
         while read_pointer < data.length
-          little_endian_length_of_encrypted_data = data[read_pointer...read_pointer+AAD_LENGTH_BYTES]
-          length_of_encrypted_data = little_endian_length_of_encrypted_data.unpack1('v')
+          little_endian_length_of_encrypted_data = data[read_pointer...read_pointer + AAD_LENGTH_BYTES]
+          length_of_encrypted_data = little_endian_length_of_encrypted_data.unpack1("v")
           read_pointer += AAD_LENGTH_BYTES
 
-          message = data[read_pointer...read_pointer+length_of_encrypted_data]
+          message = data[read_pointer...read_pointer + length_of_encrypted_data]
           read_pointer += length_of_encrypted_data
 
-          auth_tag = data[read_pointer...read_pointer+AUTHENTICATE_TAG_LENGTH_BYTES]
+          auth_tag = data[read_pointer...read_pointer + AUTHENTICATE_TAG_LENGTH_BYTES]
           read_pointer += AUTHENTICATE_TAG_LENGTH_BYTES
 
           ciphertext = message + auth_tag
@@ -46,7 +46,7 @@ module RubyHome
       end
 
       def nonce
-        NONCE_32_BIT_FIX_COMMENT_PART + [count].pack('Q')
+        NONCE_32_BIT_FIX_COMMENT_PART + [count].pack("Q")
       end
 
       def chacha20poly1305ietf

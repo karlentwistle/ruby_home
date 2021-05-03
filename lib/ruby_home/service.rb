@@ -1,10 +1,10 @@
-require_relative 'service_collection'
+require_relative "service_collection"
 
 module RubyHome
   class DuplicateServiceError < StandardError; end
 
   class Service
-    def initialize(accessory: , primary: false, hidden: false, name:, description:, uuid:)
+    def initialize(accessory:, name:, description:, uuid:, primary: false, hidden: false)
       @accessory = accessory
       @primary = primary
       @hidden = hidden
@@ -25,7 +25,7 @@ module RubyHome
       :uuid,
       :instance_id
     )
-    
+
     attr_accessor :linked
 
     def instance_id=(new_id)

@@ -25,12 +25,12 @@ module RubyHome
 
     private
 
-      def services
-        accessories.flat_map(&:services)
-      end
+    def services
+      accessories.flat_map(&:services)
+    end
 
-      def characteristics
-        services.flat_map(&:characteristics)
-      end
+    def characteristics
+      services.flat_map(&:characteristics)
+    end
   end
 end

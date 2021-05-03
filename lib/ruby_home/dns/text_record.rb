@@ -12,14 +12,14 @@ module RubyHome
 
     def to_hash
       {
-        'c#' => current_configuration_number,
-        'ci' => accessory_category_identifier,
-        'ff' => feature_flags,
-        'id' => device_id,
-        'md' => model_name,
-        'pv' => protocol_version,
-        's#' => current_state_number,
-        'sf' => status_flags
+        "c#" => current_configuration_number,
+        "ci" => accessory_category_identifier,
+        "ff" => feature_flags,
+        "id" => device_id,
+        "md" => model_name,
+        "pv" => protocol_version,
+        "s#" => current_state_number,
+        "sf" => status_flags
       }
     end
 
@@ -52,7 +52,7 @@ module RubyHome
 
     STATUS_FLAGS = {
       PAIRED: 0,
-      NOT_PAIRED: 1,
+      NOT_PAIRED: 1
     }.freeze
 
     def status_flags

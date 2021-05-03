@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 air_purifier = RubyHome::ServiceFactory.create(:air_purifier,
@@ -8,12 +8,11 @@ air_purifier = RubyHome::ServiceFactory.create(:air_purifier,
   name: "air purifier", # optional
   rotation_speed: 0, # optional
   swing_mode: 1, # optional
-  lock_physical_controls: 0, # optional
-)
+  lock_physical_controls: 0) # optional
 
 target_air_purifier_state_values = {
-  0 => 'Manual',
-  1 => 'Auto',
+  0 => "Manual",
+  1 => "Auto"
 }
 air_purifier.target_air_purifier_state.after_update do |target_air_purifier_state|
   state = target_air_purifier_state_values[target_air_purifier_state]
@@ -21,9 +20,9 @@ air_purifier.target_air_purifier_state.after_update do |target_air_purifier_stat
 end
 
 current_air_purifier_state_values = {
-  0 => 'Inactive',
-  1 => 'Idle',
-  2 => 'Purifying Air',
+  0 => "Inactive",
+  1 => "Idle",
+  2 => "Purifying Air"
 }
 air_purifier.current_air_purifier_state.after_update do |current_air_purifier_state|
   state = current_air_purifier_state_values[current_air_purifier_state]

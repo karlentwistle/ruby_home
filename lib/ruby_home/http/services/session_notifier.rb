@@ -16,21 +16,21 @@ module RubyHome
 
       def ==(other)
         self.class == other.class &&
-          self.session == other.session &&
-          self.characteristic == other.characteristic
+          session == other.session &&
+          characteristic == other.characteristic
       end
 
       attr_reader :session, :characteristic
 
       private
 
-        def send_ev_response
-          HAP::EVResponse.new(session, serialized_characteristic).send_response
-        end
+      def send_ev_response
+        HAP::EVResponse.new(session, serialized_characteristic).send_response
+      end
 
-        def serialized_characteristic
-          HTTP::CharacteristicValueSerializer.new([characteristic]).serialized_json
-        end
+      def serialized_characteristic
+        HTTP::CharacteristicValueSerializer.new([characteristic]).serialized_json
+      end
     end
   end
 end

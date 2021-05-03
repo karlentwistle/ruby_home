@@ -1,4 +1,4 @@
-require_relative 'accessory_collection'
+require_relative "accessory_collection"
 
 module RubyHome
   class Accessory

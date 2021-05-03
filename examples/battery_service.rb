@@ -1,12 +1,11 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 battery_service = RubyHome::ServiceFactory.create(:battery_service,
   status_low_battery: 0, # required
   charging_state: 0, # required
   battery_level: 20, # required
-  name: "battery service", # optional
-)
+  name: "battery service") # optional
 
 battery_service.status_low_battery.after_update do |status_low_battery|
   if status_low_battery == 0

@@ -16,15 +16,15 @@ module RubyHome
 
         private
 
-          SALT = -'Control-Salt'
-          READ = -'Control-Read-Encryption-Key'
-          WRITE = -'Control-Write-Encryption-Key'
+        SALT = -"Control-Salt"
+        READ = -"Control-Read-Encryption-Key"
+        WRITE = -"Control-Write-Encryption-Key"
 
-          attr_reader :shared_secret
+        attr_reader :shared_secret
 
-          def generate_shared_secret_key(info)
-            Crypto::HKDF.new(info: info, salt: SALT).encrypt(shared_secret)
-          end
+        def generate_shared_secret_key(info)
+          Crypto::HKDF.new(info: info, salt: SALT).encrypt(shared_secret)
+        end
       end
     end
   end

@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 carbon_dioxide_sensor = RubyHome::ServiceFactory.create(:carbon_dioxide_sensor,
@@ -9,8 +9,7 @@ carbon_dioxide_sensor = RubyHome::ServiceFactory.create(:carbon_dioxide_sensor,
   status_tampered: 0, # optional
   status_low_battery: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 carbon_dioxide_sensor.carbon_dioxide_detected.after_update do |carbon_dioxide_detected|
   if carbon_dioxide_detected == 0

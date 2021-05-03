@@ -1,16 +1,16 @@
 module RubyHome
   class StartSRPService
-    def initialize(username: , password:)
+    def initialize(username:, password:)
       @username = username
       @password = password
     end
 
     def salt_bytes
-      [salt].pack('H*')
+      [salt].pack("H*")
     end
 
     def public_key_bytes
-      [public_key].pack('H*')
+      [public_key].pack("H*")
     end
 
     def proof

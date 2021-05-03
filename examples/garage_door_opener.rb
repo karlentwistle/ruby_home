@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 garage_door_opener = RubyHome::ServiceFactory.create(:garage_door_opener,
@@ -7,8 +7,7 @@ garage_door_opener = RubyHome::ServiceFactory.create(:garage_door_opener,
   current_door_state: 1, # required
   name: "garage door opener", # optional
   lock_target_state: 1, # optional
-  lock_current_state: 1, # optional
-)
+  lock_current_state: 1) # optional
 
 garage_door_opener.obstruction_detected.after_update do |obstruction_detected|
   if obstruction_detected
@@ -19,8 +18,8 @@ garage_door_opener.obstruction_detected.after_update do |obstruction_detected|
 end
 
 target_door_state_values = {
-  0 => 'Open',
-  1 => 'Closed',
+  0 => "Open",
+  1 => "Closed"
 }
 garage_door_opener.target_door_state.after_update do |target_door_state|
   state = target_door_state_values[target_door_state]
@@ -38,11 +37,11 @@ garage_door_opener.target_door_state.after_update do |target_door_state|
 end
 
 current_door_state_values = {
-  0 => 'Open',
-  1 => 'Closed',
-  2 => 'Opening',
-  3 => 'Closing',
-  4 => 'Stopped'
+  0 => "Open",
+  1 => "Closed",
+  2 => "Opening",
+  3 => "Closing",
+  4 => "Stopped"
 }
 garage_door_opener.current_door_state.after_update do |current_door_state|
   state = current_door_state_values[current_door_state]

@@ -1,4 +1,4 @@
-require_relative 'base_value'
+require_relative "base_value"
 
 module RubyHome
   class Int32Value < BaseValue
@@ -8,8 +8,8 @@ module RubyHome
 
     private
 
-      def minimum_value
-        template.constraints.fetch('MinimumValue')
-      end
+    def minimum_value
+      template.constraints.fetch("MinimumValue")
+    end
   end
 end

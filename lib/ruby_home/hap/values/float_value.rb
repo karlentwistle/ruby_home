@@ -1,4 +1,4 @@
-require_relative 'base_value'
+require_relative "base_value"
 
 module RubyHome
   class FloatValue < BaseValue
@@ -8,8 +8,8 @@ module RubyHome
 
     private
 
-      def minimum_value
-        template.constraints.fetch('MinimumValue', 0)
-      end
+    def minimum_value
+      template.constraints.fetch("MinimumValue", 0)
+    end
   end
 end

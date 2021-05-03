@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 heater_cooler = RubyHome::ServiceFactory.create(:heater_cooler,
@@ -12,17 +12,16 @@ heater_cooler = RubyHome::ServiceFactory.create(:heater_cooler,
   heating_threshold_temperature: 20, # optional
   cooling_threshold_temperature: 10, # optional
   swing_mode: 1, # optional
-  lock_physical_controls: 0, # optional
-)
+  lock_physical_controls: 0) # optional
 
 heater_cooler.current_temperature.after_update do |current_temperature|
   puts "heater cooler current temperature in celsius #{current_temperature}"
 end
 
 target_heater_cooler_state_values = {
-  0 => 'Auto',
-  1 => 'Heat',
-  2 => 'Cool'
+  0 => "Auto",
+  1 => "Heat",
+  2 => "Cool"
 }
 heater_cooler.target_heater_cooler_state.after_update do |target_heater_cooler_state|
   state = target_heater_cooler_state_values[target_heater_cooler_state]
@@ -30,10 +29,10 @@ heater_cooler.target_heater_cooler_state.after_update do |target_heater_cooler_s
 end
 
 current_heater_cooler_state_values = {
-  0 => 'Inactive',
-  1 => 'Idle',
-  2 => 'Heating',
-  3 => 'Cooling'
+  0 => "Inactive",
+  1 => "Idle",
+  2 => "Heating",
+  3 => "Cooling"
 }
 heater_cooler.current_heater_cooler_state.after_update do |current_heater_cooler_state|
   state = current_heater_cooler_state_values[current_heater_cooler_state]

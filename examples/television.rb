@@ -1,31 +1,29 @@
-require 'ruby_home'
+require "ruby_home"
 
 RubyHome.configure do |c|
-  c.discovery_name = 'Television'
+  c.discovery_name = "Television"
   c.category_identifier = :television
 end
 
 accessory = RubyHome::Accessory.new
 
 RubyHome::ServiceFactory.create(:accessory_information,
-  accessory: accessory, # required
-)
+  accessory: accessory) # required
 
 television = RubyHome::ServiceFactory.create(:television,
   accessory: accessory, # required
   primary: true, # required
-  configured_name: 'Television', # required
+  configured_name: "Television", # required
   active: 1, # required
   active_identifier: 1, # required
   sleep_discovery_mode: 1, # required
   remote_key: nil, # required
-  name: 'Television', # optional
+  name: "Television", # optional
   power_mode_selection: true, # optional
   picture_mode: 4, # optional
   target_media_state: 0, # optional
   current_media_state: 0, # optional
-  brightness: 100 # optional
-)
+  brightness: 100) # optional
 
 television.active.after_update do |active|
   if active == 0
@@ -49,8 +47,7 @@ speaker = RubyHome::ServiceFactory.create(:television_speaker,
   name: "Television Volume", # optional
   active: 1, # optional
   volume_control_type: 1, # optional
-  volume_selector: 0, # optional
-)
+  volume_selector: 0) # optional
 speaker.volume_selector.after_update do |volume|
   if volume == 0
     puts "television volume up"
@@ -69,9 +66,7 @@ sources = (1..4).map do |index|
     is_configured: 1, # required
     current_visibility_state: 0, # required
     identifier: index, # optional
-    input_device_type: 1 # optional
-
-  )
+    input_device_type: 1) # optional
 end
 television.linked = [speaker] + sources
 

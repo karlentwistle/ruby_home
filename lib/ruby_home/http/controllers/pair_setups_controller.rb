@@ -1,10 +1,10 @@
-require_relative 'application_controller'
+require_relative "application_controller"
 
 module RubyHome
   module HTTP
     class PairSetupsController < ApplicationController
-      post '/' do
-        content_type 'application/pairing+tlv8'
+      post "/" do
+        content_type "application/pairing+tlv8"
 
         case unpack_request[:state]
         when 1
@@ -37,7 +37,7 @@ module RubyHome
         verify_srp = VerifySRPService.new(
           device_proof: unpack_request[:proof],
           srp_session: session.srp_session,
-          public_key: unpack_request[:public_key],
+          public_key: unpack_request[:public_key]
         ).run
 
         if verify_srp.success?
@@ -53,12 +53,12 @@ module RubyHome
       def exchange
         encrypted_data = unpack_request[:encrypted_data]
 
-        hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Encrypt-Info', salt: 'Pair-Setup-Encrypt-Salt')
+        hkdf = HAP::Crypto::HKDF.new(info: "Pair-Setup-Encrypt-Info", salt: "Pair-Setup-Encrypt-Salt")
         key = hkdf.encrypt(session.session_key)
 
         chacha20poly1305ietf = HAP::Crypto::ChaCha20Poly1305.new(key)
 
-        nonce = HexHelper.pad('PS-Msg05')
+        nonce = HexHelper.pad("PS-Msg05")
         decrypted_data = chacha20poly1305ietf.decrypt(nonce, encrypted_data)
         unpacked_decrypted_data = TLV.decode(decrypted_data)
 
@@ -66,36 +66,36 @@ module RubyHome
         iosdevicesignature = unpacked_decrypted_data[:signature]
         iosdeviceltpk = unpacked_decrypted_data[:public_key]
 
-        hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Controller-Sign-Info', salt: 'Pair-Setup-Controller-Sign-Salt')
+        hkdf = HAP::Crypto::HKDF.new(info: "Pair-Setup-Controller-Sign-Info", salt: "Pair-Setup-Controller-Sign-Salt")
         iosdevicex = hkdf.encrypt(session.session_key)
 
         iosdeviceinfo = [
-          iosdevicex.unpack1('H*'),
-          iosdevicepairingid.unpack1('H*'),
-          iosdeviceltpk.unpack1('H*')
+          iosdevicex.unpack1("H*"),
+          iosdevicepairingid.unpack1("H*"),
+          iosdeviceltpk.unpack1("H*")
         ].join
         verify_key = RbNaCl::Signatures::Ed25519::VerifyKey.new(iosdeviceltpk)
 
-        if verify_key.verify(iosdevicesignature, [iosdeviceinfo].pack('H*'))
-          hkdf = HAP::Crypto::HKDF.new(info: 'Pair-Setup-Accessory-Sign-Info', salt: 'Pair-Setup-Accessory-Sign-Salt')
+        if verify_key.verify(iosdevicesignature, [iosdeviceinfo].pack("H*"))
+          hkdf = HAP::Crypto::HKDF.new(info: "Pair-Setup-Accessory-Sign-Info", salt: "Pair-Setup-Accessory-Sign-Salt")
           accessory_x = hkdf.encrypt(session.session_key)
 
           signing_key = accessory_info.signing_key
           accessoryltpk = signing_key.verify_key.to_bytes
           accessoryinfo = [
-            accessory_x.unpack1('H*'),
-            accessory_info.device_id.unpack1('H*'),
-            accessoryltpk.unpack1('H*')
+            accessory_x.unpack1("H*"),
+            accessory_info.device_id.unpack1("H*"),
+            accessoryltpk.unpack1("H*")
           ].join
 
-          accessorysignature = signing_key.sign([accessoryinfo].pack('H*'))
+          accessorysignature = signing_key.sign([accessoryinfo].pack("H*"))
 
           subtlv = tlv(identifier: accessory_info.device_id, public_key: accessoryltpk, signature: accessorysignature)
 
-          nonce = HexHelper.pad('PS-Msg06')
+          nonce = HexHelper.pad("PS-Msg06")
           encrypted_data = chacha20poly1305ietf.encrypt(nonce, subtlv)
 
-          pairing_params = { admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk.unpack1('H*') }
+          pairing_params = {admin: true, identifier: iosdevicepairingid, public_key: iosdeviceltpk.unpack1("H*")}
           accessory_info.add_paired_client(**pairing_params)
 
           tlv state: 6, encrypted_data: encrypted_data

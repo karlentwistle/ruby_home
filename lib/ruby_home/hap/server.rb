@@ -30,13 +30,13 @@ module RubyHome
             res.set_error(ex)
           rescue ::WEBrick::HTTPStatus::Status => ex
             res.status = ex.code
-          rescue StandardError => ex
+          rescue => ex
             @logger.error(ex)
             res.set_error(ex, true)
           ensure
             if req.request_line
               if req.keep_alive? && res.keep_alive?
-                req.fixup()
+                req.fixup
               end
               res.send_response(session)
               access_log(@config, req, res)

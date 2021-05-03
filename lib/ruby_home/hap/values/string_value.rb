@@ -1,15 +1,15 @@
-require_relative 'base_value'
+require_relative "base_value"
 
 module RubyHome
   class StringValue < BaseValue
     DEFAULT_VALUES = {
-      firmware_revision: '1.0',
-      hardware_revision: '1.0',
-      manufacturer: 'Default-Manufacturer',
-      model: 'Default-Model',
-      name: 'RubyHome',
-      serial_number: 'Default-SerialNumber',
-      version: '1.0',
+      firmware_revision: "1.0",
+      hardware_revision: "1.0",
+      manufacturer: "Default-Manufacturer",
+      model: "Default-Model",
+      name: "RubyHome",
+      serial_number: "Default-SerialNumber",
+      version: "1.0"
     }.freeze
 
     def default
@@ -18,8 +18,8 @@ module RubyHome
 
     private
 
-      def name
-        template.name
-      end
+    def name
+      template.name
+    end
   end
 end

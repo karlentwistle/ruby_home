@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 occupancy_sensor = RubyHome::ServiceFactory.create(:occupancy_sensor,
@@ -7,8 +7,7 @@ occupancy_sensor = RubyHome::ServiceFactory.create(:occupancy_sensor,
   status_low_battery: 0, # optional
   status_tampered: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 occupancy_sensor.occupancy_detected.after_update do |occupancy_detected|
   if occupancy_detected == 0

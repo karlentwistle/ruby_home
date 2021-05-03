@@ -1,10 +1,9 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 switch = RubyHome::ServiceFactory.create(:switch,
   on: false, # required
-  name: 'switch', # optional
-)
+  name: "switch") # optional
 
 switch.on.after_update do |on|
   if on

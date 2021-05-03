@@ -1,4 +1,4 @@
-require_relative 'characteristic_collection'
+require_relative "characteristic_collection"
 
 module RubyHome
   class DuplicateCharacteristicError < StandardError; end
@@ -19,13 +19,13 @@ module RubyHome
     end
 
     PROPERTIES = {
-      'cnotify' => 'ev',
-      'read' => 'pr',
-      'uncnotify' => nil,
-      'write' => 'pw',
+      "cnotify" => "ev",
+      "read" => "pr",
+      "uncnotify" => nil,
+      "write" => "pw"
     }.freeze
 
-    def initialize(uuid:, name:, description:, format:, unit:, properties:, constraints:, service: , value_object: )
+    def initialize(uuid:, name:, description:, format:, unit:, properties:, constraints:, service:, value_object:)
       @uuid = uuid
       @name = name
       @description = description
@@ -47,7 +47,7 @@ module RubyHome
       :properties,
       :constraints,
       :instance_id,
-      :value_object,
+      :value_object
     )
 
     def instance_id=(new_id)
@@ -69,7 +69,7 @@ module RubyHome
     end
 
     def valid_values
-      constraints.fetch('ValidValues', {}).keys.map(&:to_i)
+      constraints.fetch("ValidValues", {}).keys.map(&:to_i)
     end
 
     def method_missing(method_name, *args, &block)

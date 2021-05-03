@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 temperature_sensor = RubyHome::ServiceFactory.create(:temperature_sensor,
@@ -7,8 +7,7 @@ temperature_sensor = RubyHome::ServiceFactory.create(:temperature_sensor,
   status_low_battery: 0, # optional
   status_tampered: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 temperature_sensor.current_temperature.after_update do |current_temperature|
   puts "temperature sensor current_temperature #{current_temperature}"

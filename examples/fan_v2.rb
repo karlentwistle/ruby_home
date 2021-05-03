@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 fan = RubyHome::ServiceFactory.create(:fan_v2,
@@ -9,8 +9,7 @@ fan = RubyHome::ServiceFactory.create(:fan_v2,
   rotation_direction: 0, # optional
   lock_physical_controls: 0, # optional
   target_fan_state: 0, # optional
-  current_fan_state: 0 # optional
-)
+  current_fan_state: 0) # optional
 
 fan.active.after_update do |active|
   if active == 0

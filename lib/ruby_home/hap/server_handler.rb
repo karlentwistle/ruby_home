@@ -1,7 +1,7 @@
 module RubyHome
   module HAP
     class RackHandler < ::Rack::Handler::WEBrick
-      def self.run(app, options={})
+      def self.run(app, options = {})
         @server = Server.new(options)
         @server.mount "/", RackHandler, app
         yield @server if block_given?
@@ -10,7 +10,7 @@ module RubyHome
     end
 
     class ServerHandler
-      def initialize(configuration: )
+      def initialize(configuration:)
         @configuration = configuration
       end
 
@@ -33,19 +33,19 @@ module RubyHome
         {
           Port: port,
           Host: bind_address,
-          ServerSoftware: 'RubyHome',
+          ServerSoftware: "RubyHome",
           Logger: server_logger,
           AccessLog: []
         }
       end
 
       def server_logger
-        if ENV['DEBUG'] == 'debug'
-          WEBrick::Log::new(STDOUT, WEBrick::BasicLog::DEBUG)
-        elsif ENV['DEBUG'] == 'info'
-          WEBrick::Log::new(STDOUT, WEBrick::BasicLog::INFO)
+        if ENV["DEBUG"] == "debug"
+          WEBrick::Log.new(STDOUT, WEBrick::BasicLog::DEBUG)
+        elsif ENV["DEBUG"] == "info"
+          WEBrick::Log.new(STDOUT, WEBrick::BasicLog::INFO)
         else
-          WEBrick::Log::new("/dev/null", WEBrick::BasicLog::WARN)
+          WEBrick::Log.new("/dev/null", WEBrick::BasicLog::WARN)
         end
       end
 
@@ -61,5 +61,3 @@ module RubyHome
     end
   end
 end
-
-

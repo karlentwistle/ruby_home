@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 smoke_sensor = RubyHome::ServiceFactory.create(:smoke_sensor,
@@ -7,8 +7,7 @@ smoke_sensor = RubyHome::ServiceFactory.create(:smoke_sensor,
   status_low_battery: 0, # optional
   status_tampered: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 smoke_sensor.smoke_detected.after_update do |smoke_detected|
   if smoke_detected == 0

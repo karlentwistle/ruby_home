@@ -4,7 +4,7 @@ module RubyHome
   module HAP
     module Crypto
       class HKDF
-        def initialize(salt:, info: )
+        def initialize(salt:, info:)
           @salt = salt
           @info = info
         end
@@ -16,7 +16,7 @@ module RubyHome
 
         private
 
-        ALGORITHM = 'SHA512'
+        ALGORITHM = "SHA512"
         BYTE_LENGTH = 32
 
         attr_reader :info, :salt, :source
@@ -33,7 +33,7 @@ module RubyHome
           if string.encoding == Encoding::ASCII_8BIT
             string
           else
-            [string].pack('H*')
+            [string].pack("H*")
           end
         end
       end

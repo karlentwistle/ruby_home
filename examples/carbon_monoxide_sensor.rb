@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 carbon_monoxide_sensor = RubyHome::ServiceFactory.create(:carbon_monoxide_sensor,
@@ -9,8 +9,7 @@ carbon_monoxide_sensor = RubyHome::ServiceFactory.create(:carbon_monoxide_sensor
   status_tampered: 0, # optional
   status_low_battery: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 carbon_monoxide_sensor.carbon_monoxide_detected.after_update do |carbon_monoxide_detected|
   if carbon_monoxide_detected == 0
@@ -62,7 +61,7 @@ end
 
 Thread.new do
   sleep 30
-  
+
   loop do
     carbon_monoxide_sensor.carbon_monoxide_detected = (0..1).to_a.sample
     carbon_monoxide_sensor.carbon_monoxide_peak_level = (0..100).to_a.sample

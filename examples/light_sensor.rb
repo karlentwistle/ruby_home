@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 light_sensor = RubyHome::ServiceFactory.create(:light_sensor,
@@ -7,8 +7,7 @@ light_sensor = RubyHome::ServiceFactory.create(:light_sensor,
   status_low_battery: 0, # optional
   status_tampered: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 light_sensor.current_ambient_light_level.after_update do |current_ambient_light_level|
   # maximum_value: 100000

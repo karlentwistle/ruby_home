@@ -2,8 +2,8 @@ module RubyHome
   module HAP
     class Session
       class Encrypter
-        MAX_FRAME_LENGTH = 1024.freeze
-        NONCE_32_BIT_FIX_COMMENT_PART = [0].pack('L').freeze
+        MAX_FRAME_LENGTH = 1024
+        NONCE_32_BIT_FIX_COMMENT_PART = [0].pack("L").freeze
 
         def initialize(key, count: 0)
           @key = key
@@ -17,9 +17,9 @@ module RubyHome
           while read_pointer < data.length
             encrypted_frame = ""
 
-            frame = data[read_pointer...read_pointer+MAX_FRAME_LENGTH]
+            frame = data[read_pointer...read_pointer + MAX_FRAME_LENGTH]
             length_of_encrypted_data = frame.length
-            little_endian_length_of_encrypted_data = [length_of_encrypted_data].pack('v')
+            little_endian_length_of_encrypted_data = [length_of_encrypted_data].pack("v")
 
             encrypted_frame += little_endian_length_of_encrypted_data
             encrypted_frame += chacha20poly1305ietf.encrypt(nonce, frame, little_endian_length_of_encrypted_data)
@@ -43,7 +43,7 @@ module RubyHome
         end
 
         def nonce
-          NONCE_32_BIT_FIX_COMMENT_PART + [count].pack('Q')
+          NONCE_32_BIT_FIX_COMMENT_PART + [count].pack("Q")
         end
 
         def chacha20poly1305ietf
@@ -53,4 +53,3 @@ module RubyHome
     end
   end
 end
-

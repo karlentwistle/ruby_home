@@ -1,10 +1,10 @@
-require_relative 'persistable'
+require_relative "persistable"
 
 module RubyHome
   class AccessoryInfo
     include Persistable
 
-    self.source = 'accessory_info.yml'
+    self.source = "accessory_info.yml"
 
     def self.instance
       @@_instance ||= persisted || create
@@ -14,7 +14,7 @@ module RubyHome
       @@_instance = nil
     end
 
-    USERNAME = -'Pair-Setup'
+    USERNAME = -"Pair-Setup"
 
     def initialize(device_id: nil, paired_clients: [], password: nil, signature_key: nil)
       @device_id = device_id
@@ -44,8 +44,8 @@ module RubyHome
       @paired_clients ||= []
     end
 
-    def add_paired_client(admin: false, identifier: , public_key: )
-      @paired_clients << { admin: admin, identifier: identifier, public_key: public_key }
+    def add_paired_client(identifier:, public_key:, admin: false)
+      @paired_clients << {admin: admin, identifier: identifier, public_key: public_key}
       save
     end
 
@@ -59,22 +59,22 @@ module RubyHome
     end
 
     def signing_key
-      @signing_key ||= RbNaCl::Signatures::Ed25519::SigningKey.new([signature_key].pack('H*'))
+      @signing_key ||= RbNaCl::Signatures::Ed25519::SigningKey.new([signature_key].pack("H*"))
     end
 
     private
 
-      def signature_key
-        @signature_key ||= RbNaCl::Signatures::Ed25519::SigningKey.generate.to_bytes.unpack1('H*')
-      end
+    def signature_key
+      @signature_key ||= RbNaCl::Signatures::Ed25519::SigningKey.generate.to_bytes.unpack1("H*")
+    end
 
-      def persisted_attributes
-        {
-          device_id: device_id,
-          paired_clients: paired_clients,
-          password: password,
-          signature_key: signature_key
-        }
-      end
+    def persisted_attributes
+      {
+        device_id: device_id,
+        paired_clients: paired_clients,
+        password: password,
+        signature_key: signature_key
+      }
+    end
   end
 end

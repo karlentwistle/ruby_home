@@ -1,45 +1,45 @@
-require 'spec_helper'
+require "spec_helper"
 
-RSpec.describe 'POST /pair-setup' do
-  context 'SRP Start Response' do
+RSpec.describe "POST /pair-setup" do
+  context "SRP Start Response" do
     before do
-      path = File.expand_path('../../../fixtures/srp_start_request', __FILE__)
+      path = File.expand_path("../../../fixtures/srp_start_request", __FILE__)
       data = File.read(path)
-      post '/pair-setup', data, {'CONTENT_TYPE' => 'application/pairing+tlv8'}
+      post "/pair-setup", data, {"CONTENT_TYPE" => "application/pairing+tlv8"}
     end
 
-    it 'headers contains application/pairing+tlv8 header' do
-      expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+    it "headers contains application/pairing+tlv8 header" do
+      expect(last_response.headers).to include("Content-Type" => "application/pairing+tlv8")
     end
 
-    it 'body contains state' do
+    it "body contains state" do
       expect(unpacked_body).to include(state: 2)
     end
 
-    it 'body contains salt' do
+    it "body contains salt" do
       expect(unpacked_body).to include(salt: a_kind_of(String))
     end
 
-    it 'body contains public_key' do
+    it "body contains public_key" do
       expect(unpacked_body).to include(public_key: a_kind_of(String))
     end
 
-    it 'stores proof in cache' do
+    it "stores proof in cache" do
       salt = unpacked_body[:salt]
       public_key = unpacked_body[:public_key]
       expect(session.srp_session).to include(
-        B: public_key.unpack1('H*'),
-        I: 'Pair-Setup',
+        B: public_key.unpack1("H*"),
+        I: "Pair-Setup",
         b: a_kind_of(String),
-        s: salt.unpack1('H*'),
+        s: salt.unpack1("H*"),
         v: a_kind_of(String)
       )
     end
   end
 
-  context 'SRP Verify Response' do
+  context "SRP Verify Response" do
     let(:b_pub) do
-      %w{
+      %w[
         3818FEE2 97FB0201 729E04C3 644A6C5D 5099F556 7F1791F7 92666C3C 70A3C1B3
         CEADEBE5 7130EF6C EFEFCB12 96EF7F5D 50FBC4EC C340DB99 2423EC14 1305043E
         BDE8F105 D08C5CD3 BE9B6063 8EDDA3AD 1B90BC55 779B647A B72769FF 966E3381
@@ -52,20 +52,20 @@ RSpec.describe 'POST /pair-setup' do
         76A53C06 1E49E132 328766DA 69F8D695 574F6689 D6E65CE5 BCE1B76F C5EC7F66
         EAB9F0BE A374C5C4 971638EA F35140BE AD4BCBB8 823D46FC F9E20B09 9EE11B9A
         82FE3234 B55E154A E295A94D 0DAC1356 D03FD0A1 BA51BD2E E529E5A6 EAE2F05B
-      }.join.downcase
+      ].join.downcase
     end
     let(:b) do
-      %w{
+      %w[
         1C53D956 01885908 34C60F8C E85C56B3 2812EFB6 9DB43835 CB1A7594 47557AFE
-      }.join.downcase
+      ].join.downcase
     end
     let(:salt) do
-      %w{
+      %w[
         2B08BA0B E7B88614 B9EDFCBD 507BD9F2
-      }.join.downcase
+      ].join.downcase
     end
     let(:verifier) do
-      %w{
+      %w[
         16C4FDF3 6987A85B 50255FEE C7CCEBE6 E0C88B43 F210EBD6 03D065E1 E10B2C77
         A608AD73 C4DEDF65 9C6EF469 B6E8C45D 13D8242B 6E4D8270 EECB8400 F41A94DC
         3FE621D6 C56A14A3 8234E403 AC243EEE 51FE770D 9F36B30B BA042038 F20E7800
@@ -78,113 +78,113 @@ RSpec.describe 'POST /pair-setup' do
         403115E0 22F9255C 3E651CB5 283B4E6B 5084D3F7 551BCD0A 338A86DE D2CFCFD3
         4DAA077F 7A38B8E3 50B22D39 23DE9661 E30E4C3F 3515EF1C BA511BE6 9AA5548F
         D15793F8 02099A46 C8D8FC4F 4D0B1E59 97311C8F DE59CC2E 22A5BF34 8A47D636
-      }.join.downcase
+      ].join.downcase
     end
     let(:data) do
-      File.read(File.expand_path('../../../fixtures/srp_verify_request', __FILE__))
+      File.read(File.expand_path("../../../fixtures/srp_verify_request", __FILE__))
     end
 
     before do
       session.srp_session = {
         B: b_pub,
         b: b,
-        I: 'Pair-Setup',
+        I: "Pair-Setup",
         s: salt,
         v: verifier
       }
-      post '/pair-setup', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+      post "/pair-setup", data, {"CONTENT_TYPE" => "application/pairing+tlv8"}
     end
 
-    context 'valid verify response request' do
-      it 'headers contains application/pairing+tlv8 header' do
-        expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+    context "valid verify response request" do
+      it "headers contains application/pairing+tlv8 header" do
+        expect(last_response.headers).to include("Content-Type" => "application/pairing+tlv8")
       end
 
-      it 'body contains state' do
+      it "body contains state" do
         expect(unpacked_body).to include(state: 4)
       end
 
-      it 'body contains proof' do
-        public_key = unpacked_body[:proof].unpack1('H*')
-        expected_proof = %w{
+      it "body contains proof" do
+        public_key = unpacked_body[:proof].unpack1("H*")
+        expected_proof = %w[
           986161DE 6D267DFE D08402CE 7A9EA5A0 27C09F04 2D70AD65 F374ADC7 D0F0F152
           033B4B94 0583C317 0CD4C326 4BB093C0 B518F8C9 710B6F68 A56E5B03 D0686EDA
-        }.join.downcase
+        ].join.downcase
         expect(public_key).to eql(expected_proof)
       end
 
-      it 'stores session_key' do
-        expected_session_key = %w{
+      it "stores session_key" do
+        expected_session_key = %w[
           2B5F1FA4 046B2E63 2A06F1D9 612B031F 6D0B9676 B602DD36 BFCFEA0F 85D8567E
           DDEBF2EF B5C24227 DF05D9F8 BECC3F32 518CEAAD BA5F689F 50252F6B E5D77EA6
-        }.join.downcase
+        ].join.downcase
         expect(session.session_key).to eql(expected_session_key)
       end
 
-      it 'destroy srp_session' do
+      it "destroy srp_session" do
         expect(session.srp_session).to be_nil
       end
     end
 
-    context 'invalid verify response request' do
-      context 'no public_key supplied' do
+    context "invalid verify response request" do
+      context "no public_key supplied" do
         let(:data) { RubyHome::TLV.encode(state: 3) }
 
-        it 'responds with error' do
+        it "responds with error" do
           expect(unpacked_body).to include(state: 4, error: 2)
         end
       end
 
-      context 'SRP_verify verification fails' do
+      context "SRP_verify verification fails" do
         let(:data) do
-          RubyHome::TLV.encode(state: 3, public_key: 'foo', proof: 'foo')
+          RubyHome::TLV.encode(state: 3, public_key: "foo", proof: "foo")
         end
 
-        it 'responds with error' do
+        it "responds with error" do
           expect(unpacked_body).to include(state: 4, error: 2)
         end
       end
     end
   end
 
-  context 'Exchange Response' do
+  context "Exchange Response" do
     let(:session_key) do
-      %w{
+      %w[
         7D9E8A37 2C395CC5 F4CF2AB4 D960E6D1 76FBCFC9 587DE6B6 9E3114B6 D39C6D83
         7CA464CE F3A1D51E CC1674E2 6D57783D D72B5438 882B93F6 EDCADF65 FC15288F
-      }.join.downcase
+      ].join.downcase
     end
 
     before do
       session.session_key = session_key
-      path = File.expand_path('../../../fixtures/exchange_request', __FILE__)
+      path = File.expand_path("../../../fixtures/exchange_request", __FILE__)
       data = File.read(path)
-      post '/pair-setup', data, { 'CONTENT_TYPE' => 'application/pairing+tlv8' }
+      post "/pair-setup", data, {"CONTENT_TYPE" => "application/pairing+tlv8"}
     end
 
-    it 'headers contains application/pairing+tlv8 header' do
-      expect(last_response.headers).to include('Content-Type' => 'application/pairing+tlv8')
+    it "headers contains application/pairing+tlv8 header" do
+      expect(last_response.headers).to include("Content-Type" => "application/pairing+tlv8")
     end
 
-    it 'body contains state' do
+    it "body contains state" do
       expect(unpacked_body).to include(state: 6)
     end
 
-    it 'body contains encrypted_data' do
-      encrypted_data = unpacked_body[:encrypted_data].unpack1('H*')
-      expected_encrypted_data = %w{
+    it "body contains encrypted_data" do
+      encrypted_data = unpacked_body[:encrypted_data].unpack1("H*")
+      expected_encrypted_data = %w[
         51445260 6E942707 25D0A470 8708B97B C9A495FB A0900796 A2BCF06F 8388829B
         6F6B7C09 BEE33B8F DEAD373D 83EBB92F 395B0C9B C16A8AA1 8F13EA58 F89ADF8A
         87BB4F07 8E960854 09D0BD50 02947917 FE9A0486 88E42885 1AAB213E 52B69A97
         5C3EC2CD 46E43A7A 94BCDFC3 7A4BEEF1 60612F16 C0E82753 C0D0099A 93D2F4B0
         1CF924B0 97F08C
-      }.join.downcase
+      ].join.downcase
       expect(encrypted_data).to eql(expected_encrypted_data)
     end
 
-    it 'creates pairing record' do
-      expected_identifier = '349CBC7D-01B9-4DC4-AD98-FB9029BB77F2'
-      expected_public_key = '62398c58854a0718b19a64445f5f63761472802dd15ddf19cc74bee253dde525'
+    it "creates pairing record" do
+      expected_identifier = "349CBC7D-01B9-4DC4-AD98-FB9029BB77F2"
+      expected_public_key = "62398c58854a0718b19a64445f5f63761472802dd15ddf19cc74bee253dde525"
 
       expect(RubyHome::AccessoryInfo.instance.paired_clients).to match(
         a_hash_including(

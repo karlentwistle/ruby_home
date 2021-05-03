@@ -13,28 +13,28 @@ module RubyHome
 
       private
 
-        attr_reader :body, :session
+      attr_reader :body, :session
 
-        CRLF = -"\x0d\x0a"
-        STATUS_LINE = -'EVENT/1.0 200 OK'
-        CONTENT_TYPE_LINE = -'Content-Type: application/hap+json'
+      CRLF = -"\x0d\x0a"
+      STATUS_LINE = -"EVENT/1.0 200 OK"
+      CONTENT_TYPE_LINE = -"Content-Type: application/hap+json"
 
-        def content_length_line
-          "Content-Length: #{body.length}"
-        end
+      def content_length_line
+        "Content-Length: #{body.length}"
+      end
 
-        def send_header(io)
-          data = STATUS_LINE + CRLF
-          data << CONTENT_TYPE_LINE + CRLF
-          data << content_length_line + CRLF
-          data << CRLF
+      def send_header(io)
+        data = STATUS_LINE + CRLF
+        data << CONTENT_TYPE_LINE + CRLF
+        data << content_length_line + CRLF
+        data << CRLF
 
-          io.write(data)
-        end
+        io.write(data)
+      end
 
-        def send_body(io)
-          io.write(body)
-        end
+      def send_body(io)
+        io.write(body)
+      end
     end
   end
 end

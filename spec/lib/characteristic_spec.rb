@@ -1,9 +1,9 @@
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe RubyHome::Characteristic do
-  describe '#unsubscribe' do
-    it 'removes listener from list of listeners' do
-      listener = double('listener')
+  describe "#unsubscribe" do
+    it "removes listener from list of listeners" do
+      listener = double("listener")
       door = RubyHome::ServiceFactory.create(:garage_door_opener)
       characteristic = door.target_door_state
 
@@ -14,9 +14,9 @@ RSpec.describe RubyHome::Characteristic do
       expect(characteristic.listeners).to eq []
     end
 
-    it 'removes listeners from list of listeners' do
-      listener_1 = double('listener')
-      listener_2 = double('listener')
+    it "removes listeners from list of listeners" do
+      listener_1 = double("listener")
+      listener_2 = double("listener")
       door = RubyHome::ServiceFactory.create(:garage_door_opener)
       characteristic = door.target_door_state
 
@@ -29,9 +29,9 @@ RSpec.describe RubyHome::Characteristic do
     end
   end
 
-  describe '#value=' do
-    it 'broadcasts after_update event to subscribers' do
-      listener = spy('listener')
+  describe "#value=" do
+    it "broadcasts after_update event to subscribers" do
+      listener = spy("listener")
       fan = RubyHome::ServiceFactory.create(:fan)
       characteristic = fan.on
       characteristic.subscribe listener

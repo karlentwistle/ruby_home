@@ -1,20 +1,19 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 security_system = RubyHome::ServiceFactory.create(:security_system,
   security_system_target_state: 0, # required
   security_system_current_state: 0, # required
-  name: 'security system', # optional
+  name: "security system", # optional
   security_system_alarm_type: 0, # optional
   status_tampered: 0, # optional
-  status_fault: 0 # optional
-)
+  status_fault: 0) # optional
 
 security_system_target_state_values = {
-  0 => 'Stay Arm',
-  1 => 'Away Arm',
-  2 => 'Night Arm',
-  3 => 'Disarm'
+  0 => "Stay Arm",
+  1 => "Away Arm",
+  2 => "Night Arm",
+  3 => "Disarm"
 }
 security_system.security_system_target_state.after_update do |security_system_target_state|
   state = security_system_target_state_values[security_system_target_state]
@@ -24,11 +23,11 @@ security_system.security_system_target_state.after_update do |security_system_ta
 end
 
 security_system_current_state_values = {
-  0 => 'Stay Arm',
-  1 => 'Away Arm',
-  2 => 'Night Arm',
-  3 => 'Disarmed',
-  4 => 'Alarm Triggered'
+  0 => "Stay Arm",
+  1 => "Away Arm",
+  2 => "Night Arm",
+  3 => "Disarmed",
+  4 => "Alarm Triggered"
 }
 security_system.security_system_current_state.after_update do |security_system_current_state|
   state = security_system_current_state_values[security_system_current_state]

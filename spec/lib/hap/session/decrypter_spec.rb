@@ -1,47 +1,47 @@
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe RubyHome::HAP::Decrypter do
-  describe '#decrypt' do
-    let(:key) { ['273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895'].pack('H*') }
+  describe "#decrypt" do
+    let(:key) { ["273dc7c4e1cfdac3cb78dce01709f93208e6d3236171b58f4a28d8e5e73ee895"].pack("H*") }
     let(:count) { 0 }
 
     subject do
       described_class.new(key, count: count).decrypt(data)
     end
 
-    context 'short data' do
+    context "short data" do
       let(:data) do
         [
-          %w{
+          %w[
             0B00781A E80A8471 9C75E6C6 E4DBBA98 C40CBEDB 5B058D3F 331241AC DF
-          }.join.downcase
-        ].pack('H*')
+          ].join.downcase
+        ].pack("H*")
       end
 
-      it 'decrypts small strings of data' do
-        expect(subject).to eql('hello world')
+      it "decrypts small strings of data" do
+        expect(subject).to eql("hello world")
       end
     end
 
-    context 'custom count' do
+    context "custom count" do
       let(:data) do
         [
-          %w{
+          %w[
             0B00771F 50A03DF3 6B64FE1C A6E0D281 1E83D9F8 0FBD49FA FDA4EB2D B8
-          }.join.downcase
-        ].pack('H*')
+          ].join.downcase
+        ].pack("H*")
       end
       let(:count) { 2 }
 
-      it 'decrypts using correct nonce' do
-        expect(subject).to eql('hello world')
+      it "decrypts using correct nonce" do
+        expect(subject).to eql("hello world")
       end
     end
 
-    context 'data spanning multiple frames' do
+    context "data spanning multiple frames" do
       let(:data) do
         [
-          %w{
+          %w[
             0004711E E5078A30 8A7BF5CB E1DF29FA 6C32A826 82554D02 47AFED1D F56D587F
             B72659F9 53113A7F 953649A1 9D51BE10 46E42231 ED733FEB 3D1F749D 3A617B61
             DBDE1410 CA33D0D8 7027D1AA F5AF7F15 D7E2F19C DC774720 A32F6960 EA0D3E58
@@ -76,12 +76,12 @@ RSpec.describe RubyHome::HAP::Decrypter do
             BCE740B1 C652CF87 DB7219E9 41A71E50 9F421229 5B12DDFE 612FA627 D3DA755E
             615E4004 64D7B368 EEFE200C 2A95F22C 287E0100 782F5C81 C735B347 E936DC6E
             917275BD 4B
-          }.join.downcase
-        ].pack('H*')
+          ].join.downcase
+        ].pack("H*")
       end
 
-      it 'decrypts successfully' do
-        expect(subject).to eql('a' * 1025)
+      it "decrypts successfully" do
+        expect(subject).to eql("a" * 1025)
       end
     end
   end

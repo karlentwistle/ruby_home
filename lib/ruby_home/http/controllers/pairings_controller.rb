@@ -1,10 +1,10 @@
-require_relative 'application_controller'
+require_relative "application_controller"
 
 module RubyHome
   module HTTP
     class PairingsController < ApplicationController
-      post '/' do
-        content_type 'application/pairing+tlv8'
+      post "/" do
+        content_type "application/pairing+tlv8"
 
         case unpack_request[:method]
         when 3
@@ -20,7 +20,7 @@ module RubyHome
         pairing_params = {
           admin: !!unpack_request[:permissions],
           identifier: unpack_request[:identifier],
-          public_key: unpack_request[:public_key].unpack1('H*')
+          public_key: unpack_request[:public_key].unpack1("H*")
         }
         accessory_info.add_paired_client(**pairing_params)
 
@@ -30,7 +30,7 @@ module RubyHome
       def remove_pairing
         accessory_info.remove_paired_client(unpack_request[:identifier])
 
-        response['connection'] = 'close'
+        response["connection"] = "close"
         tlv state: 2
       end
     end

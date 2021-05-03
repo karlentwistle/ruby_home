@@ -1,6 +1,6 @@
 module RubyHome
   class CharacteristicFactory
-    def self.create(characteristic_name, service: , subtype: 'default' , value: nil)
+    def self.create(characteristic_name, service:, subtype: "default", value: nil)
       new(
         characteristic_name: characteristic_name,
         service: service,
@@ -36,48 +36,48 @@ module RubyHome
 
     private
 
-      def initialize(characteristic_name:, service:, subtype:, value:)
-        @characteristic_name = characteristic_name.to_sym
-        @service = service
-        @subtype = subtype
-        @requested_value = value
-      end
+    def initialize(characteristic_name:, service:, subtype:, value:)
+      @characteristic_name = characteristic_name.to_sym
+      @service = service
+      @subtype = subtype
+      @requested_value = value
+    end
 
-      attr_reader :service, :characteristic_name, :subtype
+    attr_reader :service, :characteristic_name, :subtype
 
-      def accessory
-        service.accessory
-      end
+    def accessory
+      service.accessory
+    end
 
-      def template
-        @template ||= CharacteristicTemplate.find_by(name: characteristic_name)
-      end
+    def template
+      @template ||= CharacteristicTemplate.find_by(name: characteristic_name)
+    end
 
-      def value_object
-        value_object_class.new(template, @requested_value)
-      end
+    def value_object
+      value_object_class.new(template, @requested_value)
+    end
 
-      def value_object_class
-        BaseValue.value_for_template(template)
-      end
+    def value_object_class
+      BaseValue.value_for_template(template)
+    end
 
-      def persisted_characteristic
-        IdentifierCache.find_by(
-          accessory_id: service.accessory_id,
-          service_uuid: service.uuid,
-          uuid: template.uuid,
-          subtype: subtype
-        )
-      end
+    def persisted_characteristic
+      IdentifierCache.find_by(
+        accessory_id: service.accessory_id,
+        service_uuid: service.uuid,
+        uuid: template.uuid,
+        subtype: subtype
+      )
+    end
 
-      def persist_characteristic(characteristic)
-        IdentifierCache.create(
-          accessory_id: characteristic.accessory_id,
-          instance_id: characteristic.instance_id,
-          service_uuid: service.uuid,
-          uuid: characteristic.uuid,
-          subtype: subtype
-        )
-      end
+    def persist_characteristic(characteristic)
+      IdentifierCache.create(
+        accessory_id: characteristic.accessory_id,
+        instance_id: characteristic.instance_id,
+        service_uuid: service.uuid,
+        uuid: characteristic.uuid,
+        subtype: subtype
+      )
+    end
   end
 end

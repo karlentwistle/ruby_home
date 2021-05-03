@@ -1,6 +1,6 @@
-require_relative 'characteristic_serializer'
-require_relative 'object_serializer'
-require_relative 'uuid_helper'
+require_relative "characteristic_serializer"
+require_relative "object_serializer"
+require_relative "uuid_helper"
 
 module RubyHome
   module HTTP
@@ -10,11 +10,11 @@ module RubyHome
 
       def record_hash(service)
         {
-          'iid' => service.instance_id,
-          'type' => uuid_short_form(service.uuid),
-          'characteristics' => CharacteristicSerializer.new(service.characteristics).serializable_hash,
-          'primary' => service.primary,
-          'hidden' => service.hidden,
+          "iid" => service.instance_id,
+          "type" => uuid_short_form(service.uuid),
+          "characteristics" => CharacteristicSerializer.new(service.characteristics).serializable_hash,
+          "primary" => service.primary,
+          "hidden" => service.hidden
         }.merge(linked_services(service))
       end
 
@@ -24,7 +24,7 @@ module RubyHome
         if service.linked.empty?
           {}
         else
-          { 'linked' => service.linked.map(&:instance_id) }
+          {"linked" => service.linked.map(&:instance_id)}
         end
       end
     end

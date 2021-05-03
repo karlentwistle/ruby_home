@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 contact_sensor = RubyHome::ServiceFactory.create(:contact_sensor,
@@ -7,8 +7,7 @@ contact_sensor = RubyHome::ServiceFactory.create(:contact_sensor,
   status_low_battery: 0, # optional
   status_tampered: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 contact_sensor.contact_sensor_state.after_update do |contact_sensor_state|
   if contact_sensor_state == 0

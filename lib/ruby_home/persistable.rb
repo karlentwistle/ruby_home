@@ -1,4 +1,4 @@
-require 'facets/cattr'
+require "facets/cattr"
 
 module RubyHome
   module Persistable
@@ -19,7 +19,7 @@ module RubyHome
       end
 
       def write(collection)
-        File.open(source, 'w') do |file|
+        File.open(source, "w") do |file|
           file.write(collection.to_yaml)
         end
       rescue Errno::EBADF
@@ -31,7 +31,7 @@ module RubyHome
 
         YAML.load_file(source)
       rescue Errno::EBADF
-        return false
+        false
       end
     end
 

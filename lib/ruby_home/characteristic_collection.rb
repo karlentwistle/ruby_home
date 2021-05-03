@@ -17,7 +17,7 @@ module RubyHome
       @characteristics << characteristic
     end
 
-    alias all to_a
+    alias_method :all, :to_a
 
     def contains_instance_id?(instance_id)
       map(&:instance_id).include?(instance_id)
@@ -25,24 +25,24 @@ module RubyHome
 
     private
 
-      attr_reader :characteristics
+    attr_reader :characteristics
 
-      def define_service_getter(characteristic)
-        service = characteristic.service
+    def define_service_getter(characteristic)
+      service = characteristic.service
 
-        unless service.respond_to?(characteristic.name)
-          service.define_singleton_method(characteristic.name) { characteristic }
+      unless service.respond_to?(characteristic.name)
+        service.define_singleton_method(characteristic.name) { characteristic }
+      end
+    end
+
+    def define_service_setter(characteristic)
+      service = characteristic.service
+
+      unless service.respond_to?("#{characteristic.name}=")
+        service.define_singleton_method("#{characteristic.name}=") do |args|
+          characteristic.value = args
         end
       end
-
-      def define_service_setter(characteristic)
-        service = characteristic.service
-
-        unless service.respond_to?("#{characteristic.name}=")
-          service.define_singleton_method("#{characteristic.name}=") do |args|
-            characteristic.value = args
-          end
-        end
-      end
+    end
   end
 end

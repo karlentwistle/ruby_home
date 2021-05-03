@@ -1,39 +1,39 @@
 #!/usr/bin/env ruby
 
-require 'byebug'
-require 'plist'
-require 'yaml'
+require "byebug"
+require "plist"
+require "yaml"
 
 module RubyHome
   class CharacteristicGenerator
     class << self
       def run
         convert_binary_plist
-        File.open(file_path, 'w') do |file|
+        File.open(file_path, "w") do |file|
           file.write generate_characteristics.to_yaml
         end
       end
 
       def generate_characteristics
-        parsed_xml['Characteristics'].map do |characteristics_xml|
+        parsed_xml["Characteristics"].map do |characteristics_xml|
           new(characteristics_xml).generate_characteristic_hash
         end
       end
 
       def convert_binary_plist
         system([
-          'plutil -convert xml1 -o',
-          '/tmp/Accessory.xml',
+          "plutil -convert xml1 -o",
+          "/tmp/Accessory.xml",
           "\'/Applications/Utilities/HomeKit\ Accessory\ Simulator.app/Contents/Frameworks/HAPAccessoryKit.framework/Versions/A/Resources/default.metadata.plist\'"
-        ].join(' '))
+        ].join(" "))
       end
 
       def parsed_xml
-        Plist.parse_xml('/tmp/Accessory.xml')
+        Plist.parse_xml("/tmp/Accessory.xml")
       end
 
       def file_path
-        File.dirname(__FILE__) + '/../lib/ruby_home/config/characteristics.yml'
+        File.dirname(__FILE__) + "/../lib/ruby_home/config/characteristics.yml"
       end
     end
 
@@ -54,27 +54,27 @@ module RubyHome
         format: format,
         unit: sanitized_unit,
         properties: properties,
-        constraints: constraints,
+        constraints: constraints
       }
     end
 
     private
 
-      def sanitized_name
-        name.downcase.gsub(' ', '_').gsub('.', '_')
+    def sanitized_name
+      name.downcase.tr(" ", "_").tr(".", "_")
+    end
+
+    def sanitized_unit
+      if unit
+        "\"#{unit}\""
+      else
+        "nil"
       end
+    end
 
-      def sanitized_unit
-        if unit
-          "\"#{unit}\""
-        else
-          "nil"
-        end
-      end
+    private
 
-      private
-
-      attr_reader :constraints, :format, :name, :properties, :uuid, :unit
+    attr_reader :constraints, :format, :name, :properties, :uuid, :unit
   end
 end
 

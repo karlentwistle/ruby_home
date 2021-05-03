@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 air_quality_sensor = RubyHome::ServiceFactory.create(:air_quality_sensor,
@@ -15,16 +15,15 @@ air_quality_sensor = RubyHome::ServiceFactory.create(:air_quality_sensor,
   status_low_battery: 0, # optional
   status_tampered: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 air_quality_values = {
-  0 => 'Unknown',
-  1 => 'Excellent',
-  2 => 'Good',
-  3 => 'Fair',
-  4 => 'Inferior',
-  5 => 'Poor'
+  0 => "Unknown",
+  1 => "Excellent",
+  2 => "Good",
+  3 => "Fair",
+  4 => "Inferior",
+  5 => "Poor"
 }
 air_quality_sensor.air_quality.after_update do |air_quality|
   state = air_quality_values[air_quality]

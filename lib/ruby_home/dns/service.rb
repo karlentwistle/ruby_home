@@ -1,12 +1,12 @@
 module RubyHome
   module DNS
     class Service
-      def initialize(configuration: )
+      def initialize(configuration:)
         @configuration = configuration
       end
 
       def update
-        return if RbConfig::CONFIG['target_os'] =~ /linux/
+        return if /linux/.match?(RbConfig::CONFIG["target_os"])
 
         dnssd_service.add_record(DNSSD::Record::TXT, text_record.encode)
       end
@@ -20,9 +20,7 @@ module RubyHome
       attr_reader :configuration
 
       def dnssd_service
-        @_dnssd_service ||= begin
-          DNSSD::Service.register(name, type, nil, port, host, text_record)
-        end
+        @_dnssd_service ||= DNSSD::Service.register(name, type, nil, port, host, text_record)
       end
 
       def name
@@ -30,7 +28,7 @@ module RubyHome
       end
 
       def type
-        -'_hap._tcp'
+        -"_hap._tcp"
       end
 
       def port

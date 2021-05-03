@@ -1,4 +1,4 @@
-require 'ruby_home'
+require "ruby_home"
 
 accessory_information = RubyHome::ServiceFactory.create(:accessory_information)
 motion_sensor = RubyHome::ServiceFactory.create(:motion_sensor,
@@ -7,8 +7,7 @@ motion_sensor = RubyHome::ServiceFactory.create(:motion_sensor,
   status_low_battery: 0, # optional
   status_tampered: 0, # optional
   status_fault: 0, # optional
-  status_active: true # optional
-)
+  status_active: true) # optional
 
 motion_sensor.motion_detected.after_update do |motion_detected|
   if motion_detected

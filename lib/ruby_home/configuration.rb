@@ -4,15 +4,15 @@ module RubyHome
   class Configuration
     extend Forwardable
 
-    CATEGORIES_FILEPATH = (File.dirname(__FILE__) + '/config/categories.yml').freeze
+    CATEGORIES_FILEPATH = (File.dirname(__FILE__) + "/config/categories.yml").freeze
     CATEGORIES = YAML.load_file(CATEGORIES_FILEPATH).freeze
 
     def initialize(accessory_info = AccessoryInfo.instance)
       @accessory_info = accessory_info
     end
 
-    DEFAULT_NAME = -'RubyHome'
-    DEFAULT_HOST = -'0.0.0.0'
+    DEFAULT_NAME = -"RubyHome"
+    DEFAULT_HOST = -"0.0.0.0"
     DEFAULT_PORT = 4567
     DEFAULT_MODEL_NAME = DEFAULT_NAME
     DEFAULT_DISCOVERY_NAME = DEFAULT_NAME
@@ -40,7 +40,7 @@ module RubyHome
 
     def category_identifier=(value)
       if value.is_a?(Symbol)
-        raise UnknownCategoriyIdentifierError if !CATEGORIES.include?(value)
+        raise UnknownCategoriyIdentifierError unless CATEGORIES.include?(value)
         @category_identifier = CATEGORIES[value]
       else
         @category_identifier = value.to_i
