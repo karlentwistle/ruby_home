@@ -1,13 +1,43 @@
 require "spec_helper"
 
 RSpec.describe RubyHome::HAP::Session do
+  let(:caesar_cipher) do
+    Class.new do
+      def initialize(key, count: 0)
+        @key = key
+        @count = count
+      end
+
+      def encrypt(data)
+        @count += 1
+        caesar_cipher(data)
+      end
+
+      def decrypt(data)
+        @count -= 1
+        caesar_cipher(data)
+      end
+
+      private
+
+      def caesar_cipher(string)
+        shift = count
+        alphabet = Array("a".."z")
+        encrypter = Hash[alphabet.zip(alphabet.rotate(shift))]
+        string.chars.map { |c| encrypter.fetch(c, " ") }.join + " \n"
+      end
+
+      attr_reader :count
+    end
+  end
+
   describe "#decrypt" do
     let(:io) { StringIO.new }
     subject(:session) do
       described_class.new(
         io,
-        decrypter_class: CaesarCipher,
-        encrypter_class: CaesarCipher
+        decrypter_class: caesar_cipher,
+        encrypter_class: caesar_cipher
       )
     end
 
@@ -83,34 +113,6 @@ RSpec.describe RubyHome::HAP::Session do
       it "supports writing data with << for backwards compatibility" do
         expect(session.method(:<<)).to eql(session.method(:write))
       end
-    end
-
-    class CaesarCipher
-      def initialize(key, count: 0)
-        @key = key
-        @count = count
-      end
-
-      def encrypt(data)
-        @count += 1
-        caesar_cipher(data)
-      end
-
-      def decrypt(data)
-        @count -= 1
-        caesar_cipher(data)
-      end
-
-      private
-
-      def caesar_cipher(string)
-        shift = count
-        alphabet = Array("a".."z")
-        encrypter = Hash[alphabet.zip(alphabet.rotate(shift))]
-        string.chars.map { |c| encrypter.fetch(c, " ") }.join + " \n"
-      end
-
-      attr_reader :count
     end
   end
 end
