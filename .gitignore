@@ -1,6 +1,8 @@
 .byebug_history
 .rspec_status
+.ruby-version
 /.bundle/
+/.rubocop-*
 /.yardoc
 /_yardoc/
 /coverage/
@@ -11,4 +13,3 @@
 Gemfile.lock
 accessory_info.yml
 identifier_cache.yml
-.ruby-version

@@ -1,9 +1,2 @@
-Style:
-  TrailingCommaInLiteral:
-    Enabled: false
-  Documentation:
-    Enabled: false
-  FrozenStringLiteralComment:
-    Enabled: false
-  IndentationConsistency:
-    AllowProtectedAndPrivateMethodsBeIndented: true
+inherit_from:
+  - https://raw.githubusercontent.com/testdouble/standard/master/config/base.yml
