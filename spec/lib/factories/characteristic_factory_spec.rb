@@ -37,7 +37,7 @@ RSpec.describe RubyHome::CharacteristicFactory do
     end
 
     it "persists the characteristic within identifier cache" do
-      characteristic = RubyHome::CharacteristicFactory.create(:position_state, service: service)
+      RubyHome::CharacteristicFactory.create(:position_state, service: service)
 
       expect(RubyHome::IdentifierCache.all).to include(
         an_object_having_attributes(

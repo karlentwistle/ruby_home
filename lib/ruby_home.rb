@@ -36,8 +36,8 @@ module RubyHome
     end
 
     def run
-      trap "INT" do shutdown end
-      trap "TERM" do shutdown end
+      trap("INT") { shutdown }
+      trap("TERM") { shutdown }
 
       greet
       start

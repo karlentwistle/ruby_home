@@ -21,7 +21,7 @@ module RubyHome
     end
 
     def range_values
-      if min = template.constraints.dig("MinimumValue")
+      if (min = template.constraints.dig("MinimumValue"))
         {min.to_s => min}
       end
     end

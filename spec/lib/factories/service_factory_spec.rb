@@ -130,7 +130,7 @@ RSpec.describe RubyHome::ServiceFactory do
     end
 
     it "persists the service within identifier cache" do
-      service = RubyHome::ServiceFactory.create(:fan)
+      RubyHome::ServiceFactory.create(:fan)
 
       expect(RubyHome::IdentifierCache.all).to include(
         an_object_having_attributes(
@@ -152,8 +152,8 @@ RSpec.describe RubyHome::ServiceFactory do
 
     it "allows two services within the same accessory with different subtypes" do
       garage_door_opener = RubyHome::Accessory.new
-      security_light = RubyHome::ServiceFactory.create(:lightbulb, subtype: "security_light", accessory: garage_door_opener)
-      backlight = RubyHome::ServiceFactory.create(:lightbulb, subtype: "backlight", accessory: garage_door_opener)
+      RubyHome::ServiceFactory.create(:lightbulb, subtype: "security_light", accessory: garage_door_opener)
+      RubyHome::ServiceFactory.create(:lightbulb, subtype: "backlight", accessory: garage_door_opener)
 
       expect(RubyHome::IdentifierCache.all).to include(
         an_object_having_attributes(

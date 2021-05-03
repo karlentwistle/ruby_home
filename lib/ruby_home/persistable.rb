@@ -9,7 +9,7 @@ module RubyHome
 
     module ClassMethods
       def persisted
-        if yaml = read
+        if (yaml = read)
           new(**yaml)
         end
       end

@@ -5,7 +5,7 @@ module RubyHome
     class ApplicationController < Sinatra::Base
       disable :protection
 
-      logger = Logger.new(STDOUT)
+      logger = Logger.new($stdout)
       logger.level = case ENV["DEBUG"]
       when "debug"
         Logger::DEBUG

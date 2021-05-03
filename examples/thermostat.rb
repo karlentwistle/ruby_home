@@ -55,7 +55,7 @@ thermostat.target_heating_cooling_state.after_update do |target_heating_cooling_
   state = target_heating_cooling_state_values[target_heating_cooling_state]
   puts "heater cooler target heating cooler state is #{state}"
 
-  return if thermostat.current_heating_cooling_state == target_heating_cooling_state
+  return true if thermostat.current_heating_cooling_state == target_heating_cooling_state
 
   if target_heating_cooling_state == 1
     thermostat.current_heating_cooling_state = 1

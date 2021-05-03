@@ -81,7 +81,7 @@ module RubyHome
 
     def optional_characteristic_templates
       template.optional_characteristics.select do |characteristic_template|
-        options.keys.include?(characteristic_template.name)
+        options.key?(characteristic_template.name)
       end
     end
 

@@ -41,9 +41,9 @@ module RubyHome
 
       def server_logger
         if ENV["DEBUG"] == "debug"
-          WEBrick::Log.new(STDOUT, WEBrick::BasicLog::DEBUG)
+          WEBrick::Log.new($stdout, WEBrick::BasicLog::DEBUG)
         elsif ENV["DEBUG"] == "info"
-          WEBrick::Log.new(STDOUT, WEBrick::BasicLog::INFO)
+          WEBrick::Log.new($stdout, WEBrick::BasicLog::INFO)
         else
           WEBrick::Log.new("/dev/null", WEBrick::BasicLog::WARN)
         end
