@@ -4,11 +4,11 @@ module RubyHome
       def run(sock)
         session = Session.new(sock)
 
-        while true
+        loop do
           req = HAPRequest.new(@config, session: session)
           res = HAPResponse.new(@config)
           begin
-            while true
+            loop do
               break if sock.to_io.wait_readable(0.5)
               break if @status != :Running
             end
