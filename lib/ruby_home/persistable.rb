@@ -22,16 +22,12 @@ module RubyHome
         File.open(source, "w") do |file|
           file.write(collection.to_yaml)
         end
-      rescue Errno::EBADF
-        false
       end
 
       def read
         return false unless File.exist?(source)
 
         YAML.load_file(source)
-      rescue Errno::EBADF
-        false
       end
     end
 
