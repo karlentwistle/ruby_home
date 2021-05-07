@@ -29,6 +29,12 @@ module RubyHome
 
         YAML.load_file(source)
       end
+
+      def reset
+        File.open(source, "w") do |file|
+          file.write(nil.to_yaml)
+        end
+      end
     end
 
     def reload
