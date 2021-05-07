@@ -1,6 +1,4 @@
-RubyHome::IdentifierCache.source = Tempfile.new("identifier_cache.yml").path
-
-puts Tempfile.new("identifier_cache.yml").path
+RubyHome::IdentifierCache.source = "spec/tmp/identifier_cache.yml"
 
 RSpec.configure do |config|
   config.after(:each) do |example|

@@ -9,7 +9,6 @@
 /doc/
 /pkg/
 /spec/reports/
-/tmp/
 Gemfile.lock
 accessory_info.yml
 identifier_cache.yml

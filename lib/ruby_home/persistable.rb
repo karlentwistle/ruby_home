@@ -19,21 +19,19 @@ module RubyHome
       end
 
       def write(collection)
-        File.open(source, "w") do |file|
-          file.write(collection.to_yaml)
-        end
+        File.write(source, collection.to_yaml)
       end
 
       def read
-        return false unless File.exist?(source)
-
-        YAML.load_file(source)
+        begin
+          YAML.load_file(source)
+        rescue Errno::ENOENT
+          false
+        end
       end
 
       def reset
-        File.open(source, "w") do |file|
-          file.write(nil.to_yaml)
-        end
+        write(nil)
       end
     end
 
