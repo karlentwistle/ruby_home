@@ -20,7 +20,7 @@ module RubyHome
       end
 
       def write(collection)
-        if self.cache != collection
+        if cache != collection
           self.cache = collection
           persist
         end
@@ -29,7 +29,7 @@ module RubyHome
       end
 
       def persist
-        File.write(source, self.cache.to_yaml)
+        File.write(source, cache.to_yaml)
       end
 
       def read_persisted
