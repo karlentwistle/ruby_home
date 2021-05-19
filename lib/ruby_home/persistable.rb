@@ -34,6 +34,8 @@ module RubyHome
 
       def read_persisted
         YAML.load_file(source)
+      rescue Errno::ENOENT
+        false
       end
 
       def read
