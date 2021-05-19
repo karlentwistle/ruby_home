@@ -20,10 +20,8 @@ module RubyHome
       end
 
       def write(collection)
-        if cache != collection
-          self.cache = collection
-          persist
-        end
+        self.cache = collection
+        persist
 
         true
       end
