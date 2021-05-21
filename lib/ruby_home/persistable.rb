@@ -4,6 +4,7 @@ module RubyHome
   module Persistable
     def self.included(base)
       base.send(:cattr_accessor, :source)
+      base.send(:cattr_accessor, :cache)
       base.extend(ClassMethods)
     end
 
@@ -19,19 +20,29 @@ module RubyHome
       end
 
       def write(collection)
-        File.write(source, collection.to_yaml)
+        self.cache = collection
+        persist
+
+        true
+      end
+
+      def persist
+        File.write(source, cache.to_yaml)
+      end
+
+      def read_persisted
+        YAML.load_file(source)
+      rescue Errno::ENOENT
+        false
       end
 
       def read
-        begin
-          YAML.load_file(source)
-        rescue Errno::ENOENT
-          false
-        end
+        self.cache ||= read_persisted
       end
 
       def reset
-        write(nil)
+        self.cache = nil
+        persist
       end
     end
 
