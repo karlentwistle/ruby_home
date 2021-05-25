@@ -64,21 +64,21 @@ module RubyHome
     def optional_characteristic_names
       optional_characteristic_uuids.map do |uuid|
         RubyHome::CharacteristicTemplate.find_by(uuid: uuid).name
-      end
+      end + additional_optional_characteristic_names
+    end
+
+    ADDITIONAL_OPTIONAL_CHARACTERISTIC_NAMES = {
+      "lightbulb" => [:color_temperature]
+    }.freeze
+
+    def additional_optional_characteristic_names
+      ADDITIONAL_OPTIONAL_CHARACTERISTIC_NAMES.fetch(sanitized_name, [])
     end
 
     def required_characteristic_names
       required_characteristic_uuids.map do |uuid|
         RubyHome::CharacteristicTemplate.find_by(uuid: uuid).name
-      end + additional_required_characteristic_names
-    end
-
-    ADDITIONAL_REQUIRED_CHARACTERISTIC_NAMES = {
-      "lightbulb" => [:color_temperature]
-    }.freeze
-
-    def additional_required_characteristic_names
-      ADDITIONAL_REQUIRED_CHARACTERISTIC_NAMES.fetch(sanitized_name, [])
+      end
     end
 
     attr_reader :name, :required_characteristic_uuids, :optional_characteristic_uuids, :uuid

@@ -252,11 +252,11 @@
   :uuid: 00000043-0000-1000-8000-0026BB765291
   :optional_characteristic_names:
   - :brightness
+  - :color_temperature
   - :hue
   - :name
   - :saturation
   :required_characteristic_names:
-  - :color_temperature
   - :on
 - :name: :lock_management
   :description: Lock Management
