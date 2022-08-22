@@ -44,5 +44,9 @@ module RubyHome
         characteristic.name == characteristic_name
       end
     end
+
+    def to_s
+      "#{@name} - #{@description}"
+    end
   end
 end
