@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'hkdf', '~> 0.3.0'
   spec.add_dependency 'oj', '~> 3.10'
   spec.add_dependency 'rbnacl', '~> 7.0'
-  spec.add_dependency 'rqrcode', '~> 1.1.0'
+  spec.add_dependency 'rqrcode', '~> 1.2.0'
   spec.add_dependency 'ruby_home-srp', '~> 1.3'
   spec.add_dependency 'ruby_home-tlv', '~> 0.1'
   spec.add_dependency 'sinatra', '~> 2.0'
