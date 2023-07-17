@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "facets", "~> 3.1"
   spec.add_dependency "hkdf", "~> 1.0.0"
   spec.add_dependency "oj", "~> 3.10"
-  spec.add_dependency "rbnacl", "~> 7.0"
+  spec.add_dependency "rbnacl", "~> 7.1"
   spec.add_dependency "ruby_home-srp", "~> 1.3"
   spec.add_dependency "ruby_home-tlv", "~> 0.1"
   spec.add_dependency "sinatra", "~> 3.0"
