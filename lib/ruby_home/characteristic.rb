@@ -72,6 +72,28 @@ module RubyHome
       constraints.fetch("ValidValues", {}).keys.map(&:to_i)
     end
 
+    def minimum_value
+      return unless numeric_constraints?
+
+      constraints["MinimumValue"]
+    end
+
+    def maximum_value
+      return unless numeric_constraints?
+
+      constraints["MaximumValue"]
+    end
+
+    def step_value
+      return unless numeric_constraints?
+
+      constraints["StepValue"]
+    end
+
+    def numeric_constraints?
+      format == "uint32" || format == "float"
+    end
+
     def method_missing(method_name, *args, &block)
       value.send(method_name, *args, &block)
     end

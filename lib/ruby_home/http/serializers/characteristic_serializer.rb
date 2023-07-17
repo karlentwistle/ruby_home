@@ -17,6 +17,7 @@ module RubyHome
         }
           .merge(value_hash(characteristic))
           .merge(valid_values_hash(characteristic))
+          .merge(numeric_constraints(characteristic))
       end
 
       private
@@ -41,6 +42,16 @@ module RubyHome
         else
           {"valid-values" => characteristic.valid_values}
         end
+      end
+
+      def numeric_constraints(characteristic)
+        return {} unless characteristic.numeric_constraints?
+
+        {
+          "minValue" => characteristic.minimum_value,
+          "maxValue" => characteristic.maximum_value,
+          "minStep" => characteristic.step_value,
+        }.compact
       end
     end
   end
