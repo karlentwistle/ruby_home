@@ -45,7 +45,7 @@ module RubyHome
       end
 
       def numeric_constraints(characteristic)
-        return {} unless characteristic.numeric_constraints?
+        return {} unless characteristic.format_numeric?
 
         {
           "minValue" => characteristic.minimum_value,

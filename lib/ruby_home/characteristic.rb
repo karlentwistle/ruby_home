@@ -73,24 +73,24 @@ module RubyHome
     end
 
     def minimum_value
-      return unless numeric_constraints?
+      return unless format_numeric?
 
       constraints["MinimumValue"]
     end
 
     def maximum_value
-      return unless numeric_constraints?
+      return unless format_numeric?
 
       constraints["MaximumValue"]
     end
 
     def step_value
-      return unless numeric_constraints?
+      return unless format_numeric?
 
       constraints["StepValue"]
     end
 
-    def numeric_constraints?
+    def format_numeric?
       format == "uint32" || format == "float"
     end
 
