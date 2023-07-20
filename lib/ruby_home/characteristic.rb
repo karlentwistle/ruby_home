@@ -90,8 +90,10 @@ module RubyHome
       constraints["StepValue"]
     end
 
+    NUMERIC_FORMATS = ["float", "uint8", "int32", "uint32"].freeze
+
     def numeric_format?
-      format == "uint32" || format == "float"
+      NUMERIC_FORMATS.include?(format)
     end
 
     def method_missing(method_name, *args, &block)

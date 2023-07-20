@@ -63,7 +63,7 @@ RSpec.describe "GET /accessories" do
       expect(valid_values).to eql([0, 1])
     end
 
-    it "includes accessories services characteristics numeric properties" do
+    it "includes float format characteristics numeric properties" do
       heater_cooler = RubyHome::ServiceFactory.create(:heater_cooler, cooling_threshold_temperature: 10)
       cooling_threshold_temperature = heater_cooler.cooling_threshold_temperature
 
@@ -75,6 +75,21 @@ RSpec.describe "GET /accessories" do
         "minValue" => 10,
         "maxValue" => 30,
         "minStep" => 0.1
+      )
+    end
+
+    it "includes int format characteristics numeric properties" do
+      window_covering = RubyHome::ServiceFactory.create(:window_covering, target_horizontal_tilt_angle: 0)
+      target_horizontal_tilt_angle = window_covering.target_horizontal_tilt_angle
+
+      get "/accessories", nil, {"CONTENT_TYPE" => "application/hap+json"}
+
+      characteristics = JSON.parse(last_response.body).dig("accessories", 0, "services", 0, "characteristics")
+      characteristic = characteristics.find { |c| c["iid"] == target_horizontal_tilt_angle.instance_id }
+      expect(characteristic).to include(
+        "minValue" => -90,
+        "maxValue" => 90,
+        "minStep" => 1
       )
     end
   end
