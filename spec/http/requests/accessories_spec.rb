@@ -73,7 +73,7 @@ RSpec.describe "GET /accessories" do
       characteristic = characteristics.find { |c| c["iid"] == cooling_threshold_temperature.instance_id }
       expect(characteristic).to include(
         "minValue" => 10,
-        "maxValue" => 30,
+        "maxValue" => 35,
         "minStep" => 0.1
       )
     end
