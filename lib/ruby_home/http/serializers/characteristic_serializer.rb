@@ -50,7 +50,7 @@ module RubyHome
         {
           "minValue" => characteristic.minimum_value,
           "maxValue" => characteristic.maximum_value,
-          "minStep" => characteristic.step_value,
+          "minStep" => characteristic.step_value
         }.compact
       end
     end
