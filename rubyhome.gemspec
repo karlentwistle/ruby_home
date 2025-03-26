@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "webrick", "~> 1.7"
   spec.add_dependency "wisper", "~> 2.0"
 
-  spec.add_development_dependency "byebug", "~> 11.0"
+  spec.add_development_dependency "byebug", "~> 12.0"
   spec.add_development_dependency "plist", "~> 3.4"
   spec.add_development_dependency "rack-test", "~> 2.1.0"
   spec.add_development_dependency "rake", "~> 13.0"
